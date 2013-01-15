@@ -17,19 +17,31 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
    
-    <style name="TheoryPlanetLabel" parent="android:Widget.Holo.Light.TextView">
-        <item name="android:background">@color/PlanetTheoryTableColor</item>
+    <style name="theoryPlanetLabel" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:background">@color/PlanetTheoryTableColor2</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/Black</item>
         <item name="android:textSize">20sp</item>
+        <item name="android:layout_height">71sp</item>
+        <item name="android:layout_gravity">fill_horizontal</item>
     </style>
-    <style name="TheoryPlanetHeaderLabel" parent="android:Widget.Holo.Light.TextView">
-        <item name="android:background">@color/PlanetTheoryTableColor</item>
+    <style name="theoryPlanetHeaderLabel" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:background">@color/PlanetTheoryTableColor2</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/Black</item>
         <item name="android:textSize">23sp</item>
     </style>
-    <style name="TheoryPlanetTableGridStyle">
-        <item name="android:background">@color/PlanetTheoryTableColor</item>
+    <style name="theoryPlanetTableGridStyle">
+        <item name="android:background">@color/PlanetTheoryTableColor2</item>
+        <item name="android:layout_width">810dp</item>
+        <item name="android:layout_height">71dp</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+    <style name="planetColor">
+        <item name="android:background">@color/Crimson</item>
+        <item name="android:layout_marginLeft">52dp</item>
+        <item name="android:layout_marginTop">59dp</item>
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">100dp</item>
     </style>
 </resources>

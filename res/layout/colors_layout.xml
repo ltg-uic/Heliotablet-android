@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/planetColorsView"
+    android:layout_width="400dp"
+    android:layout_height="match_parent"
+    android:background="@color/Aquamarine" >
+
+    <RelativeLayout
+        android:id="@+id/planet1"
+        style="@style/planetColor"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/planet2"
+        style="@style/planetColor"
+        android:layout_below="@+id/planet1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="69dp" >
+
+    </RelativeLayout>
+
+</RelativeLayout>
