@@ -3,6 +3,8 @@
  <color name="PlanetTheoryTableColor">#b3b292</color>
  <color name="PlanetTheoryTableColor2">#efefef</color>
  <color name="PlanetTheoryCircleAreaColor">#b49854</color>
+ <color name="RedGradientLighterColor">#ff585e</color>
+ <color name="PlanetGreyBorder">#dddddd</color>
  <color name="White">#FFFFFF</color>
  <color name="Ivory">#FFFFF0</color>
  <color name="LightYellow">#FFFFE0</color>

@@ -43,7 +43,9 @@
         android:layout_column="1"
         android:layout_gravity="fill_vertical|fill_horizontal"
         android:layout_row="1"
-        android:text="@string/planets" />
+        android:text="@string/planets"
+        
+         />
 
     <!-- Theories -->
 
@@ -69,7 +71,10 @@
         android:layout_width="810dp"
         android:layout_column="3"
         android:layout_row="1"
-        android:text="@string/theories" />
+        android:text="@string/theories" 
+        
+        
+        />
 
     <!-- Colors -->
 
@@ -147,7 +152,9 @@
         style="@style/theoryPlanetLabel"
         android:layout_column="1"
         android:layout_row="3"
-        android:text="@string/mercury" />
+        android:text="@string/mercury" 
+        
+        />
 
     <Space
         android:layout_height="3dp"

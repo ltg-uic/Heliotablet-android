@@ -18,7 +18,7 @@
     </style>
    
     <style name="theoryPlanetLabel" parent="android:Widget.Holo.Light.TextView">
-        <item name="android:background">@color/PlanetTheoryTableColor2</item>
+        <item name="android:background">@color/PlanetTheoryTableColor</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/Black</item>
         <item name="android:textSize">20sp</item>
@@ -26,13 +26,13 @@
         <item name="android:layout_gravity">fill_horizontal</item>
     </style>
     <style name="theoryPlanetHeaderLabel" parent="android:Widget.Holo.Light.TextView">
-        <item name="android:background">@color/PlanetTheoryTableColor2</item>
+        <item name="android:background">@color/PlanetTheoryTableColor</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/Black</item>
         <item name="android:textSize">23sp</item>
     </style>
     <style name="theoryPlanetTableGridStyle">
-        <item name="android:background">@color/PlanetTheoryTableColor2</item>
+        <item name="android:background">@color/PlanetTheoryTableColor</item>
         <item name="android:layout_width">810dp</item>
         <item name="android:layout_height">71dp</item>
         <item name="android:layout_gravity">center</item>
