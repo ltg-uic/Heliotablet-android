@@ -44,4 +44,19 @@
         <item name="android:layout_width">100dp</item>
         <item name="android:layout_height">100dp</item>
     </style>
+        
+    <style name="sketchPlanetTextLabelStyle">
+        <item name="android:background">@drawable/sketch_rect</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">50dp</item>
+    </style>
+    <style name="SketchTextStyle" parent="android:Widget.TextView">
+        <item name="android:textSize">23sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
 </resources>

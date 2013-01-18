@@ -162,38 +162,50 @@ public final class R {
         public static final int ic_launcher=0x7f020001;
         public static final int planet_drag=0x7f020002;
         public static final int rect=0x7f020003;
+        public static final int sketch_rect=0x7f020004;
     }
     public static final class id {
-        public static final int colors_include=0x7f08000d;
+        public static final int colors_include=0x7f080017;
         public static final int container=0x7f080000;
-        public static final int earthView=0x7f080010;
-        public static final int jupiterView=0x7f080012;
+        public static final int earthView=0x7f08001a;
+        public static final int earth_sketch_label=0x7f080010;
+        public static final int jupiterView=0x7f08001c;
+        public static final int jupiter_sketch_label=0x7f080014;
         public static final int loginMessage=0x7f080002;
         public static final int loginView=0x7f080001;
-        public static final int marsView=0x7f080011;
-        public static final int menu_settings=0x7f080017;
-        public static final int mercuryView=0x7f08000e;
+        public static final int marsView=0x7f08001b;
+        public static final int mars_sketch_label=0x7f080015;
+        public static final int menu_settings=0x7f080021;
+        public static final int mercuryView=0x7f080018;
+        public static final int mercury_sketch_label=0x7f08000e;
         public static final int messageBottomSpacer=0x7f080008;
-        public static final int neptuneView=0x7f080015;
+        public static final int neptuneView=0x7f08001f;
+        public static final int neptune_sketch_label=0x7f080012;
         public static final int passwordLabelText=0x7f080006;
         public static final int passwordTextView=0x7f080007;
         public static final int planet1=0x7f08000a;
         public static final int planetColorsView=0x7f080009;
-        public static final int plutoView=0x7f080016;
-        public static final int saturnView=0x7f080013;
+        public static final int planetSketchView=0x7f08000d;
+        public static final int plutoView=0x7f080020;
+        public static final int pluto_sketch_label=0x7f080011;
+        public static final int saturnView=0x7f08001d;
+        public static final int saturn_sketch_label=0x7f080016;
         public static final int textView1=0x7f08000c;
-        public static final int uranusView=0x7f080014;
+        public static final int uranusView=0x7f08001e;
+        public static final int uranus_sketch_label=0x7f080013;
         public static final int usernameLabel=0x7f080003;
         public static final int usernameSpacer=0x7f080005;
         public static final int usernameTextView=0x7f080004;
-        public static final int venusView=0x7f08000f;
+        public static final int venusView=0x7f080019;
+        public static final int venus_sketch_label=0x7f08000f;
         public static final int view1=0x7f08000b;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int authenticator_activity=0x7f030001;
         public static final int colors_layout=0x7f030002;
-        public static final int theories_activity=0x7f030003;
+        public static final int sketch_activity=0x7f030003;
+        public static final int theories_activity=0x7f030004;
     }
     public static final class menu {
         public static final int activity_main=0x7f070000;
@@ -253,7 +265,9 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f060001;
+        public static final int SketchTextStyle=0x7f060007;
         public static final int planetColor=0x7f060005;
+        public static final int sketchPlanetTextLabelStyle=0x7f060006;
         public static final int theoryPlanetHeaderLabel=0x7f060003;
         public static final int theoryPlanetLabel=0x7f060002;
         public static final int theoryPlanetTableGridStyle=0x7f060004;

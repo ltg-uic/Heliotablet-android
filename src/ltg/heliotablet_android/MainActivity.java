@@ -44,6 +44,8 @@ public class MainActivity extends FragmentActivity implements
 		actionBar.addTab(actionBar.newTab().setText(R.string.title_section4)
 				.setTabListener(this));
 	}
+	
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -67,6 +69,7 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	public void onTabSelected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
+		
 		// When the given tab is selected, switch to the corresponding page in
 		// the ViewPager.
 		int position = tab.getPosition();
@@ -77,6 +80,13 @@ public class MainActivity extends FragmentActivity implements
 			fragment.setArguments(args);
 			getSupportFragmentManager().beginTransaction()
 			.replace(R.id.container, fragment).commit();
+		} else if( position == 2) {
+				Fragment fragment = new SketchFragment();
+				Bundle args = new Bundle();
+				args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+				fragment.setArguments(args);
+				getSupportFragmentManager().beginTransaction()
+				.replace(R.id.container, fragment).commit();
 		} else {
 			Fragment fragment = new DummySectionFragment();
 			Bundle args = new Bundle();
@@ -95,6 +105,7 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	public void onTabReselected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
+		
 	}
 
 	/**
