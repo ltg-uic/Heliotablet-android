@@ -5,28 +5,29 @@
     android:layout_height="match_parent"
     android:background="@color/Aquamarine" >
 
+    <View
+        android:id="@+id/planetView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="57dp"
+        android:background="@drawable/planet_drag" />
+
     <RelativeLayout
         android:id="@+id/planet1"
         style="@style/planetColor"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" >
+        android:background="@drawable/planet_drag">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
     </RelativeLayout>
-
-    <View
-        android:id="@+id/view1"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_toRightOf="@+id/planet1"
-        android:background="@drawable/planet_drag" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/planet1"
-        android:layout_below="@+id/planet1"
-        android:layout_marginTop="123dp"
-        android:drawable="@drawable/planet_drag"
-        android:text="TextView" />
 
 </RelativeLayout>

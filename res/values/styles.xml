@@ -51,10 +51,23 @@
         <item name="android:layout_height">50dp</item>
     </style>
     <style name="SketchTextStyle" parent="android:Widget.TextView">
-        <item name="android:textSize">25sp</item>
+        <item name="android:textSize">25dp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:layout_centerVertical">true</item>
+    </style>
+    <style name="sketchPlanetViewText" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textSize">25dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    <style name="sketchPlanetView" parent="@style/planetColor">
+        <item name="android:background">@drawable/planet_drag</item>
+        <item name="android:layout_width">160dp</item>
+        <item name="android:layout_height">160dp</item>
     </style>
 </resources>

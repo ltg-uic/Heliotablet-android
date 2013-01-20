@@ -19,7 +19,7 @@ public class SketchFragment extends Fragment {
 
 		View view = inflater
 				.inflate(R.layout.sketch_activity, container, false);
-		// Draggable colored circles
+		
 		FrameLayout sketchView = (FrameLayout) view
 				.findViewById(R.id.planetSketchView);
 
