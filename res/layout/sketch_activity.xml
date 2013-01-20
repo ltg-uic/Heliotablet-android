@@ -1,121 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/planetSketchView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Black" >
+    android:background="@color/Black"
+   >
 
-    <View
+    <!--
+         <View
         android:id="@+id/view1"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_toRightOf="@+id/planet1"
+        android:layout_toRightOf="@+id/"
         android:background="@drawable/planet_drag" />
+    -->
 
     <RelativeLayout
         android:id="@+id/mercury_sketch_label"
         style="@style/sketchPlanetTextLabelStyle"
-        android:layout_below="@+id/view1"
-        android:layout_marginLeft="81dp"
-        android:layout_marginTop="88dp"
-        android:layout_toRightOf="@+id/view1" >
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp" >
 
         <TextView
-            style="@style/SketchTextStyle"       
+            style="@style/SketchTextStyle"
             android:text="@string/mercury" />
     </RelativeLayout>
 
-     <RelativeLayout
-         android:id="@+id/venus_sketch_label"
-         style="@style/sketchPlanetTextLabelStyle"
-         android:layout_alignLeft="@+id/earth_sketch_label"
-         android:layout_below="@+id/view1"
-         android:layout_marginLeft="84dp" >
+    <RelativeLayout
+        android:id="@+id/venus_sketch_label"
+        style="@style/sketchPlanetTextLabelStyle"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="70dp" >
 
-         <TextView
-             style="@style/SketchTextStyle"
-             android:text="@string/venus" />
-     </RelativeLayout>
+        <TextView
+            style="@style/SketchTextStyle"
+            android:text="@string/venus" />
+    </RelativeLayout>
 
-     <RelativeLayout
-         android:id="@+id/pluto_sketch_label"
-         style="@style/sketchPlanetTextLabelStyle"
-         android:layout_alignLeft="@+id/venus_sketch_label"
-         android:layout_below="@+id/mercury_sketch_label" >
+    <RelativeLayout
+        android:id="@+id/pluto_sketch_label"
+        style="@style/sketchPlanetTextLabelStyle" 
+		android:layout_marginLeft="10dp"
+        android:layout_marginTop="130dp" >
+        <TextView
+            style="@style/SketchTextStyle"
+            android:text="@string/pluto" />
+    </RelativeLayout>
 
-         <TextView
-             style="@style/SketchTextStyle"
-             android:text="@string/pluto" />
-     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/neptune_sketch_label"
+        style="@style/sketchPlanetTextLabelStyle"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="190dp" >
 
-     <RelativeLayout
-         android:id="@+id/neptune_sketch_label"
-         style="@style/sketchPlanetTextLabelStyle"
-         android:layout_above="@+id/pluto_sketch_label"
-         android:layout_marginLeft="55dp"
-         android:layout_toRightOf="@+id/pluto_sketch_label" >
+        <TextView
+            style="@style/SketchTextStyle"
+            android:text="@string/neptune" />
+    </RelativeLayout>
 
-         <TextView
-             style="@style/SketchTextStyle"
-             android:text="@string/neptune" />
-     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/uranus_sketch_label"
+        style="@style/sketchPlanetTextLabelStyle"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="250dp" >
 
-     <RelativeLayout
-         android:id="@+id/uranus_sketch_label"
-         style="@style/sketchPlanetTextLabelStyle"
-         android:layout_above="@+id/venus_sketch_label"
-         android:layout_alignLeft="@+id/neptune_sketch_label" >
+        <TextView
+            style="@style/SketchTextStyle"
+            android:text="@string/uranus" />
+    </RelativeLayout>
 
-         <TextView
-             style="@style/SketchTextStyle"
-             android:text="@string/uranus" />
-     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/jupiter_sketch_label"
+        style="@style/sketchPlanetTextLabelStyle"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="310dp" >
 
-     <RelativeLayout
-         android:id="@+id/jupiter_sketch_label"
-         style="@style/sketchPlanetTextLabelStyle"
-         android:layout_below="@+id/pluto_sketch_label"
-         android:layout_toRightOf="@+id/pluto_sketch_label" >
+        <TextView
+            style="@style/SketchTextStyle"
+            android:text="@string/jupiter" />
+    </RelativeLayout>
 
-         <TextView
-             style="@style/SketchTextStyle"
-             android:text="@string/jupiter" />
-     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/mars_sketch_label"
+        style="@style/sketchPlanetTextLabelStyle"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="370dp" >
 
-     <RelativeLayout
-         android:id="@+id/mars_sketch_label"
-         style="@style/sketchPlanetTextLabelStyle"
-         android:layout_centerVertical="true"
-         android:layout_toLeftOf="@+id/venus_sketch_label" >
+        <TextView
+            style="@style/SketchTextStyle"
+            android:text="@string/mars" />
+    </RelativeLayout>
 
-         <TextView
-             style="@style/SketchTextStyle"
-             android:text="@string/mars" />
-     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/earth_sketch_label"
+        style="@style/sketchPlanetTextLabelStyle"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="430dp" >
 
-     <RelativeLayout
-         android:id="@+id/earth_sketch_label"
-         style="@style/sketchPlanetTextLabelStyle"
-         android:layout_above="@+id/mercury_sketch_label"
-         android:layout_alignLeft="@+id/mercury_sketch_label"
-         android:layout_marginLeft="144dp" >
+        <TextView
+            style="@style/SketchTextStyle"
+            android:text="@string/earth" />
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/saturn_sketch_label"
+        style="@style/sketchPlanetTextLabelStyle"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="490dp">
+         
 
-         <TextView
-             style="@style/SketchTextStyle"
-             android:text="@string/earth" />
-     </RelativeLayout>
+        <TextView
+            style="@style/SketchTextStyle"
+            android:text="@string/saturn" />
+    </RelativeLayout>
 
-     <RelativeLayout
-         android:id="@+id/saturn_sketch_label"
-         style="@style/sketchPlanetTextLabelStyle"
-         android:layout_below="@+id/mars_sketch_label"
-         android:layout_marginRight="26dp"
-         android:layout_marginTop="72dp"
-         android:layout_toLeftOf="@+id/uranus_sketch_label" >
-
-         <TextView
-             style="@style/SketchTextStyle"
-             android:text="@string/saturn" />
-     </RelativeLayout>
-          
-</RelativeLayout>
+</FrameLayout>

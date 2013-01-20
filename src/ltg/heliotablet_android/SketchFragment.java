@@ -1,26 +1,17 @@
 package ltg.heliotablet_android;
 
-import android.content.ClipData;
-import android.content.ClipDescription;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.DragShadowBuilder;
-import android.view.View.OnDragListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.FrameLayout;
 
 public class SketchFragment extends Fragment {
+
+	int dx;
+	int dy;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,61 +20,46 @@ public class SketchFragment extends Fragment {
 		View view = inflater
 				.inflate(R.layout.sketch_activity, container, false);
 		// Draggable colored circles
-		RelativeLayout planetColorsView = (RelativeLayout) view
+		FrameLayout sketchView = (FrameLayout) view
 				.findViewById(R.id.planetSketchView);
 
-		// get all the colors and the
-		int childCount = planetColorsView.getChildCount();
+		int childCount = sketchView.getChildCount();
 		for (int i = 0; i < childCount; i++) {
-			View sketchItem = planetColorsView.getChildAt(i);
-			sketchItem.setOnTouchListener(new SketchTouchListener());
-//			sketchItem.setOnDragListener(new SketchDragListener());
-		}
+			View sketchItem = sketchView.getChildAt(i);
+			sketchItem.setOnTouchListener(new View.OnTouchListener() {
 
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					drag(event, v);
+					return true;
+				}
+			});
+		}
 		return view;
 	}
 
-	private final class SketchTouchListener implements OnTouchListener {
-		public boolean onTouch(View view, MotionEvent motionEvent) {
-			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-				ClipData data = ClipData.newPlainText("", "");
-				DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
-						view);
-				view.startDrag(data, shadowBuilder, view, 0);
-				view.setVisibility(View.VISIBLE);
-				return true;
-			} else {
-				return false;
-			}
-		}
-	}
 
-	class SketchDragListener implements OnDragListener {
+	public void drag(MotionEvent event, View v) {
 
-		@Override
-		public boolean onDrag(View v, DragEvent event) {
-			switch (event.getAction()) {
-			case DragEvent.ACTION_DRAG_STARTED:
-				break;
-			case DragEvent.ACTION_DRAG_ENTERED:
-				break;
-			case DragEvent.ACTION_DRAG_EXITED:
-				break;
-			case DragEvent.ACTION_DROP:
-				break;
-			case DragEvent.ACTION_DRAG_ENDED:
+		FrameLayout.LayoutParams params = (android.widget.FrameLayout.LayoutParams) v
+				.getLayoutParams();
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN:
+			dx = (int) event.getX();
+			dy = (int) event.getY();
+			break;
 
-				float x = event.getX();
-				float y = event.getY();
-				
-		        View view = (View) event.getLocalState();
-		        view.setX(x);
-		        view.setY(y);
-
-			default:
-				break;
-			}
-			return true;
+		case MotionEvent.ACTION_MOVE:
+			int x = (int) event.getX();
+			int y = (int) event.getY();
+			FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) v
+					.getLayoutParams();
+			int left = lp.leftMargin + (x - dx);
+			int top = lp.topMargin + (y - dy);
+			lp.leftMargin = left;
+			lp.topMargin = top;
+			v.setLayoutParams(lp);
+			break;
 		}
 	}
 
