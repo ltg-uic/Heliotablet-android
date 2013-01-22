@@ -19,8 +19,11 @@ import android.view.View.DragShadowBuilder;
 import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class TheoryFragment extends Fragment {
 	
@@ -54,16 +57,21 @@ public class TheoryFragment extends Fragment {
 	}
 	
 	 private final class MyTouchListener implements OnTouchListener {
-		    public boolean onTouch(View view, MotionEvent motionEvent) {
-		      if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-		        ClipData data = ClipData.newPlainText("", "");
-		        DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-		        view.startDrag(data, shadowBuilder, view, 0);
-		        view.setVisibility(View.INVISIBLE);
-		        return true;
-		      } else {
-		        return false;
-		      }
+		    public boolean onTouch(View view, MotionEvent event) {
+		    	
+		    	switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					ClipData data = ClipData.newPlainText("", "");
+			        DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+			        view.startDrag(data, shadowBuilder, view, 0);
+			        view.setVisibility(View.INVISIBLE);
+					break;
+
+				case MotionEvent.ACTION_UP:
+			        view.setVisibility(View.VISIBLE);
+					break;
+				}	
+		    	return true;
 		    }
 		  }
 	 
@@ -71,7 +79,7 @@ public class TheoryFragment extends Fragment {
 	 class MyDragListener implements OnDragListener {
 		   
 		    @Override
-		    public boolean onDrag(View v, DragEvent event) {
+		    public boolean onDrag(View targetView, DragEvent event) {
 		      int action = event.getAction();
 		      switch (event.getAction()) {
 		      case DragEvent.ACTION_DRAG_STARTED:
@@ -82,13 +90,35 @@ public class TheoryFragment extends Fragment {
 		      case DragEvent.ACTION_DRAG_EXITED:
 		        break;
 		      case DragEvent.ACTION_DROP:
+		    	  
+		    	  
+		    	  
 		        // Dropped, reassign View to ViewGroup
-		        View view = (View) event.getLocalState();
-		        ViewGroup owner = (ViewGroup) view.getParent();
-		        owner.removeView(view);
-		        LinearLayout container = (LinearLayout) v;
-		        container.addView(view);
-		        view.setVisibility(View.VISIBLE);
+		        View dragged = (View) event.getLocalState();
+		        ViewGroup sourceView = (ViewGroup) dragged.getParent();
+		        
+		        if( targetView.equals(sourceView) ) {
+		        	
+		        } else {
+		        sourceView.removeView(dragged);
+		        LinearLayout container = (LinearLayout) targetView;
+		        LayoutParams layoutParams = dragged.getLayoutParams();
+		        layoutParams.height = 65;
+		        layoutParams.width = 65;
+		        
+		        RelativeLayout rel = (RelativeLayout) dragged;
+		        
+		        int childCount = rel.getChildCount();
+				for(int i = 0; i < childCount; i++) {
+				    TextView textView = (TextView) rel.getChildAt(i);
+				    textView.setTextSize(15);
+				    // do whatever you want to with the view
+				}
+		        
+		        
+		        container.addView(dragged);
+		        dragged.setVisibility(View.VISIBLE);
+		        }
 		        break;
 		      case DragEvent.ACTION_DRAG_ENDED:
 		      default:

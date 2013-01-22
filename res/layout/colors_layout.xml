@@ -3,31 +3,190 @@
     android:id="@+id/planetColorsView"
     android:layout_width="400dp"
     android:layout_height="match_parent"
-    android:background="@color/Aquamarine" >
-
-    <View
-        android:id="@+id/planetView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="57dp"
-        android:background="@drawable/planet_drag" />
+    android:background="@color/PlanetTheoryCircleAreaColor" >
 
     <RelativeLayout
-        android:id="@+id/planet1"
-        style="@style/planetColor"
-        android:background="@drawable/planet_drag">
+        android:id="@+id/redTheoryPlanet"
+        style="@style/theoryPlanetView"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="120dp"
+        android:background="@drawable/red_planet" >
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="Small Text"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:id="@+id/colorLabelText"
+            style="@style/theoryPlanetColorText"
+            android:text="@string/red" />
 
+        <TextView
+            android:id="@+id/reasonLabelText"
+            style="@style/theoryReasonText"
+            android:text="@string/blank_space" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/yellowTheoryPlanet"
+        style="@style/theoryPlanetView"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/redTheoryPlanet"
+        android:layout_marginRight="51dp"
+        android:background="@drawable/yellow_planet" >
+
+        <TextView
+            android:id="@+id/colorLabelText"
+            style="@style/theoryPlanetColorText"
+            android:text="@string/yellow"
+            android:textColor="@color/Black" />
+
+        <TextView
+            android:id="@+id/reasonLabelText"
+            style="@style/theoryReasonText"
+            android:text="@string/blank_space" 
+            android:textColor="@color/Black"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/blueTheoryPlanet"
+        style="@style/theoryPlanetView"
+        android:layout_alignLeft="@+id/yellowTheoryPlanet"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="46dp"
+        android:background="@drawable/blue_planet" >
+
+        <TextView
+            android:id="@+id/colorLabelText"
+            style="@style/theoryPlanetColorText"
+            android:text="@string/blue" />
+
+        <TextView
+            android:id="@+id/reasonLabelText"
+            style="@style/theoryReasonText"
+            android:text="@string/blank_space" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/brownTheoryPlanet"
+        style="@style/theoryPlanetView"
+        android:layout_below="@+id/brownTheoryPlanet"
+        android:layout_marginTop="21dp"
+        android:background="@drawable/brown_planet" >
+
+        <TextView
+            android:id="@+id/colorLabelText"
+            style="@style/theoryPlanetColorText"
+            android:text="@string/brown" />
+
+        <TextView
+            android:id="@+id/reasonLabelText"
+            style="@style/theoryReasonText"
+            android:text="@string/blank_space" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/purpleTheoryPlanet"
+        style="@style/theoryPlanetView"
+        android:layout_alignLeft="@+id/redTheoryPlanet"
+        android:layout_below="@+id/orangeTheoryPlanet"
+        android:layout_marginTop="23dp"
+        android:background="@drawable/purple_planet" >
+
+        <TextView
+            android:id="@+id/colorLabelText"
+            style="@style/theoryPlanetColorText"
+            android:text="@string/purple" />
+
+        <TextView
+            android:id="@+id/reasonLabelText"
+            style="@style/theoryReasonText"
+            android:text="@string/blank_space" />
+    </RelativeLayout>
+
+     <RelativeLayout
+         android:id="@+id/grayTheoryPlanet"
+         style="@style/theoryPlanetView"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/redTheoryPlanet"
+         android:layout_marginTop="22dp"
+         android:background="@drawable/gray_planet" >
+
+         <TextView
+             android:id="@+id/colorLabelText"
+             style="@style/theoryPlanetColorText"
+             android:text="@string/gray"
+             android:textColor="@color/Black" />
+
+         <TextView
+             android:id="@+id/reasonLabelText"
+             style="@style/theoryReasonText"
+             android:text="@string/blank_space"
+             android:textColor="@color/Black" 
+             
+             />
+     </RelativeLayout>
+
+     <RelativeLayout
+         android:id="@+id/orangeTheoryPlanet"
+         style="@style/theoryPlanetView"
+         android:layout_below="@+id/grayTheoryPlanet"
+         android:layout_toLeftOf="@+id/blueTheoryPlanet"
+         android:background="@drawable/orange_planet" >
+
+         <TextView
+             android:id="@+id/colorLabelText"
+             style="@style/theoryPlanetColorText"
+             android:text="@string/orange" />
+
+         <TextView
+             android:id="@+id/reasonLabelText"
+             style="@style/theoryReasonText"
+             android:text="@string/blank_space" />
+     </RelativeLayout>
+
+     <RelativeLayout
+         android:id="@+id/greenTheoryPlanet"
+         style="@style/theoryPlanetView"
+         android:layout_alignLeft="@+id/yellowTheoryPlanet"
+         android:layout_below="@+id/yellowTheoryPlanet"
+         android:layout_marginLeft="22dp"
+         android:layout_marginTop="41dp"
+         android:background="@drawable/green_planet" >
+
+         <TextView
+             android:id="@+id/colorLabelText"
+             style="@style/theoryPlanetColorText"
+             android:text="@string/green" />
+
+         <TextView
+             android:id="@+id/reasonLabelText"
+             style="@style/theoryReasonText"
+             android:text="@string/blank_space" />
+     </RelativeLayout>
+
+     <RelativeLayout
+         android:id="@+id/whiteTheoryPlanet"
+         style="@style/theoryPlanetView"
+         android:layout_alignBottom="@+id/purpleTheoryPlanet"
+         android:layout_alignRight="@+id/greenTheoryPlanet"
+         android:layout_marginBottom="50dp"
+         android:background="@drawable/white_planet" >
+
+         <TextView
+             android:id="@+id/colorLabelText"
+             style="@style/theoryPlanetColorText"
+             android:text="@string/white"
+         	  
+             android:textColor="@color/Black" 
+             
+             />
+
+         <TextView
+             android:id="@+id/reasonLabelText"
+             style="@style/theoryReasonText"
+             android:text="@string/blank_space"
+           
+             android:textColor="@color/Black" />
+     </RelativeLayout>
+
+ 
+    
 </RelativeLayout>

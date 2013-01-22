@@ -39,4 +39,5 @@
 	<string name="brown">BROWN</string>
 	<string name="orange">ORANGE</string>
 	<string name="gray">GRAY</string>
+	<string name="blank_space">"1"</string>
 </resources>

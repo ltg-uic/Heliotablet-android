@@ -270,7 +270,8 @@
         android:id="@+id/earthView"
         style="@style/theoryPlanetTableGridStyle"
         android:layout_column="3"
-        android:layout_row="7" />
+        android:layout_row="7"
+        android:padding="3dp" />
 
     <View
         android:id="@+id/marsView"
