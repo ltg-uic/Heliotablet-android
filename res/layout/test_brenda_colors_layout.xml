@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/planetColorsView"
+    android:layout_width="400dp"
+    android:layout_height="match_parent"
+    android:background="@color/GrayBlue" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/planet1"
+        android:layout_below="@+id/planet1"
+        android:layout_marginTop="123dp"
+        android:drawable="@drawable/planet_drag"
+        android:text="TextView" />
+
+   <View
+       android:id="@+id/view9"
+       android:layout_width="100dp"
+       android:layout_height="100dp"
+       android:layout_alignBottom="@+id/view2"
+       android:layout_alignLeft="@+id/view6"
+       android:layout_marginBottom="16dp"
+       android:layout_marginLeft="28dp"
+       android:background="@drawable/pluto_shape" />
+
+   <View
+       android:id="@+id/view8"
+       android:layout_width="100dp"
+       android:layout_height="100dp"
+       android:layout_above="@+id/view7"
+       android:layout_toRightOf="@+id/view7"
+       android:background="@drawable/neptune_shape" />
+
+   <View
+       android:id="@+id/view1"
+       android:layout_width="100dp"
+       android:layout_height="100dp"
+       android:layout_alignParentTop="true"
+       android:layout_toRightOf="@+id/textView1"
+       android:background="@drawable/mercury_shape"/>
+
+   <View
+       android:id="@+id/view6"
+       android:layout_width="100dp"
+       android:layout_height="100dp"
+       android:layout_alignParentTop="true"
+       android:layout_marginLeft="15dp"
+       android:layout_marginTop="18dp"
+       android:layout_toRightOf="@+id/view1"
+       android:background="@drawable/saturn_shape" />
+
+   <View
+       android:id="@+id/view2"
+       android:layout_width="100dp"
+       android:layout_height="100dp"
+       android:layout_alignParentBottom="true"
+       android:layout_toLeftOf="@+id/view7"
+       android:background="@drawable/venus_shape" />
+
+   <View
+       android:id="@+id/view4"
+       android:layout_width="100dp"
+       android:layout_height="100dp"
+       android:layout_above="@+id/view7"
+       android:layout_toRightOf="@+id/view5"
+       android:background="@drawable/mars_shape" />
+
+   <View
+       android:id="@+id/view3"
+       android:layout_width="100dp"
+       android:layout_height="100dp"
+       android:layout_alignLeft="@+id/view5"
+       android:layout_below="@+id/view1"
+       android:layout_marginLeft="18dp"
+       android:background="@drawable/earth_shape" />
+
+   <View
+       android:id="@+id/view7"
+       android:layout_width="100dp"
+       android:layout_height="100dp"
+       android:layout_above="@+id/view2"
+       android:layout_toRightOf="@+id/view5"
+       android:background="@drawable/uranus_shape" />
+
+   <RelativeLayout
+       android:id="@+id/view5"
+       style="@style/planetColor"
+       android:layout_alignParentLeft="true"
+       android:layout_below="@+id/view3"
+       android:layout_marginLeft="17dp"
+       android:background="@drawable/jupiter_shape" >
+   </RelativeLayout>
+   
+</RelativeLayout>

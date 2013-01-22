@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+ <color name="PlanetRed">#ED1C24</color>
+ <color name="PlanetBrown">#A0522D</color>
+ <color name="PlanetPink">#F800D0</color>
+ <color name="PlanetGray">#8A8A8A</color>
+ <color name="PlanetGreen">#5DBA47</color>
+ <color name="PlanetYellow">#FFFF00</color>
+ <color name="PlanetOrange">#FF6600</color>
+ <color name="PlanetBlue">#66C8FF</color>
+ <color name="PlanetPurple">#6900DD</color>
+ <color name="PlanetWhite">#FF6600</color>
  <color name="PlanetTheoryTableColor">#b3b292</color>
  <color name="PlanetTheoryTableColor2">#efefef</color>
  <color name="PlanetTheoryCircleAreaColor">#b49854</color>
