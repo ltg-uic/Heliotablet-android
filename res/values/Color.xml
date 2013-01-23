@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+ <color name="BG_00">#ED1C24</color>
+ <color name="BG_01">#CBDFA3</color>
+ <color name="BG_02">#ABB886</color>
  <color name="PlanetRed">#ED1C24</color>
  <color name="PlanetBrown">#A0522D</color>
  <color name="PlanetPink">#F800D0</color>
