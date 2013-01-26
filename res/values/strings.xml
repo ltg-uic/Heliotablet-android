@@ -8,36 +8,36 @@
     <string name="title_section1">Theories</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">XMPP</string>
-
     <string name="password">Password</string>
     <string name="label">XMPP Service</string>
     <string name="authenticator_activity_username_label">Username</string>
     <string name="authenticator_activity_password_label">Password</string>
     <string name="authenticator_activity_ok_button_label">Login</string>
-	<string name="authenticator_activity_try_login">Login</string>
-	<string name="login_title">XMPP Login</string>
-	<string name="planets">Planets</string>
-	<string name="theories">Theories</string>
-	<string name="venus">Venus</string>
-	<string name="saturn">Saturn</string>
-	<string name="colors">Colors</string>
-	<string name="pluto">Pluto</string>
-	<string name="mars">Mars</string>
-	<string name="earth">Earth</string>
-	<string name="mercury">Mercury</string>
-	<string name="jupiter">Jupiter</string>
-	<string name="uranus">Uranus</string>
-	<string name="neptune">Neptune</string>
-	
-	<!-- Colors  -->
-	<string name="red">RED</string>
-	<string name="blue">BLUE</string>
-	<string name="yellow">YELLOW</string>
-	<string name="green">GREEN</string>
-	<string name="white">WHITE</string>
-	<string name="purple">PURPLE</string>
-	<string name="brown">BROWN</string>
-	<string name="orange">ORANGE</string>
-	<string name="gray">GRAY</string>
-	<string name="blank_space">"1"</string>
+    <string name="authenticator_activity_try_login">Login</string>
+    <string name="login_title">XMPP Login</string>
+    <string name="planets">Planets</string>
+    <string name="theories">Theories</string>
+    <string name="venus">Venus</string>
+    <string name="saturn">Saturn</string>
+    <string name="colors">Colors</string>
+    <string name="pluto">Pluto</string>
+    <string name="mars">Mars</string>
+    <string name="earth">Earth</string>
+    <string name="mercury">Mercury</string>
+    <string name="jupiter">Jupiter</string>
+    <string name="uranus">Uranus</string>
+    <string name="neptune">Neptune</string>
+
+    <!-- Colors -->
+    <string name="red">RED</string>
+    <string name="blue">BLUE</string>
+    <string name="yellow">YELLOW</string>
+    <string name="green">GREEN</string>
+    <string name="white">WHITE</string>
+    <string name="purple">PURPLE</string>
+    <string name="brown">BROWN</string>
+    <string name="orange">ORANGE</string>
+    <string name="gray">GRAY</string>
+    <string name="blank_space">" "</string>
+  
 </resources>

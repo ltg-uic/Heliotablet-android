@@ -3,17 +3,7 @@
     android:id="@+id/planetColorsView"
     android:layout_width="400dp"
     android:layout_height="match_parent"
-    android:background="@color/GrayBlue" >
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/planet1"
-        android:layout_below="@+id/planet1"
-        android:layout_marginTop="123dp"
-        android:drawable="@drawable/planet_drag"
-        android:text="TextView" />
+    android:background="@color/Gray" >
 
    <View
        android:id="@+id/view9"
@@ -38,8 +28,7 @@
        android:layout_width="100dp"
        android:layout_height="100dp"
        android:layout_alignParentTop="true"
-       android:layout_toRightOf="@+id/textView1"
-       android:background="@drawable/mercury_shape"/>
+       android:background="@drawable/mercury_shape" />
 
    <View
        android:id="@+id/view6"

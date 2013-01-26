@@ -1,12 +1,9 @@
 package ltg.heliotablet_android;
 
+
+import ltg.heliotablet_android.view.PopoverView;
+import ltg.heliotablet_android.view.PopoverView.PopoverViewDelegate;
 import android.content.ClipData;
-import android.content.ClipDescription;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -25,7 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class TheoryFragment extends Fragment {
+public class CopyOfTheoryFragment extends Fragment implements PopoverViewDelegate {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,23 +30,23 @@ public class TheoryFragment extends Fragment {
 
 		View view = inflater.inflate(R.layout.theories_activity_vertical,
 				container, false);
-		View earthView = view.findViewById(R.id.earthView);
-		// Draggable colored circles
-		FrameLayout planetColorsView = (FrameLayout) view
-				.findViewById(R.id.colors_include);
-
-		earthView.setOnDragListener(new MyDragListener());
-		// earthView.setOnTouchListener(new MyTouchListener());
-
-		// get all the colors and the
-		int childCount = planetColorsView.getChildCount();
-		for (int i = 0; i < childCount; i++) {
-			View color = planetColorsView.getChildAt(i);
-			color.setOnTouchListener(new MyTouchListener());
-			color.setOnDragListener(new MyDragListener());
-			System.out.println(color);
-			// do whatever you want to with the view
-		}
+//		View earthView = view.findViewById(R.id.earthView);
+//		// Draggable colored circles
+//		FrameLayout planetColorsView = (FrameLayout) view
+//				.findViewById(R.id.colors_include);
+//
+//		earthView.setOnDragListener(new MyDragListener());
+//		// earthView.setOnTouchListener(new MyTouchListener());
+//
+//		// get all the colors and the
+//		int childCount = planetColorsView.getChildCount();
+//		for (int i = 0; i < childCount; i++) {
+//			View color = planetColorsView.getChildAt(i);
+//			color.setOnTouchListener(new MyTouchListener());
+//			color.setOnDragListener(new MyDragListener());
+//			System.out.println(color);
+//			// do whatever you want to with the view
+//		}
 
 		return view;
 	}
@@ -112,7 +109,7 @@ public class TheoryFragment extends Fragment {
 					}
 
 					
-					final GestureDetector gestureDetector = new GestureDetector(TheoryFragment.this.getActivity(), new GestureDetector.SimpleOnGestureListener() {
+					final GestureDetector gestureDetector = new GestureDetector(CopyOfTheoryFragment.this.getActivity(), new GestureDetector.SimpleOnGestureListener() {
 			            @Override
 			            public boolean onDoubleTap(MotionEvent e) {
 			                Log.i("ONDOUBLE", "On double");
@@ -124,6 +121,13 @@ public class TheoryFragment extends Fragment {
 					        @Override
 					        public boolean onTouch(View v, MotionEvent event) {
 					        	gestureDetector.onTouchEvent(event);
+					        	
+//					        	RelativeLayout rootView = (RelativeLayout) ((View) v.getParent()).findViewById(R.layout.theories_activity_vertical);
+//					        	
+//					        	PopoverView popoverView = new PopoverView(TheoryFragment.this.getActivity(), R.layout.popover_showed_view);
+//					    		popoverView.setContentSizeForViewInPopover(new Point(320, 340));
+//					    		//popoverView.setDelegate(TheoryFragment.this.getActivity().g);
+//					    		popoverView.showPopoverFromRectInViewGroup(rootView, PopoverView.getFrameForView(v), PopoverView.PopoverArrowDirectionAny, true);
 					            return true;
 					        }
 					    });
@@ -138,6 +142,30 @@ public class TheoryFragment extends Fragment {
 			}
 			return true;
 		}
+	}
+
+	@Override
+	public void popoverViewWillShow(PopoverView view) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void popoverViewDidShow(PopoverView view) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void popoverViewWillDismiss(PopoverView view) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void popoverViewDidDismiss(PopoverView view) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
