@@ -39,5 +39,9 @@
     <string name="orange">ORANGE</string>
     <string name="gray">GRAY</string>
     <string name="blank_space">" "</string>
-  
+    <string name="lorem_ipsum">This is earth because it is awesome.</string>
+   <string name="action_previous">Previous</string>
+   <string name="action_next">Next</string>
+   <string name="action_finish">Finish</string>
+   
 </resources>
