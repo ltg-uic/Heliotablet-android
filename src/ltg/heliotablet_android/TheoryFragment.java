@@ -34,8 +34,6 @@ public class TheoryFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
-
 		mainLayoutView = inflater.inflate(R.layout.theories_activity_vertical, container, false);
 		viewPagerLayout = (RelativeLayout) inflater.inflate(R.layout.activity_screen_slide, container, false);
 		View earthView = mainLayoutView.findViewById(R.id.earthView);
@@ -44,6 +42,21 @@ public class TheoryFragment extends Fragment {
 		//Draggable colored circles
 		FrameLayout planetColorsView = (FrameLayout) mainLayoutView.findViewById(R.id.colors_include);
 		
+		earthView.setOnDragListener(new TargetViewDragListener());
+		neptuneView.setOnDragListener(new TargetViewDragListener());
+		mercuryView.setOnDragListener(new TargetViewDragListener());
+		//earthView.setOnTouchListener(new MyTouchListener());
+		
+		//get all the colors and the
+		int childCount = planetColorsView.getChildCount();
+		for(int i = 0; i < childCount; i++) {
+		    View color = planetColorsView.getChildAt(i);
+		    color.setOnTouchListener(new CustomViewTouchListener());
+//		    color.setOnDragListener(new MyDragListener());
+		    System.out.println(color);
+		    // do whatever you want to with the view
+		}
+				
 		
 		
 		
@@ -135,21 +148,7 @@ public class TheoryFragment extends Fragment {
 		});
 		
 		
-		earthView.setOnDragListener(new TargetViewDragListener());
-		neptuneView.setOnDragListener(new TargetViewDragListener());
-		mercuryView.setOnDragListener(new TargetViewDragListener());
-		//earthView.setOnTouchListener(new MyTouchListener());
-		
-		//get all the colors and the
-		int childCount = planetColorsView.getChildCount();
-		for(int i = 0; i < childCount; i++) {
-		    View color = planetColorsView.getChildAt(i);
-		    color.setOnTouchListener(new CustomViewTouchListener());
-//		    color.setOnDragListener(new MyDragListener());
-		    System.out.println(color);
-		    // do whatever you want to with the view
-		}
-				
+	
 		return mainLayoutView;
 	}
 
