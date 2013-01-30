@@ -70,28 +70,28 @@ public class MainActivity extends FragmentActivity implements
 		// When the given tab is selected, switch to the corresponding page in
 		// the ViewPager.
 		int position = tab.getPosition();
-//		if( position == 0) {
-//			Fragment fragment = new TheoryFragment();
-//			Bundle args = new Bundle();
-//			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
-//			fragment.setArguments(args);
-//			getSupportFragmentManager().beginTransaction()
-//			.replace(R.id.container, fragment).commit();
-//		} else if( position == 2) {
-//				Fragment fragment = new SketchFragment();
-//				Bundle args = new Bundle();
-//				args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
-//				fragment.setArguments(args);
-//				getSupportFragmentManager().beginTransaction()
-//				.replace(R.id.container, fragment).commit();
-//		} else {
+		if( position == 0) {
+			Fragment fragment = new TheoryFragment();
+			Bundle args = new Bundle();
+			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+			fragment.setArguments(args);
+			getSupportFragmentManager().beginTransaction()
+			.replace(R.id.container, fragment).commit();
+		} else if( position == 2) {
+				Fragment fragment = new SketchFragment();
+				Bundle args = new Bundle();
+				args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+				fragment.setArguments(args);
+				getSupportFragmentManager().beginTransaction()
+				.replace(R.id.container, fragment).commit();
+		} else {
 			Fragment fragment = new DummySectionFragment();
 			Bundle args = new Bundle();
 			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
 			fragment.setArguments(args);
 			getSupportFragmentManager().beginTransaction()
 			.replace(R.id.container, fragment).commit();
-//		}
+		}
 	}
 
 	@Override

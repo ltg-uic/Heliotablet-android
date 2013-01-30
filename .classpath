@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="multitouch/TouchActivity.java|ltg/heliotablet_android/view/CircleView.java|ltg/heliotablet_android/view/PopoverView.java|ltg/heliotablet_android/CopyOfTheoryFragment.java" kind="src" path="src"/>
+	<classpathentry excluding="multitouch/TouchActivity.java|ltg/heliotablet_android/CopyOfTheoryFragment.java" kind="src" path="src"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="src" path="gen"/>
