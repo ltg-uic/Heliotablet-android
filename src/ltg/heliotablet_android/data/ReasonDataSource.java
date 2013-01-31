@@ -20,7 +20,7 @@ public class ReasonDataSource {
 			ReasonDBOpenHelper.COLUMN_TYPE, ReasonDBOpenHelper.COLUMN_ANCHOR,
 			ReasonDBOpenHelper.COLUMN_LAST_TIMESTAMP,
 			ReasonDBOpenHelper.COLUMN_ORIGIN,
-			ReasonDBOpenHelper.COLUMN_REASON_TEXT };
+			ReasonDBOpenHelper.COLUMN_REASON_TEXT, ReasonDBOpenHelper.COLUMN_FLAG };
 	private String[] reasonImageColumns = { ReasonDBOpenHelper.COLUMN_ID,
 			ReasonDBOpenHelper.COLUMN_IMAGE_RAW, ReasonDBOpenHelper.COLUMN_URL,
 			ReasonDBOpenHelper.COLUMN_REASON_ID };
@@ -38,30 +38,41 @@ public class ReasonDataSource {
 				reason.getReasonText());
 		values.put(ReasonDBOpenHelper.COLUMN_LAST_TIMESTAMP, reason
 				.getLastTimestamp().toString());
+		values.put(ReasonDBOpenHelper.COLUMN_FLAG, reason.getFlag());
 
 		long reasonId = database.insert(ReasonDBOpenHelper.TABLE_REASON, null,
 				values);
 		return reasonId;
 	}
 
-	public ReasonImage createImageReason(ReasonImage reasonImage, Long reasonId) {
-
+	public ReasonImage createImageReason(ReasonImage reasonImage) {
+		ContentValues values = new ContentValues();
+		values.put(ReasonDBOpenHelper.COLUMN_CREATION_TIME, reasonImage.getCreationTime().toString());
+		values.put(ReasonDBOpenHelper.COLUMN_URL, reasonImage.getUrl());
+		values.put(ReasonDBOpenHelper.COLUMN_REASON_ID, reasonImage.getReasonId());
 		return null;
 	}
 
 	public void deleteReason(Long reasonId) {
-
+		database.delete(ReasonDBOpenHelper.TABLE_REASON, ReasonDBOpenHelper.COLUMN_ID
+		        + " = " + reasonId, null);
 	}
 
 	public void deleteReasonImage(Long reasonImageId) {
-
+		database.delete(ReasonDBOpenHelper.TABLE_REASON_IMAGE, ReasonDBOpenHelper.COLUMN_ID
+		        + " = " + reasonImageId, null);
 	}
 
-	public List<Reason> getReasonsByTypeAndAnchor(String type, String anchor){
+	public void deleteReasonImageByReasonId(Long reasonId) {
+		database.delete(ReasonDBOpenHelper.TABLE_REASON_IMAGE, ReasonDBOpenHelper.COLUMN_REASON_ID
+		        + " = " + reasonId, null);
+	}
+	
+	public List<Reason> getReasonsByTypeAndAnchorAndFlag(String type, String anchor, String flag){
 		
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 		qb.setTables(ReasonDBOpenHelper.TABLE_REASON);
-		qb.appendWhere(ReasonDBOpenHelper.COLUMN_TYPE +" = "+type+" AND " + ReasonDBOpenHelper.COLUMN_ANCHOR +" = "+ anchor );
+		qb.appendWhere(ReasonDBOpenHelper.COLUMN_TYPE +" = "+type+" AND " + ReasonDBOpenHelper.COLUMN_ANCHOR +" = "+ anchor +" AND " + ReasonDBOpenHelper.COLUMN_FLAG +" = "+ flag);
 		Cursor c = qb.query(database, null, null, null, null, null, null);
         try {
       
@@ -75,6 +86,7 @@ public class ReasonDataSource {
                 		Reason reason = new Reason();
                 		reason.setId(c.getLong(c.getColumnIndex(ReasonDBOpenHelper.COLUMN_ID)));
                 		reason.setAnchor(c.getString(c.getColumnIndex(ReasonDBOpenHelper.COLUMN_ANCHOR)));
+                		reason.setFlag(c.getString(c.getColumnIndex(ReasonDBOpenHelper.COLUMN_FLAG)));
                 		reason.setType(c.getString(c.getColumnIndex(ReasonDBOpenHelper.COLUMN_TYPE)));
                 		reason.setReasonText(c.getString(c.getColumnIndex(ReasonDBOpenHelper.COLUMN_REASON_TEXT)));
                 		reason.setOrigin(c.getString(c.getColumnIndex(ReasonDBOpenHelper.COLUMN_ORIGIN)));
@@ -92,10 +104,6 @@ public class ReasonDataSource {
         }
         
         return null;
-	}
-
-	public void getReasonObservationsByAnchor(String anchor) {
-
 	}
 
 	public void open() throws SQLException {

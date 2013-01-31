@@ -4,6 +4,7 @@ package ltg.heliotablet_android.view;
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.view.PopoverView.PopoverViewDelegate;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -17,7 +18,7 @@ import android.widget.RelativeLayout;
 public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 
 	private GestureDetector gestureDetector;
-	
+	private String flag;
 	public CircleView(Context context) {
 		super(context);
 		init();
@@ -25,9 +26,11 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 	
 	public CircleView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.CircleView);
+        this.flag = a.getString(R.styleable.CircleView_flag);
         init();
     }
-
+	
 	private void init() {
 	}
  
@@ -93,5 +96,13 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 	public void popoverViewDidDismiss(PopoverView view) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
 	}
 }

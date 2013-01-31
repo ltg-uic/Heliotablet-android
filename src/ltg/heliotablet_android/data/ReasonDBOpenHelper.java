@@ -22,22 +22,25 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_ORIGIN = "origin";
 	public static final String COLUMN_REASON_TEXT = "reasonText";
 	public static final String COLUMN_ANCHOR = "anchor";
+	public static final String COLUMN_FLAG = "flag";
 
 	// REASON_IMAGE table
 	public static final String COLUMN_IMAGE_RAW = "imageRaw";
 	public static final String COLUMN_URL = "url";
 	public static final String COLUMN_REASON_ID = "reasonId";
+	public static final String COLUMN_CREATION_TIME = "creationTime";
 
 	public static final String CREATE_TABLE_REASON = "CREATE TABLE "
 			+ TABLE_REASON + " (" + COLUMN_ID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_REASON_TEXT
 			+ "  TEXT NOT NULL, " + COLUMN_LAST_TIMESTAMP
 			+ " TIMESTAMP DEFAULT NULL, " + COLUMN_ORIGIN + "  TEXT NOT NULL, "
-			+ COLUMN_TYPE + "  TEXT NOT NULL, " + COLUMN_ANCHOR + "  TEXT NOT NULL );";
+			+ COLUMN_TYPE + "  TEXT NOT NULL, " + COLUMN_ANCHOR + "  TEXT NOT NULL, " + COLUMN_FLAG + " TEXT NOT NULL );";
 	public static final String CREATE_TABLE_REASON_IMAGE = "CREATE TABLE "
 			+ TABLE_REASON_IMAGE + " (" + COLUMN_ID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_IMAGE_RAW
-			+ "  BLOB, " + COLUMN_REASON_ID + "  TEXT NOT NULL, "
+			+ "  BLOB, " + " + COLUMN_CREATION_TIME TIMESTAMP DEFAULT NULL, "
+		     + COLUMN_REASON_ID + "  TEXT NOT NULL, "
 			+ " FOREIGN KEY ("+COLUMN_REASON_ID+") REFERENCES " + TABLE_REASON
 			+ " ("+COLUMN_ID+"));";
 

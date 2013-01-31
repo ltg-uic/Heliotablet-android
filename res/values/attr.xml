@@ -3,4 +3,7 @@
     <declare-styleable name="TheoryPlanetView">
         <attr name="anchor" format="string" />
     </declare-styleable>
+    <declare-styleable name="CircleView">
+        <attr name="flag" format="string" />
+    </declare-styleable>
 </resources>

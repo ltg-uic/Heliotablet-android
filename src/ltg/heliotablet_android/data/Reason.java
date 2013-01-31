@@ -9,29 +9,35 @@ public class Reason {
 	//THEORY OR OBERVATION
 	private String type;
 	
-	//PLANET_NAME OR COLOR
+	//PLANET_NAME OR COLOR that the flag is attached to
 	private String anchor;
+	private String flag;
+	
 	private Timestamp lastTimestamp;
 	private String origin;
 	private String reasonText;
 	
-	public final static String ANCHOR_MERCURY = "MERCURY";
-	public final static String ANCHOR_VENUS = "VENUS";
-	public final static String ANCHOR_EARTH = "EARTH";
-	public final static String ANCHOR_MARS = "MARS";
-	public final static String ANCHOR_SATURN = "SATURN";
-	public final static String ANCHOR_JUPITER = "JUPITER";
-	public final static String ANCHOR_NEPTUNE = "NEPTUNE";
-	public final static String ANCHOR_URANUS = "URANUS";
+	
+	public final static String CONST_MERCURY = "MERCURY";
+	public final static String CONST_VENUS = "VENUS";
+	public final static String CONST_EARTH = "EARTH";
+	public final static String CONST_MARS = "MARS";
+	public final static String CONST_SATURN = "SATURN";
+	public final static String CONST_JUPITER = "JUPITER";
+	public final static String CONST_NEPTUNE = "NEPTUNE";
+	public final static String CONST_URANUS = "URANUS";
 
-	public final static String ANCHOR_RED = "RED";
-	public final static String ANCHOR_ORANGE = "ORANGE";
-	public final static String ANCHOR_BLUE = "BLUE";
-	public final static String ANCHOR_GREEN = "GREEN";
-	public final static String ANCHOR_PINK = "PINK";
-	public final static String ANCHOR_YELLOW = "YELLOW";
-	public final static String ANCHOR_GREY = "GREY";
-	public final static String ANCHOR_BROWN = "BROWN";
+	public final static String CONST_RED = "RED";
+	public final static String CONST_ORANGE = "ORANGE";
+	public final static String CONST_BLUE = "BLUE";
+	public final static String CONST_GREEN = "GREEN";
+	public final static String CONST_PINK = "PINK";
+	public final static String CONST_YELLOW = "YELLOW";
+	public final static String CONST_GREY = "GREY";
+	public final static String CONST_BROWN = "BROWN";
+	
+	public final static String TYPE_THEORY = "THEORY";
+	public final static String TYPE_OBSERVATION = "OBSERVATION";
 	
 	public long getId() {
 		return id;
@@ -79,6 +85,14 @@ public class Reason {
 
 	public void setAnchor(String anchor) {
 		this.anchor = anchor;
+	}
+
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
 	}
 
 }

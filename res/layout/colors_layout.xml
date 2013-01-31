@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:circleView="http://schemas.android.com/apk/res/ltg.heliotablet_android"
     android:id="@+id/planetColorsView"
     android:layout_width="400dp"
     android:layout_height="match_parent"
@@ -11,6 +12,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/earth_shape" 
+        circleView:flag="RED"
         >
 
         <TextView
@@ -25,6 +27,7 @@
         android:layout_marginLeft="130dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/saturn_shape" 
+        circleView:flag="YELLOW"
         
         >
 
@@ -40,7 +43,9 @@
         style="@style/theoryPlanetView"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="130dp"
-        android:background="@drawable/neptune_shape" >
+        android:background="@drawable/neptune_shape" 
+        circleView:flag="BLUE"
+        >
 
         <TextView
             android:id="@+id/neptuneReasonLabelText"
@@ -54,7 +59,9 @@
         style="@style/theoryPlanetView"
         android:layout_marginLeft="135dp"
         android:layout_marginTop="130dp"
-        android:background="@drawable/mercury_shape" >
+        android:background="@drawable/mercury_shape" 
+        circleView:flag="BROWN"
+        >
 
         <TextView
             android:id="@+id/reasonLabelText"
@@ -67,7 +74,9 @@
         style="@style/theoryPlanetView"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="230dp"
-        android:background="@drawable/uranus_shape" >
+        android:background="@drawable/uranus_shape"
+        circleView:flag="ORANGE"
+         >
 
         <TextView
             android:id="@+id/uranusReasonLabelText"
@@ -81,7 +90,9 @@
         style="@style/theoryPlanetView"
         android:layout_marginLeft="130dp"
         android:layout_marginTop="230dp"
-        android:background="@drawable/mars_shape" >
+        android:background="@drawable/mars_shape" 
+        circleView:flag="GRAY"
+        >
 
         <TextView
             android:id="@+id/marsReasonLabelText"
@@ -95,7 +106,9 @@
         style="@style/theoryPlanetView"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="330dp"
-        android:background="@drawable/jupiter_shape" >
+        android:background="@drawable/jupiter_shape" 
+        circleView:flag="GREEN"
+        >
 
         <TextView
             android:id="@+id/jupiterReasonLabelText"
@@ -110,8 +123,11 @@
         style="@style/theoryPlanetView"
         android:layout_marginLeft="120dp"
         android:layout_marginTop="330dp"
-        android:background="@drawable/venus_shape" >
+        android:background="@drawable/venus_shape" 
+        circleView:flag="PINK"
+        >
 
+        
         <TextView
             android:id="@+id/venusReasonLabelText"
             style="@style/theoryReasonText"

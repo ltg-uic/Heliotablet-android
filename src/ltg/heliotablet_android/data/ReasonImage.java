@@ -1,6 +1,7 @@
 package ltg.heliotablet_android.data;
 
 import java.sql.Blob;
+import java.sql.Timestamp;
 
 public class ReasonImage {
 
@@ -8,7 +9,8 @@ public class ReasonImage {
 	private String url;
 	private Long id;
 	private Long reasonId;
-
+	private Timestamp creationTime;
+	
 	public Blob getImageRaw() {
 		return imageRaw;
 	}
@@ -39,5 +41,13 @@ public class ReasonImage {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Timestamp getCreationTime() {
+		return creationTime;
+	}
+
+	public void setCreationTime(Timestamp creationTime) {
+		this.creationTime = creationTime;
 	}
 }

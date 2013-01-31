@@ -247,7 +247,7 @@ public class TheoryFragment extends Fragment {
 					}
 
 					CircleView cv = (CircleView) dragged;
-					
+					Log.i("COLOR", cv.getFlag());
 					cv.initGestures();
 					
 					container.addView(dragged);
