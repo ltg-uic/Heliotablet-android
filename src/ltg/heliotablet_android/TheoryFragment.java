@@ -1,5 +1,10 @@
 package ltg.heliotablet_android;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+
+import ltg.heliotablet_android.data.Reason;
+import ltg.heliotablet_android.data.ReasonDataSource;
 import ltg.heliotablet_android.view.CircleView;
 import ltg.heliotablet_android.view.PopoverView;
 import ltg.heliotablet_android.view.PopoverView.PopoverViewDelegate;
@@ -27,6 +32,8 @@ import android.widget.TextView;
 
 public class TheoryFragment extends Fragment {
 
+	private ReasonDataSource reasonDatasource;
+	
 	private View mainLayoutView;
 	private View slideScreen;
 	private RelativeLayout viewPagerLayout;
@@ -34,6 +41,14 @@ public class TheoryFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
+		
+		reasonDatasource = new ReasonDataSource(this.getActivity());
+		reasonDatasource.open();
+		
+		
+		
+		
 		mainLayoutView = inflater.inflate(R.layout.theories_activity_vertical,
 				container, false);
 		viewPagerLayout = (RelativeLayout) inflater.inflate(
@@ -66,6 +81,17 @@ public class TheoryFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				Log.i("onClickButton", "test button");
+				
+				Reason reason = new Reason();
+				reason.setAnchor("test");
+				reason.setType("dfdf");
+				reason.setOrigin("otdfd");
+				Calendar calendar = Calendar.getInstance();
+				reason.setLastTimestamp(new Timestamp(calendar.getTime().getTime()));
+				reason.setReasonText("fuck u");
+				
+				Long long1 = reasonDatasource.createReason(reason);
+				System.out.println("REason id" + long1 );
 
 				ViewPager pager = new ViewPager(TheoryFragment.this
 						.getActivity());
@@ -240,6 +266,20 @@ public class TheoryFragment extends Fragment {
 			}
 			return true;
 		}
+	}
+	
+	
+	
+	@Override
+	public void onResume() {
+		reasonDatasource.open();
+		super.onResume();
+	}
+
+	@Override
+	public void onPause() {
+		reasonDatasource.close();
+		super.onPause();
 	}
 
 }
