@@ -38,8 +38,8 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 			+ TABLE_REASON_IMAGE + " (" + COLUMN_ID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_IMAGE_RAW
 			+ "  BLOB, " + COLUMN_REASON_ID + "  TEXT NOT NULL, "
-			+ " FOREIGN KEY ('+COLUMN_REASON_ID+') REFERENCES " + TABLE_REASON
-			+ " ('+COLUMN_ID+'));";
+			+ " FOREIGN KEY ("+COLUMN_REASON_ID+") REFERENCES " + TABLE_REASON
+			+ " ("+COLUMN_ID+"));";
 
 	public ReasonDBOpenHelper(Context context, String name,
 			CursorFactory factory, int version) {
@@ -55,7 +55,7 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("PRAGMA foreign_keys=ON;");
 		db.execSQL(CREATE_TABLE_REASON);
-		//db.execSQL(CREATE_TABLE_REASON_IMAGE);
+		db.execSQL(CREATE_TABLE_REASON_IMAGE);
 	}
 
 	@Override

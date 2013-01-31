@@ -10,7 +10,8 @@
         style="@style/theoryPlanetView"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/earth_shape" >
+        android:background="@drawable/earth_shape" 
+        >
 
         <TextView
             android:id="@+id/earthReasonLabelText"
@@ -23,7 +24,9 @@
         style="@style/theoryPlanetView"
         android:layout_marginLeft="130dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/saturn_shape" >
+        android:background="@drawable/saturn_shape" 
+        
+        >
 
         <TextView
             android:id="@+id/saturnReasonLabelText"

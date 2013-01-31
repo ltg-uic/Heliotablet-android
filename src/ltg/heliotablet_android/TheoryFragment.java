@@ -8,6 +8,7 @@ import ltg.heliotablet_android.data.ReasonDataSource;
 import ltg.heliotablet_android.view.CircleView;
 import ltg.heliotablet_android.view.PopoverView;
 import ltg.heliotablet_android.view.PopoverView.PopoverViewDelegate;
+import ltg.heliotablet_android.view.TheoryPlanetView;
 import android.content.ClipData;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -34,7 +35,7 @@ public class TheoryFragment extends Fragment {
 
 	private ReasonDataSource reasonDatasource;
 	
-	private View mainLayoutView;
+	private ViewGroup theoriesView;
 	private View slideScreen;
 	private RelativeLayout viewPagerLayout;
 
@@ -46,34 +47,30 @@ public class TheoryFragment extends Fragment {
 		reasonDatasource = new ReasonDataSource(this.getActivity());
 		reasonDatasource.open();
 		
-		
-		
-		
-		mainLayoutView = inflater.inflate(R.layout.theories_activity_vertical,
+		theoriesView = (ViewGroup) inflater.inflate(R.layout.theories_activity_vertical,
 				container, false);
 		viewPagerLayout = (RelativeLayout) inflater.inflate(
 				R.layout.activity_screen_slide, container, false);
-		View earthView = mainLayoutView.findViewById(R.id.earthView);
-		View neptuneView = mainLayoutView.findViewById(R.id.neptuneView);
-		View mercuryView = mainLayoutView.findViewById(R.id.mercuryView);
-		// Draggable colored circles
-		FrameLayout planetColorsView = (FrameLayout) mainLayoutView
-				.findViewById(R.id.colors_include);
-
-		earthView.setOnDragListener(new TargetViewDragListener());
-		neptuneView.setOnDragListener(new TargetViewDragListener());
-		mercuryView.setOnDragListener(new TargetViewDragListener());
-		// earthView.setOnTouchListener(new MyTouchListener());
-
+		
+		//add listeners to all the draggable planetViews
 		// get all the colors and the
-		int childCount = planetColorsView.getChildCount();
+		int childCount = theoriesView.getChildCount();
+		for (int i = 0; i < childCount; i++) {
+			View possibleView = theoriesView.getChildAt(i);
+			if( possibleView instanceof TheoryPlanetView ) {
+				possibleView.setOnDragListener(new TargetViewDragListener());
+			}
+		}
+
+		ViewGroup planetColorsView = (FrameLayout) theoriesView.findViewById(R.id.colors_include);
+		// get all the colors and the
+		childCount = planetColorsView.getChildCount();
 		for (int i = 0; i < childCount; i++) {
 			View color = planetColorsView.getChildAt(i);
 			color.setOnTouchListener(new CustomViewTouchListener());
-			// color.setOnDragListener(new MyDragListener());
-			System.out.println(color);
-			// do whatever you want to with the view
 		}
+
+		View earthView = theoriesView.findViewById(R.id.earthView);
 
 		Button button = (Button) earthView.findViewById(R.id.testButton);
 		button.setOnClickListener(new View.OnClickListener() {
@@ -182,14 +179,14 @@ public class TheoryFragment extends Fragment {
 					}
 				});
 				popoverView.showPopoverFromRectInViewGroup(
-						(ViewGroup) mainLayoutView.getParent(),
+						(ViewGroup) theoriesView.getParent(),
 						PopoverView.getFrameForView(v),
 						PopoverView.PopoverArrowDirectionAny, true);
 
 			}
 		});
 
-		return mainLayoutView;
+		return theoriesView;
 	}
 
 	private final class CustomViewTouchListener implements OnTouchListener {
@@ -249,11 +246,14 @@ public class TheoryFragment extends Fragment {
 						// do whatever you want to with the view
 					}
 
+					CircleView cv = (CircleView) dragged;
+					
+					cv.initGestures();
+					
 					container.addView(dragged);
 					dragged.setVisibility(View.VISIBLE);
 					dragged.setOnTouchListener(null);
-					CircleView cv = (CircleView) dragged;
-					cv.initGestures();
+					
 				}
 				break;
 			case DragEvent.ACTION_DRAG_ENDED:

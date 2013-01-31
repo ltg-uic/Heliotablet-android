@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="circleview">
-        <attr name="cRadius" format="integer" />
-        <attr name="cFillColor" format="color" />
-        <attr name="cStrokeColor" format="color" />
-        <attr name="cAngleStart" format="integer" />
-        <attr name="cAngleEnd" format="integer" />
+    <declare-styleable name="TheoryPlanetView">
+        <attr name="anchor" format="string" />
     </declare-styleable>
 </resources>

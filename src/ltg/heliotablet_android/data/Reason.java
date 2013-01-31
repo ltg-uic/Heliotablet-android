@@ -3,7 +3,7 @@ package ltg.heliotablet_android.data;
 import java.sql.Timestamp;
 
 public class Reason {
-
+	
 	private long id;
 	
 	//THEORY OR OBERVATION
@@ -14,7 +14,25 @@ public class Reason {
 	private Timestamp lastTimestamp;
 	private String origin;
 	private String reasonText;
+	
+	public final static String ANCHOR_MERCURY = "MERCURY";
+	public final static String ANCHOR_VENUS = "VENUS";
+	public final static String ANCHOR_EARTH = "EARTH";
+	public final static String ANCHOR_MARS = "MARS";
+	public final static String ANCHOR_SATURN = "SATURN";
+	public final static String ANCHOR_JUPITER = "JUPITER";
+	public final static String ANCHOR_NEPTUNE = "NEPTUNE";
+	public final static String ANCHOR_URANUS = "URANUS";
 
+	public final static String ANCHOR_RED = "RED";
+	public final static String ANCHOR_ORANGE = "ORANGE";
+	public final static String ANCHOR_BLUE = "BLUE";
+	public final static String ANCHOR_GREEN = "GREEN";
+	public final static String ANCHOR_PINK = "PINK";
+	public final static String ANCHOR_YELLOW = "YELLOW";
+	public final static String ANCHOR_GREY = "GREY";
+	public final static String ANCHOR_BROWN = "BROWN";
+	
 	public long getId() {
 		return id;
 	}

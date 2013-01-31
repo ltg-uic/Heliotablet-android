@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:planetView="http://schemas.android.com/apk/res/ltg.heliotablet_android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:layout_gravity="fill"
@@ -222,25 +223,29 @@
 
     <!-- views -->
 
-    <LinearLayout
+    <ltg.heliotablet_android.view.TheoryPlanetView
         android:id="@+id/mercuryView"
         style="@style/theoryPlanetTableGridStyle"
         android:layout_column="3"
-        android:layout_row="3" />
+        android:layout_row="3" 
+        planetView:anchor="mercury"
+        />
 
-    <LinearLayout
+    <ltg.heliotablet_android.view.TheoryPlanetView
         android:id="@+id/venusView"
         style="@style/theoryPlanetTableGridStyle"
         android:layout_column="3"
-        android:layout_row="5" />
+        android:layout_row="5" 
+        planetView:anchor="venus"
+        />
 
-    <LinearLayout
+    <ltg.heliotablet_android.view.TheoryPlanetView
         android:id="@+id/earthView"
         style="@style/theoryPlanetTableGridStyle"
         android:layout_column="3"
         android:layout_row="7"
-        android:gravity="center_vertical"
-        android:padding="1dp">
+        planetView:anchor="earth"
+        >
         
         <Button
             android:id="@+id/testButton"
@@ -248,36 +253,46 @@
             android:layout_height="wrap_content"
             android:text="Test" />
         
-	</LinearLayout>
+	</ltg.heliotablet_android.view.TheoryPlanetView>
 
-    <LinearLayout
+    <ltg.heliotablet_android.view.TheoryPlanetView
         android:id="@+id/marsView"
         style="@style/theoryPlanetTableGridStyle"
         android:layout_column="3"
-        android:layout_row="9" />
+        android:layout_row="9" 
+        planetView:anchor="mars"
+        />
 
-    <LinearLayout
+    <ltg.heliotablet_android.view.TheoryPlanetView
         android:id="@+id/jupiterView"
         style="@style/theoryPlanetTableGridStyle"
         android:layout_column="3"
-        android:layout_row="11" />
+        android:layout_row="11" 
+        planetView:anchor="jupiter"
+        />
 
-    <LinearLayout
+    <ltg.heliotablet_android.view.TheoryPlanetView
         android:id="@+id/saturnView"
         style="@style/theoryPlanetTableGridStyle"
         android:layout_column="3"
-        android:layout_row="13" />
+        android:layout_row="13"
+        planetView:anchor="saturn"
+         />
 
-    <LinearLayout
+    <ltg.heliotablet_android.view.TheoryPlanetView
         android:id="@+id/uranusView"
         style="@style/theoryPlanetTableGridStyle"
         android:layout_column="3"
-        android:layout_row="15" />
+        android:layout_row="15" 
+        planetView:anchor="uranus"
+        />
         
-    <LinearLayout
+    <ltg.heliotablet_android.view.TheoryPlanetView
         android:id="@+id/neptuneView"
         style="@style/theoryPlanetTableGridStyle"
         android:layout_column="3"
-        android:layout_row="17" />
+        android:layout_row="17" 
+        planetView:anchor="neptune"
+        />
 
 </GridLayout>
