@@ -9,16 +9,19 @@ import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 
 	private GestureDetector gestureDetector;
 	private String flag;
+	private TextView reasonTextView;
 	public CircleView(Context context) {
 		super(context);
 		init();
@@ -28,8 +31,29 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
         super(context, attrs);
         TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.CircleView);
         this.flag = a.getString(R.styleable.CircleView_flag);
+        a.recycle();
+        
+      
+        //inflater.inflate(R.id.c, this, true);
+        
+        int childCount = this.getChildCount();
+		for (int i = 0; i < childCount; i++) {
+			View v = getChildAt(i);
+			System.out.println("v" + v);
+			// do whatever you want to with the view
+		}
+        this.reasonTextView = (TextView) getChildAt(1);
         init();
     }
+	
+	public void setReasonText(String reasonText) {
+		this.reasonTextView.setText(reasonText);
+	}
+	
+	public String getReasonText() {
+		return (String) this.reasonTextView.getText();
+	}
+	
 	
 	private void init() {
 	}
