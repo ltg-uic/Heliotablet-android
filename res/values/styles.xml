@@ -91,7 +91,7 @@
     
      <style name="theoryReasonText" parent="android:Widget.Holo.Light.TextView">
          <item name="android:textColor">@color/White</item>
-        <item name="android:textSize">18dp</item>
+        <item name="android:textSize">25dp</item>
         <item name="android:layout_marginTop">23dp</item>
         <item name="android:layout_alignTop">@+id/colorLabelText</item>
         <item name="android:layout_width">wrap_content</item>

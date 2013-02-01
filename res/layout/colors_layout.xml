@@ -13,13 +13,8 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/earth_shape" 
         circleView:flag="RED"
-        >
-
-        <TextView
-            android:id="@+id/earthReasonLabelText"
-            style="@style/theoryReasonText"
-            android:text="@string/blank_space" />
-    </ltg.heliotablet_android.view.CircleView>
+        circleView:textColor="@color/White"
+        />
 
     <ltg.heliotablet_android.view.CircleView
         android:id="@+id/saturnTheoryPlanet"
@@ -28,16 +23,10 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/saturn_shape" 
         circleView:flag="YELLOW"
-        
-        >
-
-        <TextView
-            android:id="@+id/saturnReasonLabelText"
-            style="@style/theoryReasonText"
-            android:text="@string/blank_space"
-            android:textColor="@color/Black" />
-    </ltg.heliotablet_android.view.CircleView>
-
+        circleView:textColor="@color/Black"
+	/>
+    
+    
     <ltg.heliotablet_android.view.CircleView
         android:id="@+id/neptuneTheoryPlanet"
         style="@style/theoryPlanetView"
@@ -45,14 +34,8 @@
         android:layout_marginTop="130dp"
         android:background="@drawable/neptune_shape" 
         circleView:flag="BLUE"
-        >
-
-        <TextView
-            android:id="@+id/neptuneReasonLabelText"
-            style="@style/theoryReasonText"
-            android:text="@string/blank_space"
-            android:textColor="@color/Black" />
-    </ltg.heliotablet_android.view.CircleView>
+        circleView:textColor="@color/White"
+        />
 
     <ltg.heliotablet_android.view.CircleView
         android:id="@+id/mercuryTheoryPlanet"
@@ -61,13 +44,9 @@
         android:layout_marginTop="130dp"
         android:background="@drawable/mercury_shape" 
         circleView:flag="BROWN"
-        >
+        circleView:textColor="@color/White"
+        />
 
-        <TextView
-            android:id="@+id/reasonLabelText"
-            style="@style/theoryReasonText"
-            android:text="@string/blank_space" />
-    </ltg.heliotablet_android.view.CircleView>
 
     <ltg.heliotablet_android.view.CircleView
         android:id="@+id/uranusTheoryPlanet"
@@ -76,14 +55,9 @@
         android:layout_marginTop="230dp"
         android:background="@drawable/uranus_shape"
         circleView:flag="ORANGE"
-         >
+        circleView:textColor="@color/Black"
+        />
 
-        <TextView
-            android:id="@+id/uranusReasonLabelText"
-            style="@style/theoryReasonText"
-            android:text="@string/blank_space"
-            android:textColor="@color/Black" />
-    </ltg.heliotablet_android.view.CircleView>
 
     <ltg.heliotablet_android.view.CircleView
         android:id="@+id/marsTheoryPlanet"
@@ -92,14 +66,9 @@
         android:layout_marginTop="230dp"
         android:background="@drawable/mars_shape" 
         circleView:flag="GRAY"
-        >
+        circleView:textColor="@color/Black"
+        />
 
-        <TextView
-            android:id="@+id/marsReasonLabelText"
-            style="@style/theoryReasonText"
-            android:text="@string/blank_space"
-            android:textColor="@color/Black" />
-    </ltg.heliotablet_android.view.CircleView>
 
     <ltg.heliotablet_android.view.CircleView
         android:id="@+id/greenTheoryPlanet"
@@ -108,15 +77,8 @@
         android:layout_marginTop="330dp"
         android:background="@drawable/jupiter_shape" 
         circleView:flag="GREEN"
-        >
-
-        <TextView
-            android:id="@+id/jupiterReasonLabelText"
-            style="@style/theoryReasonText"
-            android:text="@string/blank_space"
-            android:textColor="@color/Black" />
-
-    </ltg.heliotablet_android.view.CircleView>
+        circleView:textColor="@color/Black"
+        />
 
     <ltg.heliotablet_android.view.CircleView
         android:id="@+id/pinkTheoryPlanet"
@@ -125,13 +87,6 @@
         android:layout_marginTop="330dp"
         android:background="@drawable/venus_shape" 
         circleView:flag="PINK"
-        >
-
-        
-        <TextView
-            android:id="@+id/venusReasonLabelText"
-            style="@style/theoryReasonText"
-            android:text="@string/blank_space"
-            android:textColor="@color/Black" />
-    </ltg.heliotablet_android.view.CircleView>
+        circleView:textColor="@color/Black"
+        />
 </FrameLayout>

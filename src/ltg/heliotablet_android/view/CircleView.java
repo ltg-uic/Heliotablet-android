@@ -1,11 +1,17 @@
 package ltg.heliotablet_android.view;
 
 
+import java.util.ArrayList;
+
 import ltg.heliotablet_android.R;
+import ltg.heliotablet_android.R.color;
+import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.view.PopoverView.PopoverViewDelegate;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Point;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -21,107 +27,103 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 
 	private GestureDetector gestureDetector;
 	private String flag;
+	private int textColor;
 	private TextView reasonTextView;
+	private String type;
+	private ArrayList<Reason> reasons = new ArrayList<Reason>();
+
+	private RelativeLayout viewPagerLayout;
+	
+	
 	public CircleView(Context context) {
 		super(context);
-		init();
 	}
 	
 	public CircleView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        
+
         TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.CircleView);
         this.flag = a.getString(R.styleable.CircleView_flag);
+        this.textColor = a.getColor(R.styleable.CircleView_textColor, color.White);
         a.recycle();
         
       
-        //inflater.inflate(R.id.c, this, true);
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.circle_view, this, true);
         
-        int childCount = this.getChildCount();
-		for (int i = 0; i < childCount; i++) {
-			View v = getChildAt(i);
-			System.out.println("v" + v);
-			// do whatever you want to with the view
-		}
-        this.reasonTextView = (TextView) getChildAt(1);
-        init();
+    	viewPagerLayout = (RelativeLayout) inflater.inflate(
+				R.layout.activity_screen_slide, this, false);
+    	
+    	
+        reasonTextView = (TextView) getChildAt(0);
+        reasonTextView.setTextColor(this.textColor);
     }
 	
-	public void setReasonText(String reasonText) {
-		this.reasonTextView.setText(reasonText);
-	}
-	
-	public String getReasonText() {
-		return (String) this.reasonTextView.getText();
-	}
-	
-	
-	private void init() {
-	}
- 
-	public void initGestures() {
-		
-		
-		gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener(){
-			   
-			   @Override
-			public boolean onDoubleTap(MotionEvent e) {
-				   Log.i("CLICK", "double tap event DOUBLE TAP");
-				   float x = e.getX();
-			        float y = e.getY();
-
-			        Log.i("Double Tap", "Tapped at: (" + x + "," + y + ")");
-
-			        ViewParent parent = CircleView.this.getParent().getParent().getParent();
-			        
-			        
-//			        /RelativeLayout rootView = (RelativeLayout)findViewById(R.id.rootLayout);
-					
-					PopoverView popoverView = new PopoverView(CircleView.this.getContext(), R.layout.activity_screen_slide);
-					popoverView.setContentSizeForViewInPopover(new Point(500, 340));
-					popoverView.setDelegate(CircleView.this);
-					popoverView.showPopoverFromRectInViewGroup((ViewGroup) parent, PopoverView.getFrameForView(CircleView.this), PopoverView.PopoverArrowDirectionAny, true);
-			        
-			        
-
-				   
-				return super.onDoubleTap(e);
-			}
-		   });
-		
-		this.setOnTouchListener(new OnTouchListener() {
+	public void enableDoubleTap() {
+        gestureDetector = new GestureDetector(getContext(), new CircleDoubleTapGestureListener());
+        this.setOnTouchListener(new OnTouchListener() {
 			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				gestureDetector.onTouchEvent(event);
-				return true;
+				 gestureDetector.onTouchEvent(event);
+				 return true;
 			}
-		});
+		}); 
+	}
+	
+	class CircleDoubleTapGestureListener extends GestureDetector.SimpleOnGestureListener {
+	    // event when double tap occurs
+	    @Override
+	    public boolean onDoubleTap(MotionEvent e) {
+	    	showPopover(reasons);
+	        return super.onDoubleTap(e);
+	    }
+	}
+	
+	public void showPopover(ArrayList<Reason> reasons) {
+		ViewPager pager = new ViewPager(getContext());
+
+		ViewPager vPager = (ViewPager) viewPagerLayout
+				.findViewById(R.id.pager);
+		View view1 = View.inflate(getContext(),
+				R.layout.popover_view, null);
+		View view2 = View.inflate(getContext(),R.layout.fragment_screen_slide_page, null);
+		
+		ArrayList<View> pages = new ArrayList<View>();
+		pages.add(view1);
+		pages.add(view2);
+		vPager.setAdapter(new PopoverViewAdapter(pages));
+        ViewGroup parent = (ViewGroup) this.getParent().getParent().getParent();
+
+		
+		PopoverView popoverView = new PopoverView(getContext(), viewPagerLayout);
+		popoverView.setContentSizeForViewInPopover(new Point(400, 400));
+		popoverView.setDelegate(this);
+		popoverView.showPopoverFromRectInViewGroup(
+				parent,
+				PopoverView.getFrameForView(this),
+				PopoverView.PopoverArrowDirectionAny, true);
+		
 	}
 	
 	@Override
 	public void popoverViewWillShow(PopoverView view) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void popoverViewDidShow(PopoverView view) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void popoverViewWillDismiss(PopoverView view) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void popoverViewDidDismiss(PopoverView view) {
-		// TODO Auto-generated method stub
-		
 	}
-
+	
 	public String getFlag() {
 		return flag;
 	}
@@ -129,4 +131,15 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 	public void setFlag(String flag) {
 		this.flag = flag;
 	}
+	
+	public void setReasonText(String reasonText) {
+		this.reasonTextView.setText(reasonText);
+	}
+	
+	public String getReasonText() {
+		return this.reasonTextView.getText().toString();
+	}
+	
 }
+
+

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="observation">observation</string>
+    <string name="theory_default">theory_default</string>
+    <string name="theory_dropped">theory_dropped</string>
     <string name="app_name">helioRoom</string>
     <string name="title_section4">Discussion</string>
     <string name="title_section3">Scratch Pad</string>
