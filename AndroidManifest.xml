@@ -12,7 +12,9 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme" 
+        android:debuggable="true"
+        >
         <activity
             android:name="ltg.heliotablet_android.MainActivity"
             android:label="@string/app_name" >
@@ -22,6 +24,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+    <!--       <provider
+      		android:name="ltg.heliotablet_android.data.ReasonContentProvider"
+      		android:authorities="ltg.heliotablet_android.data" >
+   		</provider> -->
     </application>
 
 </manifest>

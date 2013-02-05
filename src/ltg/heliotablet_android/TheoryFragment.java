@@ -1,60 +1,46 @@
 package ltg.heliotablet_android;
 
-import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.HashMap;
 
-import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDataSource;
 import ltg.heliotablet_android.view.CircleView;
 import ltg.heliotablet_android.view.CircleViewDefaultTouchListener;
-import ltg.heliotablet_android.view.PopoverView;
-import ltg.heliotablet_android.view.PopoverView.PopoverViewDelegate;
 import ltg.heliotablet_android.view.TheoryPlanetView;
-import android.graphics.Point;
+import ltg.heliotablet_android.view.controller.TheoryReasonController;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnDragListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 public class TheoryFragment extends Fragment {
 
-	private ReasonDataSource reasonDatasource;
+	private TheoryReasonController theoryController;
 	
 	private ViewGroup theoriesView;
 	private HashMap<String, TheoryPlanetView> theoryViewsToAnchors = new HashMap<String, TheoryPlanetView>();
-	private GestureDetector gestureDetector;
-	private View slideScreen;
-	private RelativeLayout viewPagerLayout;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
-		
-		reasonDatasource = new ReasonDataSource(this.getActivity());
-		reasonDatasource.open();
-		
 		theoriesView = (ViewGroup) inflater.inflate(R.layout.theories_activity_vertical,
 				container, false);
-		
-		setupListeners();
+		theoryController = TheoryReasonController.getInstance(getActivity());
 
+		setupListeners();
+		
+		
+		theoryController.populateViews();
+		
 		return theoriesView;
 	}
 
@@ -74,6 +60,8 @@ public class TheoryFragment extends Fragment {
 			}
 		}
 
+		theoryController.setTheoryViewsToAnchors(theoryViewsToAnchors);
+		
 		ViewGroup planetColorsView = (FrameLayout) theoriesView.findViewById(R.id.colors_include);
 		// get all the colors and the
 		childCount = planetColorsView.getChildCount();
@@ -136,21 +124,17 @@ public class TheoryFragment extends Fragment {
 		}
 	}
 	
-	
-	
+
 	@Override
 	public void onResume() {
-		reasonDatasource.open();
+		theoryController.open();
 		super.onResume();
 	}
 
 	@Override
 	public void onPause() {
-		reasonDatasource.close();
+		theoryController.close();
 		super.onPause();
 	}
-	
-	
-	
 	
 }

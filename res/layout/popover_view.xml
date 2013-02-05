@@ -14,7 +14,7 @@
         android:orientation="vertical" >
 
         <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/mainEditText"
             android:layout_width="match_parent"
             android:layout_height="240dp"
             android:background="@drawable/textedit_shape"

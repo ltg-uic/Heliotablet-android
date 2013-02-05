@@ -23,6 +23,7 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_REASON_TEXT = "reasonText";
 	public static final String COLUMN_ANCHOR = "anchor";
 	public static final String COLUMN_FLAG = "flag";
+	public static final String COLUMN_ISREADONLY = "isReadOnly";
 
 	// REASON_IMAGE table
 	public static final String COLUMN_IMAGE_RAW = "imageRaw";
@@ -35,7 +36,7 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_REASON_TEXT
 			+ "  TEXT NOT NULL, " + COLUMN_LAST_TIMESTAMP
 			+ " TIMESTAMP DEFAULT NULL, " + COLUMN_ORIGIN + "  TEXT NOT NULL, "
-			+ COLUMN_TYPE + "  TEXT NOT NULL, " + COLUMN_ANCHOR + "  TEXT NOT NULL, " + COLUMN_FLAG + " TEXT NOT NULL );";
+			+ COLUMN_TYPE + "  TEXT NOT NULL, " + COLUMN_ANCHOR + "  TEXT NOT NULL, " + COLUMN_FLAG + " TEXT NOT NULL, " + COLUMN_ISREADONLY + " Boolean DEFAULT TRUE );";
 	public static final String CREATE_TABLE_REASON_IMAGE = "CREATE TABLE "
 			+ TABLE_REASON_IMAGE + " (" + COLUMN_ID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_IMAGE_RAW
@@ -58,7 +59,7 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("PRAGMA foreign_keys=ON;");
 		db.execSQL(CREATE_TABLE_REASON);
-		db.execSQL(CREATE_TABLE_REASON_IMAGE);
+		//db.execSQL(CREATE_TABLE_REASON_IMAGE);
 	}
 
 	@Override
@@ -67,14 +68,14 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 				"Upgrading database from version " + oldVersion + " to "
 						+ newVersion + ", which will destroy all old data");
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_REASON);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_REASON_IMAGE);
+		//db.execSQL("DROP TABLE IF EXISTS " + TABLE_REASON_IMAGE);
 		onCreate(db);
 	}
 
 	@Override
 	public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_REASON);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_REASON_IMAGE);
+		//db.execSQL("DROP TABLE IF EXISTS " + TABLE_REASON_IMAGE);
 		onCreate(db);
 	}
 

@@ -20,6 +20,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -41,25 +42,36 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 	
 	public CircleView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        
-
-        TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.CircleView);
-        this.flag = a.getString(R.styleable.CircleView_flag);
-        this.textColor = a.getColor(R.styleable.CircleView_textColor, color.White);
-        a.recycle();
-        
-      
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.circle_view, this, true);
+        reasonTextView = (TextView) getChildAt(0);
+
+        TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.CircleView);
+        this.flag = a.getString(R.styleable.CircleView_flag);
+        this.setTextColor(a.getColor(R.styleable.CircleView_textColor, color.White));
+        a.recycle();
+        
+      
+        
         
     	viewPagerLayout = (RelativeLayout) inflater.inflate(
 				R.layout.activity_screen_slide, this, false);
     	
     	
-        reasonTextView = (TextView) getChildAt(0);
-        reasonTextView.setTextColor(this.textColor);
+        reasonTextView.setTextColor(this.getTextColor());
     }
+	
+	@Override
+	public void setTag(Object tag) {
+		super.setTag(tag);
+		
+		ArrayList<Reason> reasons = (ArrayList<Reason>) tag;
+		if( reasons != null) {
+			this.reasonTextView.setText(""+reasons.size());
+		}
+		
+	}
 	
 	public void enableDoubleTap() {
         gestureDetector = new GestureDetector(getContext(), new CircleDoubleTapGestureListener());
@@ -77,23 +89,32 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 	    // event when double tap occurs
 	    @Override
 	    public boolean onDoubleTap(MotionEvent e) {
-	    	showPopover(reasons);
+	    	showPopover((ArrayList<Reason>) getTag());
 	        return super.onDoubleTap(e);
 	    }
 	}
 	
 	public void showPopover(ArrayList<Reason> reasons) {
-		ViewPager pager = new ViewPager(getContext());
-
-		ViewPager vPager = (ViewPager) viewPagerLayout
-				.findViewById(R.id.pager);
-		View view1 = View.inflate(getContext(),
-				R.layout.popover_view, null);
-		View view2 = View.inflate(getContext(),R.layout.fragment_screen_slide_page, null);
 		
 		ArrayList<View> pages = new ArrayList<View>();
-		pages.add(view1);
-		pages.add(view2);
+		ViewPager pager = new ViewPager(getContext());
+		ViewPager vPager = (ViewPager) viewPagerLayout
+				.findViewById(R.id.pager);
+		
+		for (Reason reason : reasons) {
+			View layout = View.inflate(getContext(),
+					R.layout.popover_view, null);
+			EditText editText = (EditText) layout.findViewById(R.id.mainEditText);
+			
+			editText.setText(reason.getReasonText());
+			
+			if( reason.isReadonly()) {
+				editText.setKeyListener(null);
+			}
+
+			pages.add(layout);
+		}
+		
 		vPager.setAdapter(new PopoverViewAdapter(pages));
         ViewGroup parent = (ViewGroup) this.getParent().getParent().getParent();
 
@@ -138,6 +159,15 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 	
 	public String getReasonText() {
 		return this.reasonTextView.getText().toString();
+	}
+
+	public int getTextColor() {
+		return textColor;
+	}
+
+	public void setTextColor(int textColor) {
+		this.textColor = textColor;
+	    reasonTextView.setTextColor(textColor);
 	}
 	
 }

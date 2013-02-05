@@ -16,25 +16,26 @@ public class Reason {
 	private Timestamp lastTimestamp;
 	private String origin;
 	private String reasonText;
+	private boolean isReadonly;
 	
 	
-	public final static String CONST_MERCURY = "MERCURY";
-	public final static String CONST_VENUS = "VENUS";
-	public final static String CONST_EARTH = "EARTH";
-	public final static String CONST_MARS = "MARS";
-	public final static String CONST_SATURN = "SATURN";
-	public final static String CONST_JUPITER = "JUPITER";
-	public final static String CONST_NEPTUNE = "NEPTUNE";
-	public final static String CONST_URANUS = "URANUS";
+	public final static String CONST_MERCURY = "mercury";
+	public final static String CONST_VENUS = "venus";
+	public final static String CONST_EARTH = "earth";
+	public final static String CONST_MARS = "mars";
+	public final static String CONST_SATURN = "saturn";
+	public final static String CONST_JUPITER = "jupiter";
+	public final static String CONST_NEPTUNE = "neptune";
+	public final static String CONST_URANUS = "uranus";
 
-	public final static String CONST_RED = "RED";
-	public final static String CONST_ORANGE = "ORANGE";
-	public final static String CONST_BLUE = "BLUE";
-	public final static String CONST_GREEN = "GREEN";
-	public final static String CONST_PINK = "PINK";
-	public final static String CONST_YELLOW = "YELLOW";
-	public final static String CONST_GREY = "GREY";
-	public final static String CONST_BROWN = "BROWN";
+	public final static String CONST_RED = "red";
+	public final static String CONST_ORANGE = "orange";
+	public final static String CONST_BLUE = "blue";
+	public final static String CONST_GREEN = "green";
+	public final static String CONST_PINK = "pink";
+	public final static String CONST_YELLOW = "yellow";
+	public final static String CONST_GREY = "grey";
+	public final static String CONST_BROWN = "brown";
 	
 	public final static String TYPE_THEORY = "THEORY";
 	public final static String TYPE_OBSERVATION = "OBSERVATION";
@@ -93,6 +94,14 @@ public class Reason {
 
 	public void setFlag(String flag) {
 		this.flag = flag;
+	}
+
+	public boolean isReadonly() {
+		return isReadonly;
+	}
+
+	public void setReadonly(boolean isReadonly) {
+		this.isReadonly = isReadonly;
 	}
 
 }
