@@ -95,20 +95,20 @@ public class TheoryFragment extends Fragment {
 					Log.i("DRAG", "there equal");
 				} else {
 					sourceView.removeView(dragged);
-					LinearLayout container = (LinearLayout) targetView;
-					LayoutParams layoutParams = dragged.getLayoutParams();
-					layoutParams.height = 81;
-					layoutParams.width = 80;
 
 					RelativeLayout rel = (RelativeLayout) dragged;
 
 					CircleView cv = (CircleView) dragged;
-					cv.setReasonText("2");
-					cv.setOnTouchListener(null);
-					cv.enableDoubleTap();
 					
-					container.addView(cv);
-					cv.setVisibility(View.VISIBLE);
+					if( targetView instanceof TheoryPlanetView ) {
+						TheoryPlanetView tv = (TheoryPlanetView) targetView;
+						theoryController.addReason(tv.getAnchor(), cv.getFlag(), false );
+					} else if( targetView instanceof CircleView ) {
+						TheoryPlanetView tv = (TheoryPlanetView) targetView.getParent();
+						theoryController.addReason(tv.getAnchor(), cv.getFlag(), false );
+					}
+					
+					//cv.setVisibility(View.VISIBLE);
 					
 				}
 				break;

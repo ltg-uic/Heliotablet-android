@@ -10,6 +10,7 @@ import ltg.heliotablet_android.view.PopoverView.PopoverViewDelegate;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -168,6 +169,19 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 	public void setTextColor(int textColor) {
 		this.textColor = textColor;
 	    reasonTextView.setTextColor(textColor);
+	}
+
+	public void setReducedAlpha(float circleViewAlpha) {
+		Drawable background = getBackground();
+		background.setAlpha((int) circleViewAlpha);
+		setBackground(background);
+		reasonTextView.setAlpha(circleViewAlpha);
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Flag: " + this.getFlag() + " Reasons: " + reasons.toString();
 	}
 	
 }

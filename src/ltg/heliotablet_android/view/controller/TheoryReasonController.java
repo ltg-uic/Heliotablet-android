@@ -62,7 +62,7 @@ public class TheoryReasonController {
 		marsORANGE.setOrigin("tony");
 		marsORANGE.setReasonText("YEAH YEAH ");
 		marsORANGE.setType(Reason.TYPE_THEORY);
-		marsORANGE.setReadonly(false);
+		marsORANGE.setReadonly(true);
 		
 		reasonDatasource.createReason(marsORANGE);
 	}
@@ -103,6 +103,23 @@ public class TheoryReasonController {
 	            
 	            
 		}
+	}
+
+	public void addReason(String anchor, String flag, boolean isReadOnly) {
+		TheoryPlanetView theoryPlanetView = theoryViewsToAnchors.get(anchor);
+		
+		Reason reason = new Reason();
+		reason.setType(Reason.TYPE_THEORY);
+		reason.setAnchor(anchor);
+		reason.setFlag(flag);
+		reason.setReadonly(isReadOnly);
+		reason.setOrigin("GET FROM PREFENCES");
+		
+		Reason createReason = reasonDatasource.createReason(reason);
+		
+		theoryPlanetView.updateCircleView(createReason);
+		
+		
 	}
 	
 	

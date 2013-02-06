@@ -41,7 +41,7 @@ public class ReasonDataSource {
 		this.context = context;
 	}
 
-	public Long createReason(Reason reason) {
+	public Reason createReason(Reason reason) {
 		ContentValues values = new ContentValues();
 		values.put(ReasonDBOpenHelper.COLUMN_TYPE, reason.getType());
 		values.put(ReasonDBOpenHelper.COLUMN_ANCHOR, reason.getAnchor());
@@ -56,7 +56,14 @@ public class ReasonDataSource {
 
 		long reasonId = database.insert(ReasonDBOpenHelper.TABLE_REASON, null,
 				values);
-		return reasonId;
+		
+		Cursor cursor = database.query(ReasonDBOpenHelper.TABLE_REASON,
+		        reasonColumns, ReasonDBOpenHelper.COLUMN_ID + " = " + reasonId, null,
+		        null, null, null);
+		cursor.moveToFirst();
+		Reason newReason = cursorToReason(cursor);
+		cursor.close();
+		return newReason;
 	}
 	
 	public ContentValues getReasonContentValues(Reason reason) {

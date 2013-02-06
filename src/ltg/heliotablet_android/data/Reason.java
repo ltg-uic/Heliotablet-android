@@ -34,7 +34,7 @@ public class Reason {
 	public final static String CONST_GREEN = "green";
 	public final static String CONST_PINK = "pink";
 	public final static String CONST_YELLOW = "yellow";
-	public final static String CONST_GREY = "grey";
+	public final static String CONST_GREY = "gray";
 	public final static String CONST_BROWN = "brown";
 	
 	public final static String TYPE_THEORY = "THEORY";
@@ -102,6 +102,11 @@ public class Reason {
 
 	public void setReadonly(boolean isReadonly) {
 		this.isReadonly = isReadonly;
+	}
+	
+	@Override
+	public String toString() {
+		return "id: " + this.getId() + " Type: " + this.getType() + " Anchor: " + this.getAnchor() + " Flag: " + this.getFlag() + " ReasonText: " + this.getReasonText() + " isReadyOnly: " + this.isReadonly() + " Origin: " + this.getOrigin();
 	}
 
 }
