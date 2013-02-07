@@ -2,24 +2,19 @@ package ltg.heliotablet_android;
 
 import java.util.HashMap;
 
-import ltg.heliotablet_android.data.ReasonDataSource;
 import ltg.heliotablet_android.view.CircleView;
 import ltg.heliotablet_android.view.CircleViewDefaultTouchListener;
 import ltg.heliotablet_android.view.TheoryPlanetView;
 import ltg.heliotablet_android.view.controller.TheoryReasonController;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
 import android.view.DragEvent;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnDragListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 public class TheoryFragment extends Fragment {
@@ -122,6 +117,11 @@ public class TheoryFragment extends Fragment {
 			}
 			return true;
 		}
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
 	}
 	
 

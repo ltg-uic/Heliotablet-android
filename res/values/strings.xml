@@ -6,9 +6,9 @@
     <string name="theory_dropped">theory_dropped</string>
     <string name="app_name">helioRoom</string>
     <string name="title_section4">Discussion</string>
-    <string name="title_section3">Scratch Pad</string>
-    <string name="title_section2">Observations</string>
-    <string name="title_section1">Theories</string>
+    <string name="tab_title_scratch_pad">Scratch Pad</string>
+    <string name="tab_title_observations">Observations</string>
+    <string name="tab_title_theories">Theories</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">XMPP</string>
     <string name="password">Password</string>
