@@ -64,6 +64,8 @@ public class MainActivity extends Activity  {
 		private final Activity mActivity;
 		private final String mTag;
 		private final Class<T> mClass;
+		private Fragment currentFragment;
+
 
 		/**
 		 * Constructor used each time a new tab is created.
@@ -90,9 +92,13 @@ public class MainActivity extends Activity  {
 				// If not, instantiate and add it to the activity
 				mFragment = Fragment.instantiate(mActivity, mClass.getName());
 				ft.add(android.R.id.content, mFragment, mTag);
+				//ft.commit();
 			} else {
+				
+				
 				// If it exists, simply attach it in order to show it
-				ft.attach(mFragment);
+				ft.show(mFragment);
+				//ft.commit();
 			}
 		}
 
@@ -100,7 +106,8 @@ public class MainActivity extends Activity  {
 		public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 			if (mFragment != null) {
 				// Detach the fragment, because another one is being attached
-				ft.detach(mFragment);
+				//ft.detach(mFragment);
+				ft.hide(mFragment);
 			}
 		}
 

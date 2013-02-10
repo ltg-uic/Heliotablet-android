@@ -166,6 +166,51 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 					});
 			        
 			        tv.addView(deleteButton);
+			        
+			        Button updateButton = new Button(getActivity());
+			        updateButton.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+			        updateButton.setText("Update");
+			        updateButton.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
+							
+							Loader<Cursor> deleteLoader = TheoryFragmentWithSQLiteLoader.this.getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_LOADER_ID);
+							if( deleteLoader == null) {
+								TheoryFragmentWithSQLiteLoader.this.getLoaderManager().initLoader(ReasonDBOpenHelper.DELETE_REASON_LOADER_ID, null, TheoryFragmentWithSQLiteLoader.this);
+								deleteLoader = TheoryFragmentWithSQLiteLoader.this.getLoaderManager().getLoader(ReasonDBOpenHelper.DELETE_REASON_LOADER_ID);
+							} else {
+								TheoryFragmentWithSQLiteLoader.this.getLoaderManager().restartLoader(ReasonDBOpenHelper.DELETE_REASON_LOADER_ID, null, TheoryFragmentWithSQLiteLoader.this);
+							}
+							
+							SQLiteCursorLoader sqlDeleteLoader = (SQLiteCursorLoader)deleteLoader;
+						    String[] ids= { String.valueOf(1) };
+
+						    Reason earthRed2 = new Reason();
+							
+							earthRed2.setAnchor(Reason.CONST_EARTH);
+							earthRed2.setFlag(Reason.CONST_RED);
+							earthRed2.setOrigin("tony");
+							earthRed2.setReasonText("FUCKING its the biggest");
+							earthRed2.setType(Reason.TYPE_THEORY);
+							earthRed2.setReadonly(false);
+						    
+							String[] uid = { String.valueOf(2) };
+						    
+							ContentValues reasonContentValues = ReasonDataSource.getReasonContentValues(earthRed2);
+
+							
+							sqlDeleteLoader.update(db.TABLE_REASON, reasonContentValues, "_id=?", ids);
+							
+							
+							
+							
+						}
+					});
+			        
+			        tv.addView(updateButton);
+			        
+			        
 				}
 				
 				tv.setOnDragListener(new TargetViewDragListener());
@@ -273,7 +318,7 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 		
 		switch (loader.getId()) {
 	      case ReasonDBOpenHelper.ALL_REASONS_LOADER_ID:
-	    	  updateViews(data);
+	    	  updateAllViews(data);
 	    	  System.out.println("ALL REASONS");
 	    	  break;
 	      case ReasonDBOpenHelper.INSERT_REASON_LOADER_ID:
@@ -290,6 +335,19 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 		Log.d("THEORY FRAGMENT", "onLoadFinished");
 	}
 	
+	private void updateAllViews(Cursor data) {
+		if( data != null && data.getCount() > 0 ) {
+	    	data.moveToFirst();
+	  	    while (!data.isAfterLast()) {
+	  	      Reason reason =  ReasonDataSource.cursorToReason(data);
+	  	      System.out.println("REASON: " + reason.toString());
+				theoryController.addReason(reason);
+
+	  	      data.moveToNext();
+	  	    }
+    	}
+	}
+
 	private void updateViews(Cursor data) {
 		if( data != null && data.getCount() > 0 ) {
 	    	data.moveToFirst();

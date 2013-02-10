@@ -2,7 +2,10 @@ package ltg.heliotablet_android.view;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+
+import com.google.common.collect.Iterables;
 
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.R.color;
@@ -53,8 +56,21 @@ public class TheoryPlanetView extends LinearLayout {
 			CircleView circleView = flagToCircleView.get(flag);
 			
 			ArrayList<Reason> reasons = (ArrayList<Reason>) circleView.getTag();
-			reasons.add(reason);
 			
+			Iterable matches = Iterables.filter(reasons, Reason.getIdPredicate(reason.getId()));
+			System.out.println("Matches");
+			
+			Reason oldReason = null;
+			for (Iterator<Reason> r = matches.iterator(); r.hasNext();) { 
+		        Reason next = r.next();
+		        oldReason = next;
+		    } 
+			
+			if( oldReason !=  null) {
+				reasons.remove(oldReason);
+			}
+			
+			reasons.add(reason);
 			//check to see if it should be dimmed
 			boolean isTransparent = true;
 			for (Reason r : reasons) {

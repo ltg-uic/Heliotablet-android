@@ -114,19 +114,43 @@ public class TheoryReasonController {
 		
 		if(cachedReasons.isEmpty()) {
 			cachedReasons.add(reason);
+			String anchor = reason.getAnchor();
+			TheoryPlanetView theoryPlanetView = theoryViewsToAnchors.get(anchor);
+			theoryPlanetView.updateCircleView(reason);
 		} else {
 			
 			Iterable matches = Iterables.filter(cachedReasons, Reason.getIdPredicate(reason.getId()));
-			System.out.println("Matches");
+			
 
+			boolean found = false;
+			for (Iterator<Reason> r = matches.iterator(); r.hasNext();) { 
+				System.out.println("Matches");
+		        Reason next = r.next();
+		        
+		        if( reason.compareTo(next) == 1 ) {
+		        	cachedReasons.remove(next);
+		        	cachedReasons.add(reason);
+					String anchor = reason.getAnchor();
+					TheoryPlanetView theoryPlanetView = theoryViewsToAnchors
+							.get(anchor);
+					theoryPlanetView.updateCircleView(reason);
+		        }
+		        
+		        
+		        found = true;
+		    } 
 
+			if (!found) {
+				cachedReasons.add(reason);
+				TheoryPlanetView theoryPlanetView = theoryViewsToAnchors
+						.get(reason.getAnchor());
+				theoryPlanetView.updateCircleView(reason);
+			}
 			
 		}
 		
 		
-		String anchor = reason.getAnchor();
-		TheoryPlanetView theoryPlanetView = theoryViewsToAnchors.get(anchor);
-		theoryPlanetView.updateCircleView(reason);
+		
 	}
 	
 	public void addReason(String anchor, String flag, boolean isReadOnly) {
