@@ -2,7 +2,11 @@ package ltg.heliotablet_android.data;
 
 import java.sql.Timestamp;
 
-public class Reason {
+import com.google.common.base.Objects;
+import com.google.common.base.Predicate;
+import com.google.common.collect.ComparisonChain;
+
+public class Reason implements Comparable < Reason >{
 	
 	private long id;
 	
@@ -103,10 +107,47 @@ public class Reason {
 	public void setReadonly(boolean isReadonly) {
 		this.isReadonly = isReadonly;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "id: " + this.getId() + " Type: " + this.getType() + " Anchor: " + this.getAnchor() + " Flag: " + this.getFlag() + " ReasonText: " + this.getReasonText() + " isReadyOnly: " + this.isReadonly() + " Origin: " + this.getOrigin();
+		return Objects.toStringHelper(this)
+			 	  .add("id", Long.toString(this.id))
+		    	  .add("reasonText", this.reasonText)
+		         .add("anchor", this.anchor)
+		         .add("type", this.type)
+		         .add("flag", this.flag)
+		         .add("origin", this.origin)
+		         .add("isReadonly", this.isReadonly)
+				.toString();
 	}
+	
+	@Override
+	public int compareTo(Reason other) {
+	     return ComparisonChain.start()
+	    	  .compare(this.id, other.id)
+	    	  .compare(this.reasonText, other.reasonText)
+	         .compare(this.anchor, other.anchor)
+	         .compare(this.type, other.type)
+	         .compare(this.flag, other.flag)
+	         .compare(this.origin, other.origin)
+	         .compareTrueFirst(this.isReadonly, other.isReadonly)
+	         .result();
+	}
+	
+	public static Predicate getIdPredicate(final Long id) {
+		Predicate idPredicate = new Predicate() {
+
+			@Override
+			public boolean apply(Object input) {
+				Reason r = (Reason) input;
+				if( id.equals(r.getId()))
+					return true;
+				
+				return false;
+			}
+		};
+		return idPredicate;
+	}
+	
 
 }

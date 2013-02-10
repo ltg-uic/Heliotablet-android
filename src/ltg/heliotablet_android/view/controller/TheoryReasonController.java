@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDataSource;
 import ltg.heliotablet_android.view.TheoryPlanetView;
@@ -17,13 +20,14 @@ public class TheoryReasonController {
 	private Context context;
 	private ReasonDataSource reasonDatasource;
 	private HashMap<String, TheoryPlanetView> theoryViewsToAnchors;
+	private ArrayList<Reason> cachedReasons = new ArrayList<Reason>();
 
 	private TheoryReasonController(Context context) {
 		this.context = context;
-		reasonDatasource = ReasonDataSource.getInstance(context);
-		reasonDatasource.open();
-		
-		createTestData();
+//		reasonDatasource = ReasonDataSource.getInstance(context);
+//		reasonDatasource.open();
+//		
+//		createTestData();
 	}
 	
 	public static TheoryReasonController getInstance(Context context) {
@@ -105,6 +109,26 @@ public class TheoryReasonController {
 		}
 	}
 
+	
+	public void addReason(Reason reason) {
+		
+		if(cachedReasons.isEmpty()) {
+			cachedReasons.add(reason);
+		} else {
+			
+			Iterable matches = Iterables.filter(cachedReasons, Reason.getIdPredicate(reason.getId()));
+			System.out.println("Matches");
+
+
+			
+		}
+		
+		
+		String anchor = reason.getAnchor();
+		TheoryPlanetView theoryPlanetView = theoryViewsToAnchors.get(anchor);
+		theoryPlanetView.updateCircleView(reason);
+	}
+	
 	public void addReason(String anchor, String flag, boolean isReadOnly) {
 		TheoryPlanetView theoryPlanetView = theoryViewsToAnchors.get(anchor);
 		

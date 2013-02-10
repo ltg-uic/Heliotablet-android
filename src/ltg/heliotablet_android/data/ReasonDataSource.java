@@ -16,7 +16,7 @@ public class ReasonDataSource {
 
 	private SQLiteDatabase database;
 	private ReasonDBOpenHelper reasonDBHelper;
-	private String[] reasonColumns = { ReasonDBOpenHelper.COLUMN_ID,
+	public static final String[] reasonColumns = { ReasonDBOpenHelper.COLUMN_ID,
 			ReasonDBOpenHelper.COLUMN_TYPE, ReasonDBOpenHelper.COLUMN_ANCHOR,
 			ReasonDBOpenHelper.COLUMN_LAST_TIMESTAMP,
 			ReasonDBOpenHelper.COLUMN_ORIGIN,
@@ -37,7 +37,7 @@ public class ReasonDataSource {
 	}
 	
 	private ReasonDataSource(Context context) {
-		reasonDBHelper = new ReasonDBOpenHelper(context);
+		//reasonDBHelper = new ReasonDBOpenHelper(context);
 		this.context = context;
 	}
 
@@ -66,15 +66,15 @@ public class ReasonDataSource {
 		return newReason;
 	}
 	
-	public ContentValues getReasonContentValues(Reason reason) {
+	public static ContentValues getReasonContentValues(Reason reason) {
 		ContentValues values = new ContentValues();
 		values.put(ReasonDBOpenHelper.COLUMN_TYPE, reason.getType());
 		values.put(ReasonDBOpenHelper.COLUMN_ANCHOR, reason.getAnchor());
 		values.put(ReasonDBOpenHelper.COLUMN_ORIGIN, reason.getOrigin());
 		values.put(ReasonDBOpenHelper.COLUMN_REASON_TEXT,
 				reason.getReasonText());
-		values.put(ReasonDBOpenHelper.COLUMN_LAST_TIMESTAMP, reason
-				.getLastTimestamp().toString());
+		java.util.Date date= new java.util.Date();
+		values.put(ReasonDBOpenHelper.COLUMN_LAST_TIMESTAMP, new Timestamp(date.getTime()).toString());
 		values.put(ReasonDBOpenHelper.COLUMN_FLAG, reason.getFlag());
 		values.put(ReasonDBOpenHelper.COLUMN_ISREADONLY, reason.isReadonly());
 		
@@ -165,7 +165,7 @@ public class ReasonDataSource {
         return null;
 	}
 	
-	 public Reason cursorToReason(Cursor c) {
+	 public static Reason cursorToReason(Cursor c) {
 		    Reason reason = new Reason();
 		    reason.setId(c.getLong(c.getColumnIndex(ReasonDBOpenHelper.COLUMN_ID)));
     		reason.setAnchor(c.getString(c.getColumnIndex(ReasonDBOpenHelper.COLUMN_ANCHOR)));

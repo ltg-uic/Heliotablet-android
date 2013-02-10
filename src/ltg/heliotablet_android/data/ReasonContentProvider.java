@@ -1,9 +1,11 @@
 package ltg.heliotablet_android.data;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
@@ -32,7 +34,7 @@ public class ReasonContentProvider extends ContentProvider {
 
 	@Override
 	public boolean onCreate() {
-		database = new ReasonDBOpenHelper(getContext());
+		//database = new ReasonDBOpenHelper(getContext());
 		return false;
 	}
 
@@ -45,18 +47,20 @@ public class ReasonContentProvider extends ContentProvider {
 	// your database schema.
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
-		SQLiteDatabase writeDatabase = database.getWritableDatabase();
-		switch (uriMatcher.match(uri)) {
-		case ALL_REASONS:
-			// do nothing
-			break;
-		default:
-			throw new IllegalArgumentException("Unsupported URI: " + uri);
-		}
-		long id = writeDatabase.insert(ReasonDBOpenHelper.TABLE_REASON, null,
-				values);
-		getContext().getContentResolver().notifyChange(uri, null);
-		return Uri.parse(CONTENT_URI + "/" + id);
+	    int uriType = uriMatcher.match(uri);
+        if (uriType != ALL_REASONS) {
+            throw new IllegalArgumentException("Invalid URI for insert");
+        }
+        SQLiteDatabase sqlDB = database.getWritableDatabase();
+        long newID = sqlDB
+                .insert(ReasonDBOpenHelper.TABLE_REASON, null, values);
+        if (newID > 0) {
+            Uri newUri = ContentUris.withAppendedId(uri, newID);
+            getContext().getContentResolver().notifyChange(uri, null);
+            return newUri;
+        } else {
+            throw new SQLException("Failed to insert row into " + uri);
+        }
 	}
 
 	@Override
@@ -81,6 +85,7 @@ public class ReasonContentProvider extends ContentProvider {
 
 		Cursor cursor = queryBuilder.query(db, projection, selection,
 				selectionArgs, null, null, sortOrder);
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
 		return cursor;
 
 	}

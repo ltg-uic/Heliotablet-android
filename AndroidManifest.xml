@@ -25,9 +25,11 @@
             </intent-filter>
         </activity>
         
-    <!--       <provider
+    	<!-- <provider
       		android:name="ltg.heliotablet_android.data.ReasonContentProvider"
-      		android:authorities="ltg.heliotablet_android.data" >
+      		android:authorities="ltg.heliotablet_android.data" 
+      		android:exported="false"
+      		>
    		</provider> -->
     </application>
 

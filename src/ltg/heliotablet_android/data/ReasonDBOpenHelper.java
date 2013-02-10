@@ -1,6 +1,12 @@
 package ltg.heliotablet_android.data;
 
+import java.sql.Timestamp;
+
+import ltg.heliotablet_android.view.controller.TheoryReasonController;
+
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -8,6 +14,11 @@ import android.util.Log;
 
 public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 
+	public static final int ALL_REASONS_LOADER_ID = 0;
+	public static final int INSERT_REASON_LOADER_ID = 1;
+	public static final int UPDATE_REASON_LOADER_ID = 2;
+	public static final int DELETE_REASON_LOADER_ID = 3;
+	
 	private static final String DATABASE_NAME = "reasons.db";
 	private static final int DATABASE_VERSION = 1;
 
@@ -30,6 +41,9 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_URL = "url";
 	public static final String COLUMN_REASON_ID = "reasonId";
 	public static final String COLUMN_CREATION_TIME = "creationTime";
+	
+	public final static String TYPE_THEORY = "THEORY";
+	public final static String TYPE_OBSERVATION = "OBSERVATION";
 
 	public static final String CREATE_TABLE_REASON = "CREATE TABLE "
 			+ TABLE_REASON + " (" + COLUMN_ID
@@ -44,21 +58,31 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 		     + COLUMN_REASON_ID + "  TEXT NOT NULL, "
 			+ " FOREIGN KEY ("+COLUMN_REASON_ID+") REFERENCES " + TABLE_REASON
 			+ " ("+COLUMN_ID+"));";
+	private static ReasonDBOpenHelper rInstance;
 
 	public ReasonDBOpenHelper(Context context, String name,
 			CursorFactory factory, int version) {
 		super(context, name, factory, version);
 	}
 
-	public ReasonDBOpenHelper(Context context) {
+	private ReasonDBOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
 	}
+	
+	public static ReasonDBOpenHelper getInstance(Context context) {
+		if (rInstance == null) {
+			rInstance = new ReasonDBOpenHelper(context);
+		}
+		return rInstance;
+	}
+	
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("PRAGMA foreign_keys=ON;");
 		db.execSQL(CREATE_TABLE_REASON);
+		//seedDb(db);
 		//db.execSQL(CREATE_TABLE_REASON_IMAGE);
 	}
 
@@ -78,5 +102,58 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 		//db.execSQL("DROP TABLE IF EXISTS " + TABLE_REASON_IMAGE);
 		onCreate(db);
 	}
+	
 
+	public void seedDb(SQLiteDatabase db) {
+		
+		Reason earthRed1 = new Reason();
+		earthRed1.setAnchor(Reason.CONST_EARTH);
+		earthRed1.setFlag(Reason.CONST_RED);
+		earthRed1.setOrigin("bob");
+		earthRed1.setReasonText("Earth is red be it sucks");
+		earthRed1.setType(Reason.TYPE_THEORY);
+		earthRed1.setReadonly(true);
+		
+		createReason(earthRed1, db);
+		
+		Reason earthRed2 = new Reason();
+		
+		earthRed2.setAnchor(Reason.CONST_EARTH);
+		earthRed2.setFlag(Reason.CONST_RED);
+		earthRed2.setOrigin("tony");
+		earthRed2.setReasonText("because its the biggest");
+		earthRed2.setType(Reason.TYPE_THEORY);
+		earthRed2.setReadonly(false);
+		
+		createReason(earthRed2, db);
+		
+		Reason marsORANGE = new Reason();
+		
+		marsORANGE.setAnchor(Reason.CONST_MARS);
+		marsORANGE.setFlag(Reason.CONST_ORANGE);
+		marsORANGE.setOrigin("tony");
+		marsORANGE.setReasonText("YEAH YEAH ");
+		marsORANGE.setType(Reason.TYPE_THEORY);
+		marsORANGE.setReadonly(true);
+		
+		createReason(marsORANGE, db);
+	}
+	
+	public void createReason(Reason reason, SQLiteDatabase database) {
+		ContentValues values = new ContentValues();
+		values.put(ReasonDBOpenHelper.COLUMN_TYPE, reason.getType());
+		values.put(ReasonDBOpenHelper.COLUMN_ANCHOR, reason.getAnchor());
+		values.put(ReasonDBOpenHelper.COLUMN_ORIGIN, reason.getOrigin());
+		values.put(ReasonDBOpenHelper.COLUMN_REASON_TEXT,
+				reason.getReasonText());
+		
+		java.util.Date date= new java.util.Date();
+		values.put(ReasonDBOpenHelper.COLUMN_LAST_TIMESTAMP, new Timestamp(date.getTime()).toString());
+		values.put(ReasonDBOpenHelper.COLUMN_FLAG, reason.getFlag());
+		values.put(ReasonDBOpenHelper.COLUMN_ISREADONLY, reason.isReadonly());
+
+		long reasonId = database.insert(ReasonDBOpenHelper.TABLE_REASON, null,
+				values);
+	}
+	
 }
