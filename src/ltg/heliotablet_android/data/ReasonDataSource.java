@@ -47,7 +47,7 @@ public class ReasonDataSource {
 		values.put(ReasonDBOpenHelper.COLUMN_ANCHOR, reason.getAnchor());
 		values.put(ReasonDBOpenHelper.COLUMN_ORIGIN, reason.getOrigin());
 		values.put(ReasonDBOpenHelper.COLUMN_REASON_TEXT,
-				reason.getReasonText());
+				( reason.getReasonText() == null ) ? " " : reason.getReasonText());
 		
 		java.util.Date date= new java.util.Date();
 		values.put(ReasonDBOpenHelper.COLUMN_LAST_TIMESTAMP, new Timestamp(date.getTime()).toString());

@@ -261,17 +261,22 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 
 					if (targetView instanceof TheoryPlanetView) {
 						TheoryPlanetView tv = (TheoryPlanetView) targetView;
-						theoryController.addReason(tv.getAnchor(),
-								cv.getFlag(), false);
-					} else if (targetView instanceof CircleView) {
-						TheoryPlanetView tv = (TheoryPlanetView) targetView
-								.getParent();
-						theoryController.addReason(tv.getAnchor(),
-								cv.getFlag(), false);
-					}
+						
+						Loader<Cursor> insertLoader = TheoryFragmentWithSQLiteLoader.this.getLoaderManager().getLoader(ReasonDBOpenHelper.INSERT_REASON_LOADER_ID);
+						
+						if( insertLoader == null) {
+							TheoryFragmentWithSQLiteLoader.this.getLoaderManager().initLoader(ReasonDBOpenHelper.INSERT_REASON_LOADER_ID, null, TheoryFragmentWithSQLiteLoader.this);
+							insertLoader = TheoryFragmentWithSQLiteLoader.this.getLoaderManager().getLoader(ReasonDBOpenHelper.INSERT_REASON_LOADER_ID);
+							
+						} 
 
-					// cv.setVisibility(View.VISIBLE);
-
+						Reason reason = new Reason(tv.getAnchor(),cv.getFlag(), Reason.TYPE_THEORY,"tony", false);
+						
+						SQLiteCursorLoader sqlInsertLoader = (SQLiteCursorLoader)insertLoader;
+						
+						ContentValues reasonContentValues = ReasonDataSource.getReasonContentValues(reason);
+						sqlInsertLoader.insert(ReasonDBOpenHelper.TABLE_REASON, null, reasonContentValues);
+					} 
 				}
 				break;
 			case DragEvent.ACTION_DRAG_ENDED:

@@ -44,6 +44,18 @@ public class Reason implements Comparable < Reason >{
 	public final static String TYPE_THEORY = "THEORY";
 	public final static String TYPE_OBSERVATION = "OBSERVATION";
 	
+	public Reason(String anchor, String flag, String type, String origin, boolean isReadOnly) {
+		this.anchor = anchor;
+		this.flag = flag;
+		this.origin = origin;
+		this.type = type;
+		this.isReadonly = isReadOnly;
+	}
+	
+	public Reason() {
+		
+	}
+
 	public long getId() {
 		return id;
 	}
