@@ -121,14 +121,16 @@ public class TheoryReasonController {
 			
 			Iterable matches = Iterables.filter(cachedReasons, Reason.getIdPredicate(reason.getId()));
 			
-
+			
+			
 			boolean found = false;
+			Reason oldReason = null;
 			for (Iterator<Reason> r = matches.iterator(); r.hasNext();) { 
 				System.out.println("Matches");
 		        Reason next = r.next();
-		        
-		        if( reason.compareTo(next) == 1 ) {
-		        	cachedReasons.remove(next);
+		    
+		        if( reason.compareTo(next) == 0 ) {
+		        	oldReason = next;
 		        	cachedReasons.add(reason);
 					String anchor = reason.getAnchor();
 					TheoryPlanetView theoryPlanetView = theoryViewsToAnchors
@@ -140,6 +142,9 @@ public class TheoryReasonController {
 		        found = true;
 		    } 
 
+//			if( oldReason != null )
+//				cachedReasons.remove(oldReason);
+			
 			if (!found) {
 				cachedReasons.add(reason);
 				TheoryPlanetView theoryPlanetView = theoryViewsToAnchors

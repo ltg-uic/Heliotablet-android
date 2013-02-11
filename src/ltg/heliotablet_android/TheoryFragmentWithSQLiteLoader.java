@@ -76,6 +76,11 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 	private void setupLoader() {
 		getLoaderManager().initLoader(ReasonDBOpenHelper.ALL_REASONS_LOADER_ID, null, this);
 		getLoaderManager().initLoader(ReasonDBOpenHelper.INSERT_REASON_LOADER_ID, null, this);
+		
+		Bundle args = new Bundle();
+	    args.putParcelable("reason", null);
+		
+		getLoaderManager().initLoader(ReasonDBOpenHelper.UPDATE_REASON_LOADER_ID, args, this);
 		LoaderManager.enableDebugLogging(true);
 	}
 
@@ -175,15 +180,15 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 						@Override
 						public void onClick(View v) {
 							
-							Loader<Cursor> deleteLoader = TheoryFragmentWithSQLiteLoader.this.getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_LOADER_ID);
-							if( deleteLoader == null) {
+							Loader<Cursor> updateLoader = TheoryFragmentWithSQLiteLoader.this.getLoaderManager().getLoader(ReasonDBOpenHelper.UPDATE_REASON_LOADER_ID);
+							if( updateLoader == null) {
 								TheoryFragmentWithSQLiteLoader.this.getLoaderManager().initLoader(ReasonDBOpenHelper.DELETE_REASON_LOADER_ID, null, TheoryFragmentWithSQLiteLoader.this);
-								deleteLoader = TheoryFragmentWithSQLiteLoader.this.getLoaderManager().getLoader(ReasonDBOpenHelper.DELETE_REASON_LOADER_ID);
+								updateLoader = TheoryFragmentWithSQLiteLoader.this.getLoaderManager().getLoader(ReasonDBOpenHelper.DELETE_REASON_LOADER_ID);
 							} else {
 								TheoryFragmentWithSQLiteLoader.this.getLoaderManager().restartLoader(ReasonDBOpenHelper.DELETE_REASON_LOADER_ID, null, TheoryFragmentWithSQLiteLoader.this);
 							}
 							
-							SQLiteCursorLoader sqlDeleteLoader = (SQLiteCursorLoader)deleteLoader;
+							SQLiteCursorLoader sqlDeleteLoader = (SQLiteCursorLoader)updateLoader;
 						    String[] ids= { String.valueOf(1) };
 
 						    Reason earthRed2 = new Reason();
@@ -199,8 +204,13 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 						    
 							ContentValues reasonContentValues = ReasonDataSource.getReasonContentValues(earthRed2);
 
+							Bundle args = new Bundle();
+						    args.putString("id", "2");
+
+						
+							TheoryFragmentWithSQLiteLoader.this.getLoaderManager().restartLoader(ReasonDBOpenHelper.UPDATE_REASON_LOADER_ID, args, TheoryFragmentWithSQLiteLoader.this);
 							
-							sqlDeleteLoader.update(db.TABLE_REASON, reasonContentValues, "_id=?", ids);
+							//sqlDeleteLoader.update(db.TABLE_REASON, reasonContentValues, "_id=?", ids);
 							
 							
 							
@@ -312,7 +322,9 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 	      case ReasonDBOpenHelper.DELETE_REASON_LOADER_ID:
 	      		System.out.println("DELETE REASONS");
 	      		return new SQLiteCursorLoader(this.getActivity(), db, "SELECT _id, anchor, type, flag, reasonText, isReadOnly, lastTimestamp, origin FROM reason ORDER BY anchor;", null);
-
+	      case ReasonDBOpenHelper.UPDATE_REASON_LOADER_ID:		
+	    	    System.out.println("UPDATE REASONS" + args);
+	    	    return new SQLiteCursorLoader(this.getActivity(), db, "SELECT _id, anchor, type, flag, reasonText, isReadOnly, lastTimestamp, origin FROM reason WHERE _id = '3'; SELECT _id, anchor, type, flag, reasonText, isReadOnly, lastTimestamp, origin FROM reason WHERE _id = '4';", null);
 		 }
 		
 		 return null;
@@ -333,6 +345,10 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 	    	  System.out.println("Delete");
 	    	  //updateViews(data);
 	    	  break;
+	      case ReasonDBOpenHelper.UPDATE_REASON_LOADER_ID:
+	    	  System.out.println("update");
+	    	 // updateViews(data);
+	    	  break;	  
 		 }
 //		System.out.println("hey");
 

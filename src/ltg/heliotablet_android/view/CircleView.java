@@ -2,6 +2,11 @@ package ltg.heliotablet_android.view;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+import com.google.common.collect.ComparisonChain;
 
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.R.color;
@@ -90,12 +95,23 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 	    // event when double tap occurs
 	    @Override
 	    public boolean onDoubleTap(MotionEvent e) {
-	    	showPopover((ArrayList<Reason>) getTag());
+	    	List<Reason> reasons = (ArrayList<Reason>) getTag();
+	    	
+	    	Collections.sort(reasons, new Comparator<Reason>(){
+	            @Override
+	            public int compare(Reason r1, Reason r2) {
+	                 return ComparisonChain.start()
+	                       .compareFalseFirst(r1.isReadonly(), r2.isReadonly()).result();
+	            }});
+	    	
+	    	
+	    	
+	    	showPopover(reasons);
 	        return super.onDoubleTap(e);
 	    }
 	}
 	
-	public void showPopover(ArrayList<Reason> reasons) {
+	public void showPopover(List<Reason> reasons) {
 		
 		ArrayList<View> pages = new ArrayList<View>();
 		ViewPager pager = new ViewPager(getContext());
