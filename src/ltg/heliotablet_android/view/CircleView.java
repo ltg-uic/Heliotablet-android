@@ -6,15 +6,25 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import ltg.heliotablet_android.MainActivity;
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.R.color;
+import ltg.heliotablet_android.TheoryFragmentWithSQLiteLoader;
 import ltg.heliotablet_android.data.Reason;
+import ltg.heliotablet_android.data.ReasonDBOpenHelper;
+import ltg.heliotablet_android.data.ReasonDataSource;
 import ltg.heliotablet_android.view.PopoverView.PopoverViewDelegate;
 
 import org.apache.commons.lang3.StringUtils;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.LoaderManager;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Loader;
 import android.content.res.TypedArray;
+import android.database.Cursor;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.SystemClock;
@@ -30,6 +40,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.commonsware.cwac.loaderex.SQLiteCursorLoader;
 import com.google.common.collect.ComparisonChain;
 
 public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
@@ -188,12 +199,21 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 		if(!StringUtils.stripToEmpty(reason.getReasonText()).equals(edit)) {
 			reason.setReasonText(edit);
 			
-		}
-				
-			//setNewReason(reason);	
-				
+			Activity mainActivity = (Activity) CircleView.this.getContext();
+			LoaderManager loaderManager = mainActivity.getLoaderManager();
+			TheoryFragmentWithSQLiteLoader tf = (TheoryFragmentWithSQLiteLoader) mainActivity.getFragmentManager().findFragmentByTag(getContext().getString(R.string.fragment_tag_theory));
+			Loader<Cursor> loader = tf.getLoaderManager().getLoader(ReasonDBOpenHelper.UPDATE_REASON_LOADER_ID);
+			SQLiteCursorLoader updateLoader = (SQLiteCursorLoader)loader;
 			
+			  String[] args= { String.valueOf(reason.getId()) };
+
+			ContentValues reasonContentValues = ReasonDataSource.getReasonContentValues(reason);  
+			updateLoader.update(ReasonDBOpenHelper.TABLE_REASON, reasonContentValues, "_id=?", args);
+			
+
+		}
 		
+
 	}
 
 	private void setNewReason(Reason reason) {

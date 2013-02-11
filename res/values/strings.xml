@@ -46,5 +46,8 @@
    <string name="action_previous">Previous</string>
    <string name="action_next">Next</string>
    <string name="action_finish">Finish</string>
+   <string name="fragment_tag_theory">theory</string>
+   <string name="fragment_tag_observation">observations</string>
+   <string name="fragment_tag_scratchpad">scratchpad</string>
    
 </resources>

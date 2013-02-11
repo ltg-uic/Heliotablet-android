@@ -324,7 +324,7 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 	      		return new SQLiteCursorLoader(this.getActivity(), db, "SELECT _id, anchor, type, flag, reasonText, isReadOnly, lastTimestamp, origin FROM reason ORDER BY anchor;", null);
 	      case ReasonDBOpenHelper.UPDATE_REASON_LOADER_ID:		
 	    	    System.out.println("UPDATE REASONS" + args);
-	    	    return new SQLiteCursorLoader(this.getActivity(), db, "SELECT _id, anchor, type, flag, reasonText, isReadOnly, lastTimestamp, origin FROM reason WHERE _id = '3'; SELECT _id, anchor, type, flag, reasonText, isReadOnly, lastTimestamp, origin FROM reason WHERE _id = '4';", null);
+	    	    return new SQLiteCursorLoader(this.getActivity(), db, "SELECT _id, anchor, type, flag, reasonText, isReadOnly, lastTimestamp, origin FROM reason WHERE type = '" + ReasonDBOpenHelper.TYPE_THEORY + "' ORDER BY anchor;", null);
 		 }
 		
 		 return null;
@@ -347,6 +347,7 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 	    	  break;
 	      case ReasonDBOpenHelper.UPDATE_REASON_LOADER_ID:
 	    	  System.out.println("update");
+	    	  quickDump(data);	    	 
 	    	 // updateViews(data);
 	    	  break;	  
 		 }
@@ -354,6 +355,18 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 
 //		
 		Log.d("THEORY FRAGMENT", "onLoadFinished");
+	}
+	
+	
+	private void quickDump(Cursor data) {
+		if (data != null && data.getCount() > 0) {
+			data.moveToFirst();
+			while (!data.isAfterLast()) {
+				Reason reason = ReasonDataSource.cursorToReason(data);
+				System.out.println("REASON: " + reason.toString());
+				data.moveToNext();
+			}
+		}
 	}
 	
 	private void updateAllViews(Cursor data) {

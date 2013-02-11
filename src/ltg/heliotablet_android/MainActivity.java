@@ -40,18 +40,18 @@ public class MainActivity extends Activity  {
 		
 		Tab tab = actionBar.newTab()
 							.setText(R.string.tab_title_theories)
-							.setTabListener(new TabListener<TheoryFragmentWithSQLiteLoader>(this, "theories", TheoryFragmentWithSQLiteLoader.class));
+							.setTabListener(new TabListener<TheoryFragmentWithSQLiteLoader>(this, getString(R.string.fragment_tag_theory), TheoryFragmentWithSQLiteLoader.class));
 		actionBar.addTab(tab);
 		
 		tab = actionBar.newTab()
 				.setText(R.string.tab_title_observations)
-				.setTabListener(new TabListener<ObservationFragment>(this, "observations", ObservationFragment.class));
+				.setTabListener(new TabListener<ObservationFragment>(this, getString(R.string.fragment_tag_observation), ObservationFragment.class));
 		    
 		actionBar.addTab(tab);
 		
 		tab = actionBar.newTab()
 				.setText(R.string.tab_title_scratch_pad)
-				.setTabListener(new TabListener<ScratchPadFragment>(this, "scratchpad", ScratchPadFragment.class));
+				.setTabListener(new TabListener<ScratchPadFragment>(this, getString(R.string.fragment_tag_scratchpad), ScratchPadFragment.class));
 		    
 		actionBar.addTab(tab);
 		
