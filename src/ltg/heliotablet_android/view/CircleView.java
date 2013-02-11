@@ -25,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -73,7 +74,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 	public void setTag(Object tag) {
 		super.setTag(tag);
 		
-		ArrayList<Reason> reasons = (ArrayList<Reason>) tag;
+		reasons = (ArrayList<Reason>) tag;
 		if( reasons != null) {
 			this.reasonTextView.setText(""+reasons.size());
 		}
@@ -96,7 +97,6 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 	    // event when double tap occurs
 	    @Override
 	    public boolean onDoubleTap(MotionEvent e) {
-	    	List<Reason> reasons = (ArrayList<Reason>) getTag();
 	    	
 	    	Collections.sort(reasons, new Comparator<Reason>(){
 	            @Override
@@ -173,16 +173,31 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 
 	@Override
 	public void popoverViewWillDismiss(PopoverView view) {
+		
+		
 		ViewPager vPager = (ViewPager) view.findViewById(R.id.pager);
 		PopoverViewAdapter adapter = (PopoverViewAdapter) vPager.getAdapter();
 		EditText editText = (EditText) adapter.findViewById(0, R.id.mainEditText);
-		if( editText.getTag() != null && ((Boolean)editText.getTag()).booleanValue()) {
-			String edit = StringUtils.stripToEmpty(editText.getText().toString());
-			View reasonView = adapter.getView(0);
-			Reason reason = (Reason) reasonView.getTag();
-			if(!StringUtils.stripToEmpty(reason.getReasonText()).equals(edit))
+		
+		InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+		
+		String edit = StringUtils.stripToEmpty(editText.getText().toString());
+		View reasonView = adapter.getView(0);
+		Reason reason = (Reason) reasonView.getTag();
+		if(!StringUtils.stripToEmpty(reason.getReasonText()).equals(edit)) {
 			reason.setReasonText(edit);
+			
 		}
+				
+			//setNewReason(reason);	
+				
+			
+		
+	}
+
+	private void setNewReason(Reason reason) {
+		reasons.get(reasons.indexOf(reason)).setReasonText(reason.getReasonText());
 		
 	}
 
