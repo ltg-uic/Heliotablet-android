@@ -6,29 +6,30 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import com.google.common.collect.ComparisonChain;
-
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.R.color;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.view.PopoverView.PopoverViewDelegate;
+
+import org.apache.commons.lang3.StringUtils;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
-import android.support.v4.view.PagerAdapter;
+import android.os.SystemClock;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.google.common.collect.ComparisonChain;
 
 public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 
@@ -121,23 +122,32 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 		for (Reason reason : reasons) {
 			View layout = View.inflate(getContext(),
 					R.layout.popover_view, null);
-			EditText editText = (EditText) layout.findViewById(R.id.mainEditText);
+			layout.setTag(reason);
+			
+			final EditText editText = (EditText) layout.findViewById(R.id.mainEditText);
 			
 			editText.setText(reason.getReasonText());
 			
 			if( reason.isReadonly()) {
 				editText.setKeyListener(null);
+			} else {
+				editText.setFocusable(true);
+			    editText.setFocusableInTouchMode(true);
+	            editText.setClickable(true);
+				editText.requestFocus();
 			}
 
 			pages.add(layout);
 		}
 		
 		vPager.setAdapter(new PopoverViewAdapter(pages));
+		vPager.setOffscreenPageLimit(5);
+		vPager.setCurrentItem(0);
         ViewGroup parent = (ViewGroup) this.getParent().getParent().getParent();
 
 		
 		PopoverView popoverView = new PopoverView(getContext(), viewPagerLayout);
-		popoverView.setContentSizeForViewInPopover(new Point(400, 400));
+		popoverView.setContentSizeForViewInPopover(new Point(370, 220));
 		popoverView.setDelegate(this);
 		popoverView.showPopoverFromRectInViewGroup(
 				parent,
@@ -152,14 +162,33 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 
 	@Override
 	public void popoverViewDidShow(PopoverView view) {
+		ViewPager vPager = (ViewPager) view.findViewById(R.id.pager);
+		PopoverViewAdapter adapter = (PopoverViewAdapter) vPager.getAdapter();
+		EditText editText = (EditText) adapter.findViewById(0, R.id.mainEditText);
+		editText.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN , 0, 0, 0));
+		editText.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP , 0, 0, 0));
+		editText.requestFocus();
+		editText.setSelection(editText.getText().length());
 	}
 
 	@Override
 	public void popoverViewWillDismiss(PopoverView view) {
+		ViewPager vPager = (ViewPager) view.findViewById(R.id.pager);
+		PopoverViewAdapter adapter = (PopoverViewAdapter) vPager.getAdapter();
+		EditText editText = (EditText) adapter.findViewById(0, R.id.mainEditText);
+		if( editText.getTag() != null && ((Boolean)editText.getTag()).booleanValue()) {
+			String edit = StringUtils.stripToEmpty(editText.getText().toString());
+			View reasonView = adapter.getView(0);
+			Reason reason = (Reason) reasonView.getTag();
+			if(!StringUtils.stripToEmpty(reason.getReasonText()).equals(edit))
+			reason.setReasonText(edit);
+		}
+		
 	}
 
 	@Override
 	public void popoverViewDidDismiss(PopoverView view) {
+		
 	}
 	
 	public String getFlag() {

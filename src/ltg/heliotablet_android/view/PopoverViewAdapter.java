@@ -22,6 +22,14 @@ public class PopoverViewAdapter extends PagerAdapter {
 	public int getCount() {
 		return pages.size();
 	}
+	
+	public View getView(int position) {
+		return pages.get(position);
+	}
+	
+	public View findViewById(int position, int id) {
+	    return pages.get(position).findViewById(id);
+	}
 
 	@Override
 	public boolean isViewFromObject(View view, Object object) {
@@ -37,6 +45,6 @@ public class PopoverViewAdapter extends PagerAdapter {
 
 	@Override
 	public void destroyItem(ViewGroup container, int position, Object object) {
-		container.removeViewAt(position);
+		//container.removeViewAt(position);
 	}
 }
