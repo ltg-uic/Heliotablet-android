@@ -9,7 +9,7 @@ import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ComparisonChain;
 
-public class Reason implements Comparable<Reason>, Parcelable {
+public class Reason implements Comparable<Reason> {
 
 	private long id;
 
@@ -55,19 +55,25 @@ public class Reason implements Comparable<Reason>, Parcelable {
 		this.isReadonly = isReadOnly;
 	}
 
-	public Reason(Parcel parcel) {
-		id = parcel.readLong();
-		lastTimestamp = Timestamp.valueOf(parcel.readString());
-		type = parcel.readString();
-		origin = parcel.readString();
-		reasonText = parcel.readString();
-		anchor = parcel.readString();
-		flag = parcel.readString();
-		isReadonly = parcel.readInt() == 1;
+	public static Reason newInstance(Reason reason) {
+	    return new Reason(reason.getId(),reason.getAnchor(), reason.getFlag(), reason.getType(), reason.getOrigin(), reason.isReadonly,reason.getReasonText(), reason.getLastTimestamp()); 
 	}
-
+ 
 	public Reason() {
 
+	}
+
+	public Reason(long id, String anchor, String flag, String type,
+			String origin, boolean isReadOnly, String reasonText,
+			Timestamp lastTimestamp) {
+		this.id = id;
+		this.anchor = anchor;
+		this.flag = flag;
+		this.origin = origin;
+		this.type = type;
+		this.isReadonly = isReadOnly;
+		this.reasonText = reasonText;
+		this.lastTimestamp = lastTimestamp;
 	}
 
 	public long getId() {
@@ -195,23 +201,6 @@ public class Reason implements Comparable<Reason>, Parcelable {
 			}
 		};
 		return flagPredicate;
-	}
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel parcel, int flags) {
-		parcel.writeLong(id);
-		parcel.writeString(lastTimestamp.toString());
-		parcel.writeString(type);
-		parcel.writeString(origin);
-		parcel.writeString(reasonText);
-		parcel.writeString(anchor);
-		parcel.writeString(flag);
-		parcel.writeInt(isReadonly ? 1 : 0);
 	}
 
 }

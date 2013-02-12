@@ -58,32 +58,32 @@ public class TheoryPlanetView extends LinearLayout {
 		this.anchor = anchor;
 	}
 
+	Ordering<Reason> isReadOnlyOrdering = new Ordering<Reason>() {
+		@Override
+		public int compare(Reason r1, Reason r2) {
+			// TODO Auto-generated method stub
+			return ComparisonChain.start()
+			        .compareTrueFirst(r1.isReadonly(), r2.isReadonly())
+			        .compare(r1.getId(), r2.getId())
+			        .result();
+		}
+	   };
+	   
 	public void updateCircleView(ImmutableSortedSet<Reason> imReasonSet) {
 
 		for (String flag : allFlags) {
 
 			// filter for each COLOR
-			ImmutableSortedSet<Reason> newUnsortedReasonSet = ImmutableSortedSet
+			ImmutableSortedSet<Reason> newSortedByFlagReasonSet = ImmutableSortedSet
 					.copyOf(Iterables.filter(imReasonSet,
 							Reason.getFlagPredicate(flag)));
-			if (!newUnsortedReasonSet.isEmpty()) {
 
-				
-				Ordering<Reason> isReadOnlyOrdering = new Ordering<Reason>() {
-					@Override
-					public int compare(Reason r1, Reason r2) {
-						// TODO Auto-generated method stub
-						return ComparisonChain.start()
-						        .compareTrueFirst(r1.isReadonly(), r2.isReadonly())
-						        .compare(r1.getId(), r2.getId())
-						        .result();
-					}
-				   };
-				
-			ImmutableSortedSet<Reason> newSortedReasonSet = ImmutableSortedSet.orderedBy(
-						    isReadOnlyOrdering.reverse()).addAll(newUnsortedReasonSet).build();
+			if (!newSortedByFlagReasonSet.isEmpty()) {
 
-				//ImmutableSortedSet<Reason> reverseOrder = newSortedReasonSet.descendingSet();
+				ImmutableSortedSet<Reason> newSortedByReadOnlyReasonSet = ImmutableSortedSet
+						.orderedBy(isReadOnlyOrdering.reverse())
+						.addAll(newSortedByFlagReasonSet).build();
+
 				// true is first, we want false first
 				// check if it was there already
 				CircleView circleView = flagToCircleView.get(flag);
@@ -102,7 +102,7 @@ public class TheoryPlanetView extends LinearLayout {
 
 				// just replace
 
-				circleView.setTag(newSortedReasonSet);
+				circleView.setTag(newSortedByReadOnlyReasonSet);
 				this.invalidate();
 
 			}

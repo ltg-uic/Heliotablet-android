@@ -41,6 +41,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.commonsware.cwac.loaderex.SQLiteCursorLoader;
+import com.google.common.base.Strings;
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSortedSet;
@@ -55,6 +56,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 	private ImmutableSortedSet<Reason> imReasons;
 
 	private RelativeLayout viewPagerLayout;
+	private Reason reasonNeedsUpdate;
 	
 	
 	public CircleView(Context context) {
@@ -112,10 +114,6 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 	    // event when double tap occurs
 	    @Override
 	    public boolean onDoubleTap(MotionEvent e) {
-	    	
-	    
-	    	
-	    	
 	    	
 	    	showPopover(imReasons);
 	        return super.onDoubleTap(e);
@@ -185,7 +183,6 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 	@Override
 	public void popoverViewWillDismiss(PopoverView view) {
 		
-		
 		ViewPager vPager = (ViewPager) view.findViewById(R.id.pager);
 		PopoverViewAdapter adapter = (PopoverViewAdapter) vPager.getAdapter();
 		EditText editText = (EditText) adapter.findViewById(0, R.id.mainEditText);
@@ -193,36 +190,48 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 		InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
 		
-		String edit = StringUtils.stripToEmpty(editText.getText().toString());
-		View reasonView = adapter.getView(0);
-		Reason reason = (Reason) reasonView.getTag();
-		if(!StringUtils.stripToEmpty(reason.getReasonText()).equals(edit)) {
-			reason.setReasonText(edit);
+		String newReasonText = editText.getText().toString();
+		
+		reasonNeedsUpdate = null;
+		
+		if( !Strings.isNullOrEmpty(newReasonText) ) {
+			View reasonView = adapter.getView(0);
+			Reason viewReason = (Reason) reasonView.getTag();
 			
-			Activity mainActivity = (Activity) CircleView.this.getContext();
-			LoaderManager loaderManager = mainActivity.getLoaderManager();
-			TheoryFragmentWithSQLiteLoader tf = (TheoryFragmentWithSQLiteLoader) mainActivity.getFragmentManager().findFragmentByTag(getContext().getString(R.string.fragment_tag_theory));
-			Loader<Cursor> loader = tf.getLoaderManager().getLoader(ReasonDBOpenHelper.UPDATE_REASON_LOADER_ID);
-			SQLiteCursorLoader updateLoader = (SQLiteCursorLoader)loader;
-			
-			  String[] args= { String.valueOf(reason.getId()) };
-
-			ContentValues reasonContentValues = ReasonDataSource.getReasonContentValues(reason);  
-			updateLoader.update(ReasonDBOpenHelper.TABLE_REASON, reasonContentValues, "_id=?", args);
-			
-
+			//if it has been updated
+			if( !viewReason.equals(newReasonText)) {
+				reasonNeedsUpdate = Reason.newInstance(viewReason);
+				reasonNeedsUpdate.setReasonText(editText.getText().toString());
+			}
 		}
+
 		
 
-	}
-
-	private void setNewReason(Reason reason) {
-		//reasons.get(reasons.indexOf(reason)).setReasonText(reason.getReasonText());
-		
 	}
 
 	@Override
 	public void popoverViewDidDismiss(PopoverView view) {
+		
+		
+		//lets update
+		if( reasonNeedsUpdate != null ) {
+			
+			
+			Activity mainActivity = (Activity) CircleView.this.getContext();
+			LoaderManager loaderManager = mainActivity.getLoaderManager();
+			
+			//find the loader
+			TheoryFragmentWithSQLiteLoader tf = (TheoryFragmentWithSQLiteLoader) mainActivity.getFragmentManager().findFragmentByTag(getContext().getString(R.string.fragment_tag_theory));
+			Loader<Cursor> loader = tf.getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_LOADER_ID);
+			SQLiteCursorLoader updateLoader = (SQLiteCursorLoader)loader;
+			
+			String[] args= { String.valueOf(reasonNeedsUpdate.getId()) };
+
+			ContentValues reasonContentValues = ReasonDataSource.getReasonContentValues(reasonNeedsUpdate);  
+			updateLoader.update(ReasonDBOpenHelper.TABLE_REASON, reasonContentValues, "_id=?", args);
+			
+
+		}
 		
 	}
 	

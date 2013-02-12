@@ -275,11 +275,11 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 					if (targetView instanceof TheoryPlanetView) {
 						TheoryPlanetView tv = (TheoryPlanetView) targetView;
 						
-						Loader<Cursor> insertLoader = TheoryFragmentWithSQLiteLoader.this.getLoaderManager().getLoader(ReasonDBOpenHelper.INSERT_REASON_LOADER_ID);
+						Loader<Cursor> insertLoader = TheoryFragmentWithSQLiteLoader.this.getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_LOADER_ID);
 						
 						if( insertLoader == null) {
-							TheoryFragmentWithSQLiteLoader.this.getLoaderManager().initLoader(ReasonDBOpenHelper.INSERT_REASON_LOADER_ID, null, TheoryFragmentWithSQLiteLoader.this);
-							insertLoader = TheoryFragmentWithSQLiteLoader.this.getLoaderManager().getLoader(ReasonDBOpenHelper.INSERT_REASON_LOADER_ID);
+							TheoryFragmentWithSQLiteLoader.this.getLoaderManager().initLoader(ReasonDBOpenHelper.ALL_REASONS_LOADER_ID, null, TheoryFragmentWithSQLiteLoader.this);
+							insertLoader = TheoryFragmentWithSQLiteLoader.this.getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_LOADER_ID);
 							
 						} 
 
@@ -315,19 +315,7 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 		 
 		switch (id) {
 	      case ReasonDBOpenHelper.ALL_REASONS_LOADER_ID:
-	    	  System.out.println("ALL REASONS");
 	    	  return new SQLiteCursorLoader(this.getActivity(), db, "SELECT _id, anchor, type, flag, reasonText, isReadOnly, lastTimestamp, origin FROM reason WHERE type = '" + ReasonDBOpenHelper.TYPE_THEORY + "' ORDER BY anchor, flag, isReadOnly;", null);
-	    	  
-	      case ReasonDBOpenHelper.INSERT_REASON_LOADER_ID:
-	    	  System.out.println("INSERT REASONS");
-	    	  return new SQLiteCursorLoader(this.getActivity(), db, "SELECT _id, anchor, type, flag, reasonText, isReadOnly, lastTimestamp, origin FROM reason WHERE _id = (select last_insert_rowid());", null);
-	    	  
-	      case ReasonDBOpenHelper.DELETE_REASON_LOADER_ID:
-	      		System.out.println("DELETE REASONS");
-	      		return new SQLiteCursorLoader(this.getActivity(), db, "SELECT _id, anchor, type, flag, reasonText, isReadOnly, lastTimestamp, origin FROM reason ORDER BY anchor;", null);
-	      case ReasonDBOpenHelper.UPDATE_REASON_LOADER_ID:		
-	    	    System.out.println("UPDATE REASONS" + args);
-	    	    return new SQLiteCursorLoader(this.getActivity(), db, "SELECT _id, anchor, type, flag, reasonText, isReadOnly, lastTimestamp, origin FROM reason WHERE type = '" + ReasonDBOpenHelper.TYPE_THEORY + "' ORDER BY anchor;", null);
 		 }
 		
 		 return null;
@@ -339,25 +327,10 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 		switch (loader.getId()) {
 	      case ReasonDBOpenHelper.ALL_REASONS_LOADER_ID:
 	    	  updateAllViews(data);
-	    	  quickDump(data);	
-	    	  System.out.println("ALL REASONS");
+	    	  //quickDump(data);	
+	    	  //System.out.println("ALL REASONS");
 	    	  break;
-	      case ReasonDBOpenHelper.INSERT_REASON_LOADER_ID:
-	    	  updateViews(data);
-	    	  break;
-	      case ReasonDBOpenHelper.DELETE_REASON_LOADER_ID:
-	    	  System.out.println("Delete");
-	    	  //updateViews(data);
-	    	  break;
-	      case ReasonDBOpenHelper.UPDATE_REASON_LOADER_ID:
-	    	  System.out.println("update");
-	    	  quickDump(data);	    	 
-	    	 // updateViews(data);
-	    	  break;	  
-		 }
-//		System.out.println("hey");
-
-//		
+	    }
 		Log.d("THEORY FRAGMENT", "onLoadFinished");
 	}
 	
