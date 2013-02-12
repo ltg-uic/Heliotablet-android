@@ -152,7 +152,9 @@ public class TheoryReasonController {
 		for (String anchor : allAnchors) {
 			ImmutableSortedSet<Reason> imReasonSet = ImmutableSortedSet.copyOf(Iterables.filter(allReasons, Reason.getAnchorPredicate(anchor)));
 			TheoryPlanetView theoryPlanetView = theoryViewsToAnchors.get(anchor);
-			theoryPlanetView.updateCircleView(imReasonSet);
+			if( !imReasonSet.isEmpty() ) {
+				theoryPlanetView.updateCircleView(imReasonSet);
+			}
 		}
 		
 		
