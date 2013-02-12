@@ -153,19 +153,48 @@ public class Reason implements Comparable<Reason>, Parcelable {
 				.compareTrueFirst(this.isReadonly, other.isReadonly).result();
 	}
 
-	public static Predicate getIdPredicate(final Long id) {
-		Predicate idPredicate = new Predicate() {
+	public static Predicate<Reason> getIdPredicate(final Long id) {
+		Predicate<Reason> idPredicate = new Predicate<Reason>() {
 
 			@Override
-			public boolean apply(Object input) {
-				Reason r = (Reason) input;
-				if (id.equals(r.getId()))
+			public boolean apply(Reason input) {
+				if (id.equals(input.getId()))
 					return true;
 
 				return false;
 			}
 		};
 		return idPredicate;
+	}
+	
+	public static Predicate<Reason> getAnchorPredicate(final String anchor) {
+		Predicate<Reason> anchorPredicate = new Predicate<Reason>() {
+
+			@Override
+			public boolean apply(Reason input) {
+	
+				if (anchor.equals(input.getAnchor()))
+					return true;
+
+				return false;
+			}
+		};
+		return anchorPredicate;
+	}
+	
+	public static Predicate<Reason> getFlagPredicate(final String flag) {
+		Predicate<Reason> flagPredicate = new Predicate<Reason>() {
+
+			@Override
+			public boolean apply(Reason input) {
+	
+				if (flag.equals(input.getFlag()))
+					return true;
+
+				return false;
+			}
+		};
+		return flagPredicate;
 	}
 
 	@Override

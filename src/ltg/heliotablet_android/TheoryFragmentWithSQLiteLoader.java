@@ -1,6 +1,8 @@
 package ltg.heliotablet_android;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
@@ -31,6 +33,7 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
 
 import com.commonsware.cwac.loaderex.SQLiteCursorLoader;
+import com.google.common.collect.Lists;
 
 public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 		LoaderManager.LoaderCallbacks<Cursor> {
@@ -75,12 +78,12 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 
 	private void setupLoader() {
 		getLoaderManager().initLoader(ReasonDBOpenHelper.ALL_REASONS_LOADER_ID, null, this);
-		getLoaderManager().initLoader(ReasonDBOpenHelper.INSERT_REASON_LOADER_ID, null, this);
-		
-		Bundle args = new Bundle();
-	    args.putParcelable("reason", null);
-		
-		getLoaderManager().initLoader(ReasonDBOpenHelper.UPDATE_REASON_LOADER_ID, args, this);
+//		getLoaderManager().initLoader(ReasonDBOpenHelper.INSERT_REASON_LOADER_ID, null, this);
+//		
+//		Bundle args = new Bundle();
+//	    args.putParcelable("reason", null);
+//		
+//		getLoaderManager().initLoader(ReasonDBOpenHelper.UPDATE_REASON_LOADER_ID, args, this);
 		LoaderManager.enableDebugLogging(true);
 	}
 
@@ -116,7 +119,7 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 							
 							ContentValues reasonContentValues = ReasonDataSource.getReasonContentValues(marsORANGE);
 							
-							Loader<Cursor> insertLoader = TheoryFragmentWithSQLiteLoader.this.getLoaderManager().getLoader(ReasonDBOpenHelper.INSERT_REASON_LOADER_ID);
+							Loader<Cursor> insertLoader = TheoryFragmentWithSQLiteLoader.this.getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_LOADER_ID);
 							
 							if( insertLoader == null) {
 								TheoryFragmentWithSQLiteLoader.this.getLoaderManager().initLoader(ReasonDBOpenHelper.INSERT_REASON_LOADER_ID, null, TheoryFragmentWithSQLiteLoader.this);
@@ -313,7 +316,7 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 		switch (id) {
 	      case ReasonDBOpenHelper.ALL_REASONS_LOADER_ID:
 	    	  System.out.println("ALL REASONS");
-	    	  return new SQLiteCursorLoader(this.getActivity(), db, "SELECT _id, anchor, type, flag, reasonText, isReadOnly, lastTimestamp, origin FROM reason WHERE type = '" + ReasonDBOpenHelper.TYPE_THEORY + "' ORDER BY anchor;", null);
+	    	  return new SQLiteCursorLoader(this.getActivity(), db, "SELECT _id, anchor, type, flag, reasonText, isReadOnly, lastTimestamp, origin FROM reason WHERE type = '" + ReasonDBOpenHelper.TYPE_THEORY + "' ORDER BY anchor, flag, isReadOnly;", null);
 	    	  
 	      case ReasonDBOpenHelper.INSERT_REASON_LOADER_ID:
 	    	  System.out.println("INSERT REASONS");
@@ -336,6 +339,7 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 		switch (loader.getId()) {
 	      case ReasonDBOpenHelper.ALL_REASONS_LOADER_ID:
 	    	  updateAllViews(data);
+	    	  quickDump(data);	
 	    	  System.out.println("ALL REASONS");
 	    	  break;
 	      case ReasonDBOpenHelper.INSERT_REASON_LOADER_ID:
@@ -370,16 +374,17 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 	}
 	
 	private void updateAllViews(Cursor data) {
-		if( data != null && data.getCount() > 0 ) {
-	    	data.moveToFirst();
-	  	    while (!data.isAfterLast()) {
-	  	      Reason reason =  ReasonDataSource.cursorToReason(data);
-	  	      System.out.println("REASON: " + reason.toString());
-				theoryController.addReason(reason);
-
-	  	      data.moveToNext();
-	  	    }
-    	}
+		if (data != null && data.getCount() > 0) {
+			List<Reason> allReasons = Lists.newArrayList();
+			allReasons = Collections.synchronizedList(allReasons); 
+			data.moveToFirst();
+			while (!data.isAfterLast()) {
+				Reason reason = ReasonDataSource.cursorToReason(data);
+				allReasons.add(reason);
+				data.moveToNext();
+			}
+			theoryController.updateViews(allReasons);
+		}
 	}
 
 	private void updateViews(Cursor data) {

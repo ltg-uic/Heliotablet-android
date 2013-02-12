@@ -1,14 +1,12 @@
 package ltg.heliotablet_android.view;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import com.google.common.collect.Iterables;
-
 import ltg.heliotablet_android.R;
-import ltg.heliotablet_android.R.color;
 import ltg.heliotablet_android.data.Reason;
 import android.content.Context;
 import android.content.res.Resources;
@@ -16,9 +14,14 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+
+import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSortedSet;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Ordering;
+import com.google.common.primitives.Ints;
 
 public class TheoryPlanetView extends LinearLayout {
 
@@ -26,6 +29,9 @@ public class TheoryPlanetView extends LinearLayout {
 	private HashMap<String, CircleView> flagToCircleView = new HashMap<String, CircleView>();
 	private HashMap<String, Boolean> flagToTransparent = new HashMap<String, Boolean>();
 	private float circleViewAlpha = 150f;
+	
+	ImmutableSet<String> allFlags = ImmutableSet.of(Reason.CONST_BLUE, Reason.CONST_BROWN, Reason.CONST_GREEN, Reason.CONST_GREY, Reason.CONST_ORANGE, Reason.CONST_PINK, Reason.CONST_RED, Reason.CONST_YELLOW);
+
 	
 	public TheoryPlanetView(Context context) {
 		super(context);
@@ -44,6 +50,60 @@ public class TheoryPlanetView extends LinearLayout {
 
 	public void setAnchor(String anchor) {
 		this.anchor = anchor;
+	}
+	
+	static final Comparator<Reason> ISREADYONLY_ORDER = new Comparator<Reason>() {
+		public int compare(Reason r1, Reason r2) {
+			return (r2.isReadonly() == r1.isReadonly() ? 0 : 1);
+		}
+	};
+
+	public void updateCircleView(ImmutableSortedSet<Reason> imReasonSet) {
+		
+		
+		for (String flag : allFlags) {
+			
+			//filter for each COLOR
+			ImmutableSortedSet<Reason> newUnsortedReasonSet = ImmutableSortedSet.copyOf(Iterables.filter(imReasonSet, Reason.getFlagPredicate(flag)));
+			
+			
+			
+			if(!newUnsortedReasonSet.isEmpty()) {
+
+				
+		
+				//now sort by isReadOnly
+				ImmutableSortedSet<Reason> newSortedReasonSet = ImmutableSortedSet.<Reason>orderedBy(ISREADYONLY_ORDER).addAll(newUnsortedReasonSet).build();
+				
+				 ImmutableSortedSet<Reason> reverseOrder = newSortedReasonSet.descendingSet();
+				//true is first, we want false first
+				//check if it was there already
+				CircleView circleView = flagToCircleView.get(flag);
+				
+				//if null we are creating it for the first, no need to diff
+				if( circleView == null) {
+					circleView = (CircleView) LayoutInflater.from(getContext()).inflate(R.layout.circle_view_layout, this, false);
+					flagToCircleView.put(flag, circleView);
+					styleCircleView(circleView,flag, false);
+					 
+					this.addView(circleView);
+					
+				}
+				
+				//just replace
+				
+				circleView.setTag(reverseOrder);
+				this.invalidate();
+				
+				
+				
+				
+				
+			}
+			
+		
+		}
+		
 	}
 	
 	public void updateCircleView(Reason reason){
@@ -158,6 +218,13 @@ public class TheoryPlanetView extends LinearLayout {
 			cv.setReducedAlpha(circleViewAlpha);
 			//cv.invalidate();
 		}
+	}
+	
+	@Override
+	public String toString() {
+			return Objects.toStringHelper(this).add("anchor", this.anchor)
+					.add("flagToCircleView", this.flagToCircleView)
+					.toString();
 	}
 
 }

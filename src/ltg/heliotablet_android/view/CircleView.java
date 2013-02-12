@@ -42,6 +42,8 @@ import android.widget.TextView;
 
 import com.commonsware.cwac.loaderex.SQLiteCursorLoader;
 import com.google.common.collect.ComparisonChain;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSortedSet;
 
 public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 
@@ -50,7 +52,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 	private int textColor;
 	private TextView reasonTextView;
 	private String type;
-	private ArrayList<Reason> reasons = new ArrayList<Reason>();
+	private ImmutableSortedSet<Reason> imReasons;
 
 	private RelativeLayout viewPagerLayout;
 	
@@ -79,15 +81,17 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
     	
     	
         reasonTextView.setTextColor(this.getTextColor());
+        this.enableDoubleTap();
     }
 	
 	@Override
 	public void setTag(Object tag) {
 		super.setTag(tag);
 		
-		reasons = (ArrayList<Reason>) tag;
-		if( reasons != null) {
-			this.reasonTextView.setText(""+reasons.size());
+		imReasons = (ImmutableSortedSet<Reason>) tag;
+		
+		if( imReasons != null) {
+			this.reasonTextView.setText(""+ imReasons.size());
 		}
 		
 	}
@@ -109,28 +113,23 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 	    @Override
 	    public boolean onDoubleTap(MotionEvent e) {
 	    	
-	    	Collections.sort(reasons, new Comparator<Reason>(){
-	            @Override
-	            public int compare(Reason r1, Reason r2) {
-	                 return ComparisonChain.start()
-	                       .compareFalseFirst(r1.isReadonly(), r2.isReadonly()).result();
-	            }});
+	    
 	    	
 	    	
 	    	
-	    	showPopover(reasons);
+	    	showPopover(imReasons);
 	        return super.onDoubleTap(e);
 	    }
 	}
 	
-	public void showPopover(List<Reason> reasons) {
+	public void showPopover(ImmutableSortedSet<Reason> popOverReasonSet) {
 		
 		ArrayList<View> pages = new ArrayList<View>();
 		ViewPager pager = new ViewPager(getContext());
 		ViewPager vPager = (ViewPager) viewPagerLayout
 				.findViewById(R.id.pager);
 		
-		for (Reason reason : reasons) {
+		for (Reason reason : popOverReasonSet) {
 			View layout = View.inflate(getContext(),
 					R.layout.popover_view, null);
 			layout.setTag(reason);
@@ -141,6 +140,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 			
 			if( reason.isReadonly()) {
 				editText.setKeyListener(null);
+				editText.setBackgroundColor(color.reasonEditTextColor);
 			} else {
 				editText.setFocusable(true);
 			    editText.setFocusableInTouchMode(true);
@@ -217,7 +217,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 	}
 
 	private void setNewReason(Reason reason) {
-		reasons.get(reasons.indexOf(reason)).setReasonText(reason.getReasonText());
+		//reasons.get(reasons.indexOf(reason)).setReasonText(reason.getReasonText());
 		
 	}
 
@@ -260,8 +260,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return "Flag: " + this.getFlag() + " Reasons: " + reasons.toString();
+		return "Flag: " + this.getFlag() + " Reasons: " + imReasons.toString();
 	}
 	
 }

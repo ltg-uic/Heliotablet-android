@@ -2,14 +2,19 @@ package ltg.heliotablet_android.view.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
 import com.google.common.base.Predicate;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Sets;
 
 import ltg.heliotablet_android.data.Reason;
+import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.data.ReasonDataSource;
 import ltg.heliotablet_android.view.TheoryPlanetView;
 import android.content.Context;
@@ -21,13 +26,11 @@ public class TheoryReasonController {
 	private ReasonDataSource reasonDatasource;
 	private HashMap<String, TheoryPlanetView> theoryViewsToAnchors;
 	private ArrayList<Reason> cachedReasons = new ArrayList<Reason>();
-
+	ImmutableSet<String> allAnchors = ImmutableSet.of(Reason.CONST_MERCURY, Reason.CONST_VENUS, Reason.CONST_EARTH, Reason.CONST_MARS, Reason.CONST_JUPITER, Reason.CONST_SATURN, Reason.CONST_NEPTUNE, Reason.CONST_URANUS);
+	
+	
 	private TheoryReasonController(Context context) {
 		this.context = context;
-//		reasonDatasource = ReasonDataSource.getInstance(context);
-//		reasonDatasource.open();
-//		
-//		createTestData();
 	}
 	
 	public static TheoryReasonController getInstance(Context context) {
@@ -37,40 +40,6 @@ public class TheoryReasonController {
 		return tInstance;
 	}
 	
-	public void createTestData() {
-		Reason earthRed1 = new Reason();
-		earthRed1.setAnchor(Reason.CONST_EARTH);
-		earthRed1.setFlag(Reason.CONST_RED);
-		earthRed1.setOrigin("bob");
-		earthRed1.setReasonText("Earth is red be it sucks");
-		earthRed1.setType(Reason.TYPE_THEORY);
-		earthRed1.setReadonly(true);
-		
-		reasonDatasource.createReason(earthRed1);
-		
-		Reason earthRed2 = new Reason();
-		
-		earthRed2.setAnchor(Reason.CONST_EARTH);
-		earthRed2.setFlag(Reason.CONST_RED);
-		earthRed2.setOrigin("tony");
-		earthRed2.setReasonText("because its the biggest");
-		earthRed2.setType(Reason.TYPE_THEORY);
-		earthRed2.setReadonly(false);
-		
-		reasonDatasource.createReason(earthRed2);
-		
-		Reason marsORANGE = new Reason();
-		
-		marsORANGE.setAnchor(Reason.CONST_MARS);
-		marsORANGE.setFlag(Reason.CONST_ORANGE);
-		marsORANGE.setOrigin("tony");
-		marsORANGE.setReasonText("YEAH YEAH ");
-		marsORANGE.setType(Reason.TYPE_THEORY);
-		marsORANGE.setReadonly(true);
-		
-		reasonDatasource.createReason(marsORANGE);
-	}
-
 	public void open() {
 		reasonDatasource.open();
 	}
@@ -172,6 +141,24 @@ public class TheoryReasonController {
 		
 		theoryPlanetView.updateCircleView(createReason);
 		
+		
+	}
+
+	public void updateViews(List<Reason> allReasons) {
+		
+		 //Break the list up into chunks by ANCHOR aka PLANET NAME
+		
+							
+		for (String anchor : allAnchors) {
+			ImmutableSortedSet<Reason> imReasonSet = ImmutableSortedSet.copyOf(Iterables.filter(allReasons, Reason.getAnchorPredicate(anchor)));
+			TheoryPlanetView theoryPlanetView = theoryViewsToAnchors.get(anchor);
+			theoryPlanetView.updateCircleView(imReasonSet);
+		}
+		
+		
+		
+		
+		// TODO Auto-generated method stub
 		
 	}
 	
