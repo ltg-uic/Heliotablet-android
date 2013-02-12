@@ -152,16 +152,16 @@ public class TheoryFragmentWithLoader extends Fragment implements
 
 					CircleView cv = (CircleView) dragged;
 
-					if (targetView instanceof TheoryPlanetView) {
-						TheoryPlanetView tv = (TheoryPlanetView) targetView;
-						theoryController.addReason(tv.getAnchor(),
-								cv.getFlag(), false);
-					} else if (targetView instanceof CircleView) {
-						TheoryPlanetView tv = (TheoryPlanetView) targetView
-								.getParent();
-						theoryController.addReason(tv.getAnchor(),
-								cv.getFlag(), false);
-					}
+//					if (targetView instanceof TheoryPlanetView) {
+//						TheoryPlanetView tv = (TheoryPlanetView) targetView;
+//						theoryController.addReason(tv.getAnchor(),
+//								cv.getFlag(), false);
+//					} else if (targetView instanceof CircleView) {
+//						TheoryPlanetView tv = (TheoryPlanetView) targetView
+//								.getParent();
+//						theoryController.addReason(tv.getAnchor(),
+//								cv.getFlag(), false);
+//					}
 
 					// cv.setVisibility(View.VISIBLE);
 
@@ -215,7 +215,7 @@ public class TheoryFragmentWithLoader extends Fragment implements
 		    	data.moveToFirst();
 		  	    while (!data.isAfterLast()) {
 		  	      Reason reason =  ReasonDataSource.cursorToReason(data);
-					theoryController.addReason(reason);
+					//theoryController.addReason(reason);
 
 		  	      data.moveToNext();
 		  	    }

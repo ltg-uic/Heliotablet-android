@@ -10,6 +10,7 @@ import ltg.heliotablet_android.MainActivity;
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.R.color;
 import ltg.heliotablet_android.TheoryFragmentWithSQLiteLoader;
+import ltg.heliotablet_android.TheoryViewFragment;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.data.ReasonDataSource;
@@ -50,6 +51,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 
 	private GestureDetector gestureDetector;
 	private String flag;
+	private String anchor;
 	private int textColor;
 	private TextView reasonTextView;
 	private String type;
@@ -205,8 +207,6 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 			}
 		}
 
-		
-
 	}
 
 	@Override
@@ -221,7 +221,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 			LoaderManager loaderManager = mainActivity.getLoaderManager();
 			
 			//find the loader
-			TheoryFragmentWithSQLiteLoader tf = (TheoryFragmentWithSQLiteLoader) mainActivity.getFragmentManager().findFragmentByTag(getContext().getString(R.string.fragment_tag_theory));
+			TheoryViewFragment tf = (TheoryViewFragment) mainActivity.getFragmentManager().findFragmentByTag(this.getAnchor());
 			Loader<Cursor> loader = tf.getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_LOADER_ID);
 			SQLiteCursorLoader updateLoader = (SQLiteCursorLoader)loader;
 			
@@ -270,6 +270,14 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 	@Override
 	public String toString() {
 		return "Flag: " + this.getFlag() + " Reasons: " + imReasons.toString();
+	}
+
+	public String getAnchor() {
+		return anchor;
+	}
+
+	public void setAnchor(String anchor) {
+		this.anchor = anchor;
 	}
 	
 }

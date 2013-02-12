@@ -95,6 +95,7 @@ public class TheoryPlanetView extends LinearLayout {
 
 					styleCircleView(circleView, flag, false);
 					circleView.setFlag(flag);
+					circleView.setAnchor(this.anchor);
 					flagToCircleView.put(flag, circleView);
 					this.addView(circleView);
 

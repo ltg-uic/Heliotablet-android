@@ -24,7 +24,7 @@ public class TheoryReasonController {
 	private static TheoryReasonController tInstance;
 	private Context context;
 	private ReasonDataSource reasonDatasource;
-	private HashMap<String, TheoryPlanetView> theoryViewsToAnchors;
+	private HashMap<String, TheoryPlanetView> theoryViewsToAnchors = new HashMap<String, TheoryPlanetView>();
 	private ArrayList<Reason> cachedReasons = new ArrayList<Reason>();
 	ImmutableSet<String> allAnchors = ImmutableSet.of(Reason.CONST_MERCURY, Reason.CONST_VENUS, Reason.CONST_EARTH, Reason.CONST_MARS, Reason.CONST_JUPITER, Reason.CONST_SATURN, Reason.CONST_NEPTUNE, Reason.CONST_URANUS);
 	
@@ -47,11 +47,19 @@ public class TheoryReasonController {
 	public void close() {
 		reasonDatasource.close();
 	}
+	
+	public void add(String anchor, TheoryPlanetView theoryview) {
+		this.theoryViewsToAnchors.put(anchor, theoryview);
+	}
 
 	public void setTheoryViewsToAnchors(
 			HashMap<String, TheoryPlanetView> theoryViewsToAnchors) {
 		this.theoryViewsToAnchors = theoryViewsToAnchors;
 		
+	}
+	
+	public HashMap<String, TheoryPlanetView> getTheoryViewsToAnchors() {
+		return theoryViewsToAnchors;
 	}
 
 	public void populateViews() {
@@ -78,89 +86,12 @@ public class TheoryReasonController {
 		}
 	}
 
-	
-	public void addReason(Reason reason) {
-		
-		if(cachedReasons.isEmpty()) {
-			cachedReasons.add(reason);
-			String anchor = reason.getAnchor();
-			TheoryPlanetView theoryPlanetView = theoryViewsToAnchors.get(anchor);
-			theoryPlanetView.updateCircleView(reason);
-		} else {
-			
-			Iterable matches = Iterables.filter(cachedReasons, Reason.getIdPredicate(reason.getId()));
-			
-			
-			
-			boolean found = false;
-			Reason oldReason = null;
-			for (Iterator<Reason> r = matches.iterator(); r.hasNext();) { 
-				System.out.println("Matches");
-		        Reason next = r.next();
-		    
-		        if( reason.compareTo(next) == 0 ) {
-		        	oldReason = next;
-		        	cachedReasons.add(reason);
-					String anchor = reason.getAnchor();
-					TheoryPlanetView theoryPlanetView = theoryViewsToAnchors
-							.get(anchor);
-					theoryPlanetView.updateCircleView(reason);
-		        }
-		        
-		        
-		        found = true;
-		    } 
-
-//			if( oldReason != null )
-//				cachedReasons.remove(oldReason);
-			
-			if (!found) {
-				cachedReasons.add(reason);
-				TheoryPlanetView theoryPlanetView = theoryViewsToAnchors
-						.get(reason.getAnchor());
-				theoryPlanetView.updateCircleView(reason);
-			}
-			
-		}
-		
-		
-		
-	}
-	
-	public void addReason(String anchor, String flag, boolean isReadOnly) {
-		TheoryPlanetView theoryPlanetView = theoryViewsToAnchors.get(anchor);
-		
-		Reason reason = new Reason();
-		reason.setType(Reason.TYPE_THEORY);
-		reason.setAnchor(anchor);
-		reason.setFlag(flag);
-		reason.setReadonly(isReadOnly);
-		reason.setOrigin("GET FROM PREFENCES");
-		
-		Reason createReason = reasonDatasource.createReason(reason);
-		
-		theoryPlanetView.updateCircleView(createReason);
-		
-		
-	}
-
-	public void updateViews(List<Reason> allReasons) {
-		
-		 //Break the list up into chunks by ANCHOR aka PLANET NAME
-		
-							
-		for (String anchor : allAnchors) {
+	public void updateViews(List<Reason> allReasons, String anchor) {
 			ImmutableSortedSet<Reason> imReasonSet = ImmutableSortedSet.copyOf(Iterables.filter(allReasons, Reason.getAnchorPredicate(anchor)));
 			TheoryPlanetView theoryPlanetView = theoryViewsToAnchors.get(anchor);
 			if( !imReasonSet.isEmpty() ) {
 				theoryPlanetView.updateCircleView(imReasonSet);
-			}
 		}
-		
-		
-		
-		
-		// TODO Auto-generated method stub
 		
 	}
 	

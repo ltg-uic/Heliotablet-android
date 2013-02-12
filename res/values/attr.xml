@@ -7,4 +7,7 @@
         <attr name="flag" format="string" />
         <attr name="textColor" format="color" />
     </declare-styleable>
+    <declare-styleable name="TheoryViewFragment">
+        <attr name="android:label" />
+    </declare-styleable>
 </resources>

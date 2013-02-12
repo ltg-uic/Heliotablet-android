@@ -40,7 +40,7 @@ public class MainActivity extends Activity  {
 		
 		Tab tab = actionBar.newTab()
 							.setText(R.string.tab_title_theories)
-							.setTabListener(new TabListener<TheoryFragmentWithSQLiteLoader>(this, getString(R.string.fragment_tag_theory), TheoryFragmentWithSQLiteLoader.class));
+							.setTabListener(new TabListener<TheoryFragmentWithSQLiteLoaderNestFragments>(this, getString(R.string.fragment_tag_theory), TheoryFragmentWithSQLiteLoaderNestFragments.class));
 		actionBar.addTab(tab);
 		
 		tab = actionBar.newTab()

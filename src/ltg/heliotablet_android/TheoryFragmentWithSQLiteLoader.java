@@ -356,21 +356,8 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 				allReasons.add(reason);
 				data.moveToNext();
 			}
-			theoryController.updateViews(allReasons);
+			//theoryController.updateViews(allReasons);
 		}
-	}
-
-	private void updateViews(Cursor data) {
-		if( data != null && data.getCount() > 0 ) {
-	    	data.moveToFirst();
-	  	    while (!data.isAfterLast()) {
-	  	      Reason reason =  ReasonDataSource.cursorToReason(data);
-	  	      System.out.println("REASON: " + reason.toString());
-				theoryController.addReason(reason);
-
-	  	      data.moveToNext();
-	  	    }
-    	}
 	}
 
 	@Override
