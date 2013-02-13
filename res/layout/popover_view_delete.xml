@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainScrollView"
+    android:layout_width="370dp"
+    android:layout_height="220dp"
+    android:layout_gravity="fill"
+    android:background="@color/WhiteSmoke"
+     >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="224dp"
+        android:layout_margin="0dp"
+        >
+        <EditText
+            android:id="@+id/mainEditText"
+            android:layout_width="340dp"
+            android:layout_height="190dp"
+            android:layout_marginLeft="15dp"
+        	android:layout_marginTop="15dp"
+            android:background="@drawable/textedit_shape"
+            android:ems="10"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:text="@string/blank_space" >
+            
+            <requestFocus />
+        </EditText>
+        
+          <Button
+              android:id="@+id/deleteButton"
+              style="?android:attr/buttonStyleSmall"
+              android:layout_width="30dp"
+              android:layout_height="30dp"
+              android:layout_centerHorizontal="true"
+              android:layout_centerVertical="true"
+              android:layout_marginLeft="338dp"
+              android:layout_marginTop="2dp"
+              android:background="@drawable/delete_button"
+              android:text=""
+              android:includeFontPadding="false"
+              android:textColor="@color/White"
+              android:textSize="20dp" />
+       
+    </FrameLayout>
+
+</ScrollView>

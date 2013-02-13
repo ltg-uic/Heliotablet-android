@@ -2,24 +2,15 @@ package ltg.heliotablet_android.view;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
-import ltg.heliotablet_android.MainActivity;
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.R.color;
-import ltg.heliotablet_android.TheoryFragmentWithSQLiteLoader;
 import ltg.heliotablet_android.TheoryViewFragment;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.data.ReasonDataSource;
 import ltg.heliotablet_android.view.PopoverView.PopoverViewDelegate;
-
-import org.apache.commons.lang3.StringUtils;
-
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.Context;
@@ -32,19 +23,21 @@ import android.os.SystemClock;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.commonsware.cwac.loaderex.SQLiteCursorLoader;
 import com.google.common.base.Strings;
-import com.google.common.collect.ComparisonChain;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSortedSet;
 
 public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
@@ -52,10 +45,12 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 	private GestureDetector gestureDetector;
 	private String flag;
 	private String anchor;
+	private boolean isDelete = false;
 	private int textColor;
 	private TextView reasonTextView;
 	private String type;
 	private ImmutableSortedSet<Reason> imReasons;
+	private PopoverView cachedPopoverView;
 
 	private RelativeLayout viewPagerLayout;
 	private Reason reasonNeedsUpdate;
@@ -87,6 +82,13 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
         reasonTextView.setTextColor(this.getTextColor());
         this.enableDoubleTap();
     }
+	
+	public int getReasonsSize() {
+		if( imReasons != null ){
+			imReasons.size();
+		}
+		return 0;
+	}
 	
 	@Override
 	public void setTag(Object tag) {
@@ -131,21 +133,54 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 		
 		for (Reason reason : popOverReasonSet) {
 			View layout = View.inflate(getContext(),
-					R.layout.popover_view, null);
+					R.layout.popover_view_delete, null);
 			layout.setTag(reason);
 			
 			final EditText editText = (EditText) layout.findViewById(R.id.mainEditText);
-			
+			Button deleteButton = (Button) layout.findViewById(R.id.deleteButton);
 			editText.setText(reason.getReasonText());
 			
 			if( reason.isReadonly()) {
 				editText.setKeyListener(null);
 				editText.setBackgroundColor(color.reasonEditTextColor);
+				deleteButton.setVisibility(View.GONE);
 			} else {
 				editText.setFocusable(true);
 			    editText.setFocusableInTouchMode(true);
 	            editText.setClickable(true);
 				editText.requestFocus();
+				deleteButton.setVisibility(View.VISIBLE);
+				deleteButton.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						
+						ViewGroup parent = (ViewGroup) v.getParent().getParent();
+						Reason reasonToDelete = (Reason) parent.getTag();
+						
+						CircleView.this.isDelete = true;
+						
+						CircleView.this.cachedPopoverView.dissmissPopover(true);
+						
+						SQLiteCursorLoader deleteLoader = getSqliteCursorLoader();
+						
+						String[] args= { String.valueOf(reasonToDelete.getId()) };
+						
+						deleteLoader.delete(ReasonDBOpenHelper.TABLE_REASON, "_ID=?", args);
+						
+						
+						CircleView.this.makeToast("Reason Deleted");
+						
+						if( CircleView.this.imReasons.size() - 1 <= 0 ) {
+							ViewGroup tv = (ViewGroup) CircleView.this.getParent();
+							tv.removeView(CircleView.this);
+							
+							 InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+					         imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+						}
+						
+					}
+				});
 			}
 
 			pages.add(layout);
@@ -158,6 +193,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 
 		
 		PopoverView popoverView = new PopoverView(getContext(), viewPagerLayout);
+		cachedPopoverView = popoverView;
 		popoverView.setContentSizeForViewInPopover(new Point(370, 220));
 		popoverView.setDelegate(this);
 		popoverView.showPopoverFromRectInViewGroup(
@@ -184,26 +220,32 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 
 	@Override
 	public void popoverViewWillDismiss(PopoverView view) {
-		
-		ViewPager vPager = (ViewPager) view.findViewById(R.id.pager);
-		PopoverViewAdapter adapter = (PopoverViewAdapter) vPager.getAdapter();
-		EditText editText = (EditText) adapter.findViewById(0, R.id.mainEditText);
-		
-		InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-		
-		String newReasonText = editText.getText().toString();
-		
-		reasonNeedsUpdate = null;
-		
-		if( !Strings.isNullOrEmpty(newReasonText) ) {
-			View reasonView = adapter.getView(0);
-			Reason viewReason = (Reason) reasonView.getTag();
-			
-			//if it has been updated
-			if( !viewReason.equals(newReasonText)) {
-				reasonNeedsUpdate = Reason.newInstance(viewReason);
-				reasonNeedsUpdate.setReasonText(editText.getText().toString());
+	
+		if (isDelete == false) {
+			ViewPager vPager = (ViewPager) view.findViewById(R.id.pager);
+			PopoverViewAdapter adapter = (PopoverViewAdapter) vPager
+					.getAdapter();
+			EditText editText = (EditText) adapter.findViewById(0,
+					R.id.mainEditText);
+
+			InputMethodManager imm = (InputMethodManager) getContext()
+					.getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+
+			String newReasonText = editText.getText().toString();
+
+			reasonNeedsUpdate = null;
+
+			if (!Strings.isNullOrEmpty(newReasonText)) {
+				View reasonView = adapter.getView(0);
+				Reason viewReason = (Reason) reasonView.getTag();
+
+				// if it has been updated
+				if (!viewReason.equals(newReasonText)) {
+					reasonNeedsUpdate = Reason.newInstance(viewReason);
+					reasonNeedsUpdate.setReasonText(editText.getText()
+							.toString());
+				}
 			}
 		}
 
@@ -214,26 +256,46 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 		
 		
 		//lets update
-		if( reasonNeedsUpdate != null ) {
+		if( reasonNeedsUpdate != null && isDelete == false ) {
 			
 			
-			Activity mainActivity = (Activity) CircleView.this.getContext();
-			LoaderManager loaderManager = mainActivity.getLoaderManager();
-			
-			//find the loader
-			TheoryViewFragment tf = (TheoryViewFragment) mainActivity.getFragmentManager().findFragmentByTag(this.getAnchor());
-			Loader<Cursor> loader = tf.getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_LOADER_ID);
-			SQLiteCursorLoader updateLoader = (SQLiteCursorLoader)loader;
+			SQLiteCursorLoader updateLoader = getSqliteCursorLoader();
 			
 			String[] args= { String.valueOf(reasonNeedsUpdate.getId()) };
 
 			ContentValues reasonContentValues = ReasonDataSource.getReasonContentValues(reasonNeedsUpdate);  
 			updateLoader.update(ReasonDBOpenHelper.TABLE_REASON, reasonContentValues, "_id=?", args);
 			
+			this.makeToast("Reason Updated");
 
+		} else {
+			//just deleted reset the flag
+			isDelete = false;
+			
 		}
 		
 	}
+
+	private SQLiteCursorLoader getSqliteCursorLoader() {
+		Activity mainActivity = (Activity) CircleView.this.getContext();
+		LoaderManager loaderManager = mainActivity.getLoaderManager();
+		
+		//find the loader
+		TheoryViewFragment tf = (TheoryViewFragment) mainActivity.getFragmentManager().findFragmentByTag(this.getAnchor());
+		Loader<Cursor> loader = tf.getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_LOADER_ID);
+		SQLiteCursorLoader updateLoader = (SQLiteCursorLoader)loader;
+		return updateLoader;
+	}
+	
+
+	
+	public void makeToast(String toastText) {
+		Toast toast = Toast.makeText(getContext(), toastText,
+				Toast.LENGTH_SHORT);
+		toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 50);
+		toast.show();
+	}
+	
 	
 	public String getFlag() {
 		return flag;
