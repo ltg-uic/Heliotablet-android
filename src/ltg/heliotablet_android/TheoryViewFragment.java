@@ -1,18 +1,17 @@
 package ltg.heliotablet_android;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-
-import ltg.heliotablet_android.TheoryFragmentWithSQLiteLoader.TargetViewDragListener;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.data.ReasonDataSource;
 import ltg.heliotablet_android.view.CircleView;
 import ltg.heliotablet_android.view.TheoryPlanetView;
 import ltg.heliotablet_android.view.controller.TheoryReasonController;
+
+import org.apache.commons.lang3.StringUtils;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;
@@ -35,7 +34,6 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.commonsware.cwac.loaderex.SQLiteCursorLoader;
-import com.google.common.base.CharMatcher;
 import com.google.common.collect.Lists;
 
 public class TheoryViewFragment extends Fragment implements
@@ -154,7 +152,7 @@ public class TheoryViewFragment extends Fragment implements
 				marsORANGE.setOrigin("tony");
 				marsORANGE.setReasonText("YEAH YEAHdfdfdfdfd ");
 				marsORANGE.setType(Reason.TYPE_THEORY);
-				marsORANGE.setReadonly(false);
+				marsORANGE.setReadonly(true);
 
 				ContentValues reasonContentValues = ReasonDataSource
 						.getReasonContentValues(marsORANGE);

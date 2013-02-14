@@ -202,5 +202,20 @@ public class Reason implements Comparable<Reason> {
 		};
 		return flagPredicate;
 	}
+	
+	public static Predicate<Reason> getIsReadOnlyPredicate(final boolean isReadyOnly) {
+		Predicate<Reason> isReadyOnlyPredicate = new Predicate<Reason>() {
+
+			@Override
+			public boolean apply(Reason input) {
+	
+				if (input.isReadonly() == isReadyOnly)
+					return true;
+
+				return false;
+			}
+		};
+		return isReadyOnlyPredicate;
+	}
 
 }

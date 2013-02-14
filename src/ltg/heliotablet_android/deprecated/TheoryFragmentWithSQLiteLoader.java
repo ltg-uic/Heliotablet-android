@@ -1,9 +1,12 @@
-package ltg.heliotablet_android;
+package ltg.heliotablet_android.deprecated;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import ltg.heliotablet_android.R;
+import ltg.heliotablet_android.R.id;
+import ltg.heliotablet_android.R.layout;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.data.ReasonDataSource;

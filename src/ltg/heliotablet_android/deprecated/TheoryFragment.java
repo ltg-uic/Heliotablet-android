@@ -1,7 +1,10 @@
-package ltg.heliotablet_android;
+package ltg.heliotablet_android.deprecated;
 
 import java.util.HashMap;
 
+import ltg.heliotablet_android.R;
+import ltg.heliotablet_android.R.id;
+import ltg.heliotablet_android.R.layout;
 import ltg.heliotablet_android.view.CircleView;
 import ltg.heliotablet_android.view.CircleViewDefaultTouchListener;
 import ltg.heliotablet_android.view.TheoryPlanetView;

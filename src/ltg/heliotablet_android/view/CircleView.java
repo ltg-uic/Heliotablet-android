@@ -159,8 +159,12 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 						Reason reasonToDelete = (Reason) parent.getTag();
 						
 						CircleView.this.isDelete = true;
-						
 						CircleView.this.cachedPopoverView.dissmissPopover(true);
+						
+						boolean isScheduledForViewRemoval = false;
+						if( CircleView.this.imReasons.size() - 1 <= 0 ) {
+							isScheduledForViewRemoval = true;
+						}
 						
 						SQLiteCursorLoader deleteLoader = getSqliteCursorLoader();
 						
@@ -171,12 +175,14 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 						
 						CircleView.this.makeToast("Reason Deleted");
 						
-						if( CircleView.this.imReasons.size() - 1 <= 0 ) {
+						if( isScheduledForViewRemoval ) {
 							ViewGroup tv = (ViewGroup) CircleView.this.getParent();
 							tv.removeView(CircleView.this);
 							
 							 InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 					         imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+						} else {
+							CircleView.this.makeTransparent(true);
 						}
 						
 					}
@@ -203,6 +209,14 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 		
 	}
 	
+	protected void makeTransparent(boolean isTransparent) {
+		if( isTransparent )
+			this.setAlpha(120f);
+		else
+			this.setAlpha(255f);
+		
+	}
+
 	@Override
 	public void popoverViewWillShow(PopoverView view) {
 	}
