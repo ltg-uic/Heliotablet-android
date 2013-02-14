@@ -152,7 +152,7 @@ public class TheoryViewFragment extends Fragment implements
 				marsORANGE.setOrigin("tony");
 				marsORANGE.setReasonText("YEAH YEAHdfdfdfdfd ");
 				marsORANGE.setType(Reason.TYPE_THEORY);
-				marsORANGE.setReadonly(true);
+				marsORANGE.setReadonly(false);
 
 				ContentValues reasonContentValues = ReasonDataSource
 						.getReasonContentValues(marsORANGE);

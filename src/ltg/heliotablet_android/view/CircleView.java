@@ -3,6 +3,8 @@ package ltg.heliotablet_android.view;
 
 import java.util.ArrayList;
 
+import org.apache.commons.lang3.StringUtils;
+
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.R.color;
 import ltg.heliotablet_android.TheoryViewFragment;
@@ -239,14 +241,17 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 			ViewPager vPager = (ViewPager) view.findViewById(R.id.pager);
 			PopoverViewAdapter adapter = (PopoverViewAdapter) vPager
 					.getAdapter();
+			int currentItem = vPager.getCurrentItem();
 			EditText editText = (EditText) adapter.findViewById(0,
 					R.id.mainEditText);
-
+			if( editText.getKeyListener() == null)
+				return;
+			
 			InputMethodManager imm = (InputMethodManager) getContext()
 					.getSystemService(Context.INPUT_METHOD_SERVICE);
 			imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
 
-			String newReasonText = editText.getText().toString();
+			String newReasonText = StringUtils.trimToEmpty(editText.getText().toString());
 
 			reasonNeedsUpdate = null;
 
@@ -255,7 +260,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 				Reason viewReason = (Reason) reasonView.getTag();
 
 				// if it has been updated
-				if (!viewReason.equals(newReasonText)) {
+				if ( !StringUtils.trimToEmpty(viewReason.getReasonText()).equals(newReasonText)) {
 					reasonNeedsUpdate = Reason.newInstance(viewReason);
 					reasonNeedsUpdate.setReasonText(editText.getText()
 							.toString());
@@ -281,7 +286,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 			updateLoader.update(ReasonDBOpenHelper.TABLE_REASON, reasonContentValues, "_id=?", args);
 			
 			this.makeToast("Reason Updated");
-
+			reasonNeedsUpdate = null;
 		} else {
 			//just deleted reset the flag
 			isDelete = false;
