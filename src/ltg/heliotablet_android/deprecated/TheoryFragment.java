@@ -37,7 +37,6 @@ public class TheoryFragment extends Fragment {
 		setupListeners();
 		
 		
-		theoryController.populateViews();
 		
 		return theoriesView;
 	}

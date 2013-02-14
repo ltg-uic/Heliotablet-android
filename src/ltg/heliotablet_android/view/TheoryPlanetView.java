@@ -30,8 +30,6 @@ public class TheoryPlanetView extends LinearLayout {
 
 	private String anchor;
 	private HashMap<String, CircleView> flagToCircleView = new HashMap<String, CircleView>();
-	private HashMap<String, Boolean> flagToTransparent = new HashMap<String, Boolean>();
-	private float circleViewAlpha = 150f;
 
 	ImmutableSet<String> allFlags = ImmutableSet.of(Reason.CONST_BLUE,
 			Reason.CONST_BROWN, Reason.CONST_GREEN, Reason.CONST_GREY,
@@ -99,7 +97,7 @@ public class TheoryPlanetView extends LinearLayout {
 					circleView = (CircleView) LayoutInflater.from(getContext())
 							.inflate(R.layout.circle_view_layout, this, false);
 
-					styleCircleView(circleView, flag, false);
+					styleCircleView(circleView, flag);
 					circleView.setFlag(flag);
 					circleView.setAnchor(this.anchor);
 					flagToCircleView.put(flag, circleView);
@@ -124,78 +122,9 @@ public class TheoryPlanetView extends LinearLayout {
 
 	}
 
-	public void updateCircleView(Reason reason) {
+	
 
-		// it all ready exists
-		String flag = reason.getFlag();
-
-		if (flagToCircleView.containsKey(flag)) {
-
-			CircleView circleView = flagToCircleView.get(flag);
-
-			ArrayList<Reason> reasons = (ArrayList<Reason>) circleView.getTag();
-
-			Iterable matches = Iterables.filter(reasons,
-					Reason.getIdPredicate(reason.getId()));
-			System.out.println("Matches");
-
-			Reason oldReason = null;
-			for (Iterator<Reason> r = matches.iterator(); r.hasNext();) {
-				Reason next = r.next();
-				oldReason = next;
-			}
-
-			if (oldReason != null) {
-				reasons.remove(oldReason);
-			}
-
-			reasons.add(reason);
-			// check to see if it should be dimmed
-			boolean isTransparent = true;
-			for (Reason r : reasons) {
-				if (r.isReadonly() == false) {
-					isTransparent = false;
-				}
-			}
-
-			if (isTransparent) {
-				circleView.setReducedAlpha(circleViewAlpha);
-				circleView.invalidate();
-			} else {
-				circleView.setReducedAlpha(255);
-				circleView.invalidate();
-			}
-
-			circleView.setTag(reasons);
-
-			this.invalidate();
-
-		} else {
-			// Create a new circle view
-
-			CircleView cv = (CircleView) LayoutInflater.from(getContext())
-					.inflate(R.layout.circle_view_layout, this, false);
-
-			styleCircleView(cv, flag, reason.isReadonly());
-
-			List<Reason> arrayList = new ArrayList<Reason>();
-			arrayList.add(reason);
-
-			cv.setTag(arrayList);
-			cv.enableDoubleTap();
-
-			// order the views
-
-			flagToCircleView.put(flag, cv);
-
-			this.addView(cv);
-			this.invalidate();
-
-		}
-	}
-
-	private void styleCircleView(CircleView cv, String color,
-			boolean isTransparent) {
+	private void styleCircleView(CircleView cv, String color) {
 		Resources resources = getResources();
 		Drawable drawable = null;
 
@@ -232,11 +161,12 @@ public class TheoryPlanetView extends LinearLayout {
 
 		cv.setTextColor(textColor);
 		cv.setBackground(drawable);
+		cv.setReducedAlpha(255f);
 
-		if (isTransparent) {
-			cv.setReducedAlpha(circleViewAlpha);
-			// cv.invalidate();
-		}
+	}
+	
+	public void removeFlagFromCircleViewMap(String flag) {
+		flagToCircleView.remove(flag);
 	}
 
 	@Override

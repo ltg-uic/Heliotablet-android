@@ -3,8 +3,6 @@ package ltg.heliotablet_android.view;
 
 import java.util.ArrayList;
 
-import org.apache.commons.lang3.StringUtils;
-
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.R.color;
 import ltg.heliotablet_android.TheoryViewFragment;
@@ -12,6 +10,10 @@ import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.data.ReasonDataSource;
 import ltg.heliotablet_android.view.PopoverView.PopoverViewDelegate;
+import ltg.heliotablet_android.view.controller.TheoryReasonController;
+
+import org.apache.commons.lang3.StringUtils;
+
 import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.ContentValues;
@@ -30,7 +32,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,7 +57,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 
 	private RelativeLayout viewPagerLayout;
 	private Reason reasonNeedsUpdate;
-	
+	private TheoryReasonController theoryController;
 	
 	public CircleView(Context context) {
 		super(context);
@@ -74,7 +75,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
         this.setTextColor(a.getColor(R.styleable.CircleView_textColor, color.White));
         a.recycle();
         
-      
+        theoryController = TheoryReasonController.getInstance(context);
         
         
     	viewPagerLayout = (RelativeLayout) inflater.inflate(
@@ -157,30 +158,32 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 					@Override
 					public void onClick(View v) {
 						
-						ViewGroup parent = (ViewGroup) v.getParent().getParent();
-						Reason reasonToDelete = (Reason) parent.getTag();
-						
+						ViewGroup parent = (ViewGroup) v.getParent()
+								.getParent();
+
 						CircleView.this.isDelete = true;
 						CircleView.this.cachedPopoverView.dissmissPopover(true);
-						
+
 						boolean isScheduledForViewRemoval = false;
-						if( CircleView.this.imReasons.size() - 1 <= 0 ) {
+						if (CircleView.this.imReasons.size() - 1 <= 0) {
 							isScheduledForViewRemoval = true;
 						}
+
+						Reason reasonToDelete = (Reason) parent.getTag();
+
+						theoryController.deleteReason(reasonToDelete, isScheduledForViewRemoval);
 						
-						SQLiteCursorLoader deleteLoader = getSqliteCursorLoader();
-						
-						String[] args= { String.valueOf(reasonToDelete.getId()) };
-						
-						deleteLoader.delete(ReasonDBOpenHelper.TABLE_REASON, "_ID=?", args);
-						
-						 InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-				         imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-						
+						InputMethodManager imm = (InputMethodManager) getContext()
+								.getSystemService(Context.INPUT_METHOD_SERVICE);
+						imm.hideSoftInputFromWindow(
+								v.getApplicationWindowToken(),
+								InputMethodManager.HIDE_NOT_ALWAYS);
+
 						CircleView.this.makeToast("Reason Deleted");
-						
-						if( isScheduledForViewRemoval ) {
-							ViewGroup tv = (ViewGroup) CircleView.this.getParent();
+
+						if (isScheduledForViewRemoval) {
+							ViewGroup tv = (ViewGroup) CircleView.this
+									.getParent();
 							tv.removeView(CircleView.this);
 						} else {
 							CircleView.this.makeTransparent(true);
@@ -275,15 +278,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 		
 		//lets update
 		if( reasonNeedsUpdate != null && isDelete == false ) {
-			
-			
-			SQLiteCursorLoader updateLoader = getSqliteCursorLoader();
-			
-			String[] args= { String.valueOf(reasonNeedsUpdate.getId()) };
-
-			ContentValues reasonContentValues = ReasonDataSource.getReasonContentValues(reasonNeedsUpdate);  
-			updateLoader.update(ReasonDBOpenHelper.TABLE_REASON, reasonContentValues, "_id=?", args);
-			
+			theoryController.updateReason(reasonNeedsUpdate);
 			this.makeToast("Reason Updated");
 			reasonNeedsUpdate = null;
 		} else {

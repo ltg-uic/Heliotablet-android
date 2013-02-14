@@ -102,21 +102,8 @@ public class TheoryViewFragment extends Fragment implements
 
 					if (targetView instanceof TheoryPlanetView) {
 						TheoryPlanetView tv = (TheoryPlanetView) targetView;
-						
-						Loader<Cursor> insertLoader = TheoryViewFragment.this.getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_LOADER_ID);
-						
-						if( insertLoader == null) {
-//							TheoryFragmentWithSQLiteLoaderNestFragments.this.getLoaderManager().initLoader(ReasonDBOpenHelper.ALL_REASONS_LOADER_ID, null, TheoryFragmentWithSQLiteLoaderNestFragments.this);
-							insertLoader = TheoryViewFragment.this.getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_LOADER_ID);
-							
-						} 
-
 						Reason reason = new Reason(tv.getAnchor(),cv.getFlag(), Reason.TYPE_THEORY,"tony", false);
-						
-						SQLiteCursorLoader sqlInsertLoader = (SQLiteCursorLoader)insertLoader;
-						
-						ContentValues reasonContentValues = ReasonDataSource.getReasonContentValues(reason);
-						sqlInsertLoader.insert(ReasonDBOpenHelper.TABLE_REASON, null, reasonContentValues);
+						theoryController.insertReason(reason);
 					} 
 				}
 				break;
@@ -145,36 +132,17 @@ public class TheoryViewFragment extends Fragment implements
 			@Override
 			public void onClick(View v) {
 
-				Reason marsORANGE = new Reason();
+				Reason marsGreen = new Reason();
 
-				marsORANGE.setAnchor(TheoryViewFragment.this.theoryAnchor);
-				marsORANGE.setFlag(Reason.CONST_GREEN);
-				marsORANGE.setOrigin("tony");
-				marsORANGE.setReasonText("YEAH YEAHdfdfdfdfd ");
-				marsORANGE.setType(Reason.TYPE_THEORY);
-				marsORANGE.setReadonly(false);
+				marsGreen.setAnchor(TheoryViewFragment.this.theoryAnchor);
+				marsGreen.setFlag(Reason.CONST_GREEN);
+				marsGreen.setOrigin("tony");
+				marsGreen.setReasonText("YEAH YEAHdfdfdfdfd" + Math.random());
+				marsGreen.setType(Reason.TYPE_THEORY);
+				marsGreen.setReadonly(false);
 
-				ContentValues reasonContentValues = ReasonDataSource
-						.getReasonContentValues(marsORANGE);
+				theoryController.insertReason(marsGreen);
 
-				Loader<Cursor> insertLoader = TheoryViewFragment.this
-						.getLoaderManager().getLoader(
-								ReasonDBOpenHelper.ALL_REASONS_LOADER_ID);
-
-				if (insertLoader == null) {
-					TheoryViewFragment.this.getLoaderManager().initLoader(
-							ReasonDBOpenHelper.ALL_REASONS_LOADER_ID, null,
-							TheoryViewFragment.this);
-					insertLoader = TheoryViewFragment.this.getLoaderManager()
-							.getLoader(
-									ReasonDBOpenHelper.ALL_REASONS_LOADER_ID);
-
-				}
-
-				SQLiteCursorLoader sqlInsertLoader = (SQLiteCursorLoader) insertLoader;
-
-				sqlInsertLoader.insert(ReasonDBOpenHelper.TABLE_REASON, null,
-						reasonContentValues);
 				System.out.println("insert click!!");
 
 			}

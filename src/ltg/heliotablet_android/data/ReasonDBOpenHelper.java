@@ -82,7 +82,7 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("PRAGMA foreign_keys=ON;");
 		db.execSQL(CREATE_TABLE_REASON);
-		//seedDb(db);
+		seedDb(db);
 		//db.execSQL(CREATE_TABLE_REASON_IMAGE);
 	}
 

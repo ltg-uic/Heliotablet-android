@@ -7,17 +7,25 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
+import com.commonsware.cwac.loaderex.SQLiteCursorLoader;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 
+import ltg.heliotablet_android.TheoryViewFragment;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.data.ReasonDataSource;
+import ltg.heliotablet_android.view.CircleView;
 import ltg.heliotablet_android.view.TheoryPlanetView;
+import android.app.Activity;
+import android.app.LoaderManager;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Loader;
+import android.database.Cursor;
 
 public class TheoryReasonController {
 
@@ -62,30 +70,6 @@ public class TheoryReasonController {
 		return theoryViewsToAnchors;
 	}
 
-	public void populateViews() {
-		
-		ArrayList<Reason> allReasons = (ArrayList<Reason>) reasonDatasource.getAllReasons();
-		
-	    Iterator<Entry<String, TheoryPlanetView>> entries =
-	            theoryViewsToAnchors.entrySet().iterator();
-	        while (entries.hasNext()) {
-	            Entry<String, TheoryPlanetView> entry = entries.next();
-	            System.out.println("Key = " + entry.getKey() + ", Value = "+ entry.getValue());
-	            
-	            TheoryPlanetView tv = entry.getValue();
-	            
-	            String tvAnchor = tv.getAnchor();
-	            
-	            for (Reason reason : allReasons) {
-	            	if( reason.getAnchor().equals(tvAnchor)) {
-	            		tv.updateCircleView(reason);
-	            	}
-				}
-	            
-	            
-		}
-	}
-
 	public void updateViews(List<Reason> allReasons, String anchor) {
 			ImmutableSortedSet<Reason> imReasonSet = ImmutableSortedSet.copyOf(Iterables.filter(allReasons, Reason.getAnchorPredicate(anchor)));
 			TheoryPlanetView theoryPlanetView = theoryViewsToAnchors.get(anchor);
@@ -94,6 +78,50 @@ public class TheoryReasonController {
 		}
 		
 	}
+	
+	private SQLiteCursorLoader getSqliteCursorLoader(String anchor) {
+		Activity mainActivity = (Activity)context;
+		LoaderManager loaderManager = mainActivity.getLoaderManager();
+		
+		//find the loader
+		TheoryViewFragment tf = (TheoryViewFragment) mainActivity.getFragmentManager().findFragmentByTag(anchor);
+		Loader<Cursor> loader = tf.getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_LOADER_ID);
+		SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
+		return sqliteLoader;
+	}
+
+	public void deleteReason(Reason reason, boolean isScheduledForViewRemoval) {
+		SQLiteCursorLoader sqliteCursorLoader = getSqliteCursorLoader(reason.getAnchor());
+
+		String[] args = { String.valueOf(reason.getId()) };
+
+		sqliteCursorLoader.delete(ReasonDBOpenHelper.TABLE_REASON,
+				"_ID=?", args);
+		
+		TheoryPlanetView theoryPlanetView = theoryViewsToAnchors.get(reason.getAnchor());
+		
+		if( isScheduledForViewRemoval )
+		theoryPlanetView.removeFlagFromCircleViewMap(reason.getFlag());
+		
+		
+	}
+	
+	
+
+	public void updateReason(Reason reason) {
+		SQLiteCursorLoader sqliteCursorLoader = getSqliteCursorLoader(reason.getAnchor());
+		String[] args = { String.valueOf(reason.getId()) };
+		ContentValues reasonContentValues = ReasonDataSource.getReasonContentValues(reason);  
+		sqliteCursorLoader.update(ReasonDBOpenHelper.TABLE_REASON, reasonContentValues, "_id=?", args);
+		
+	}
+
+	public void insertReason(Reason reason) {
+		SQLiteCursorLoader sqliteCursorLoader = getSqliteCursorLoader(reason.getAnchor());
+		ContentValues reasonContentValues = ReasonDataSource.getReasonContentValues(reason);
+		sqliteCursorLoader.insert(ReasonDBOpenHelper.TABLE_REASON, null, reasonContentValues);		
+	}
+	
 	
 	
 }
