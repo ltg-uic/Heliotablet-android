@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
- <color name="reasonEditTextColor">#EFEEEE</color>
+ <color name="reasonEditTextColor">#F5F5F5</color>
  <color name="BG_00">#ED1C24</color>
  <color name="BG_01">#CBDFA3</color>
  <color name="BG_02">#ABB886</color>

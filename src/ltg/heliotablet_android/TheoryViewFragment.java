@@ -47,11 +47,16 @@ public class TheoryViewFragment extends Fragment implements
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
+		//init theory
 		theoryView = (TheoryPlanetView) inflater.inflate(R.layout.theory_view,
 				container, false);
 		theoryView.setAnchor(theoryAnchor);
 		theoryView.setOnDragListener(new TargetViewDragListener());
+		
 		db = ReasonDBOpenHelper.getInstance(this.getActivity());
+		
+		
 		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
 				.detectAll().penaltyLog().build());
 		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
@@ -60,7 +65,7 @@ public class TheoryViewFragment extends Fragment implements
 
 		theoryController = TheoryReasonController.getInstance(getActivity());
 		theoryController.add(theoryAnchor, theoryView);
-		setupListeners();
+		//setupTestListeners();
 		setupLoader();
 
 		return theoryView;
@@ -119,7 +124,89 @@ public class TheoryViewFragment extends Fragment implements
 		}
 	}
 
-	private void setupListeners() {
+	
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+	}
+
+	@Override
+	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
+		switch (id) {
+		case ReasonDBOpenHelper.ALL_REASONS_LOADER_ID:
+			return new SQLiteCursorLoader(
+					this.getActivity(),
+					db,
+					"SELECT _id, anchor, type, flag, reasonText, isReadOnly, lastTimestamp, origin FROM reason WHERE type = '"
+							+ ReasonDBOpenHelper.TYPE_THEORY
+							+ "' AND anchor = '"
+							+ theoryAnchor
+							+ "' ORDER BY anchor, flag, isReadOnly;", null);
+		}
+
+		return null;
+	}
+
+	@Override
+	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+		switch (loader.getId()) {
+		case ReasonDBOpenHelper.ALL_REASONS_LOADER_ID:
+			updateAllViews(data);
+			break;
+		}
+		Log.d("THEORY FRAGMENT", "onLoadFinished");
+	}
+	
+	private void updateAllViews(Cursor data) {
+		if (data != null && data.getCount() > 0) {
+			List<Reason> allReasons = Lists.newArrayList();
+			allReasons = Collections.synchronizedList(allReasons);
+			data.moveToFirst();
+			while (!data.isAfterLast()) {
+				Reason reason = ReasonDataSource.cursorToReason(data);
+				allReasons.add(reason);
+				data.moveToNext();
+			}
+			quickDump(allReasons);
+			theoryController.updateViews(allReasons, this.theoryAnchor);
+		}
+	}
+
+	private void quickDump(List<Reason> allReasons) {
+		for (Reason reason : allReasons) {
+			System.out.println("REASON: " + reason.toString());
+		}
+	}
+
+	@Override
+	public void onLoaderReset(Loader<Cursor> loader) {
+		System.out.println("yo");
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		db.close();
+	}
+
+	@Override
+	public void onInflate(Activity activity, AttributeSet attrs,
+			Bundle savedInstanceState) {
+		super.onInflate(activity, attrs, savedInstanceState);
+
+		TypedArray a = activity.obtainStyledAttributes(attrs,
+				R.styleable.TheoryViewFragment);
+		
+		
+		theoryAnchor = StringUtils.lowerCase((String) a.getText(R.styleable.TheoryViewFragment_android_label));
+		a.recycle();
+
+	}
+	
+	private void setupTestListeners() {
 		// add listeners to all the draggable planetViews
 		// get all the colors and the
 		
@@ -139,7 +226,7 @@ public class TheoryViewFragment extends Fragment implements
 				marsGreen.setOrigin("tony");
 				marsGreen.setReasonText("YEAH YEAHdfdfdfdfd" + Math.random());
 				marsGreen.setType(Reason.TYPE_THEORY);
-				marsGreen.setReadonly(false);
+				marsGreen.setReadonly(true);
 
 				theoryController.insertReason(marsGreen);
 
@@ -244,86 +331,6 @@ public class TheoryViewFragment extends Fragment implements
 		});
 
 		theoryView.addView(updateButton);
-
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-	}
-
-	@Override
-	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-
-		switch (id) {
-		case ReasonDBOpenHelper.ALL_REASONS_LOADER_ID:
-			return new SQLiteCursorLoader(
-					this.getActivity(),
-					db,
-					"SELECT _id, anchor, type, flag, reasonText, isReadOnly, lastTimestamp, origin FROM reason WHERE type = '"
-							+ ReasonDBOpenHelper.TYPE_THEORY
-							+ "' AND anchor = '"
-							+ theoryAnchor
-							+ "' ORDER BY anchor, flag, isReadOnly;", null);
-		}
-
-		return null;
-	}
-
-	@Override
-	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
-		switch (loader.getId()) {
-		case ReasonDBOpenHelper.ALL_REASONS_LOADER_ID:
-			updateAllViews(data);
-			break;
-		}
-		Log.d("THEORY FRAGMENT", "onLoadFinished");
-	}
-	
-	private void updateAllViews(Cursor data) {
-		if (data != null && data.getCount() > 0) {
-			List<Reason> allReasons = Lists.newArrayList();
-			allReasons = Collections.synchronizedList(allReasons);
-			data.moveToFirst();
-			while (!data.isAfterLast()) {
-				Reason reason = ReasonDataSource.cursorToReason(data);
-				allReasons.add(reason);
-				data.moveToNext();
-			}
-			quickDump(allReasons);
-			theoryController.updateViews(allReasons, this.theoryAnchor);
-		}
-	}
-
-	private void quickDump(List<Reason> allReasons) {
-		for (Reason reason : allReasons) {
-			System.out.println("REASON: " + reason.toString());
-		}
-	}
-
-	@Override
-	public void onLoaderReset(Loader<Cursor> loader) {
-		System.out.println("yo");
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		db.close();
-	}
-
-	@Override
-	public void onInflate(Activity activity, AttributeSet attrs,
-			Bundle savedInstanceState) {
-		super.onInflate(activity, attrs, savedInstanceState);
-
-		TypedArray a = activity.obtainStyledAttributes(attrs,
-				R.styleable.TheoryViewFragment);
-		
-		
-		theoryAnchor = StringUtils.lowerCase((String) a.getText(R.styleable.TheoryViewFragment_android_label));
-		a.recycle();
 
 	}
 

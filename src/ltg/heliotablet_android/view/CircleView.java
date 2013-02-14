@@ -145,7 +145,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 			
 			if( reason.isReadonly()) {
 				editText.setKeyListener(null);
-				editText.setBackgroundColor(color.reasonEditTextColor);
+				editText.setBackground(getResources().getDrawable(R.drawable.textedit_shape_disabled));
 				deleteButton.setVisibility(View.GONE);
 			} else {
 				editText.setFocusable(true);
@@ -185,8 +185,6 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 							ViewGroup tv = (ViewGroup) CircleView.this
 									.getParent();
 							tv.removeView(CircleView.this);
-						} else {
-							CircleView.this.makeTransparent(true);
 						}
 						
 					}
