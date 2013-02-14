@@ -163,11 +163,11 @@ public class TheoryViewFragment extends Fragment implements
 
 				if (insertLoader == null) {
 					TheoryViewFragment.this.getLoaderManager().initLoader(
-							ReasonDBOpenHelper.INSERT_REASON_LOADER_ID, null,
+							ReasonDBOpenHelper.ALL_REASONS_LOADER_ID, null,
 							TheoryViewFragment.this);
 					insertLoader = TheoryViewFragment.this.getLoaderManager()
 							.getLoader(
-									ReasonDBOpenHelper.INSERT_REASON_LOADER_ID);
+									ReasonDBOpenHelper.ALL_REASONS_LOADER_ID);
 
 				}
 
@@ -175,16 +175,7 @@ public class TheoryViewFragment extends Fragment implements
 
 				sqlInsertLoader.insert(ReasonDBOpenHelper.TABLE_REASON, null,
 						reasonContentValues);
-
-				// Bundle args = new Bundle();
-				// args.putParcelable(ARGS_PARAMS, params);
-
-				// TheoryFragmentWithSQLiteLoaderNestFragmentsNestFragments.this.getLoaderManager().restartLoader(ReasonDBOpenHelper.INSERT_REASON_LOADER_ID,
-				// args,
-				// TheoryFragmentWithSQLiteLoaderNestFragmentsNestFragments.this);
-				// TheoryFragmentWithSQLiteLoaderNestFragmentsNestFragments.this.getActivity().getContentResolver().insert(ReasonContentProvider.CONTENT_URI,
-				// reasonContentValues);
-				System.out.println("click!!");
+				System.out.println("insert click!!");
 
 			}
 		});

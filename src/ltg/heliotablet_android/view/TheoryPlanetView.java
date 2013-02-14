@@ -85,8 +85,8 @@ public class TheoryPlanetView extends LinearLayout {
 						.addAll(newSortedByFlagReasonSet).build();
 				
 				ImmutableSortedSet<Reason> newIsReadonlyReasonSet = ImmutableSortedSet
-						.copyOf(Iterables.filter(imReasonSet,
-								Reason.getIsReadOnlyPredicate(false)));
+						.copyOf(Iterables.filter(newSortedByReadOnlyReasonSet,
+								Reason.getIsReadOnlyFalsePredicate()));
 
 				
 					
@@ -113,7 +113,9 @@ public class TheoryPlanetView extends LinearLayout {
 					circleView.makeTransparent(true);
 				// just replace
 
+				
 				circleView.setTag(newSortedByReadOnlyReasonSet);
+				circleView.invalidate();
 				this.invalidate();
 
 			}

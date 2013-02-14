@@ -211,9 +211,9 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 	
 	protected void makeTransparent(boolean isTransparent) {
 		if( isTransparent )
-			this.setAlpha(120f);
+			this.setReducedAlpha(100f);
 		else
-			this.setAlpha(255f);
+			this.setReducedAlpha(255f);
 		
 	}
 
