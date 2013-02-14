@@ -174,15 +174,14 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 						
 						deleteLoader.delete(ReasonDBOpenHelper.TABLE_REASON, "_ID=?", args);
 						
+						 InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+				         imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 						
 						CircleView.this.makeToast("Reason Deleted");
 						
 						if( isScheduledForViewRemoval ) {
 							ViewGroup tv = (ViewGroup) CircleView.this.getParent();
 							tv.removeView(CircleView.this);
-							
-							 InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-					         imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 						} else {
 							CircleView.this.makeTransparent(true);
 						}
