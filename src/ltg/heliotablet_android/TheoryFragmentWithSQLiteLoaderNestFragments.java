@@ -48,7 +48,7 @@ public class TheoryFragmentWithSQLiteLoaderNestFragments extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		theoriesView = (ViewGroup) inflater.inflate(
-				R.layout.theories_activity_nested, container, false);
+				R.layout.brenda_theories_activity_nested, container, false);
 		 db= ReasonDBOpenHelper.getInstance(this.getActivity());
 		  StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll()
                   .penaltyLog()
