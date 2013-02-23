@@ -111,10 +111,17 @@
         <item name="android:layout_centerVertical">true</item>
     </style>
 
-    <style name="observationCircleViewStyle">
-        <item name="android:layout_width">220dp</item>
-        <item name="android:layout_height">220dp</item>
+    <style name="observationAnchorViewStyle">
+        <item name="android:layout_width">270dp</item>
+        <item name="android:layout_height">270dp</item>
         <item name="android:name">ltg.heliotablet_android.ObservationViewFragment</item>
     </style>
+    
+     <style name="observationCircleViewStyle" parent="@style/planetColor">
+        <item name="android:layout_width">10dp</item>
+        <item name="android:layout_height">10dp</item>
+    </style>
+    
+    
 
 </resources>

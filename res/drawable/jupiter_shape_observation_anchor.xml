@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+ 
+  <item
+        android:id="@+id/scaledDrawable">    
+        <scale
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:drawable="@drawable/jupiter_shape_rect"
+            android:scaleGravity="center_vertical|center_horizontal"
+            android:scaleHeight="15%"
+            android:scaleWidth="15%" />
+    </item>
+   
+         
+
+</layer-list>

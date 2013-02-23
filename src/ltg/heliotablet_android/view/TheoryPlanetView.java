@@ -151,7 +151,6 @@ public class TheoryPlanetView extends LinearLayout {
 			textColor = textColorBlack;
 
 		}
-
 		cv.setTextColor(textColor);
 		cv.setBackground(drawable);
 

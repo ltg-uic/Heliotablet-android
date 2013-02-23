@@ -1,10 +1,8 @@
-<ltg.heliotablet_android.view.CircleView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:circleView="http://schemas.android.com/apk/res/ltg.heliotablet_android"
-    android:background="@drawable/neptune_shape" 
-    circleView:flag="RED"
-    circleView:textColor="@color/White"
+<ltg.heliotablet_android.view.ObservationCircleView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/obsView"
+    style="@style/observationCircleViewStyle"
+    android:background="@drawable/jupiter_shape" 
     android:layout_width="10dp"
     android:layout_height="10dp"
-    
 />
 

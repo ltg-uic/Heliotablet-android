@@ -10,88 +10,72 @@
         android:layout_width="260dp"
         android:layout_height="600dp"
         android:layout_marginLeft="1024dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="53dp"
         android:scaleType="fitEnd"
         android:src="@drawable/shape_cloud" android:contentDescription="TODO"/>
 
     <fragment
         android:id="@+id/blueView"
-        android:name="ltg.heliotablet_android.ObservationViewFragment"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
+        style="@style/observationAnchorViewStyle"
         android:layout_marginLeft="800dp"
-        android:layout_marginTop="460dp"
+        android:layout_marginTop="420dp"
         android:label="@string/blue" >
     </fragment>
 
     <fragment
         android:id="@+id/brownView"
-        android:name="ltg.heliotablet_android.ObservationViewFragment"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="60dp"
+        style="@style/observationAnchorViewStyle"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/mercury_shape"
         android:label="@string/brown" />
 
     <fragment
         android:id="@+id/yellowView"
-        android:name="ltg.heliotablet_android.ObservationViewFragment"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
+        style="@style/observationAnchorViewStyle"
         android:layout_marginLeft="800dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/saturn_shape"
         android:label="@string/yellow" />
 
     <fragment
         android:id="@+id/pinkView"
-        android:name="ltg.heliotablet_android.ObservationViewFragment"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
-        android:layout_marginLeft="480dp"
-        android:layout_marginTop="20dp"
+        style="@style/observationAnchorViewStyle"
+        android:layout_marginLeft="407dp"
+        android:layout_marginTop="22dp"
         android:background="@drawable/venus_shape"
         android:label="@string/pink" />
 
     <fragment
         android:id="@+id/grayView"
-        android:name="ltg.heliotablet_android.ObservationViewFragment"
-        android:layout_marginLeft="400dp"
-        android:layout_marginTop="480dp"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
+        style="@style/observationAnchorViewStyle"
+             android:layout_marginLeft="382dp"
+        android:layout_marginTop="420dp"
         android:background="@drawable/mars_shape"
         android:label="@string/gray" />
 
     <fragment
         android:id="@+id/redView"
-        android:name="ltg.heliotablet_android.ObservationViewFragment"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
-        android:layout_marginLeft="580dp"
-        android:layout_marginTop="290dp"
-        android:background="@drawable/earth_shape"
+        style="@style/observationAnchorViewStyle"
+        android:layout_marginLeft="592dp"
+        android:layout_marginTop="232dp"
+        android:background="@drawable/earth_shape"    
         android:label="@string/red" />
 
     <fragment
         android:id="@+id/orangeView"
-        android:name="ltg.heliotablet_android.ObservationViewFragment"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="450dp"
+        style="@style/observationAnchorViewStyle"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="416dp"
         android:background="@drawable/uranus_shape"
         android:label="@string/orange" />
 
     <fragment
         android:id="@+ig/greenView"
-        android:name="ltg.heliotablet_android.ObservationViewFragment"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
-        android:layout_marginLeft="260dp"
-        android:layout_marginTop="220dp"
-        android:background="@drawable/jupiter_shape"
+        style="@style/observationAnchorViewStyle"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="210dp"
+        android:background="@drawable/jupiter_shape_observation_anchor"
         android:label="@string/green" />
 
 </FrameLayout>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ltg.heliotablet_android.view.ObservationCircleView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/ltg.heliotablet_android"
-    android:id="@+id/observationView"
-    android:layout_width="220dp"
-    android:layout_height="220dp"
-    app:angleOffset="90.0"
-   app:innerRadius="50dp"
- />

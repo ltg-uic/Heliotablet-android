@@ -85,8 +85,8 @@ public class CircleLayout extends ViewGroup {
 			mDividerPaint.setColor(dividerColor);
 			
 			mAngleOffset = a.getFloat(R.styleable.CircleLayout_angleOffset, 90f);
-			mDividerWidth = a.getDimensionPixelSize(R.styleable.CircleLayout_dividerWidth, 1);
-			mInnerRadius = a.getDimensionPixelSize(R.styleable.CircleLayout_innerRadius, 80);
+			mDividerWidth = a.getDimensionPixelSize(R.styleable.CircleLayout_dividerWidth, 3);
+			mInnerRadius = a.getDimensionPixelSize(R.styleable.CircleLayout_innerRadius, 20);
 			
 			mLayoutMode =1;
 		} finally {

@@ -7,6 +7,7 @@ import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.data.ReasonDataSource;
 import ltg.heliotablet_android.view.CircleView;
+import ltg.heliotablet_android.view.ObservationAnchorView;
 import ltg.heliotablet_android.view.ObservationCircleView;
 import ltg.heliotablet_android.view.TheoryPlanetView;
 import ltg.heliotablet_android.view.controller.TheoryReasonController;
@@ -43,33 +44,34 @@ public class ObservationViewFragment extends Fragment implements
 	private String observationAnchor;
 	private TheoryReasonController theoryController;
 	private ReasonDBOpenHelper db = null;
-	private ObservationCircleView observationCircleView;
+	private ObservationAnchorView observationAnchorView;
 	private SQLiteCursorLoader loader = null;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
 		//init theory
-		observationCircleView = (ObservationCircleView) inflater.inflate(R.layout.observation_view,
+		
+		observationAnchorView = (ObservationAnchorView) inflater.inflate(R.layout.observation_anchor_view,
 				container, false);
-		observationCircleView.setAnchor(observationAnchor);
+		observationAnchorView.setAnchor(observationAnchor);
 		
-		CircleView circleView = (CircleView)inflater.inflate(R.layout.observation_view_layout, container, false);
+		ObservationCircleView circleView = (ObservationCircleView)inflater.inflate(R.layout.observation_view_layout, container, false);
 		
-		observationCircleView.addView(circleView);
+		observationAnchorView.addView(circleView);
 		
-		circleView = (CircleView)inflater.inflate(R.layout.observation_view_layout, container, false);
-		observationCircleView.addView(circleView);
-		circleView = (CircleView)inflater.inflate(R.layout.observation_view_layout, container, false);
-		observationCircleView.addView(circleView);
-		circleView = (CircleView)inflater.inflate(R.layout.observation_view_layout, container, false);
-		observationCircleView.addView(circleView);
-		circleView = (CircleView)inflater.inflate(R.layout.observation_view_layout, container, false);
-		observationCircleView.addView(circleView);
-		circleView = (CircleView)inflater.inflate(R.layout.observation_view_layout, container, false);
-		observationCircleView.addView(circleView);
-		circleView = (CircleView)inflater.inflate(R.layout.observation_view_layout, container, false);
-		observationCircleView.addView(circleView);
+		circleView = (ObservationCircleView)inflater.inflate(R.layout.observation_view_layout, container, false);
+		observationAnchorView.addView(circleView);
+		circleView = (ObservationCircleView)inflater.inflate(R.layout.observation_view_layout, container, false);
+		observationAnchorView.addView(circleView);
+		circleView = (ObservationCircleView)inflater.inflate(R.layout.observation_view_layout, container, false);
+		observationAnchorView.addView(circleView);
+		circleView = (ObservationCircleView)inflater.inflate(R.layout.observation_view_layout, container, false);
+		observationAnchorView.addView(circleView);
+		circleView = (ObservationCircleView)inflater.inflate(R.layout.observation_view_layout, container, false);
+		observationAnchorView.addView(circleView);
+		circleView = (ObservationCircleView)inflater.inflate(R.layout.observation_view_layout, container, false);
+		observationAnchorView.addView(circleView);
 		db = ReasonDBOpenHelper.getInstance(this.getActivity());
 		
 		
@@ -84,7 +86,7 @@ public class ObservationViewFragment extends Fragment implements
 		//setupTestListeners();
 		//setupLoader();
 
-		return observationCircleView;
+		return observationAnchorView;
 	}
 
 	private void setupLoader() {
