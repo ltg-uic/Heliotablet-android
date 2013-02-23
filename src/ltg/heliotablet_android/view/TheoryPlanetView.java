@@ -1,10 +1,6 @@
 package ltg.heliotablet_android.view;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.data.Reason;
@@ -16,15 +12,12 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
-import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Ordering;
-import com.google.common.primitives.Booleans;
-import com.google.common.primitives.Ints;
 
 public class TheoryPlanetView extends LinearLayout {
 

@@ -16,7 +16,7 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
-   
+
     <style name="theoryPlanetLabel" parent="android:Widget.Holo.Light.TextView">
         <item name="android:background">@color/PlanetTheoryTableColor</item>
         <item name="android:gravity">center</item>
@@ -25,12 +25,14 @@
         <item name="android:layout_height">86dp</item>
         <item name="android:layout_gravity">fill_horizontal</item>
     </style>
+
     <style name="theoryPlanetHeaderLabel" parent="android:Widget.Holo.Light.TextView">
         <item name="android:background">@color/PlanetTheoryTableColor</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/Black</item>
         <item name="android:textSize">23sp</item>
     </style>
+
     <style name="theoryPlanetTableGridStyle">
         <item name="android:background">@color/PlanetTheoryTableColor</item>
         <item name="android:layout_width">810dp</item>
@@ -42,6 +44,7 @@
         <item name="android:paddingTop">1dp</item>
         <item name="android:gravity">center_vertical</item>
     </style>
+
     <style name="planetColor">
         <item name="android:background">@color/Crimson</item>
         <item name="android:layout_marginLeft">52dp</item>
@@ -49,12 +52,13 @@
         <item name="android:layout_width">100dp</item>
         <item name="android:layout_height">100dp</item>
     </style>
-        
+
     <style name="sketchPlanetTextLabelStyle">
         <item name="android:background">@drawable/sketch_rect</item>
-	    <item name="android:layout_width">145dp</item>
+        <item name="android:layout_width">145dp</item>
         <item name="android:layout_height">50dp</item>
     </style>
+
     <style name="SketchTextStyle" parent="android:Widget.TextView">
         <item name="android:textSize">25dp</item>
         <item name="android:layout_width">wrap_content</item>
@@ -62,6 +66,7 @@
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:layout_centerVertical">true</item>
     </style>
+
     <style name="sketchPlanetViewText" parent="android:Widget.Holo.Light.TextView">
         <item name="android:textColor">@color/White</item>
         <item name="android:textSize">25dp</item>
@@ -70,22 +75,23 @@
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:layout_centerVertical">true</item>
     </style>
+
     <style name="sketchPlanetView" parent="@style/planetColor">
         <item name="android:layout_width">145dp</item>
         <item name="android:layout_height">145dp</item>
     </style>
-    
-     <style name="theoryPlanetView" parent="@style/planetColor">
+
+    <style name="theoryPlanetView" parent="@style/planetColor">
         <item name="android:layout_width">100dp</item>
         <item name="android:layout_height">100dp</item>
     </style>
-   
-      <style name="theoryPlanetView2" parent="">
+
+    <style name="theoryPlanetView2" parent="">
         <item name="android:layout_width">80dp</item>
         <item name="android:layout_height">80dp</item>
     </style>
-     
-     <style name="theoryPlanetColorText" parent="android:Widget.Holo.Light.TextView">
+
+    <style name="theoryPlanetColorText" parent="android:Widget.Holo.Light.TextView">
         <item name="android:textColor">@color/White</item>
         <item name="android:textSize">20dp</item>
         <item name="android:layout_width">wrap_content</item>
@@ -93,9 +99,9 @@
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:layout_centerVertical">true</item>
     </style>
-    
-     <style name="theoryReasonText" parent="android:Widget.Holo.Light.TextView">
-         <item name="android:textColor">@color/White</item>
+
+    <style name="theoryReasonText" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:textColor">@color/White</item>
         <item name="android:textSize">25dp</item>
         <item name="android:layout_marginTop">23dp</item>
         <item name="android:layout_alignTop">@+id/colorLabelText</item>
@@ -103,7 +109,12 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:layout_centerVertical">true</item>
-    </style>    
-     
-     
+    </style>
+
+    <style name="observationCircleViewStyle">
+        <item name="android:layout_width">220dp</item>
+        <item name="android:layout_height">220dp</item>
+        <item name="android:name">ltg.heliotablet_android.ObservationViewFragment</item>
+    </style>
+
 </resources>

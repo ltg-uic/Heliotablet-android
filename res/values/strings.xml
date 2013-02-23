@@ -32,15 +32,15 @@
     <string name="neptune">Neptune</string>
 
     <!-- Colors -->
-    <string name="red">RED</string>
-    <string name="blue">BLUE</string>
-    <string name="yellow">YELLOW</string>
-    <string name="green">GREEN</string>
-    <string name="white">WHITE</string>
-    <string name="purple">PURPLE</string>
-    <string name="brown">BROWN</string>
-    <string name="orange">ORANGE</string>
-    <string name="gray">GRAY</string>
+    <string name="red">red</string>
+    <string name="blue">blue</string>
+    <string name="yellow">yellow</string>
+    <string name="green">green</string>
+    <string name="white">white</string>
+    <string name="purple">purple</string>
+    <string name="brown">brown</string>
+    <string name="orange">orange</string>
+    <string name="gray">gray</string>
     <string name="blank_space">" "</string>
     <string name="lorem_ipsum">This is earth because it is awesome.</string>
    <string name="action_previous">Previous</string>
@@ -49,5 +49,6 @@
    <string name="fragment_tag_theory">theory</string>
    <string name="fragment_tag_observation">observations</string>
    <string name="fragment_tag_scratchpad">scratchpad</string>
+   <string name="pink">pink</string>
    
 </resources>

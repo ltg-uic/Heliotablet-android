@@ -5,77 +5,93 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_color" >
 
-	<ImageView
-	    android:id="@+id/planetPalletView"
-	    android:layout_width="260dp"
-	    android:layout_height="600dp"
-	    android:layout_marginLeft="1024dp"
-	    android:layout_marginTop="60dp"
-	    android:scaleType="fitEnd"
-	    android:src="@drawable/shape_cloud" />
+    <ImageView
+        android:id="@+id/planetPalletView"
+        android:layout_width="260dp"
+        android:layout_height="600dp"
+        android:layout_marginLeft="1024dp"
+        android:layout_marginTop="60dp"
+        android:scaleType="fitEnd"
+        android:src="@drawable/shape_cloud" android:contentDescription="TODO"/>
 
-    <View
-        android:id="@+id/view8"
+    <fragment
+        android:id="@+id/blueView"
+        android:name="ltg.heliotablet_android.ObservationViewFragment"
         android:layout_width="220dp"
         android:layout_height="220dp"
         android:layout_marginLeft="800dp"
         android:layout_marginTop="460dp"
-        android:background="@drawable/neptune_shape" />
+        android:label="@string/blue" >
+    </fragment>
 
-    <View
-        android:id="@+id/view1"
+    <fragment
+        android:id="@+id/brownView"
+        android:name="ltg.heliotablet_android.ObservationViewFragment"
         android:layout_width="220dp"
         android:layout_height="220dp"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="60dp"
-        android:background="@drawable/mercury_shape" />
+        android:background="@drawable/mercury_shape"
+        android:label="@string/brown" />
 
-    <View
-        android:id="@+id/view6"
+    <fragment
+        android:id="@+id/yellowView"
+        android:name="ltg.heliotablet_android.ObservationViewFragment"
         android:layout_width="220dp"
         android:layout_height="220dp"
         android:layout_marginLeft="800dp"
         android:layout_marginTop="60dp"
-        android:background="@drawable/saturn_shape" />
+        android:background="@drawable/saturn_shape"
+        android:label="@string/yellow" />
 
-    <View
-        android:id="@+id/view2"
+    <fragment
+        android:id="@+id/pinkView"
+        android:name="ltg.heliotablet_android.ObservationViewFragment"
         android:layout_width="220dp"
         android:layout_height="220dp"
         android:layout_marginLeft="480dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/venus_shape" />
+        android:background="@drawable/venus_shape"
+        android:label="@string/pink" />
 
-    <View
-        android:id="@+id/view4"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
+    <fragment
+        android:id="@+id/grayView"
+        android:name="ltg.heliotablet_android.ObservationViewFragment"
         android:layout_marginLeft="400dp"
         android:layout_marginTop="480dp"
-        android:background="@drawable/mars_shape" />
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:background="@drawable/mars_shape"
+        android:label="@string/gray" />
 
-    <View
-        android:id="@+id/view3"
+    <fragment
+        android:id="@+id/redView"
+        android:name="ltg.heliotablet_android.ObservationViewFragment"
         android:layout_width="220dp"
         android:layout_height="220dp"
         android:layout_marginLeft="580dp"
         android:layout_marginTop="290dp"
-        android:background="@drawable/earth_shape" />
+        android:background="@drawable/earth_shape"
+        android:label="@string/red" />
 
-    <View
-        android:id="@+id/view7"
+    <fragment
+        android:id="@+id/orangeView"
+        android:name="ltg.heliotablet_android.ObservationViewFragment"
         android:layout_width="220dp"
         android:layout_height="220dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="450dp"
-        android:background="@drawable/uranus_shape" />
+        android:background="@drawable/uranus_shape"
+        android:label="@string/orange" />
 
-    <View
-        android:id="@+ig/green"
+    <fragment
+        android:id="@+ig/greenView"
+        android:name="ltg.heliotablet_android.ObservationViewFragment"
         android:layout_width="220dp"
         android:layout_height="220dp"
         android:layout_marginLeft="260dp"
         android:layout_marginTop="220dp"
-        android:background="@drawable/jupiter_shape" />
+        android:background="@drawable/jupiter_shape"
+        android:label="@string/green" />
 
 </FrameLayout>

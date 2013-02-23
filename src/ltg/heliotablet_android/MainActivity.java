@@ -48,7 +48,6 @@ public class MainActivity extends Activity  {
 				.setTabListener(new TabListener<ObservationFragment>(this, getString(R.string.fragment_tag_observation), ObservationFragment.class));
 		    
 		actionBar.addTab(tab);
-		
 		tab = actionBar.newTab()
 				.setText(R.string.tab_title_scratch_pad)
 				.setTabListener(new TabListener<ScratchPadFragment>(this, getString(R.string.fragment_tag_scratchpad), ScratchPadFragment.class));

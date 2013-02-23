@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <declare-styleable name="TheoryPlanetView">
         <attr name="anchor" format="string" />
     </declare-styleable>
@@ -10,4 +11,15 @@
     <declare-styleable name="TheoryViewFragment">
         <attr name="android:label" />
     </declare-styleable>
+    <declare-styleable name="ObservationViewFragment">
+        <attr name="android:label" />
+    </declare-styleable>
+    <declare-styleable name="CircleLayout">
+        <attr name="innerRadius" format="dimension" />
+        <attr name="divider" format="color" />
+        <attr name="innerCircle" format="color" />
+        <attr name="angleOffset" format="float" />
+        <attr name="dividerWidth" format="dimension" />
+    </declare-styleable>
+
 </resources>
