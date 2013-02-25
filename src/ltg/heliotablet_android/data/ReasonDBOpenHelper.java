@@ -14,10 +14,15 @@ import android.util.Log;
 
 public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 
-	public static final int ALL_REASONS_LOADER_ID = 0;
-	public static final int INSERT_REASON_LOADER_ID = 1;
-	public static final int UPDATE_REASON_LOADER_ID = 2;
-	public static final int DELETE_REASON_LOADER_ID = 3;
+	public static final int ALL_REASONS_THEORY_LOADER_ID = 0;
+	public static final int INSERT_REASON_THEORY_LOADER_ID = 1;
+	public static final int UPDATE_REASON_THEORY_LOADER_ID = 2;
+	public static final int DELETE_REASON_THEORY_LOADER_ID = 3;
+	
+	public static final int ALL_REASONS_OBS_LOADER_ID = 0;
+	public static final int INSERT_REASON_OBS_LOADER_ID = 1;
+	public static final int UPDATE_REASON_OBS_LOADER_ID = 2;
+	public static final int DELETE_REASON_OBS_LOADER_ID = 3;
 	
 	private static final String DATABASE_NAME = "reasons.db";
 	private static final int DATABASE_VERSION = 1;

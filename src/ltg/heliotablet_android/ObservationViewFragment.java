@@ -3,6 +3,7 @@ package ltg.heliotablet_android;
 import java.util.Collections;
 import java.util.List;
 
+import ltg.heliotablet_android.TheoryViewFragment.TargetViewDragListener;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.data.ReasonDataSource;
@@ -10,6 +11,7 @@ import ltg.heliotablet_android.view.CircleView;
 import ltg.heliotablet_android.view.ObservationAnchorView;
 import ltg.heliotablet_android.view.ObservationCircleView;
 import ltg.heliotablet_android.view.TheoryPlanetView;
+import ltg.heliotablet_android.view.controller.ObservationReasonController;
 import ltg.heliotablet_android.view.controller.TheoryReasonController;
 
 import org.apache.commons.lang3.StringUtils;
@@ -42,7 +44,7 @@ public class ObservationViewFragment extends Fragment implements
 		LoaderManager.LoaderCallbacks<Cursor> {
 
 	private String observationAnchor;
-	private TheoryReasonController theoryController;
+	private ObservationReasonController observationController;
 	private ReasonDBOpenHelper db = null;
 	private ObservationAnchorView observationAnchorView;
 	private SQLiteCursorLoader loader = null;
@@ -55,23 +57,9 @@ public class ObservationViewFragment extends Fragment implements
 		observationAnchorView = (ObservationAnchorView) inflater.inflate(R.layout.observation_anchor_view,
 				container, false);
 		observationAnchorView.setAnchor(observationAnchor);
+		observationAnchorView.setOnDragListener(new TargetViewDragListener());
+
 		
-		ObservationCircleView circleView = (ObservationCircleView)inflater.inflate(R.layout.observation_view_layout, container, false);
-		
-		observationAnchorView.addView(circleView);
-		
-		circleView = (ObservationCircleView)inflater.inflate(R.layout.observation_view_layout, container, false);
-		observationAnchorView.addView(circleView);
-		circleView = (ObservationCircleView)inflater.inflate(R.layout.observation_view_layout, container, false);
-		observationAnchorView.addView(circleView);
-		circleView = (ObservationCircleView)inflater.inflate(R.layout.observation_view_layout, container, false);
-		observationAnchorView.addView(circleView);
-		circleView = (ObservationCircleView)inflater.inflate(R.layout.observation_view_layout, container, false);
-		observationAnchorView.addView(circleView);
-		circleView = (ObservationCircleView)inflater.inflate(R.layout.observation_view_layout, container, false);
-		observationAnchorView.addView(circleView);
-		circleView = (ObservationCircleView)inflater.inflate(R.layout.observation_view_layout, container, false);
-		observationAnchorView.addView(circleView);
 		db = ReasonDBOpenHelper.getInstance(this.getActivity());
 		
 		
@@ -81,16 +69,16 @@ public class ObservationViewFragment extends Fragment implements
 				.detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
 				.penaltyLog().penaltyDeath().build());
 
-//		theoryController = TheoryReasonController.getInstance(getActivity());
-//		theoryController.add(theoryAnchor, observationCircleView);
+		observationController = ObservationReasonController.getInstance(getActivity());
+		observationController.add(observationAnchor, observationAnchorView);
 		//setupTestListeners();
-		//setupLoader();
+		setupLoader();
 
 		return observationAnchorView;
 	}
 
 	private void setupLoader() {
-		getLoaderManager().initLoader(ReasonDBOpenHelper.ALL_REASONS_LOADER_ID,
+		getLoaderManager().initLoader(ReasonDBOpenHelper.ALL_REASONS_OBS_LOADER_ID,
 				null, this);
 		LoaderManager.enableDebugLogging(true);
 	}
@@ -117,16 +105,17 @@ public class ObservationViewFragment extends Fragment implements
 				if (targetView.equals(sourceView)) {
 					Log.i("DRAG", "there equal");
 				} else {
-					sourceView.removeView(dragged);
+					//sourceView.removeView(dragged);
 
-					RelativeLayout rel = (RelativeLayout) dragged;
+					//RelativeLayout rel = (RelativeLayout) dragged;
 
-					CircleView cv = (CircleView) dragged;
+					//CircleView cv = (CircleView) dragged;
 
-					if (targetView instanceof TheoryPlanetView) {
-						TheoryPlanetView tv = (TheoryPlanetView) targetView;
-						Reason reason = new Reason(tv.getAnchor(),cv.getFlag(), Reason.TYPE_THEORY,"tony", false);
-						theoryController.insertReason(reason);
+					if (targetView instanceof ObservationAnchorView) {
+						ObservationAnchorView tv = (ObservationAnchorView) targetView;
+						//tv.addView(dragged);
+//						Reason reason = new Reason(tv.getAnchor(),cv.getFlag(), Reason.TYPE_THEORY,"tony", false);
+//						observationController.insertReason(reason);
 					} 
 				}
 				break;
@@ -153,12 +142,12 @@ public class ObservationViewFragment extends Fragment implements
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
 		switch (id) {
-		case ReasonDBOpenHelper.ALL_REASONS_LOADER_ID:
+		case ReasonDBOpenHelper.ALL_REASONS_OBS_LOADER_ID:
 			return new SQLiteCursorLoader(
 					this.getActivity(),
 					db,
 					"SELECT _id, anchor, type, flag, reasonText, isReadOnly, lastTimestamp, origin FROM reason WHERE type = '"
-							+ ReasonDBOpenHelper.TYPE_THEORY
+							+ ReasonDBOpenHelper.TYPE_OBSERVATION
 							+ "' AND anchor = '"
 							+ observationAnchor
 							+ "' ORDER BY anchor, flag, isReadOnly;", null);
@@ -171,7 +160,7 @@ public class ObservationViewFragment extends Fragment implements
 	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
 		switch (loader.getId()) {
-		case ReasonDBOpenHelper.ALL_REASONS_LOADER_ID:
+		case ReasonDBOpenHelper.ALL_REASONS_OBS_LOADER_ID:
 			updateAllViews(data);
 			break;
 		}
@@ -189,7 +178,7 @@ public class ObservationViewFragment extends Fragment implements
 				data.moveToNext();
 			}
 			quickDump(allReasons);
-			theoryController.updateViews(allReasons, this.observationAnchor);
+			observationController.updateViews(allReasons, this.observationAnchor);
 		}
 	}
 
@@ -201,7 +190,6 @@ public class ObservationViewFragment extends Fragment implements
 
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
-		System.out.println("yo");
 	}
 
 	@Override

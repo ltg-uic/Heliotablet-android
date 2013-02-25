@@ -1,17 +1,32 @@
 package ltg.heliotablet_android.view;
 
+import java.util.HashMap;
+
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSortedSet;
+import com.google.common.collect.Iterables;
+
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.data.Reason;
+import ltg.heliotablet_android.view.controller.OrderingViewData;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ScaleDrawable;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
-public class ObservationAnchorView extends CircleLayout   {
+public class ObservationAnchorView extends CircleLayout implements ICircleView   {
 
 	private String anchor;
+	private HashMap<String, ObservationCircleView> flagToCircleView = new HashMap<String, ObservationCircleView>();
+
+	private ImmutableSet<String> allFlags = ImmutableSet.of(Reason.CONST_BLUE,
+			Reason.CONST_BROWN, Reason.CONST_GREEN, Reason.CONST_GREY,
+			Reason.CONST_ORANGE, Reason.CONST_PINK, Reason.CONST_RED,
+			Reason.CONST_YELLOW);
 	
 	public ObservationAnchorView(Context context) {
 		super(context);
@@ -29,37 +44,73 @@ public class ObservationAnchorView extends CircleLayout   {
 
 	public void setAnchor(String anchor) {
 		this.anchor = anchor;
-		styleView();
+		StyleCircleView.styleView(this, anchor, getResources());
 	}
 
-	private void styleView() {
-			Resources resources = getResources();
-			LayerDrawable drawable = null;
 
-			int textColorWhite = resources.getColor(R.color.White);
-			int textColorBlack = resources.getColor(R.color.Black);
+	public void updateObservationCircleView(ImmutableSortedSet<Reason> imReasonSet) {
 
-			if (anchor.equals(Reason.CONST_RED)) {
-				drawable = (LayerDrawable) resources.getDrawable(R.drawable.earth_shape);
-			} else if (anchor.equals(Reason.CONST_BLUE)) {
-				drawable = (LayerDrawable) resources.getDrawable(R.drawable.neptune_shape);
-			} else if (anchor.equals(Reason.CONST_BROWN)) {
-				drawable = (LayerDrawable) resources.getDrawable(R.drawable.mercury_shape);
-			} else if (anchor.equals(Reason.CONST_YELLOW)) {
-				drawable = (LayerDrawable) resources.getDrawable(R.drawable.saturn_shape);
-			} else if (anchor.equals(Reason.CONST_PINK)) {
-				drawable = (LayerDrawable) resources.getDrawable(R.drawable.venus_shape);
-			} else if (anchor.equals(Reason.CONST_GREEN)) {
-				drawable = (LayerDrawable) resources.getDrawable(R.drawable.jupiter_shape);
-			} else if (anchor.equals(Reason.CONST_GREY)) {
-				drawable = (LayerDrawable) resources.getDrawable(R.drawable.mars_shape);
-			} else if (anchor.equals(Reason.CONST_ORANGE)) {
-				drawable = (LayerDrawable) resources.getDrawable(R.drawable.uranus_shape);
+			for (String flag : allFlags) {
+
+				// filter for each COLOR
+				ImmutableSortedSet<Reason> newSortedByFlagReasonSet = ImmutableSortedSet
+						.copyOf(Iterables.filter(imReasonSet,
+								Reason.getFlagPredicate(flag)));
+
+				if (!newSortedByFlagReasonSet.isEmpty()) {
+
+					ImmutableSortedSet<Reason> newSortedByReadOnlyReasonSet = ImmutableSortedSet
+							.orderedBy(OrderingViewData.isReadOnlyOrdering.reverse())
+							.addAll(newSortedByFlagReasonSet).build();
+					
+					ImmutableSortedSet<Reason> newIsReadonlyReasonSet = ImmutableSortedSet
+							.copyOf(Iterables.filter(newSortedByReadOnlyReasonSet,
+									Reason.getIsReadOnlyFalsePredicate()));
+
+					
+						
+					// true is first, we want false first
+					// check if it was there already
+					ObservationCircleView circleView = flagToCircleView.get(flag);
+
+					// if null we are creating it for the first, no need to diff
+					if (circleView == null) {
+						
+						circleView = (ObservationCircleView) LayoutInflater.from(getContext())
+								.inflate(R.layout.observation_view_layout, this, false);
+
+						StyleCircleView.styleView((ICircleView)circleView, flag, getResources());
+						circleView.setFlag(flag);
+						circleView.setAnchor(this.anchor);
+						flagToCircleView.put(flag, circleView);
+						this.addView(circleView);
+
+					}
+
+					if( newIsReadonlyReasonSet.size() > 0 )
+						circleView.makeTransparent(false);
+					else
+						circleView.makeTransparent(true);
+					// just replace
+
+					
+					circleView.setTag(newSortedByReadOnlyReasonSet);
+					circleView.invalidate();
+					this.invalidate();
+
+				}
+
 			}
 
-			//this.setTextColor(textColor);
-			this.setBackground(drawable);
+		}
 
+	@Override
+	public int getTextColor() {
+		return 0;
 	}
-	
+
+	@Override
+	public void setTextColor(int textColor) {
+	}
+		
 }

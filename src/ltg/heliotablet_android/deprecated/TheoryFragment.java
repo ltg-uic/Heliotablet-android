@@ -129,13 +129,13 @@ public class TheoryFragment extends Fragment {
 
 	@Override
 	public void onResume() {
-		theoryController.open();
+//		theoryController.open();
 		super.onResume();
 	}
 
 	@Override
 	public void onPause() {
-		theoryController.close();
+//		theoryController.close();
 		super.onPause();
 	}
 	

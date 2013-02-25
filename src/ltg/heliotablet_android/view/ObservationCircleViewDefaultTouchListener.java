@@ -14,7 +14,7 @@ public class ObservationCircleViewDefaultTouchListener implements OnTouchListene
 			ClipData data = ClipData.newPlainText("", "");
 			DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
 					view);
-			view.startDrag(data, shadowBuilder, view, 0);
+			view.startDrag(data, shadowBuilder, null, 0);
 			//view.setVisibility(View.INVISIBLE);
 			break;
 

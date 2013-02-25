@@ -72,7 +72,7 @@ public class TheoryViewFragment extends Fragment implements
 	}
 
 	private void setupLoader() {
-		getLoaderManager().initLoader(ReasonDBOpenHelper.ALL_REASONS_LOADER_ID,
+		getLoaderManager().initLoader(ReasonDBOpenHelper.ALL_REASONS_THEORY_LOADER_ID,
 				null, this);
 		LoaderManager.enableDebugLogging(true);
 	}
@@ -135,7 +135,7 @@ public class TheoryViewFragment extends Fragment implements
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
 		switch (id) {
-		case ReasonDBOpenHelper.ALL_REASONS_LOADER_ID:
+		case ReasonDBOpenHelper.ALL_REASONS_THEORY_LOADER_ID:
 			return new SQLiteCursorLoader(
 					this.getActivity(),
 					db,
@@ -153,7 +153,7 @@ public class TheoryViewFragment extends Fragment implements
 	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
 		switch (loader.getId()) {
-		case ReasonDBOpenHelper.ALL_REASONS_LOADER_ID:
+		case ReasonDBOpenHelper.ALL_REASONS_THEORY_LOADER_ID:
 			updateAllViews(data);
 			break;
 		}
@@ -248,20 +248,20 @@ public class TheoryViewFragment extends Fragment implements
 
 				Loader<Cursor> deleteLoader = TheoryViewFragment.this
 						.getLoaderManager().getLoader(
-								ReasonDBOpenHelper.DELETE_REASON_LOADER_ID);
+								ReasonDBOpenHelper.DELETE_REASON_THEORY_LOADER_ID);
 				Bundle args = new Bundle();
 				args.putString("ID", String.valueOf(1));
 				if (deleteLoader == null) {
 
 					TheoryViewFragment.this.getLoaderManager().initLoader(
-							ReasonDBOpenHelper.DELETE_REASON_LOADER_ID, args,
+							ReasonDBOpenHelper.DELETE_REASON_THEORY_LOADER_ID, args,
 							TheoryViewFragment.this);
 					deleteLoader = TheoryViewFragment.this.getLoaderManager()
 							.getLoader(
-									ReasonDBOpenHelper.DELETE_REASON_LOADER_ID);
+									ReasonDBOpenHelper.DELETE_REASON_THEORY_LOADER_ID);
 				} else {
 					TheoryViewFragment.this.getLoaderManager().restartLoader(
-							ReasonDBOpenHelper.DELETE_REASON_LOADER_ID, args,
+							ReasonDBOpenHelper.DELETE_REASON_THEORY_LOADER_ID, args,
 							TheoryViewFragment.this);
 				}
 
@@ -286,17 +286,17 @@ public class TheoryViewFragment extends Fragment implements
 
 				Loader<Cursor> updateLoader = TheoryViewFragment.this
 						.getLoaderManager().getLoader(
-								ReasonDBOpenHelper.UPDATE_REASON_LOADER_ID);
+								ReasonDBOpenHelper.UPDATE_REASON_THEORY_LOADER_ID);
 				if (updateLoader == null) {
 					TheoryViewFragment.this.getLoaderManager().initLoader(
-							ReasonDBOpenHelper.DELETE_REASON_LOADER_ID, null,
+							ReasonDBOpenHelper.DELETE_REASON_THEORY_LOADER_ID, null,
 							TheoryViewFragment.this);
 					updateLoader = TheoryViewFragment.this.getLoaderManager()
 							.getLoader(
-									ReasonDBOpenHelper.DELETE_REASON_LOADER_ID);
+									ReasonDBOpenHelper.DELETE_REASON_THEORY_LOADER_ID);
 				} else {
 					TheoryViewFragment.this.getLoaderManager().restartLoader(
-							ReasonDBOpenHelper.DELETE_REASON_LOADER_ID, null,
+							ReasonDBOpenHelper.DELETE_REASON_THEORY_LOADER_ID, null,
 							TheoryViewFragment.this);
 				}
 
@@ -321,7 +321,7 @@ public class TheoryViewFragment extends Fragment implements
 				args.putString("id", "2");
 
 				TheoryViewFragment.this.getLoaderManager().restartLoader(
-						ReasonDBOpenHelper.UPDATE_REASON_LOADER_ID, args,
+						ReasonDBOpenHelper.UPDATE_REASON_THEORY_LOADER_ID, args,
 						TheoryViewFragment.this);
 
 				// sqlDeleteLoader.update(db.TABLE_REASON, reasonContentValues,

@@ -43,7 +43,7 @@ import com.commonsware.cwac.loaderex.SQLiteCursorLoader;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSortedSet;
 
-public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
+public class CircleView extends RelativeLayout implements PopoverViewDelegate, ICircleView  {
 
 	private GestureDetector gestureDetector;
 	private String flag;
@@ -293,7 +293,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate  {
 		
 		//find the loader
 		TheoryViewFragment tf = (TheoryViewFragment) mainActivity.getFragmentManager().findFragmentByTag(this.getAnchor());
-		Loader<Cursor> loader = tf.getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_LOADER_ID);
+		Loader<Cursor> loader = tf.getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_THEORY_LOADER_ID);
 		SQLiteCursorLoader updateLoader = (SQLiteCursorLoader)loader;
 		return updateLoader;
 	}

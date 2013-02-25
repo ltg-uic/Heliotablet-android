@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.data.Reason;
+import ltg.heliotablet_android.view.controller.OrderingViewData;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -24,11 +25,11 @@ public class TheoryPlanetView extends LinearLayout {
 	private String anchor;
 	private HashMap<String, CircleView> flagToCircleView = new HashMap<String, CircleView>();
 
-	ImmutableSet<String> allFlags = ImmutableSet.of(Reason.CONST_BLUE,
+	private ImmutableSet<String> allFlags = ImmutableSet.of(Reason.CONST_BLUE,
 			Reason.CONST_BROWN, Reason.CONST_GREEN, Reason.CONST_GREY,
 			Reason.CONST_ORANGE, Reason.CONST_PINK, Reason.CONST_RED,
 			Reason.CONST_YELLOW);
-
+	   
 	public TheoryPlanetView(Context context) {
 		super(context);
 	}
@@ -49,17 +50,6 @@ public class TheoryPlanetView extends LinearLayout {
 		this.anchor = anchor;
 	}
 
-	Ordering<Reason> isReadOnlyOrdering = new Ordering<Reason>() {
-		@Override
-		public int compare(Reason r1, Reason r2) {
-			// TODO Auto-generated method stub
-			return ComparisonChain.start()
-			        .compareTrueFirst(r1.isReadonly(), r2.isReadonly())
-			        .compare(r1.getId(), r2.getId())
-			        .result();
-		}
-	   };
-	   
 	public void updateCircleView(ImmutableSortedSet<Reason> imReasonSet) {
 
 		for (String flag : allFlags) {
@@ -72,7 +62,7 @@ public class TheoryPlanetView extends LinearLayout {
 			if (!newSortedByFlagReasonSet.isEmpty()) {
 
 				ImmutableSortedSet<Reason> newSortedByReadOnlyReasonSet = ImmutableSortedSet
-						.orderedBy(isReadOnlyOrdering.reverse())
+						.orderedBy(OrderingViewData.isReadOnlyOrdering.reverse())
 						.addAll(newSortedByFlagReasonSet).build();
 				
 				ImmutableSortedSet<Reason> newIsReadonlyReasonSet = ImmutableSortedSet
