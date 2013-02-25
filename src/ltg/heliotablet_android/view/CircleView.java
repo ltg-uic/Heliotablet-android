@@ -8,7 +8,7 @@ import ltg.heliotablet_android.R.color;
 import ltg.heliotablet_android.TheoryViewFragment;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
-import ltg.heliotablet_android.data.ReasonDataSource;
+import ltg.heliotablet_android.deprecated.ReasonDataSource;
 import ltg.heliotablet_android.view.PopoverView.PopoverViewDelegate;
 import ltg.heliotablet_android.view.controller.TheoryReasonController;
 

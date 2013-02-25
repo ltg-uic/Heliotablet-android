@@ -1,8 +1,12 @@
-package ltg.heliotablet_android.data;
+package ltg.heliotablet_android.deprecated;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
+import ltg.heliotablet_android.data.Reason;
+import ltg.heliotablet_android.data.ReasonDBOpenHelper;
+import ltg.heliotablet_android.data.ReasonImage;
 
 import android.content.ContentValues;
 import android.content.Context;

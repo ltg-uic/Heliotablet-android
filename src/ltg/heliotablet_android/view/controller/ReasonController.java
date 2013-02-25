@@ -2,7 +2,7 @@ package ltg.heliotablet_android.view.controller;
 
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
-import ltg.heliotablet_android.data.ReasonDataSource;
+import ltg.heliotablet_android.deprecated.ReasonDataSource;
 import android.content.ContentValues;
 import android.content.Context;
 

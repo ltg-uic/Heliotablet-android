@@ -112,33 +112,33 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 	public void seedDb(SQLiteDatabase db) {
 
 		Reason earthRed1 = new Reason();
-		earthRed1.setAnchor(Reason.CONST_MERCURY);
+		earthRed1.setAnchor(Reason.CONST_YELLOW);
 		earthRed1.setFlag(Reason.CONST_RED);
 		earthRed1.setOrigin("bob");
 		earthRed1.setReasonText("Earth is red be it sucks");
-		earthRed1.setType(Reason.TYPE_THEORY);
+		earthRed1.setType(Reason.TYPE_OBSERVATION);
 		earthRed1.setReadonly(true);
 
 		createReason(earthRed1, db);
 
 		Reason earthRed2 = new Reason();
 
-		earthRed2.setAnchor(Reason.CONST_MERCURY);
+		earthRed2.setAnchor(Reason.CONST_BROWN);
 		earthRed2.setFlag(Reason.CONST_RED);
 		earthRed2.setOrigin("tony");
 		earthRed2.setReasonText("because its the biggest");
-		earthRed2.setType(Reason.TYPE_THEORY);
+		earthRed2.setType(Reason.TYPE_OBSERVATION);
 		earthRed2.setReadonly(false);
 
 		createReason(earthRed2, db);
 
 		Reason marsORANGE = new Reason();
 
-		marsORANGE.setAnchor(Reason.CONST_MERCURY);
+		marsORANGE.setAnchor(Reason.CONST_BLUE);
 		marsORANGE.setFlag(Reason.CONST_ORANGE);
 		marsORANGE.setOrigin("tony");
 		marsORANGE.setReasonText("YEAH YEAH ");
-		marsORANGE.setType(Reason.TYPE_THEORY);
+		marsORANGE.setType(Reason.TYPE_OBSERVATION);
 		marsORANGE.setReadonly(true);
 
 		createReason(marsORANGE, db);

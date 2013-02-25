@@ -6,7 +6,6 @@ import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonContentProvider;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
-import ltg.heliotablet_android.data.ReasonDataSource;
 import ltg.heliotablet_android.view.CircleView;
 import ltg.heliotablet_android.view.CircleViewDefaultTouchListener;
 import ltg.heliotablet_android.view.TheoryPlanetView;
