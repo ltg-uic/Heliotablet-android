@@ -32,17 +32,9 @@ import com.commonsware.cwac.loaderex.SQLiteCursorLoader;
 
 public class TheoryFragmentWithSQLiteLoaderNestFragments extends Fragment {
 
-	// The loader's unique id. Loader ids are specific to the Activity or
-	// Fragment in which they reside.
-	
-
 	private TheoryReasonController theoryController;
 	private ViewGroup theoriesView;
-	private HashMap<String, TheoryPlanetView> theoryViewsToAnchors = new HashMap<String, TheoryPlanetView>();
 	private ReasonDBOpenHelper db = null;
-
-	private SQLiteCursorLoader loader = null;
-
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

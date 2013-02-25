@@ -5,14 +5,18 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_color" >
 
-    <ImageView
-        android:id="@+id/planetPalletView"
+    
+      <include
+        android:id="@+id/shape_colors_include"
         android:layout_width="260dp"
         android:layout_height="600dp"
         android:layout_marginLeft="1024dp"
         android:layout_marginTop="53dp"
         android:scaleType="fitEnd"
-        android:src="@drawable/shape_cloud" android:contentDescription="TODO"/>
+        layout="@layout/shape_colors_layout"
+      />
+      
+   
 
     <fragment
         android:id="@+id/blueView"
