@@ -19,14 +19,14 @@ public class ReasonController {
 	public void updateReason(Reason reason) {
 		SQLiteCursorLoader sqliteCursorLoader = getSqliteCursorLoader(reason.getAnchor());
 		String[] args = { String.valueOf(reason.getId()) };
-		ContentValues reasonContentValues = ReasonDataSource.getReasonContentValues(reason);  
+		ContentValues reasonContentValues = ReasonDBOpenHelper.getReasonContentValues(reason);  
 		sqliteCursorLoader.update(ReasonDBOpenHelper.TABLE_REASON, reasonContentValues, "_id=?", args);
 		
 	}
 
 	public void insertReason(Reason reason) {
 		SQLiteCursorLoader sqliteCursorLoader = getSqliteCursorLoader(reason.getAnchor());
-		ContentValues reasonContentValues = ReasonDataSource.getReasonContentValues(reason);
+		ContentValues reasonContentValues = ReasonDBOpenHelper.getReasonContentValues(reason);
 		sqliteCursorLoader.insert(ReasonDBOpenHelper.TABLE_REASON, null, reasonContentValues);		
 	}
 	

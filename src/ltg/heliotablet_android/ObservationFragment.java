@@ -21,7 +21,7 @@ public class ObservationFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		observationView = inflater
-				.inflate(R.layout.test_brenda_colors_layout, container, false);
+				.inflate(R.layout.observation_activity, container, false);
 		
 		 db= ReasonDBOpenHelper.getInstance(this.getActivity());
 		  StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll()

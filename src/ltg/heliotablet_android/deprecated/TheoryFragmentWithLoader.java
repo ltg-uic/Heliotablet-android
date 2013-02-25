@@ -5,6 +5,7 @@ import java.util.HashMap;
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonContentProvider;
+import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.data.ReasonDataSource;
 import ltg.heliotablet_android.view.CircleView;
 import ltg.heliotablet_android.view.CircleViewDefaultTouchListener;
@@ -93,7 +94,7 @@ public class TheoryFragmentWithLoader extends Fragment implements
 							marsORANGE.setType(Reason.TYPE_THEORY);
 							marsORANGE.setReadonly(false);
 							
-							ContentValues reasonContentValues = ReasonDataSource.getReasonContentValues(marsORANGE);
+							ContentValues reasonContentValues = ReasonDBOpenHelper.getReasonContentValues(marsORANGE);
 							
 							
 							TheoryFragmentWithLoader.this.getActivity().getContentResolver().insert(ReasonContentProvider.CONTENT_URI, reasonContentValues);
@@ -190,7 +191,7 @@ public class TheoryFragmentWithLoader extends Fragment implements
 		if (cursor != null) {
 			cursor.moveToFirst();
 
-			Reason cursorToReason = ReasonDataSource.cursorToReason(cursor);
+			Reason cursorToReason = ReasonDBOpenHelper.cursorToReason(cursor);
 			System.out.println("GOT IT");
 		}
 		// Always close the cursor
@@ -213,7 +214,7 @@ public class TheoryFragmentWithLoader extends Fragment implements
 	    	if( data != null ) {
 		    	data.moveToFirst();
 		  	    while (!data.isAfterLast()) {
-		  	      Reason reason =  ReasonDataSource.cursorToReason(data);
+		  	      Reason reason =  ReasonDBOpenHelper.cursorToReason(data);
 					//theoryController.addReason(reason);
 
 		  	      data.moveToNext();

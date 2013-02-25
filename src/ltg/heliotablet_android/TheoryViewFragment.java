@@ -166,7 +166,7 @@ public class TheoryViewFragment extends Fragment implements
 			allReasons = Collections.synchronizedList(allReasons);
 			data.moveToFirst();
 			while (!data.isAfterLast()) {
-				Reason reason = ReasonDataSource.cursorToReason(data);
+				Reason reason = ReasonDBOpenHelper.cursorToReason(data);
 				allReasons.add(reason);
 				data.moveToNext();
 			}
@@ -314,7 +314,7 @@ public class TheoryViewFragment extends Fragment implements
 
 				String[] uid = { String.valueOf(2) };
 
-				ContentValues reasonContentValues = ReasonDataSource
+				ContentValues reasonContentValues = ReasonDBOpenHelper
 						.getReasonContentValues(earthRed2);
 
 				Bundle args = new Bundle();

@@ -3,21 +3,23 @@ package ltg.heliotablet_android.view.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import ltg.heliotablet_android.ObservationViewFragment;
 import ltg.heliotablet_android.data.Reason;
-import ltg.heliotablet_android.data.ReasonDataSource;
+import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.view.ObservationAnchorView;
-import ltg.heliotablet_android.view.TheoryPlanetView;
+import android.app.Activity;
+import android.app.LoaderManager;
 import android.content.Context;
+import android.content.Loader;
+import android.database.Cursor;
 
 import com.commonsware.cwac.loaderex.SQLiteCursorLoader;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Iterables;
 
-public class ObservationReasonController {
+public class ObservationReasonController extends ReasonController {
 
 	private static ObservationReasonController tInstance;
-	private Context context;
-	private ReasonDataSource reasonDatasource;
 	private HashMap<String, ObservationAnchorView> observationViewsToAnchors = new HashMap<String, ObservationAnchorView>();
 	
 	private ObservationReasonController(Context context) {
@@ -29,14 +31,6 @@ public class ObservationReasonController {
 			tInstance = new ObservationReasonController(context);
 		}
 		return tInstance;
-	}
-	
-	public void open() {
-		reasonDatasource.open();
-	}
-
-	public void close() {
-		reasonDatasource.close();
 	}
 	
 	public void add(String anchor, ObservationAnchorView theoryview) {
@@ -60,21 +54,27 @@ public class ObservationReasonController {
 			observationView.updateObservationCircleView(imReasonSet);
 		}
 	}
-	
-	private SQLiteCursorLoader getSqliteCursorLoader(String anchor) {
-		return null;
-	}
 
+	public SQLiteCursorLoader getSqliteCursorLoader(String anchor) {
+		Activity mainActivity = (Activity)context;
+		LoaderManager loaderManager = mainActivity.getLoaderManager();
+		
+		//find the loader
+		ObservationViewFragment obs = (ObservationViewFragment) mainActivity.getFragmentManager().findFragmentByTag(anchor);
+		Loader<Cursor> loader = obs.getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_OBS_LOADER_ID);
+		SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
+		return sqliteLoader;
+	}
+	
 	public void deleteReason(Reason reason, boolean isScheduledForViewRemoval) {
+		super.deleteReason(reason, isScheduledForViewRemoval);
+		
+		ObservationAnchorView observationAnchorView = observationViewsToAnchors.get(reason.getAnchor());
+		
+		//if( isScheduledForViewRemoval )
+		//observationAnchorView.removeFlagFromCircleViewMap(reason.getFlag());
 	}
 	
-	
-
-	public void updateReason(Reason reason) {
-	}
-
-	public void insertReason(Reason reason) {
-	}
 	
 	
 	

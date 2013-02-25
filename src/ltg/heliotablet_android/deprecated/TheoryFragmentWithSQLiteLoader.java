@@ -9,7 +9,7 @@ import ltg.heliotablet_android.R.id;
 import ltg.heliotablet_android.R.layout;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
-import ltg.heliotablet_android.data.ReasonDataSource;
+import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.view.CircleView;
 import ltg.heliotablet_android.view.CircleViewDefaultTouchListener;
 import ltg.heliotablet_android.view.TheoryPlanetView;
@@ -120,7 +120,7 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 							marsORANGE.setType(Reason.TYPE_THEORY);
 							marsORANGE.setReadonly(false);
 							
-							ContentValues reasonContentValues = ReasonDataSource.getReasonContentValues(marsORANGE);
+							ContentValues reasonContentValues = ReasonDBOpenHelper.getReasonContentValues(marsORANGE);
 							
 							Loader<Cursor> insertLoader = TheoryFragmentWithSQLiteLoader.this.getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_THEORY_LOADER_ID);
 							
@@ -208,7 +208,7 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 						    
 							String[] uid = { String.valueOf(2) };
 						    
-							ContentValues reasonContentValues = ReasonDataSource.getReasonContentValues(earthRed2);
+							ContentValues reasonContentValues = ReasonDBOpenHelper.getReasonContentValues(earthRed2);
 
 							Bundle args = new Bundle();
 						    args.putString("id", "2");
@@ -290,7 +290,7 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 						
 						SQLiteCursorLoader sqlInsertLoader = (SQLiteCursorLoader)insertLoader;
 						
-						ContentValues reasonContentValues = ReasonDataSource.getReasonContentValues(reason);
+						ContentValues reasonContentValues = ReasonDBOpenHelper.getReasonContentValues(reason);
 						sqlInsertLoader.insert(ReasonDBOpenHelper.TABLE_REASON, null, reasonContentValues);
 					} 
 				}
@@ -342,7 +342,7 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 		if (data != null && data.getCount() > 0) {
 			data.moveToFirst();
 			while (!data.isAfterLast()) {
-				Reason reason = ReasonDataSource.cursorToReason(data);
+				Reason reason = ReasonDBOpenHelper.cursorToReason(data);
 				System.out.println("REASON: " + reason.toString());
 				data.moveToNext();
 			}
@@ -355,7 +355,7 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 			allReasons = Collections.synchronizedList(allReasons); 
 			data.moveToFirst();
 			while (!data.isAfterLast()) {
-				Reason reason = ReasonDataSource.cursorToReason(data);
+				Reason reason = ReasonDBOpenHelper.cursorToReason(data);
 				allReasons.add(reason);
 				data.moveToNext();
 			}
