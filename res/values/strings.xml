@@ -50,5 +50,9 @@
    <string name="fragment_tag_observation">observations</string>
    <string name="fragment_tag_scratchpad">scratchpad</string>
    <string name="pink">pink</string>
+   <string name="obs_reason_text">Why do people agree that %1$s is closer than %2$s?</string>
+   <string name="obs_reason_button_1">Because they saw %1$s in front of %2$s. (%3$d)</string>
+   <string name="obs_reason_button_2">Because %1$s moved faster than %2$s. (%3$d)</string>
+   <string name="obs_reason_button_3">Because of another reason. (%1$d)</string>
    
 </resources>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainScrollView"
+    android:layout_width="520dp"
+    android:layout_height="220dp"
+    android:layout_gravity="fill"
+    android:background="@color/WhiteSmoke"
+     >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="0dp" >
+
+        <LinearLayout
+            android:id="@+id/buttonGroup"
+            android:layout_width="490dp"
+            android:layout_height="190dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/textedit_shape"
+            android:gravity="top"
+            android:orientation="vertical" >
+            
+            <requestFocus />
+
+            <TextView
+                android:id="@+id/reasonTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/obs_reason_text"
+                android:textSize="18dp" />
+
+            <Button
+                android:id="@+id/reasonButton1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/obs_reason_button_1" />
+
+            <Button
+                android:id="@+id/reasonButton2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/obs_reason_button_2" />
+
+            <Button
+                android:id="@+id/reasonButton3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/obs_reason_button_3" />
+
+        </LinearLayout>
+        
+          <Button
+              android:id="@+id/deleteButton"
+              style="?android:attr/buttonStyleSmall"
+              android:layout_width="30dp"
+              android:layout_height="30dp"
+              android:layout_centerHorizontal="true"
+              android:layout_centerVertical="true"
+              android:layout_marginLeft="490dp"
+              android:layout_marginTop="2dp"
+              android:background="@drawable/delete_button"
+              android:text=""
+              android:includeFontPadding="false"
+              android:textColor="@color/White"
+              android:textSize="20dp" />
+       
+    </FrameLayout>
+
+</ScrollView>
