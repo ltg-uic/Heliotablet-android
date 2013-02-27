@@ -16,8 +16,6 @@
         layout="@layout/shape_colors_layout"
       />
       
-   
-
     <fragment
         android:id="@+id/blueView"
         style="@style/observationAnchorViewStyle"

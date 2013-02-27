@@ -90,17 +90,17 @@
            >
     -->
 
-    <include
+	<include
         android:id="@+id/colors_include"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        layout="@layout/brenda_colors_layout"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
         android:layout_column="5"
-        android:layout_gravity="fill"
+        android:layout_gravity="right|center_horizontal"
         android:layout_row="1"
         android:layout_rowSpan="20"
-        layout="@layout/colors_layout"
-        android:gravity="center"
-        android:paddingRight="0dp" />
+        android:gravity="right" />
+
 
     <!-- </RelativeLayout> -->
 
@@ -307,5 +307,4 @@
         android:layout_row="17" >
   
      </fragment>
-     
 </GridLayout>
