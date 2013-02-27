@@ -1,4 +1,4 @@
-<ltg.heliotablet_android.view.ObservationCircleView xmlns:android="http://schemas.android.com/apk/res/android"
+<ltg.heliotablet_android.view.observation.ObservationCircleView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:circleView="http://schemas.android.com/apk/res/ltg.heliotablet_android"
     style="@style/theoryPlanetView2"
     android:background="@drawable/earth_shape" 

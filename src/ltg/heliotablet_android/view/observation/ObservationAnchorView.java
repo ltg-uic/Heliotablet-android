@@ -1,13 +1,17 @@
-package ltg.heliotablet_android.view;
+package ltg.heliotablet_android.view.observation;
 
 import java.util.HashMap;
 
+import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Multiset;
 
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.data.Reason;
+import ltg.heliotablet_android.view.ICircleView;
+import ltg.heliotablet_android.view.StyleCircleView;
 import ltg.heliotablet_android.view.controller.OrderingViewData;
 import android.content.Context;
 import android.content.res.Resources;
@@ -71,31 +75,35 @@ public class ObservationAnchorView extends CircleLayout implements ICircleView  
 						
 					// true is first, we want false first
 					// check if it was there already
-					ObservationCircleView circleView = flagToCircleView.get(flag);
+					ObservationCircleView anchorView = flagToCircleView.get(flag);
 
 					// if null we are creating it for the first, no need to diff
-					if (circleView == null) {
+					if (anchorView == null) {
 						
-						circleView = (ObservationCircleView) LayoutInflater.from(getContext())
+						anchorView = (ObservationCircleView) LayoutInflater.from(getContext())
 								.inflate(R.layout.observation_view_layout, this, false);
 
-						StyleCircleView.styleView((ICircleView)circleView, flag, getResources());
-						circleView.setFlag(flag);
-						circleView.setAnchor(this.anchor);
-						flagToCircleView.put(flag, circleView);
-						this.addView(circleView);
+						StyleCircleView.styleView((ICircleView)anchorView, flag, getResources());
+						anchorView.setFlag(flag);
+						anchorView.setAnchor(this.anchor);
+						flagToCircleView.put(flag, anchorView);
+						this.addView(anchorView);
 
 					}
 
 					if( newIsReadonlyReasonSet.size() > 0 )
-						circleView.makeTransparent(false);
+						anchorView.makeTransparent(false);
 					else
-						circleView.makeTransparent(true);
+						anchorView.makeTransparent(true);
 					// just replace
 
-					
-					circleView.setTag(newSortedByReadOnlyReasonSet);
-					circleView.invalidate();
+					Multiset<String> ms = HashMultiset.create();
+					for(Reason reason : newSortedByReadOnlyReasonSet) {
+						ms.add(reason.getReasonText());
+					}
+					anchorView.setReasonTextMultiSet(ms);
+					anchorView.setTag(newSortedByReadOnlyReasonSet);
+					anchorView.invalidate();
 					this.invalidate();
 
 				}

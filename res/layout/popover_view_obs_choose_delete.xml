@@ -32,24 +32,33 @@
                 android:text="@string/obs_reason_text"
                 android:textSize="18dp" />
 
-            <Button
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+        <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+            <RadioButton
                 android:id="@+id/reasonButton1"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/obs_reason_button_1" />
+                android:text="@string/reasonButton1" />
 
-            <Button
+            <RadioButton
                 android:id="@+id/reasonButton2"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/obs_reason_button_2" />
+                android:text="@string/reasonButton2" />
 
-            <Button
+            <RadioButton
                 android:id="@+id/reasonButton3"
-                android:layout_width="match_parent"
+                android:layout_width="367dp"
                 android:layout_height="wrap_content"
-                android:text="@string/obs_reason_button_3" />
-
+                android:text="@string/reasonButton3" />
+		</RadioGroup>
         </LinearLayout>
         
           <Button

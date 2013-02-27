@@ -1,4 +1,4 @@
-package ltg.heliotablet_android.view;
+package ltg.heliotablet_android.view.theory;
 
 import java.util.HashMap;
 

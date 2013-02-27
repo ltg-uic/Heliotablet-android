@@ -6,7 +6,7 @@ import java.util.List;
 import ltg.heliotablet_android.ObservationViewFragment;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
-import ltg.heliotablet_android.view.ObservationAnchorView;
+import ltg.heliotablet_android.view.observation.ObservationAnchorView;
 import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.Context;

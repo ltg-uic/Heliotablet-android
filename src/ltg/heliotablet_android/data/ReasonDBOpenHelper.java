@@ -112,10 +112,10 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 	public void seedDb(SQLiteDatabase db) {
 
 		Reason earthRed1 = new Reason();
-		earthRed1.setAnchor(Reason.CONST_YELLOW);
-		earthRed1.setFlag(Reason.CONST_RED);
-		earthRed1.setOrigin("bob");
-		earthRed1.setReasonText("Earth is red be it sucks");
+		earthRed1.setAnchor(Reason.CONST_RED);
+		earthRed1.setFlag(Reason.CONST_YELLOW);
+		earthRed1.setOrigin("Derek");
+		earthRed1.setReasonText("Because of another reason.");
 		earthRed1.setType(Reason.TYPE_OBSERVATION);
 		earthRed1.setReadonly(true);
 
@@ -123,25 +123,27 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 
 		Reason earthRed2 = new Reason();
 
-		earthRed2.setAnchor(Reason.CONST_BROWN);
-		earthRed2.setFlag(Reason.CONST_RED);
-		earthRed2.setOrigin("tony");
-		earthRed2.setReasonText("because its the biggest");
+		earthRed2.setAnchor(Reason.CONST_RED);
+		earthRed2.setFlag(Reason.CONST_YELLOW);
+		earthRed2.setOrigin("Tony");
+		earthRed2.setReasonText("Because Yellow moved faster than Red.");
 		earthRed2.setType(Reason.TYPE_OBSERVATION);
-		earthRed2.setReadonly(false);
+		earthRed2.setReadonly(true);
 
 		createReason(earthRed2, db);
 
-		Reason marsORANGE = new Reason();
+		Reason earthRed21 = new Reason();
 
-		marsORANGE.setAnchor(Reason.CONST_BLUE);
-		marsORANGE.setFlag(Reason.CONST_ORANGE);
-		marsORANGE.setOrigin("tony");
-		marsORANGE.setReasonText("YEAH YEAH ");
-		marsORANGE.setType(Reason.TYPE_OBSERVATION);
-		marsORANGE.setReadonly(true);
+		earthRed21.setAnchor(Reason.CONST_RED);
+		earthRed21.setFlag(Reason.CONST_YELLOW);
+		earthRed21.setOrigin("Tom");
+		earthRed21.setReasonText("Because they saw Yellow in front of Red.");
+		earthRed21.setType(Reason.TYPE_OBSERVATION);
+		earthRed21.setReadonly(true);
 
-		createReason(marsORANGE, db);
+		createReason(earthRed21, db);
+		
+		
 	}
 
 	public void createReason(Reason reason, SQLiteDatabase database) {

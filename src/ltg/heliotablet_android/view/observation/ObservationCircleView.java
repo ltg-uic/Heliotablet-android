@@ -1,10 +1,16 @@
-package ltg.heliotablet_android.view;
+package ltg.heliotablet_android.view.observation;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+
+import org.apache.commons.lang3.StringUtils;
 
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.R.color;
 import ltg.heliotablet_android.data.Reason;
+import ltg.heliotablet_android.view.ICircleView;
+import ltg.heliotablet_android.view.PopoverView;
+import ltg.heliotablet_android.view.PopoverViewAdapter;
 import ltg.heliotablet_android.view.PopoverView.PopoverViewDelegate;
 import android.content.Context;
 import android.content.res.Resources;
@@ -13,6 +19,7 @@ import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,11 +27,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableSortedSet;
+import com.google.common.collect.Multiset;
 
 public class ObservationCircleView extends RelativeLayout implements ICircleView, PopoverViewDelegate {
 
@@ -38,6 +50,7 @@ public class ObservationCircleView extends RelativeLayout implements ICircleView
 	private PopoverView cachedPopoverView;
 	private RelativeLayout viewPagerLayout;
 	private Reason reasonNeedsUpdate;
+	private Multiset<String> reasonTextMultiSet;
 	
 	public ObservationCircleView(Context context) {
 		super(context);
@@ -70,31 +83,44 @@ public class ObservationCircleView extends RelativeLayout implements ICircleView
 		ViewPager vPager = (ViewPager) viewPagerLayout
 				.findViewById(R.id.pager);
 		
-		for (Reason reason : popOverReasonSet) {
+		Reason reason = popOverReasonSet.first();
 			View layout = View.inflate(getContext(),
 					R.layout.popover_view_obs_choose_delete, null);
-			layout.setTag(reason);
 			pages.add(layout);
 			
 			
 			TextView reasonText = (TextView) layout.findViewById(R.id.reasonTitle);
 			String text = String.format(resources.getString(R.string.obs_reason_text), reason.getFlag(), reason.getAnchor());
+			
 			reasonText.setText(text);
 			
-			int i = 2;
-			Button reasonButton1 = (Button) layout.findViewById(R.id.reasonButton1);
-			text = String.format(resources.getString(R.string.obs_reason_button_1), reason.getFlag(), reason.getAnchor(),i);
-			reasonButton1.setText(text);
-			
-			Button reasonButton2 = (Button) layout.findViewById(R.id.reasonButton2);
-			text = String.format(resources.getString(R.string.obs_reason_button_2), reason.getFlag(), reason.getAnchor(),i);
-			reasonButton2.setText(text);
-			
-			Button reasonButton3 = (Button) layout.findViewById(R.id.reasonButton3);
-			text = String.format(resources.getString(R.string.obs_reason_button_3),i);
-			reasonButton3.setText(text);
 			
 			
+			RadioGroup radioGroup = (RadioGroup) layout.findViewById(R.id.radioGroup);
+			radioGroup.setTag(reason);
+			applyCountToLabelRadioButtons(radioGroup, flag, anchor);
+			
+			radioGroup
+					.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+						@Override
+						public void onCheckedChanged(RadioGroup rg,
+								int checkedId) {
+							
+							Reason reason = (Reason) rg.getTag();
+							
+							String flag = StringUtils.capitalize(reason.getFlag());
+							String anchor = StringUtils.capitalize(reason.getAnchor());
+
+							ObservationCircleView.this
+									.applyCountToLabelRadioButtons(rg, flag, anchor);
+							RadioButton selectedRadioButton = (RadioButton) rg.findViewById(checkedId);
+
+							String text = (String) selectedRadioButton.getTag();
+							selectedRadioButton.setText(createRadioButtonCountLabel(text,1));
+
+						}
+					});
 			
 			Button deleteButton = (Button) layout.findViewById(R.id.deleteButton);
 			
@@ -108,7 +134,6 @@ public class ObservationCircleView extends RelativeLayout implements ICircleView
 						
 					}
 				});
-		}
 		
 		vPager.setAdapter(new PopoverViewAdapter(pages));
 		vPager.setOffscreenPageLimit(5);
@@ -127,6 +152,34 @@ public class ObservationCircleView extends RelativeLayout implements ICircleView
 		
 	}
 	
+	private void applyCountToLabelRadioButtons(RadioGroup radioGroup, String flag, String anchor) {
+		int childCount = radioGroup.getChildCount();
+		Resources resources = getResources();
+		
+		for( int i = 0; i < childCount; i++) {
+			RadioButton r = (RadioButton)radioGroup.getChildAt(i);
+			
+			try {
+			    Class res = R.string.class;
+			    Field field = res.getField("stringName");
+			    int stringId = field.getInt(r.getId());
+			    String text = String.format(resources.getString(stringId), flag, anchor);
+			    r.setTag(text);
+				r.setText(createRadioButtonCountLabel(text,0));
+			}
+			catch (Exception e) {
+			    Log.e("MyTag", "Failure to get drawable id.", e);
+			}
+		}
+		
+	}
+
+	private String createRadioButtonCountLabel(String text, int extraCount) {
+		int count = reasonTextMultiSet.count(text);
+		return text + ((count > 0) ? "(" + count + extraCount + ")" : "" ); 
+		
+	}
+
 	@Override
 	public void popoverViewWillShow(PopoverView view) {
 	}
@@ -163,6 +216,7 @@ public class ObservationCircleView extends RelativeLayout implements ICircleView
 		
 		if( imReasons != null) {
 			this.reasonTextView.setText(""+ imReasons.size());
+			//also make a multiset
 		}
 		
 	}
@@ -240,6 +294,14 @@ public class ObservationCircleView extends RelativeLayout implements ICircleView
 		}); 
 	}
 	
+	public Multiset<String> getReasonTextMultiSet() {
+		return reasonTextMultiSet;
+	}
+
+	public void setReasonTextMultiSet(Multiset<String> reasonTextMultiSet) {
+		this.reasonTextMultiSet = reasonTextMultiSet;
+	}
+
 	class CircleDoubleTapGestureListener extends GestureDetector.SimpleOnGestureListener {
 	    // event when double tap occurs
 	    @Override

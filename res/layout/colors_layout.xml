@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/PlanetTheoryCircleAreaColor" >
 
-    <ltg.heliotablet_android.view.CircleView
+    <ltg.heliotablet_android.view.theory.CircleView
         android:id="@+id/earthTheoryPlanet"
         style="@style/theoryPlanetView"
         android:layout_marginLeft="20dp"
@@ -16,7 +16,7 @@
         circleView:textColor="@color/White"
         />
 
-    <ltg.heliotablet_android.view.CircleView
+    <ltg.heliotablet_android.view.theory.CircleView
         android:id="@+id/saturnTheoryPlanet"
         style="@style/theoryPlanetView"
         android:layout_marginLeft="130dp"
@@ -27,7 +27,7 @@
 	/>
     
     
-    <ltg.heliotablet_android.view.CircleView
+    <ltg.heliotablet_android.view.theory.CircleView
         android:id="@+id/neptuneTheoryPlanet"
         style="@style/theoryPlanetView"
         android:layout_marginLeft="20dp"
@@ -37,7 +37,7 @@
         circleView:textColor="@color/White"
         />
 
-    <ltg.heliotablet_android.view.CircleView
+    <ltg.heliotablet_android.view.theory.CircleView
         android:id="@+id/mercuryTheoryPlanet"
         style="@style/theoryPlanetView"
         android:layout_marginLeft="135dp"
@@ -48,7 +48,7 @@
         />
 
 
-    <ltg.heliotablet_android.view.CircleView
+    <ltg.heliotablet_android.view.theory.CircleView
         android:id="@+id/uranusTheoryPlanet"
         style="@style/theoryPlanetView"
         android:layout_marginLeft="20dp"
@@ -59,7 +59,7 @@
         />
 
 
-    <ltg.heliotablet_android.view.CircleView
+    <ltg.heliotablet_android.view.theory.CircleView
         android:id="@+id/marsTheoryPlanet"
         style="@style/theoryPlanetView"
         android:layout_marginLeft="130dp"
@@ -70,7 +70,7 @@
         />
 
 
-    <ltg.heliotablet_android.view.CircleView
+    <ltg.heliotablet_android.view.theory.CircleView
         android:id="@+id/greenTheoryPlanet"
         style="@style/theoryPlanetView"
         android:layout_marginLeft="20dp"
@@ -80,7 +80,7 @@
         circleView:textColor="@color/Black"
         />
 
-    <ltg.heliotablet_android.view.CircleView
+    <ltg.heliotablet_android.view.theory.CircleView
         android:id="@+id/pinkTheoryPlanet"
         style="@style/theoryPlanetView"
         android:layout_marginLeft="120dp"

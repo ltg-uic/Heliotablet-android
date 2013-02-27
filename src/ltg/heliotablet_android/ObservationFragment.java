@@ -1,8 +1,8 @@
 package ltg.heliotablet_android;
 
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
-import ltg.heliotablet_android.view.CircleViewDefaultTouchListener;
 import ltg.heliotablet_android.view.controller.ObservationReasonController;
+import ltg.heliotablet_android.view.theory.CircleViewDefaultTouchListener;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.StrictMode;

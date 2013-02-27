@@ -223,7 +223,7 @@
 
     <!-- views -->
 
-    <ltg.heliotablet_android.view.TheoryPlanetView
+    <ltg.heliotablet_android.view.theory.TheoryPlanetView
         android:id="@+id/mercuryView"
         style="@style/theoryPlanetTableGridStyle"
         android:layout_column="3"
@@ -231,7 +231,7 @@
         planetView:anchor="mercury"
         />
 
-    <ltg.heliotablet_android.view.TheoryPlanetView
+    <ltg.heliotablet_android.view.theory.TheoryPlanetView
         android:id="@+id/venusView"
         style="@style/theoryPlanetTableGridStyle"
         android:layout_column="3"
@@ -239,7 +239,7 @@
         planetView:anchor="venus"
         />
 
-    <ltg.heliotablet_android.view.TheoryPlanetView
+    <ltg.heliotablet_android.view.theory.TheoryPlanetView
         android:id="@+id/earthView"
         style="@style/theoryPlanetTableGridStyle"
         android:layout_column="3"
@@ -248,9 +248,9 @@
         >
     
         
-	</ltg.heliotablet_android.view.TheoryPlanetView>
+	</ltg.heliotablet_android.view.theory.TheoryPlanetView>
 
-    <ltg.heliotablet_android.view.TheoryPlanetView
+    <ltg.heliotablet_android.view.theory.TheoryPlanetView
         android:id="@+id/marsView"
         style="@style/theoryPlanetTableGridStyle"
         android:layout_column="3"
@@ -258,7 +258,7 @@
         planetView:anchor="mars"
         />
 
-    <ltg.heliotablet_android.view.TheoryPlanetView
+    <ltg.heliotablet_android.view.theory.TheoryPlanetView
         android:id="@+id/jupiterView"
         style="@style/theoryPlanetTableGridStyle"
         android:layout_column="3"
@@ -266,7 +266,7 @@
         planetView:anchor="jupiter"
         />
 
-    <ltg.heliotablet_android.view.TheoryPlanetView
+    <ltg.heliotablet_android.view.theory.TheoryPlanetView
         android:id="@+id/saturnView"
         style="@style/theoryPlanetTableGridStyle"
         android:layout_column="3"
@@ -274,7 +274,7 @@
         planetView:anchor="saturn"
          />
 
-    <ltg.heliotablet_android.view.TheoryPlanetView
+    <ltg.heliotablet_android.view.theory.TheoryPlanetView
         android:id="@+id/uranusView"
         style="@style/theoryPlanetTableGridStyle"
         android:layout_column="3"
@@ -282,7 +282,7 @@
         planetView:anchor="uranus"
         />
         
-    <ltg.heliotablet_android.view.TheoryPlanetView
+    <ltg.heliotablet_android.view.theory.TheoryPlanetView
         android:id="@+id/neptuneView"
         style="@style/theoryPlanetTableGridStyle"
         android:layout_column="3"

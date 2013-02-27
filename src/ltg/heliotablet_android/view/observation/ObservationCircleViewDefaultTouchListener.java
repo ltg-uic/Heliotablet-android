@@ -1,4 +1,4 @@
-package ltg.heliotablet_android.view;
+package ltg.heliotablet_android.view.observation;
 
 import android.content.ClipData;
 import android.view.MotionEvent;

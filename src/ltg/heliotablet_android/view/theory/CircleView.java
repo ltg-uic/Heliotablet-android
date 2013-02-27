@@ -1,4 +1,4 @@
-package ltg.heliotablet_android.view;
+package ltg.heliotablet_android.view.theory;
 
 
 import java.util.ArrayList;
@@ -9,6 +9,9 @@ import ltg.heliotablet_android.TheoryViewFragment;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.deprecated.ReasonDataSource;
+import ltg.heliotablet_android.view.ICircleView;
+import ltg.heliotablet_android.view.PopoverView;
+import ltg.heliotablet_android.view.PopoverViewAdapter;
 import ltg.heliotablet_android.view.PopoverView.PopoverViewDelegate;
 import ltg.heliotablet_android.view.controller.TheoryReasonController;
 
