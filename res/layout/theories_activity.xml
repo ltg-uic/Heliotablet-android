@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:layout_gravity="fill"
     android:alignmentMode="alignBounds"
-    android:background="@color/Black"
+    android:background="@color/TheoryBG_00"
     android:columnCount="6"
     android:fitsSystemWindows="false"
     android:orientation="horizontal"

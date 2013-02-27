@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:layout_gravity="fill"
     android:alignmentMode="alignBounds"
-    android:background="@color/Black"
+    android:background="@color/TheoryBG_00"
     android:columnCount="6"
     android:fitsSystemWindows="false"
     android:orientation="horizontal"
@@ -99,7 +99,6 @@
         android:layout_row="1"
         android:layout_rowSpan="20"
         layout="@layout/colors_layout"
-        android:background="@color/PlanetTheoryCircleAreaColor"
         android:gravity="center"
         android:paddingRight="0dp" />
 
@@ -134,7 +133,8 @@
         android:layout_width="97dp"
         android:layout_column="1"
         android:layout_row="3"
-        android:text="@string/mercury" />
+        android:text="@string/mercury"
+        android:textColor="@color/White" />
 
     <Space
         android:layout_height="1dp"

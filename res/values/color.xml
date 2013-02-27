@@ -4,6 +4,7 @@
  <color name="BG_00">#ED1C24</color>
  <color name="BG_01">#CBDFA3</color>
  <color name="BG_02">#ABB886</color>
+ <color name="TheoryBG_00">#0487BF</color>
  <color name="PlanetRed">#ED1C24</color>
  <color name="PlanetBrown">#A0522D</color>
  <color name="PlanetPink">#F800D0</color>
@@ -14,11 +15,13 @@
  <color name="PlanetBlue">#66C8FF</color>
  <color name="PlanetPurple">#6900DD</color>
  <color name="PlanetWhite">#FF6600</color>
- <color name="PlanetTheoryTableColor">#b3b292</color>
+ <color name="PlanetTheoryTableColor">#202356</color>
  <color name="PlanetTheoryTableColor2">#efefef</color>
  <color name="PlanetTheoryCircleAreaColor">#b49854</color>
  <color name="RedGradientLighterColor">#ff585e</color>
  <color name="PlanetGreyBorder">#dddddd</color>
+ <color name="PlanetGreyShadow">#303030</color>
+ <color name="TheoryViewPlanetName">#0487BF</color>
  <color name="White">#FFFFFF</color>
  <color name="Ivory">#FFFFF0</color>
  <color name="LightYellow">#FFFFE0</color>

@@ -9,13 +9,13 @@
 	    	<gradient
 	            android:type="radial"
 	            android:startColor="#ffffff"
-	            android:endColor="#000000"
+	            android:endColor="@color/PlanetGreyShadow"
 	            android:gradientRadius="100"
 	            android:centerX="75%"
 	            android:centerY="25%"/>
 	</shape>
 	</item>
-	<item android:left="2dp"
+	<item android:left="1dp"
     	      android:bottom="2dp">
 	<shape android:shape="oval">
 	    	<size

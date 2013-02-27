@@ -18,9 +18,11 @@
     </style>
 
     <style name="theoryPlanetLabel" parent="android:Widget.Holo.Light.TextView">
-        <item name="android:background">@color/PlanetTheoryTableColor</item>
+        <!-- <item name="android:background">@color/TheoryViewPlanetName</item>-->        
+        <item name="android:background">#000F29</item>
+        
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/Black</item>
+        <item name="android:textColor">@color/White</item>
         <item name="android:textSize">20sp</item>
         <item name="android:layout_height">86dp</item>
         <item name="android:layout_gravity">fill_horizontal</item>
@@ -34,7 +36,7 @@
     </style>
 
     <style name="theoryPlanetTableGridStyle">
-        <item name="android:background">@color/PlanetTheoryTableColor</item>
+        <item name="android:background">@color/TheoryViewPlanetName</item>
         <item name="android:layout_width">810dp</item>
         <item name="android:layout_height">86dp</item>
         <item name="android:layout_gravity">center</item>
@@ -60,7 +62,7 @@
     </style>
 
     <style name="SketchTextStyle" parent="android:Widget.TextView">
-        <item name="android:textSize">25dp</item>
+        <item name="android:textSize">25sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerHorizontal">true</item>
@@ -69,7 +71,7 @@
 
     <style name="sketchPlanetViewText" parent="android:Widget.Holo.Light.TextView">
         <item name="android:textColor">@color/White</item>
-        <item name="android:textSize">25dp</item>
+        <item name="android:textSize">25sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerHorizontal">true</item>
@@ -93,7 +95,7 @@
 
     <style name="theoryPlanetColorText" parent="android:Widget.Holo.Light.TextView">
         <item name="android:textColor">@color/White</item>
-        <item name="android:textSize">20dp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerHorizontal">true</item>
@@ -102,7 +104,7 @@
 
     <style name="theoryReasonText" parent="android:Widget.Holo.Light.TextView">
         <item name="android:textColor">@color/White</item>
-        <item name="android:textSize">25dp</item>
+        <item name="android:textSize">25sp</item>
         <item name="android:layout_marginTop">23dp</item>
         <item name="android:layout_alignTop">@+id/colorLabelText</item>
         <item name="android:layout_width">wrap_content</item>
