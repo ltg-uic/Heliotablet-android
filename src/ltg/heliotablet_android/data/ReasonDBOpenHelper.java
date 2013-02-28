@@ -115,9 +115,9 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 		earthRed1.setAnchor(Reason.CONST_RED);
 		earthRed1.setFlag(Reason.CONST_YELLOW);
 		earthRed1.setOrigin("Derek");
-		earthRed1.setReasonText("Because of another reason.");
+		earthRed1.setReasonText("");
 		earthRed1.setType(Reason.TYPE_OBSERVATION);
-		earthRed1.setReadonly(true);
+		earthRed1.setReadonly(false);
 
 		createReason(earthRed1, db);
 

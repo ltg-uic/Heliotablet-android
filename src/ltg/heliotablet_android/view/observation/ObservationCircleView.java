@@ -12,6 +12,9 @@ import ltg.heliotablet_android.view.ICircleView;
 import ltg.heliotablet_android.view.PopoverView;
 import ltg.heliotablet_android.view.PopoverViewAdapter;
 import ltg.heliotablet_android.view.PopoverView.PopoverViewDelegate;
+import ltg.heliotablet_android.view.controller.ObservationReasonController;
+import ltg.heliotablet_android.view.controller.TheoryReasonController;
+import ltg.heliotablet_android.view.theory.CircleView;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -26,7 +29,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -34,8 +39,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableSortedSet;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Multiset;
 
 public class ObservationCircleView extends RelativeLayout implements ICircleView, PopoverViewDelegate {
@@ -47,10 +54,14 @@ public class ObservationCircleView extends RelativeLayout implements ICircleView
 	private String anchor;
 	private GestureDetector gestureDetector;
 
-	private PopoverView cachedPopoverView;
 	private RelativeLayout viewPagerLayout;
 	private Reason reasonNeedsUpdate;
 	private Multiset<String> reasonTextMultiSet;
+	private boolean isDelete = false;
+	private ObservationReasonController observationReasonController;
+	private PopoverView cachedPopoverView;
+
+
 	
 	public ObservationCircleView(Context context) {
 		super(context);
@@ -69,6 +80,9 @@ public class ObservationCircleView extends RelativeLayout implements ICircleView
         this.setTextColor(a.getColor(R.styleable.CircleView_textColor, color.White));
         a.recycle();
         
+        observationReasonController = ObservationReasonController.getInstance(context);
+
+        
         viewPagerLayout = (RelativeLayout) inflater.inflate(
 				R.layout.activity_screen_slide, this, false);
         reasonTextView.setTextColor(this.getTextColor());
@@ -83,42 +97,80 @@ public class ObservationCircleView extends RelativeLayout implements ICircleView
 		ViewPager vPager = (ViewPager) viewPagerLayout
 				.findViewById(R.id.pager);
 		
-		Reason reason = popOverReasonSet.first();
+		//get the editable reason
+		ImmutableSortedSet<Reason> editableReasons = ImmutableSortedSet
+				.copyOf(Iterables.filter(popOverReasonSet,
+						Reason.getIsReadOnlyFalsePredicate()));
+		
+			//get all the users - the current one
+		
+		if( !editableReasons.isEmpty() ) {
+			Reason reason = editableReasons.first();
+		
 			View layout = View.inflate(getContext(),
 					R.layout.popover_view_obs_choose_delete, null);
 			pages.add(layout);
 			
 			
-			TextView reasonText = (TextView) layout.findViewById(R.id.reasonTitle);
-			String text = String.format(resources.getString(R.string.obs_reason_text), reason.getFlag(), reason.getAnchor());
+			String flag = StringUtils.capitalize(reason.getFlag());
+			String anchor = StringUtils.capitalize(reason.getAnchor());
 			
-			reasonText.setText(text);
+			TextView titleText = (TextView) layout.findViewById(R.id.reasonTitle);
+			String text = String.format(resources.getString(R.string.obs_reason_text), flag, anchor);
+			titleText.setText(text);
 			
 			
 			
 			RadioGroup radioGroup = (RadioGroup) layout.findViewById(R.id.radioGroup);
 			radioGroup.setTag(reason);
-			applyCountToLabelRadioButtons(radioGroup, flag, anchor);
+			
+			String reasonText = StringUtils.stripToNull(reason.getReasonText());
+			
+			for(int i = 0; i < radioGroup.getChildCount(); i++ ) {
+					RadioButton radioButton = (RadioButton) radioGroup.getChildAt(i);
+					
+					
+					updateRadioButton(radioButton, flag, anchor);
+					
+					if( reasonText != null & radioButton.getTag().equals(reasonText)) {
+						radioButton.setSelected(true);
+						radioButton.setEnabled(false);
+					}
+					
+					
+					int count = reasonTextMultiSet.count(radioButton.getTag());
+					if( count > 0)
+						radioButton.setText(radioButton.getTag() + " (" + count + ")");
+			}
+			
+			
 			
 			radioGroup
 					.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 						@Override
-						public void onCheckedChanged(RadioGroup rg,
+						public void onCheckedChanged(RadioGroup radioGroup,
 								int checkedId) {
-							
-							Reason reason = (Reason) rg.getTag();
+							Reason reason = (Reason) radioGroup.getTag();
 							
 							String flag = StringUtils.capitalize(reason.getFlag());
 							String anchor = StringUtils.capitalize(reason.getAnchor());
 
-							ObservationCircleView.this
-									.applyCountToLabelRadioButtons(rg, flag, anchor);
-							RadioButton selectedRadioButton = (RadioButton) rg.findViewById(checkedId);
-
+							for(int i = 0; i < radioGroup.getChildCount(); i++ ) {
+								RadioButton radioButton = (RadioButton) radioGroup.getChildAt(i);
+								updateRadioButton(radioButton, flag, anchor);
+								int count = reasonTextMultiSet.count(radioButton.getTag());
+								if( count > 0)
+									radioButton.setText(radioButton.getTag() + " (" + count + ")");
+							}
+							
+							RadioButton selectedRadioButton = (RadioButton) radioGroup.findViewById(checkedId);
 							String text = (String) selectedRadioButton.getTag();
-							selectedRadioButton.setText(createRadioButtonCountLabel(text,1));
-
+							updateRadioButton(selectedRadioButton, flag, anchor);
+							
+							int count = reasonTextMultiSet.count(selectedRadioButton.getTag());
+							count = count + 1;
+							selectedRadioButton.setText(selectedRadioButton.getTag() + " (" + count + ")");
 						}
 					});
 			
@@ -130,11 +182,46 @@ public class ObservationCircleView extends RelativeLayout implements ICircleView
 					@Override
 					public void onClick(View v) {
 						
+						ViewGroup parent = (ViewGroup) v.getParent()
+								.getParent();
+
+						ObservationCircleView.this.isDelete = true;
+						ObservationCircleView.this.cachedPopoverView.dissmissPopover(true);
+
+						boolean isScheduledForViewRemoval = false;
+						if (ObservationCircleView.this.imReasons.size() - 1 <= 0) {
+							isScheduledForViewRemoval = true;
+						}
+
+						if( parent != null ) {
+							RadioGroup radioGroup = (RadioGroup) parent.findViewById(R.id.radioGroup);
+							
+							for(int i = 0; i < radioGroup.getChildCount(); i++ ) {
+								RadioButton radioButton = (RadioButton) radioGroup.getChildAt(i);
+								
+								if(radioButton.isEnabled() == false ) {
+									
+									Reason reasonToDelete = ((Reason) radioGroup.getTag());
+									
+									observationReasonController.deleteReason(reasonToDelete, isScheduledForViewRemoval);
+									ObservationCircleView.this.makeToast("Reason Deleted");
+
+									if (isScheduledForViewRemoval) {
+										ViewGroup tv = (ViewGroup) ObservationCircleView.this
+												.getParent();
+										tv.removeView(ObservationCircleView.this);
+									}
+								}
+								
+							}
+							
+						}
+						
 						
 						
 					}
 				});
-		
+		}
 		vPager.setAdapter(new PopoverViewAdapter(pages));
 		vPager.setOffscreenPageLimit(5);
 		vPager.setCurrentItem(0);
@@ -151,33 +238,22 @@ public class ObservationCircleView extends RelativeLayout implements ICircleView
 				PopoverView.PopoverArrowDirectionAny, true);
 		
 	}
-	
-	private void applyCountToLabelRadioButtons(RadioGroup radioGroup, String flag, String anchor) {
-		int childCount = radioGroup.getChildCount();
-		Resources resources = getResources();
-		
-		for( int i = 0; i < childCount; i++) {
-			RadioButton r = (RadioButton)radioGroup.getChildAt(i);
+	private void updateRadioButton(RadioButton radioButton, String flag, String anchor) {
+			String text = null;
+			switch(radioButton.getId()) {
+			case R.id.reasonButton1:
+				text = (String) getResources().getString(R.string.reasonButton1, flag, anchor);
+				break;
+			case R.id.reasonButton2:
+				text = (String) getResources().getString(R.string.reasonButton2, flag, anchor);
+				break;
+			case R.id.reasonButton3:
+				text = (String) getResources().getString(R.string.reasonButton3, flag, anchor);
+				break;
+			}
 			
-			try {
-			    Class res = R.string.class;
-			    Field field = res.getField("stringName");
-			    int stringId = field.getInt(r.getId());
-			    String text = String.format(resources.getString(stringId), flag, anchor);
-			    r.setTag(text);
-				r.setText(createRadioButtonCountLabel(text,0));
-			}
-			catch (Exception e) {
-			    Log.e("MyTag", "Failure to get drawable id.", e);
-			}
-		}
-		
-	}
-
-	private String createRadioButtonCountLabel(String text, int extraCount) {
-		int count = reasonTextMultiSet.count(text);
-		return text + ((count > 0) ? "(" + count + extraCount + ")" : "" ); 
-		
+			radioButton.setTag(text);
+			radioButton.setText(text);
 	}
 
 	@Override
@@ -190,13 +266,77 @@ public class ObservationCircleView extends RelativeLayout implements ICircleView
 	}
 
 	public void popoverViewWillDismiss(PopoverView view) {
-		// TODO Auto-generated method stub
+		
+//		if (isDelete == false) {
+			ViewPager vPager = (ViewPager) view.findViewById(R.id.pager);
+			PopoverViewAdapter adapter = (PopoverViewAdapter) vPager
+					.getAdapter();
+			ViewGroup radioView  = (ViewGroup) adapter.getView(0);
+			
+			if( radioView != null ) {
+				RadioGroup radioGroup = (RadioGroup) radioView.findViewById(R.id.radioGroup);
+				
+				for(int i = 0; i < radioGroup.getChildCount(); i++ ) {
+					RadioButton radioButton = (RadioButton) radioGroup.getChildAt(i);
+					
+					if(radioButton.isEnabled() && radioButton.isChecked()) {
+						String selectedText = (String) radioButton.getTag();
+						
+						reasonNeedsUpdate = null;
+						Reason newReason = Reason.newInstance((Reason) radioGroup.getTag());
+						newReason.setReasonText(selectedText);
+						reasonNeedsUpdate = newReason;
+					}
+					
+				}
+				
+			}
+			
+			
+//			
+//			
+//			
+//			EditText editText = (EditText) adapter.findViewById(0,
+//					R.id.mainEditText);
+//			if( editText.getKeyListener() == null)
+//				return;
+//			
+//			InputMethodManager imm = (InputMethodManager) getContext()
+//					.getSystemService(Context.INPUT_METHOD_SERVICE);
+//			imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+//
+//			String newReasonText = StringUtils.trimToEmpty(editText.getText().toString());
+//
+//			reasonNeedsUpdate = null;
+//
+//			if (!Strings.isNullOrEmpty(newReasonText)) {
+//				View reasonView = adapter.getView(0);
+//				Reason viewReason = (Reason) reasonView.getTag();
+//
+//				// if it has been updated
+//				if ( !StringUtils.trimToEmpty(viewReason.getReasonText()).equals(newReasonText)) {
+//					reasonNeedsUpdate = Reason.newInstance(viewReason);
+//					reasonNeedsUpdate.setReasonText(editText.getText()
+//							.toString());
+//				}
+//			}
+//		}
+
 		
 	}
 	
 	@Override
 	public void popoverViewDidDismiss(PopoverView view) {
-		// TODO Auto-generated method stub
+		//lets update
+		if( reasonNeedsUpdate != null && isDelete == false ) {
+			observationReasonController.updateReason(reasonNeedsUpdate);
+			this.makeToast("Reason Updated");
+			reasonNeedsUpdate = null;
+		} else {
+			//just deleted reset the flag
+			isDelete = false;
+			
+		}
 		
 	}
 

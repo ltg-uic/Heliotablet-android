@@ -290,19 +290,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 		
 	}
 
-	private SQLiteCursorLoader getSqliteCursorLoader() {
-		Activity mainActivity = (Activity) CircleView.this.getContext();
-		LoaderManager loaderManager = mainActivity.getLoaderManager();
-		
-		//find the loader
-		TheoryViewFragment tf = (TheoryViewFragment) mainActivity.getFragmentManager().findFragmentByTag(this.getAnchor());
-		Loader<Cursor> loader = tf.getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_THEORY_LOADER_ID);
-		SQLiteCursorLoader updateLoader = (SQLiteCursorLoader)loader;
-		return updateLoader;
-	}
-	
 
-	
 	public void makeToast(String toastText) {
 		Toast toast = Toast.makeText(getContext(), toastText,
 				Toast.LENGTH_SHORT);
