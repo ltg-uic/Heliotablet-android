@@ -102,6 +102,10 @@ public class ObservationCircleView extends RelativeLayout implements ICircleView
 				.copyOf(Iterables.filter(popOverReasonSet,
 						Reason.getIsReadOnlyFalsePredicate()));
 		
+		ImmutableSortedSet<Reason> nonEditableReasons = ImmutableSortedSet
+				.copyOf(Iterables.filter(popOverReasonSet,
+						Reason.getIsReadOnlyTruePredicate()));
+		
 			//get all the users - the current one
 		
 		if( !editableReasons.isEmpty() ) {
@@ -221,6 +225,31 @@ public class ObservationCircleView extends RelativeLayout implements ICircleView
 						
 					}
 				});
+		} 
+		if( !nonEditableReasons.isEmpty() ) {
+			
+			StringBuilder sb = new StringBuilder();
+			
+			String flag = StringUtils.capitalize(getFlag());
+			String anchor = StringUtils.capitalize(getAnchor());
+			
+			String text = String.format(resources.getString(R.string.obs_reason_origin_text), flag, anchor);
+			
+			sb.append(text);
+			sb.append("\n\n");
+			for (Reason nonEditableReason : nonEditableReasons) {
+				sb.append(nonEditableReason.getOrigin());
+				sb.append("\n");
+			}
+			
+			View originLayout = View.inflate(getContext(),
+					R.layout.popover_view_obs_origin_list, null);
+			pages.add(originLayout);
+			
+			EditText editText = (EditText) originLayout.findViewById(R.id.originEditText);
+			editText.setText(sb.toString());
+			editText.setKeyListener(null);
+		
 		}
 		vPager.setAdapter(new PopoverViewAdapter(pages));
 		vPager.setOffscreenPageLimit(5);
@@ -266,31 +295,36 @@ public class ObservationCircleView extends RelativeLayout implements ICircleView
 	}
 
 	public void popoverViewWillDismiss(PopoverView view) {
-		
-//		if (isDelete == false) {
-			ViewPager vPager = (ViewPager) view.findViewById(R.id.pager);
-			PopoverViewAdapter adapter = (PopoverViewAdapter) vPager
-					.getAdapter();
-			ViewGroup radioView  = (ViewGroup) adapter.getView(0);
-			
-			if( radioView != null ) {
-				RadioGroup radioGroup = (RadioGroup) radioView.findViewById(R.id.radioGroup);
-				
-				for(int i = 0; i < radioGroup.getChildCount(); i++ ) {
-					RadioButton radioButton = (RadioButton) radioGroup.getChildAt(i);
-					
-					if(radioButton.isEnabled() && radioButton.isChecked()) {
+
+		// if (isDelete == false) {
+		ViewPager vPager = (ViewPager) view.findViewById(R.id.pager);
+		PopoverViewAdapter adapter = (PopoverViewAdapter) vPager.getAdapter();
+		ViewGroup radioView = (ViewGroup) adapter.getView(0);
+
+		if (radioView != null) {
+			RadioGroup radioGroup = (RadioGroup) radioView
+					.findViewById(R.id.radioGroup);
+
+			if (radioGroup != null) {
+
+				for (int i = 0; i < radioGroup.getChildCount(); i++) {
+					RadioButton radioButton = (RadioButton) radioGroup
+							.getChildAt(i);
+
+					if (radioButton.isEnabled() && radioButton.isChecked()) {
 						String selectedText = (String) radioButton.getTag();
-						
+
 						reasonNeedsUpdate = null;
-						Reason newReason = Reason.newInstance((Reason) radioGroup.getTag());
+						Reason newReason = Reason
+								.newInstance((Reason) radioGroup.getTag());
 						newReason.setReasonText(selectedText);
 						reasonNeedsUpdate = newReason;
 					}
-					
+
 				}
-				
 			}
+
+		}
 			
 			
 //			

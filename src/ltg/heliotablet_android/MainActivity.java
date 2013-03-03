@@ -9,6 +9,8 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,6 +30,7 @@ public class MainActivity extends Activity  {
 
 		// Set up the action bar.
 		actionBar = getActionBar();
+		actionBar.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		setupTabs(); 		
 	}

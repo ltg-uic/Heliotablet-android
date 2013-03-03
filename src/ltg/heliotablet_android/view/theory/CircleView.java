@@ -137,7 +137,8 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 		ViewPager vPager = (ViewPager) viewPagerLayout
 				.findViewById(R.id.pager);
 		
-		for (Reason reason : popOverReasonSet) {
+		ImmutableSortedSet<Reason> copyOfReasonSet = ImmutableSortedSet.copyOf(popOverReasonSet);
+		for (Reason reason : copyOfReasonSet) {
 			View layout = View.inflate(getContext(),
 					R.layout.popover_view_delete, null);
 			layout.setTag(reason);
