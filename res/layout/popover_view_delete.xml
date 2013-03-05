@@ -4,14 +4,17 @@
     android:layout_width="370dp"
     android:layout_height="220dp"
     android:layout_gravity="fill"
-    android:background="@color/WhiteSmoke"
-     >
+    android:background="@color/WhiteSmoke" >
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="224dp"
+<<<<<<< HEAD
         android:layout_margin="0dp"
         >
+=======
+        android:layout_margin="0dp" >
+>>>>>>> Radio buttons updates and pop over changes
 
         <EditText
             android:id="@+id/mainEditText"
@@ -23,27 +26,31 @@
             android:ems="10"
             android:gravity="top"
             android:inputType="textMultiLine"
+<<<<<<< HEAD
             android:text="@string/blank_space"
             android:textColor="@color/Black" >
             
+=======
+            android:text="@string/blank_space" >
+
+>>>>>>> Radio buttons updates and pop over changes
             <requestFocus />
         </EditText>
-        
-          <Button
-              android:id="@+id/deleteButton"
-              style="?android:attr/buttonStyleSmall"
-              android:layout_width="30dp"
-              android:layout_height="30dp"
-              android:layout_centerHorizontal="true"
-              android:layout_centerVertical="true"
-              android:layout_marginLeft="338dp"
-              android:layout_marginTop="2dp"
-              android:background="@drawable/button_close"
-              android:text=""
-              android:includeFontPadding="false"
-              android:textColor="@color/White"
-              android:textSize="20dp" />
-       
+
+        <Button
+            android:id="@+id/deleteButton"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="338dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/button_close"
+            android:includeFontPadding="false"
+            android:text=""
+            android:textColor="@color/White"
+            android:textSize="20dp" />
     </FrameLayout>
 
 </ScrollView>

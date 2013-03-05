@@ -1,8 +1,13 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
 
+<<<<<<< HEAD
     
     
+=======
+
+    	
+>>>>>>> Radio buttons updates and pop over changes
     <!-- Application theme. -->
 	
 	<style name="Theme.Custom" parent="android:style/Theme.Holo">
@@ -10,6 +15,7 @@
 	</style>
     
 
+<<<<<<< HEAD
       <style name="theoryPlanetTableGridStyleNeptune">
         <item name="android:background">@color/TheoryViewPlanetName</item>
         <item name="android:layout_width">810dp</item>
@@ -24,6 +30,19 @@
     </style>
     
      <style name="theoryPlanetLabelNeptune" parent="android:Widget.Holo.Light.TextView">
+=======
+    <!--Brenda Testing the theme for radio buttons  -->
+    <style name="CustomTheme" parent="android:Theme">
+        <item name="android:radioButtonStyle">@style/RadioButton</item>
+    </style>
+
+    <style name="RadioButton" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="android:button">@drawable/button_star</item>
+    </style>
+    <!-- END Brenda  -->
+    
+    <style name="theoryPlanetLabel" parent="android:Widget.Holo.Light.TextView">
+>>>>>>> Radio buttons updates and pop over changes
         <!-- <item name="android:background">@color/TheoryViewPlanetName</item>-->        
         <item name="android:background">#000F29</item>
         
@@ -143,6 +162,22 @@
         <item name="android:layout_height">10dp</item>
     </style>
     
-    
+     <!-- BRENDA ADDED TO TEST BUTTON STYLES, BUT MAY NEED TO DELETE THIS PART LATER -->
+    <style name="button_star" parent="@android:style/Widget.Button">
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:background">@drawable/button_star</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+<!--    <item name="android:textColor">#FFFFFFFF</item>
+        <item name="android:shadowColor">#FF000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">-1</item>
+        <item name="android:shadowRadius">0.2</item>
+        <item name="android:textSize">16dip</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/button</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item> -->
+    </style>
 
 </resources>

@@ -2,22 +2,22 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/mainScrollView"
     android:layout_width="520dp"
-    android:layout_height="220dp"
+    android:layout_height="240dp"
     android:layout_gravity="fill"
     android:background="@color/WhiteSmoke"
      >
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="0dp" >
 
         <LinearLayout
             android:id="@+id/buttonGroup"
             android:layout_width="490dp"
-            android:layout_height="190dp"
+            android:layout_height="166dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="35dp"
             android:background="@drawable/textedit_shape"
             android:gravity="top"
             android:orientation="vertical" >
@@ -30,8 +30,12 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="@string/obs_reason_text"
+<<<<<<< HEAD
                 android:textColor="@color/Black"
                 android:textSize="18dp" />
+=======
+                android:textSize="18sp" />
+>>>>>>> Radio buttons updates and pop over changes
 
             <Space
                 android:layout_width="match_parent"
@@ -46,20 +50,31 @@
                 android:id="@+id/reasonButton1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+<<<<<<< HEAD
                 android:text="@string/reasonButton1"
                 android:textColor="@color/Black" />
+=======
+                android:button="@drawable/button_star"
+                android:text="@string/reasonButton1" />
+>>>>>>> Radio buttons updates and pop over changes
 
             <RadioButton
                 android:id="@+id/reasonButton2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+<<<<<<< HEAD
                 android:text="@string/reasonButton2"
                 android:textColor="@color/Black" />
+=======
+                android:button="@drawable/button_star"
+                android:text="@string/reasonButton2" />
+>>>>>>> Radio buttons updates and pop over changes
 
             <RadioButton
                 android:id="@+id/reasonButton3"
-                android:layout_width="367dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+<<<<<<< HEAD
                 android:text="@string/reasonButton3"
                 android:textColor="@color/Black" />
 
@@ -80,7 +95,30 @@
               android:includeFontPadding="false"
               android:textColor="@color/White"
               android:textSize="20dp" />
+=======
+                android:button="@drawable/button_star"
+                android:text="@string/reasonButton3" />
+        </RadioGroup>
+		
+
+</LinearLayout>
+>>>>>>> Radio buttons updates and pop over changes
        
+         <Button
+            android:id="@+id/deleteButton"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="490dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/button_close"
+            android:includeFontPadding="false"
+            android:text=""
+            android:textColor="@color/White"
+            android:textSize="20dp" />
+                  
     </FrameLayout>
 
 </ScrollView>
