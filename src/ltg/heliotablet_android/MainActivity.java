@@ -318,7 +318,7 @@ public class MainActivity extends Activity {
 			mActivity = activity;
 			mTag = tag;
 			mClass = clz;
-			mFragment = Fragment.instantiate(mActivity, mClass.getName());
+			
 		
 		}
 
@@ -331,7 +331,7 @@ public class MainActivity extends Activity {
 				// If not, instantiate and add it to the activity
 				mFragment = Fragment.instantiate(mActivity, mClass.getName());
 				ft.add(android.R.id.content, mFragment, mTag);
-				// ft.commit();
+				//ft.commit();
 			} else {
 
 				// If it exists, simply attach it in order to show it

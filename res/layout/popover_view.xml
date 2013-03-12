@@ -21,7 +21,8 @@
             android:ems="10"
             android:gravity="top"
             android:inputType="textMultiLine"
-            android:text="@string/blank_space" >
+            android:text="@string/blank_space"
+            android:textColor="@color/Black" >
             
             <requestFocus />
         </EditText>
