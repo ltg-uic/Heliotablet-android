@@ -66,6 +66,7 @@ public class TheoryViewFragment extends Fragment implements
 		theoryController = TheoryReasonController.getInstance(getActivity());
 		theoryController.add(theoryAnchor, theoryView);
 		//setupTestListeners();
+		
 		setupLoader();
 
 		return theoryView;

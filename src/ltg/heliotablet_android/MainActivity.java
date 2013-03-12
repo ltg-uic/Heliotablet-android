@@ -1,14 +1,22 @@
 package ltg.heliotablet_android;
 
+import ltg.commons.LTGEvent;
+import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.view.LoginDialog;
+import ltg.heliotablet_android.view.controller.ObservationReasonController;
+import ltg.heliotablet_android.view.controller.TheoryReasonController;
 
 import org.jivesoftware.smack.SmackAndroid;
+
+import com.commonsware.cwac.loaderex.SQLiteCursorLoader;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -34,10 +42,10 @@ public class MainActivity extends Activity {
 	private static final String TAG = "MainActivity";
 	private Messenger activityMessenger;
 	private SharedPreferences settings = null;
-	
+
 	private MenuItem connectMenu;
 	private MenuItem disconnectMenu;
-	
+
 	private Handler handler = new Handler() {
 		public void handleMessage(Message message) {
 			Intent intent = (Intent) message.obj;
@@ -45,10 +53,13 @@ public class MainActivity extends Activity {
 				if (intent.getAction().equals(
 						XmppService.CHAT_ACTION_RECEIVED_MESSAGE)) {
 					receiveIntent(intent);
-				} else if( intent.getAction().equals(XmppService.SHOW_LOGIN)) {
+				} else if (intent.getAction().equals(XmppService.SHOW_LOGIN)) {
 					prepDialog().show();
-				} else if( intent.getAction().equals(XmppService.ERROR) ) {
+				} else if (intent.getAction().equals(XmppService.ERROR)) {
 					makeToast(intent);
+				} else if (intent.getAction().equals(
+						XmppService.LTG_EVENT_RECEIVED)) {
+					receiveIntent(intent);
 				}
 			}
 
@@ -57,15 +68,39 @@ public class MainActivity extends Activity {
 
 	public void receiveIntent(Intent intent) {
 		if (intent != null) {
-			String stringExtra = intent
-					.getStringExtra(XmppService.XMPP_MESSAGE);
-			makeToast("MESSAGE RECEIVE: " + stringExtra);
+			LTGEvent ltgEvent = (LTGEvent) intent
+					.getSerializableExtra(XmppService.LTG_EVENT);
 
-		
+			if (ltgEvent != null) {
+				if (ltgEvent.getPayload() != null) {
+					JsonNode payload = ltgEvent.getPayload();
+					String color = payload.get("color").textValue();
+					String anchor = payload.get("anchor").textValue();
+					String reasonText = payload.get("reason").textValue();
+					String origin = ltgEvent.getOrigin();
+					if (ltgEvent.getType().equals("new_theory")) {
+						TheoryReasonController tc = TheoryReasonController.getInstance(this);
+
+						Reason reason = new Reason(anchor, color,
+								Reason.TYPE_THEORY, origin, true);
+						reason.setReasonText(reasonText);
+						tc.insertReason(reason);
+					} else if (ltgEvent.getType().equals("new_observation")) {
+						ObservationReasonController oc = ObservationReasonController.getInstance(this);
+						Reason reason = new Reason(anchor, color,
+								Reason.TYPE_OBSERVATION, origin, true);
+						reason.setReasonText(reasonText);
+						oc.insertReason(reason);
+					}
+
+				}
+
+			}
+			makeToast("LTG EVENT Received: " + ltgEvent.toString());
 
 		}
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -79,19 +114,14 @@ public class MainActivity extends Activity {
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		setupTabs();
 	}
-	
+
 	public void initXmppService() {
-		SmackAndroid.init(this);
-		
 		// XMPP bind
 		activityMessenger = new Messenger(handler);
-		Intent intent = new Intent(MainActivity.this,
-				XmppService.class);
+		Intent intent = new Intent(MainActivity.this, XmppService.class);
 		intent.setAction(XmppService.STARTUP);
-		intent.putExtra(XmppService.ACTIVITY_MESSAGER,
-				activityMessenger);
-		intent.putExtra(XmppService.CHAT_TYPE,
-				XmppService.GROUP_CHAT);
+		intent.putExtra(XmppService.ACTIVITY_MESSAGER, activityMessenger);
+		intent.putExtra(XmppService.CHAT_TYPE, XmppService.GROUP_CHAT);
 		intent.putExtra(XmppService.GROUP_CHAT_NAME,
 				getString(R.string.XMPP_CHAT_ROOM));
 		startService(intent);
@@ -118,15 +148,13 @@ public class MainActivity extends Activity {
 				String password = org.apache.commons.lang3.StringUtils
 						.stripToNull(passwordTextView.getText().toString());
 
-				settings = getSharedPreferences(
-						getString(R.string.xmpp_prefs), MODE_PRIVATE);
+				settings = getSharedPreferences(getString(R.string.xmpp_prefs),
+						MODE_PRIVATE);
 				SharedPreferences.Editor prefEditor = settings.edit();
-				prefEditor.putString(getString(R.string.user_name),
-						username);
-				prefEditor
-						.putString(getString(R.string.password), password);
+				prefEditor.putString(getString(R.string.user_name), username);
+				prefEditor.putString(getString(R.string.password), password);
 				prefEditor.commit();
-				
+
 				Intent intent = new Intent();
 				intent.setAction(XmppService.CONNECT);
 				Message newMessage = Message.obtain();
@@ -135,8 +163,7 @@ public class MainActivity extends Activity {
 			}
 		};
 
-		return LoginDialog.createLoginDialog(this, positive,
-				negative,null);
+		return LoginDialog.createLoginDialog(this, positive, negative, null);
 	}
 
 	public void sendXmppMessage(String text) {
@@ -152,8 +179,8 @@ public class MainActivity extends Activity {
 		settings = getSharedPreferences(getString(R.string.xmpp_prefs),
 				MODE_PRIVATE);
 		SharedPreferences.Editor prefEditor = settings.edit();
-//		prefEditor.clear();
-//		prefEditor.commit();
+		// prefEditor.clear();
+		// prefEditor.commit();
 		prefEditor.putString(getString(R.string.user_name), "obama");
 		prefEditor.putString(getString(R.string.password), "obama");
 		prefEditor.putString(getString(R.string.XMPP_HOST_KEY),
@@ -186,7 +213,7 @@ public class MainActivity extends Activity {
 			makeToast(stringExtra);
 		}
 	}
-	
+
 	public void makeToast(String toastText) {
 		Toast toast = Toast.makeText(this, toastText, Toast.LENGTH_SHORT);
 		toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 50);
@@ -197,7 +224,7 @@ public class MainActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_main, menu);
-		
+
 		connectMenu = menu.getItem(0);
 		disconnectMenu = menu.getItem(1);
 		disconnectMenu.setEnabled(false);
@@ -226,7 +253,12 @@ public class MainActivity extends Activity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+	}
+
 	private void setupTabs() {
 		// TODO Auto-generated method stub
 
@@ -286,6 +318,8 @@ public class MainActivity extends Activity {
 			mActivity = activity;
 			mTag = tag;
 			mClass = clz;
+			mFragment = Fragment.instantiate(mActivity, mClass.getName());
+		
 		}
 
 		/* The following are each of the ActionBar.TabListener callbacks */

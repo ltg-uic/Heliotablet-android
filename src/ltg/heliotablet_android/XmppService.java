@@ -1,13 +1,21 @@
 package ltg.heliotablet_android;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
+import ltg.commons.LTGEvent;
+import ltg.commons.LTGEventHandler;
+import ltg.commons.NotAnLTGEventException;
+
+import org.jivesoftware.smack.AndroidConnectionConfiguration;
 import org.jivesoftware.smack.Connection;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.ConnectionCreationListener;
 import org.jivesoftware.smack.ConnectionListener;
 import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.SASLAuthentication;
+import org.jivesoftware.smack.SmackAndroid;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.filter.PacketTypeFilter;
@@ -35,9 +43,6 @@ import android.widget.Toast;
 
 public class XmppService extends IntentService {
 
-
-	
-	
 	private final IBinder xmppBinder = new XmppBinder();
 
 	private static final String TAG = "XmppService";
@@ -63,6 +68,10 @@ public class XmppService extends IntentService {
 	public static final String ACTIVITY_MESSAGER = "ACTIVITY_MESSAGER";
 	public static final String CONNECT = "CONNECT";
 	public static final String XMPP_MESSAGE = "XMPP_MESSAGE";
+
+	public static final String LTG_EVENT = "LTG_EVENT";
+
+	public static final String LTG_EVENT_RECEIVED = "LTG_EVENT_RECEIVED";
 
 	private static volatile Looper serviceLooper;
 	private static volatile ServiceHandler serviceHandler;
@@ -94,11 +103,7 @@ public class XmppService extends IntentService {
 		}
 	}
 
-	Handler connectionHandler = new Handler() {
-		public void handleMessage(android.os.Message msg) {
-
-		};
-	};
+	private SmackAndroid smackAndroid;
 	
 
 	@Override
@@ -109,7 +114,6 @@ public class XmppService extends IntentService {
 		String action = intent.getAction();
 		Bundle extras = intent.getExtras();
 		if (action.equals(STARTUP)) {
-
 			Object messExtra = extras.get(ACTIVITY_MESSAGER);
 			
 			if (messExtra != null) {
@@ -155,6 +159,22 @@ public class XmppService extends IntentService {
 			removeListeners();
 			groupChat = null;
 			xmppConnection = null;
+		} else if( action.equals(LTG_EVENT_RECEIVED)) {
+			String json = intent.getStringExtra(XMPP_MESSAGE);
+			
+			try {
+				LTGEvent deserializeEvent = LTGEventHandler.deserializeEvent(json);
+				Intent i = new Intent(LTG_EVENT_RECEIVED);
+				i.putExtra(LTG_EVENT,(Serializable) deserializeEvent);
+				sendIntentToUI(i);
+			} catch (IOException e) {
+				Log.e(TAG,"Problem Deserializing Event",e);
+			} catch (NotAnLTGEventException e) {
+				Log.e(TAG,"Non ltg event",e);
+				sendErrorToUI("Non LTG Event captured");
+			}
+			
+			
 		}
 
 	}
@@ -163,18 +183,13 @@ public class XmppService extends IntentService {
 		
 		if (xmppConnection == null ) {
 
-			ConnectionConfiguration connectionConfiguration = new ConnectionConfiguration(
-					DOMAIN, 5222);
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-				connectionConfiguration.setTruststoreType("BKS");
-				connectionConfiguration.setTruststorePassword(null);
-				connectionConfiguration.setTruststorePath(null);
-			}
+			AndroidConnectionConfiguration connectionConfiguration = new AndroidConnectionConfiguration(
+					DOMAIN, 5222,"TABLET");
 			connectionConfiguration.setSASLAuthenticationEnabled(false);
+			connectionConfiguration.setDebuggerEnabled(true);
 			//SASLAuthentication.supportSASLMechanism("PLAIN", 0);
-			Connection.DEBUG_ENABLED = true;
+			XMPPConnection.DEBUG_ENABLED = true;
 			xmppConnection = new XMPPConnection(connectionConfiguration);
-			
 			
 
 			Connection.addConnectionCreationListener(createConnectionListener());
@@ -196,7 +211,7 @@ public class XmppService extends IntentService {
 			@Override
 			public void connectionCreated(final Connection connection) {
 				final Intent i = new Intent(DO_LOGIN);
-				final android.os.Message newMessage = android.os.Message.obtain();
+				final android.os.Message newMessage = serviceHandler.obtainMessage();
 				newMessage.obj = i;
 				sendToServiceHandler(i);
 				sendErrorToUI("Connection Successful!!");
@@ -212,7 +227,7 @@ public class XmppService extends IntentService {
 			@Override
 			public void connectionClosed() {
 				final Intent i = new Intent(DESTORY);
-				final android.os.Message newMessage = android.os.Message.obtain();
+				final android.os.Message newMessage = serviceHandler.obtainMessage();
 				newMessage.obj = i;
 				sendToServiceHandler(i);
 				sendErrorToUI("Connection is being destroyed normally");
@@ -222,7 +237,7 @@ public class XmppService extends IntentService {
 			@Override
 			public void connectionClosedOnError(Exception e) {
 				final Intent i = new Intent(DESTORY);
-				final android.os.Message newMessage = android.os.Message.obtain();
+				final android.os.Message newMessage = serviceHandler.obtainMessage();
 				newMessage.obj = i;
 				sendToServiceHandler(i);
 				sendErrorToUI("Connection is being destroyed do to an error");
@@ -278,7 +293,7 @@ public class XmppService extends IntentService {
 			xmppConnection.login(storedUserName, storedPassword);
 
 			final Intent i = new Intent(GROUP_CHAT);
-			final android.os.Message newMessage = android.os.Message.obtain();
+			final android.os.Message newMessage = serviceHandler.obtainMessage();
 			newMessage.obj = i;
 			sendToServiceHandler(i);
 			} catch (XMPPException e) {
@@ -301,13 +316,12 @@ public class XmppService extends IntentService {
 		handlerThreadId = thread.getId();
 		serviceLooper = thread.getLooper();
 		serviceHandler = new ServiceHandler(serviceLooper);
+		smackAndroid = SmackAndroid.init(this);
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-
 		sendToServiceHandler(startId, intent);
-
 		return START_REDELIVER_INTENT;
 	}
 
@@ -366,34 +380,19 @@ public class XmppService extends IntentService {
 			}
 		}
 		if (message.getBody() != null) {
-			String fromName = StringUtils.parseBareAddress(message.getFrom());
-			Log.i(TAG, "Got text [" + message.getBody() + "] from [" + fromName
-					+ "]");
-
-			Intent i = new Intent(CHAT_ACTION_RECEIVED_MESSAGE);
-			i.putExtra(XMPP_MESSAGE, fromName + " says: " + message.getBody());
-
-			android.os.Message newMessage = android.os.Message.obtain();
-			newMessage.obj = i;
-			if (activityMessenger != null) {
-				try {
-					activityMessenger.send(newMessage);
-				} catch (RemoteException e) {
-					Log.e(TAG,
-							"PACKET RECEIVED SENDING PROBLEM SENDING MESSAGE BACK TO ACTIVITY",
-							e);
-				}
-			} else {
-				throw new NullPointerException(
-						"ACTIVITY MESSAGER WENT AWAY -> NULL");
-			}
+			
+			//LTG EVENT
+			Intent intent = new Intent(LTG_EVENT_RECEIVED);
+			intent.putExtra(XMPP_MESSAGE, message.getBody());
+			sendToServiceHandler(intent);
+			
 		} else {
-			// Log.i(TAG, packet.toXML());
+			//Log.i(TAG, packet.toXML());
 		}
 	}
 
 	protected void sendIntentToUI(Intent intent) {
-		android.os.Message newMessage = android.os.Message.obtain();
+		android.os.Message newMessage = serviceHandler.obtainMessage();
 		newMessage.obj = intent;
 		try {
 			activityMessenger.send(newMessage);
@@ -407,7 +406,7 @@ public class XmppService extends IntentService {
 		Intent i = new Intent(ERROR);
 		i.putExtra(XMPP_MESSAGE, text);
 
-		android.os.Message newMessage = android.os.Message.obtain();
+		android.os.Message newMessage = serviceHandler.obtainMessage();
 		newMessage.obj = i;
 		try {
 			activityMessenger.send(newMessage);
@@ -422,6 +421,7 @@ public class XmppService extends IntentService {
 		super.onDestroy();
 		serviceLooper.quit();
 		xmppConnection.disconnect();
+		smackAndroid.onDestroy();
 	}
 
 	public static boolean sendToServiceHandler(int i, Intent intent) {

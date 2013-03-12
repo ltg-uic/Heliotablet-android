@@ -1,6 +1,7 @@
 package ltg.heliotablet_android.data;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -53,6 +54,8 @@ public class Reason implements Comparable<Reason> {
 		this.origin = origin;
 		this.type = type;
 		this.isReadonly = isReadOnly;
+		java.util.Date date = new java.util.Date();
+		this.lastTimestamp = new Timestamp(date.getTime());
 	}
 
 	public static Reason newInstance(Reason reason) {
