@@ -2,34 +2,50 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ltg.heliotablet_android"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0" xmlns:tools="http://schemas.android.com/tools">
 
     <uses-sdk
         android:minSdkVersion="16"
-        android:targetSdkVersion="16" />
+        android:targetSdkVersion="16" tools:ignore="OldTargetApi"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        >
+        android:theme="@style/Theme.Custom"
+         >
         <activity
             android:name="ltg.heliotablet_android.MainActivity"
-            android:label="@string/app_name" 
-            >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-    	<!-- <provider
+
+        <service android:name=".XmppService" />
+        <!--
+             <receiver android:name="ltg.android_xmppbase.XmppServiceBooter">
+             <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        -->
+
+
+        <!--
+           <provider
       		android:name="ltg.heliotablet_android.data.ReasonContentProvider"
       		android:authorities="ltg.heliotablet_android.data" 
       		android:exported="false"
       		>
-   		</provider> -->
+   		</provider>
+        -->
     </application>
 
 </manifest>

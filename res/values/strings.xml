@@ -9,15 +9,6 @@
     <string name="tab_title_scratch_pad">Scratch Pad</string>
     <string name="tab_title_observations">Observations</string>
     <string name="tab_title_theories">Theories</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">XMPP</string>
-    <string name="password">Password</string>
-    <string name="label">XMPP Service</string>
-    <string name="authenticator_activity_username_label">Username</string>
-    <string name="authenticator_activity_password_label">Password</string>
-    <string name="authenticator_activity_ok_button_label">Login</string>
-    <string name="authenticator_activity_try_login">Login</string>
-    <string name="login_title">XMPP Login</string>
     <string name="planets">Planets</string>
     <string name="theories">Theories</string>
     <string name="venus">Venus</string>
@@ -43,17 +34,38 @@
     <string name="gray">gray</string>
     <string name="blank_space">" "</string>
     <string name="lorem_ipsum">This is earth because it is awesome.</string>
-   <string name="action_previous">Previous</string>
-   <string name="action_next">Next</string>
-   <string name="action_finish">Finish</string>
-   <string name="fragment_tag_theory">theory</string>
-   <string name="fragment_tag_observation">observations</string>
-   <string name="fragment_tag_scratchpad">scratchpad</string>
-   <string name="pink">pink</string>
-   <string name="obs_reason_origin_text">Who agrees that %1$s is closer than %2$s?</string>
-   <string name="obs_reason_text">Why do people agree that %1$s is closer than %2$s?</string>
-   <string name="reasonButton1">Because they saw %1$s in front of %2$s.</string>
-   <string name="reasonButton2">Because %1$s moved faster than %2$s.</string>
-   <string name="reasonButton3">Because of another reason.</string>
-   
+    
+    <!-- labels -->
+    <string name="action_previous">Previous</string>
+    <string name="action_next">Next</string>
+    <string name="action_finish">Finish</string>
+    <string name="fragment_tag_theory">theory</string>
+    <string name="fragment_tag_observation">observations</string>
+    <string name="fragment_tag_scratchpad">scratchpad</string>
+    <string name="pink">pink</string>
+    <string name="obs_reason_origin_text">Who agrees that %1$s is closer than %2$s?</string>
+    <string name="obs_reason_text">Why do people agree that %1$s is closer than %2$s?</string>
+    <string name="reasonButton1">Because they saw %1$s in front of %2$s.</string>
+    <string name="reasonButton2">Because %1$s moved faster than %2$s.</string>
+    <string name="reasonButton3">Because of another reason.</string>
+
+    <!-- Xmpp stuff -->
+    <string name="xmpp_prefs">XMPP_PREFS</string>
+    <string name="user_name">USER_NAME</string>
+    <string name="xmpp_host">54.243.60.48</string>
+    <string name="XMPP_HOST_KEY">xmpp_host_key</string>
+    <string name="XMPP_PORT">XMPP_PORT</string>
+    <string name="XMPP_CHAT_ROOM">android-test@conference.54.243.60.48</string>
+    <string name="menu_connect">Connect</string>
+	<string name="menu_disconnect">Disconnect</string>
+    <string name="password">PASSWORD</string>
+    <string name="label">XMPP Service</string>
+    <string name="authenticator_activity_username_label">Username</string>
+    <string name="authenticator_activity_password_label">Password</string>
+    <string name="authenticator_activity_ok_button_label">Login</string>
+    <string name="authenticator_activity_try_login">Login</string>
+    <string name="login_title">XMPP Login</string>
+    <string name="login_button">Login</string>
+    <string name="cancel_button">Cancel</string>
+
 </resources>
