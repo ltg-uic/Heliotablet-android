@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
  <color name="reasonEditTextColor">#F5F5F5</color>
- <color name="BG_00">#ED1C24</color>
- <color name="BG_01">#CBDFA3</color>
- <color name="BG_02">#ABB886</color>
+ <color name="BGBlueLight">#33B5E5</color>
+ <color name="BGBlueMedium">#000080</color>
+ <color name="BGBlueDark">#000F29</color>
  <color name="TheoryBG_00">#0487BF</color>
  <color name="PlanetRed">#ED1C24</color>
  <color name="PlanetBrown">#A0522D</color>

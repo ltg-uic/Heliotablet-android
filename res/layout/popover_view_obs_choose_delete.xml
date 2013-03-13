@@ -4,7 +4,7 @@
     android:layout_width="520dp"
     android:layout_height="240dp"
     android:layout_gravity="fill"
-    android:background="#36B5E4">
+    android:background="@color/BGBlueDark">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -14,9 +14,9 @@
         <LinearLayout
             android:id="@+id/buttonGroup"
             android:layout_width="490dp"
-            android:layout_height="166dp"
+            android:layout_height="180dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             android:background="@drawable/textedit_shape"
             android:gravity="top"
             android:orientation="vertical" >
@@ -27,13 +27,17 @@
                 android:id="@+id/reasonTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
+                android:gravity="left|center_horizontal"
                 android:text="@string/obs_reason_text"
-                android:textSize="18sp" />
+                android:textColor="@color/BGBlueDark"
+                android:textColorHint="@color/BGBlueDark"
+                android:textColorLink="@color/BGBlueMedium"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                android:layout_height="16dp" />
 
         <RadioGroup
         android:id="@+id/radioGroup"
@@ -78,7 +82,7 @@
             android:includeFontPadding="false"
             android:text=""
             android:textColor="@color/White"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
                   
     </FrameLayout>
 

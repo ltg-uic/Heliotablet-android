@@ -5,8 +5,8 @@
 <!-- SHAPE with the radial blue gradient used for background       -->                
 			<gradient
 	            android:type="radial"
-	            android:startColor="#001F82"
-	            android:endColor="#000F29"
+	            android:startColor="@color/BGBlueMedium"
+	            android:endColor="@color/BGBlueDark"
 	            android:gradientRadius="500"
 	            android:centerX="50%"
 	            android:centerY="50%"/>
