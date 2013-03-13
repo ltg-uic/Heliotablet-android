@@ -4,7 +4,7 @@
     android:layout_width="370dp"
     android:layout_height="220dp"
     android:layout_gravity="fill"
-    android:background="@color/WhiteSmoke" >
+    android:background="#002e3e" >
 
     <FrameLayout
         android:layout_width="match_parent"
