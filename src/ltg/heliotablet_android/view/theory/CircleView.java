@@ -135,7 +135,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 		ArrayList<View> pages = new ArrayList<View>();
 		ViewPager pager = new ViewPager(getContext());
 		ViewPager vPager = (ViewPager) viewPagerLayout
-				.findViewById(R.id.pager);
+				.findViewById(R.id.popover_pager);
 		
 		
 		ImmutableSortedSet<Reason> copyOfReasonSet = ImmutableSortedSet
@@ -207,7 +207,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 		vPager.setAdapter(new PopoverViewAdapter(pages));
 		vPager.setOffscreenPageLimit(5);
 		vPager.setCurrentItem(0);
-        ViewGroup parent = (ViewGroup) this.getParent().getParent().getParent();
+        ViewGroup parent = (ViewGroup) this.getParent().getParent().getParent().getParent();
 
 		
 		PopoverView popoverView = new PopoverView(getContext(), viewPagerLayout);
@@ -235,7 +235,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 
 	@Override
 	public void popoverViewDidShow(PopoverView view) {
-		ViewPager vPager = (ViewPager) view.findViewById(R.id.pager);
+		ViewPager vPager = (ViewPager) view.findViewById(R.id.popover_pager);
 		PopoverViewAdapter adapter = (PopoverViewAdapter) vPager.getAdapter();
 		EditText editText = (EditText) adapter.findViewById(0, R.id.mainEditText);
 		editText.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN , 0, 0, 0));
@@ -248,7 +248,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 	public void popoverViewWillDismiss(PopoverView view) {
 	
 		if (isDelete == false) {
-			ViewPager vPager = (ViewPager) view.findViewById(R.id.pager);
+			ViewPager vPager = (ViewPager) view.findViewById(R.id.popover_pager);
 			PopoverViewAdapter adapter = (PopoverViewAdapter) vPager
 					.getAdapter();
 			int currentItem = vPager.getCurrentItem();

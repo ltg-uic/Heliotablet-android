@@ -179,7 +179,7 @@ public class MainActivity extends FragmentActivity implements TabListener {
 				getSupportFragmentManager());
 
 		// Set up the ViewPager with the sections adapter.
-		mViewPager = (NonSwipeableViewPager) findViewById(R.id.pager);
+		mViewPager = (NonSwipeableViewPager) findViewById(R.id.main_pager);
 		mViewPager.setOffscreenPageLimit(3);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		// When swiping between different sections, select the corresponding

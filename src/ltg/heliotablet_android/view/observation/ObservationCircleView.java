@@ -95,7 +95,7 @@ public class ObservationCircleView extends RelativeLayout implements ICircleView
 		ArrayList<View> pages = new ArrayList<View>();
 		ViewPager pager = new ViewPager(getContext());
 		ViewPager vPager = (ViewPager) viewPagerLayout
-				.findViewById(R.id.pager);
+				.findViewById(R.id.popover_pager);
 		
 		//get the editable reason
 		ImmutableSortedSet<Reason> editableReasons = ImmutableSortedSet
@@ -297,7 +297,7 @@ public class ObservationCircleView extends RelativeLayout implements ICircleView
 	public void popoverViewWillDismiss(PopoverView view) {
 
 		// if (isDelete == false) {
-		ViewPager vPager = (ViewPager) view.findViewById(R.id.pager);
+		ViewPager vPager = (ViewPager) view.findViewById(R.id.popover_pager);
 		PopoverViewAdapter adapter = (PopoverViewAdapter) vPager.getAdapter();
 		ViewGroup radioView = (ViewGroup) adapter.getView(0);
 
