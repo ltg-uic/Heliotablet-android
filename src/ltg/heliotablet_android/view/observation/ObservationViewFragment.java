@@ -12,25 +12,23 @@ import ltg.heliotablet_android.view.controller.ObservationReasonController;
 import org.apache.commons.lang3.StringUtils;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.LoaderManager;
 import android.content.Context;
-import android.content.Loader;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.DragEvent;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnDragListener;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.commonsware.cwac.loaderex.SQLiteCursorLoader;
+import com.commonsware.cwac.loaderex.acl.SQLiteCursorLoader;
 import com.google.common.collect.Lists;
 
 public class ObservationViewFragment extends Fragment implements

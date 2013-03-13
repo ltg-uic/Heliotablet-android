@@ -1,14 +1,10 @@
 package ltg.heliotablet_android.view.observation;
 
 import ltg.heliotablet_android.R;
-import ltg.heliotablet_android.R.id;
-import ltg.heliotablet_android.R.layout;
-import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.view.controller.ObservationReasonController;
 import ltg.heliotablet_android.view.theory.CircleViewDefaultTouchListener;
-import android.app.Fragment;
 import android.os.Bundle;
-import android.os.StrictMode;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,14 +21,14 @@ public class ObservationFragment extends Fragment {
 		observationView = inflater
 				.inflate(R.layout.observation_activity, container, false);
 		
-		  StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll()
-                 .penaltyLog()
-                 .build());
-		  StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects()
-         .detectLeakedClosableObjects()
-         .penaltyLog()
-         .penaltyDeath()
-         .build());
+//		  StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll()
+//                 .penaltyLog()
+//                 .build());
+//		  StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects()
+//         .detectLeakedClosableObjects()
+//         .penaltyLog()
+//         .penaltyDeath()
+//         .build());
 		
 		observationController = ObservationReasonController.getInstance(getActivity());
 

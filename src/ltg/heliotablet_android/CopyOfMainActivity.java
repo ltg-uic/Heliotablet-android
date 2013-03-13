@@ -1,20 +1,25 @@
 package ltg.heliotablet_android;
 
-import java.util.List;
-
 import ltg.commons.LTGEvent;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.view.LoginDialog;
-import ltg.heliotablet_android.view.controller.NonSwipeableViewPager;
 import ltg.heliotablet_android.view.controller.ObservationReasonController;
 import ltg.heliotablet_android.view.controller.TheoryReasonController;
 import ltg.heliotablet_android.view.observation.ObservationFragment;
 import ltg.heliotablet_android.view.theory.TheoryFragmentWithSQLiteLoaderNestFragments;
+
+import org.jivesoftware.smack.SmackAndroid;
+
+import com.commonsware.cwac.loaderex.SQLiteCursorLoader;
+import com.fasterxml.jackson.databind.JsonNode;
+
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
-import android.app.ActionBar.TabListener;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -26,11 +31,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Messenger;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -38,10 +38,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.google.common.collect.Lists;
-
-public class MainActivity extends FragmentActivity implements TabListener {
+public class CopyOfMainActivity extends Activity {
 
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 	private ActionBar actionBar;
@@ -52,9 +49,7 @@ public class MainActivity extends FragmentActivity implements TabListener {
 
 	private MenuItem connectMenu;
 	private MenuItem disconnectMenu;
-	private SectionsPagerAdapter mSectionsPagerAdapter;
-	private NonSwipeableViewPager mViewPager;
-	
+
 	private Handler handler = new Handler() {
 		public void handleMessage(Message message) {
 			Intent intent = (Intent) message.obj;
@@ -143,7 +138,7 @@ public class MainActivity extends FragmentActivity implements TabListener {
 
 		    public void run() {
 
-		    	ReasonDBOpenHelper rbHelper = ReasonDBOpenHelper.getInstance(MainActivity.this);
+		    	ReasonDBOpenHelper rbHelper = ReasonDBOpenHelper.getInstance(CopyOfMainActivity.this);
 		    	
 		    	if( op.equals("INSERT"))
 		    		rbHelper.createReason(reason);
@@ -162,53 +157,17 @@ public class MainActivity extends FragmentActivity implements TabListener {
 		hardcodedUserNameXMPP();
 		initXmppService();
 
-		initTabs();
-	}
-	
-	
-
-	
-	public void initTabs() {
 		// Set up the action bar.
-		final ActionBar actionBar = getActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		actionBar = getActionBar();
 		actionBar.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
-		// Create the adapter that will return a fragment for each of the three
-		// primary sections of the app.
-		mSectionsPagerAdapter = new SectionsPagerAdapter(
-				getSupportFragmentManager());
-
-		// Set up the ViewPager with the sections adapter.
-		mViewPager = (NonSwipeableViewPager) findViewById(R.id.pager);
-		mViewPager.setOffscreenPageLimit(3);
-		mViewPager.setAdapter(mSectionsPagerAdapter);
-		// When swiping between different sections, select the corresponding
-		// tab. We can also use ActionBar.Tab#select() to do this if we have
-		// a reference to the Tab.
-//		mViewPager
-//				.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-//					@Override
-//					public void onPageSelected(int position) {
-//						actionBar.setSelectedNavigationItem(position);
-//					}
-//				});
-
-		// For each of the sections in the app, add a tab to the action bar.
-		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-			// Create a tab with text corresponding to the page title defined by
-			// the adapter. Also specify this Activity object, which implements
-			// the TabListener interface, as the callback (listener) for when
-			// this tab is selected.
-			actionBar.addTab(actionBar.newTab()
-					.setText(mSectionsPagerAdapter.getPageTitle(i))
-					.setTabListener(this));
-		}
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		setupTabs();
 	}
 
 	public void initXmppService() {
 		// XMPP bind
 		activityMessenger = new Messenger(handler);
-		Intent intent = new Intent(MainActivity.this, XmppService.class);
+		Intent intent = new Intent(CopyOfMainActivity.this, XmppService.class);
 		intent.setAction(XmppService.STARTUP);
 		intent.putExtra(XmppService.ACTIVITY_MESSAGER, activityMessenger);
 		intent.putExtra(XmppService.CHAT_TYPE, XmppService.GROUP_CHAT);
@@ -310,112 +269,6 @@ public class MainActivity extends FragmentActivity implements TabListener {
 		toast.show();
 	}
 
-
-
-
-	private void setupTabs() {
-		// TODO Auto-generated method stub
-
-		// Theories tab
-
-		Tab tab = actionBar
-				.newTab()
-				.setText(R.string.tab_title_theories)
-				.setTabListener(this);
-		actionBar.addTab(tab);
-
-		tab = actionBar
-				.newTab()
-				.setText(R.string.tab_title_observations)
-				.setTabListener(this);
-
-		actionBar.addTab(tab);
-		tab = actionBar
-				.newTab()
-				.setText(R.string.tab_title_scratch_pad)
-				.setTabListener(this);
-
-		actionBar.addTab(tab);
-
-	}
-	
-
-	@Override
-	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-		mViewPager.setCurrentItem(tab.getPosition());
-		
-	}
-
-	@Override
-	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onTabReselected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-	/**
-	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-	 * one of the sections/tabs/pages.
-	 */
-	public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-		private List<Fragment> fragments = null;
-		
-		public SectionsPagerAdapter(FragmentManager fm) {
-			super(fm);
-			fragments =  Lists.newArrayList(new TheoryFragmentWithSQLiteLoaderNestFragments(), new ObservationFragment(), new ScratchPadFragment());
-		}
-
-		@Override
-		public android.support.v4.app.Fragment getItem(int position) {
-			return fragments.get(position);
-		}
-		
-
-		@Override
-		public int getCount() {
-			return 3;
-		}
-
-		@Override
-		public CharSequence getPageTitle(int position) {
-			switch (position) {
-			case 0:
-				return getString(R.string.tab_title_theories);
-			case 1:
-				return getString(R.string.tab_title_observations);
-			case 2:
-				return getString(R.string.tab_title_scratch_pad);
-			}
-			return null;
-		}
-	}
-	
-
-
-
-	@Override
-	public void onRestoreInstanceState(Bundle savedInstanceState) {
-		// Restore the previously serialized current tab position.
-		if (savedInstanceState.containsKey(STATE_SELECTED_NAVIGATION_ITEM)) {
-			getActionBar().setSelectedNavigationItem(
-					savedInstanceState.getInt(STATE_SELECTED_NAVIGATION_ITEM));
-		}
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		// Serialize the current tab position.
-		outState.putInt(STATE_SELECTED_NAVIGATION_ITEM, getActionBar()
-				.getSelectedNavigationIndex());
-	}
-	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -450,10 +303,126 @@ public class MainActivity extends FragmentActivity implements TabListener {
 		}
 	}
 
-	
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+	}
+
+	private void setupTabs() {
+		// TODO Auto-generated method stub
+
+		// Theories tab
+
+		Tab tab = actionBar
+				.newTab()
+				.setText(R.string.tab_title_theories)
+				.setTabListener(
+						new TabListener<TheoryFragmentWithSQLiteLoaderNestFragments>(
+								this,
+								getString(R.string.fragment_tag_theory),
+								TheoryFragmentWithSQLiteLoaderNestFragments.class));
+		actionBar.addTab(tab);
+
+		tab = actionBar
+				.newTab()
+				.setText(R.string.tab_title_observations)
+				.setTabListener(
+						new TabListener<ObservationFragment>(this,
+								getString(R.string.fragment_tag_observation),
+								ObservationFragment.class));
+
+		actionBar.addTab(tab);
+		tab = actionBar
+				.newTab()
+				.setText(R.string.tab_title_scratch_pad)
+				.setTabListener(
+						new TabListener<ScratchPadFragment>(this,
+								getString(R.string.fragment_tag_scratchpad),
+								ScratchPadFragment.class));
+
+		actionBar.addTab(tab);
+
+	}
+
+	public static class TabListener<T extends Fragment> implements
+			ActionBar.TabListener {
+
+		private Fragment mFragment;
+		private final Activity mActivity;
+		private final String mTag;
+		private final Class<T> mClass;
+		private Fragment currentFragment;
+
+		/**
+		 * Constructor used each time a new tab is created.
+		 * 
+		 * @param activity
+		 *            The host Activity, used to instantiate the fragment
+		 * @param tag
+		 *            The identifier tag for the fragment
+		 * @param clz
+		 *            The fragment's Class, used to instantiate the fragment
+		 */
+		public TabListener(Activity activity, String tag, Class<T> clz) {
+			mActivity = activity;
+			mTag = tag;
+			mClass = clz;
+			//mFragment = Fragment.instantiate(mActivity, mClass.getName());
+//			FragmentTransaction beginTransaction = activity.getFragmentManager().beginTransaction();
+//			beginTransaction.add(android.R.id.content, mFragment, mTag);
+			//ft.commit();
+		
+		}
+
+		/* The following are each of the ActionBar.TabListener callbacks */
+
+		@Override
+		public void onTabSelected(Tab tab, FragmentTransaction ft) {
+			// Check if the fragment is already initialized
+			if (mFragment == null) {
+				// If not, instantiate and add it to the activity
+				mFragment = Fragment.instantiate(mActivity, mClass.getName());
+				ft.add(android.R.id.content, mFragment, mTag);
+				//ft.commit();
+			} else {
+
+				// If it exists, simply attach it in order to show it
+				ft.show(mFragment);
+				// ft.commit();
+			}
+		}
+
+		@Override
+		public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+			if (mFragment != null) {
+				// Detach the fragment, because another one is being attached
+				// ft.detach(mFragment);
+				ft.hide(mFragment);
+			}
+		}
+
+		@Override
+		public void onTabReselected(Tab tab, FragmentTransaction ft) {
+			// TODO Auto-generated method stub
+
+		}
+
+	}
+
+	@Override
+	public void onRestoreInstanceState(Bundle savedInstanceState) {
+		// Restore the previously serialized current tab position.
+		if (savedInstanceState.containsKey(STATE_SELECTED_NAVIGATION_ITEM)) {
+			getActionBar().setSelectedNavigationItem(
+					savedInstanceState.getInt(STATE_SELECTED_NAVIGATION_ITEM));
+		}
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		// Serialize the current tab position.
+		outState.putInt(STATE_SELECTED_NAVIGATION_ITEM, getActionBar()
+				.getSelectedNavigationIndex());
 	}
 
 }

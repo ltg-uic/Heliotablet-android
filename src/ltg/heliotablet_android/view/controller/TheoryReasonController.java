@@ -8,13 +8,13 @@ import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.view.theory.TheoryPlanetView;
 import ltg.heliotablet_android.view.theory.TheoryViewFragment;
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.LoaderManager;
 import android.content.Context;
-import android.content.Loader;
 import android.database.Cursor;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.Loader;
 
-import com.commonsware.cwac.loaderex.SQLiteCursorLoader;
+import com.commonsware.cwac.loaderex.acl.SQLiteCursorLoader;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Iterables;
 
@@ -70,9 +70,10 @@ public class TheoryReasonController extends ReasonController {
 	}
 	
 	public SQLiteCursorLoader getSqliteCursorLoader(String anchor) throws NullPointerException {
-		Activity mainActivity = (Activity)context;
+		FragmentActivity mainActivity = (FragmentActivity)context;
 		
-		Fragment findFragmentByTag = mainActivity.getFragmentManager().findFragmentByTag(anchor);
+		//find the loader
+		Fragment findFragmentByTag = mainActivity.getSupportFragmentManager().findFragmentByTag(anchor);
 		if(findFragmentByTag == null)
 			throw new NullPointerException("TheoryReasonController anchor: " + anchor + " loader null."); 
 		

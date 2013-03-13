@@ -1,34 +1,14 @@
 package ltg.heliotablet_android.view.theory;
 
-import java.util.HashMap;
-
 import ltg.heliotablet_android.R;
-import ltg.heliotablet_android.R.id;
-import ltg.heliotablet_android.R.layout;
-import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
-import ltg.heliotablet_android.deprecated.ReasonDataSource;
 import ltg.heliotablet_android.view.controller.TheoryReasonController;
-import android.app.Fragment;
-import android.app.LoaderManager;
-import android.content.ContentValues;
-import android.content.Loader;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.util.Log;
-import android.view.DragEvent;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnDragListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
-
-import com.commonsware.cwac.loaderex.SQLiteCursorLoader;
 
 public class TheoryFragmentWithSQLiteLoaderNestFragments extends Fragment {
 
@@ -42,14 +22,14 @@ public class TheoryFragmentWithSQLiteLoaderNestFragments extends Fragment {
 		theoriesView = (ViewGroup) inflater.inflate(
 				R.layout.theories_activity_nested, container, false);
 		 db= ReasonDBOpenHelper.getInstance(this.getActivity());
-		  StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll()
-                  .penaltyLog()
-                  .build());
-		  StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects()
-          .detectLeakedClosableObjects()
-          .penaltyLog()
-          .penaltyDeath()
-          .build());
+//		  StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll()
+//                  .penaltyLog()
+//                  .build());
+//		  StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects()
+//          .detectLeakedClosableObjects()
+//          .penaltyLog()
+//          .penaltyDeath()
+//          .build());
 		
 		theoryController = TheoryReasonController.getInstance(getActivity());
 
