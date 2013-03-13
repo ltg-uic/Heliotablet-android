@@ -6,6 +6,8 @@ import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.view.LoginDialog;
 import ltg.heliotablet_android.view.controller.ObservationReasonController;
 import ltg.heliotablet_android.view.controller.TheoryReasonController;
+import ltg.heliotablet_android.view.observation.ObservationFragment;
+import ltg.heliotablet_android.view.theory.TheoryFragmentWithSQLiteLoaderNestFragments;
 
 import org.jivesoftware.smack.SmackAndroid;
 
@@ -126,7 +128,7 @@ public class MainActivity extends Activity {
 				}
 
 			}
-			makeToast("LTG EVENT Received: " + ltgEvent.toString());
+			//makeToast("LTG EVENT Received: " + ltgEvent.toString());
 
 		}
 	}

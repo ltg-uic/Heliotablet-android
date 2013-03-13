@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.R.color;
-import ltg.heliotablet_android.TheoryViewFragment;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.deprecated.ReasonDataSource;
@@ -13,6 +12,7 @@ import ltg.heliotablet_android.view.ICircleView;
 import ltg.heliotablet_android.view.PopoverView;
 import ltg.heliotablet_android.view.PopoverViewAdapter;
 import ltg.heliotablet_android.view.PopoverView.PopoverViewDelegate;
+import ltg.heliotablet_android.view.controller.OrderingViewData;
 import ltg.heliotablet_android.view.controller.TheoryReasonController;
 
 import org.apache.commons.lang3.StringUtils;
@@ -137,7 +137,13 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 		ViewPager vPager = (ViewPager) viewPagerLayout
 				.findViewById(R.id.pager);
 		
-		ImmutableSortedSet<Reason> copyOfReasonSet = ImmutableSortedSet.copyOf(popOverReasonSet);
+		
+		ImmutableSortedSet<Reason> copyOfReasonSet = ImmutableSortedSet
+				.orderedBy(OrderingViewData.isReadOnlyOrdering.reverse())
+				.addAll(popOverReasonSet).build();
+		
+		
+		
 		for (Reason reason : copyOfReasonSet) {
 			View layout = View.inflate(getContext(),
 					R.layout.popover_view_delete, null);

@@ -49,6 +49,12 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 
 	public final static String TYPE_THEORY = "THEORY";
 	public final static String TYPE_OBSERVATION = "OBSERVATION";
+	
+	public static final String[] reasonColumns = { ReasonDBOpenHelper.COLUMN_ID,
+		ReasonDBOpenHelper.COLUMN_TYPE, ReasonDBOpenHelper.COLUMN_ANCHOR,
+		ReasonDBOpenHelper.COLUMN_LAST_TIMESTAMP,
+		ReasonDBOpenHelper.COLUMN_ORIGIN,
+		ReasonDBOpenHelper.COLUMN_REASON_TEXT, ReasonDBOpenHelper.COLUMN_FLAG, ReasonDBOpenHelper.COLUMN_ISREADONLY };
 
 	public static final String CREATE_TABLE_REASON = "CREATE TABLE "
 			+ TABLE_REASON + " (" + COLUMN_ID
@@ -90,7 +96,7 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 		database = db;
 		db.execSQL("PRAGMA foreign_keys=ON;");
 		db.execSQL(CREATE_TABLE_REASON);
-		seedDb(db);
+		//seedDb(db);
 		// db.execSQL(CREATE_TABLE_REASON_IMAGE);
 	}
 
@@ -169,6 +175,12 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 
 		long reasonId = database.insert(ReasonDBOpenHelper.TABLE_REASON, null,
 				values);
+		
+		//Cursor cursor = database.query(ReasonDBOpenHelper.TABLE_REASON,
+//		        reasonColumns, ReasonDBOpenHelper.COLUMN_ID + " = " + reasonId, null,
+//		        null, null, null);
+//		cursor.close();
+		
 	}
 
 	public static Reason cursorToReason(Cursor c) {

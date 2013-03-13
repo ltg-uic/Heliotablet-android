@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Multiset;
 
+import ltg.heliotablet_android.MiscUtil;
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.view.ICircleView;
@@ -51,6 +52,17 @@ public class ObservationAnchorView extends CircleLayout implements ICircleView  
 		StyleCircleView.styleView(this, anchor, getResources());
 	}
 
+	public boolean hasReadyOnlyFalse(String flag) {
+		ObservationCircleView anchorView = flagToCircleView.get(flag);
+		if( anchorView != null) {
+			ImmutableSortedSet<Reason> editableReasons = ImmutableSortedSet
+					.copyOf(Iterables.filter((ImmutableSortedSet<Reason>)anchorView.getTag(),
+							Reason.getIsReadOnlyFalsePredicate()));
+			return editableReasons.size() > 0;
+		} else {
+			return false;
+		}
+	}
 
 	public void updateObservationCircleView(ImmutableSortedSet<Reason> imReasonSet) {
 
@@ -77,6 +89,8 @@ public class ObservationAnchorView extends CircleLayout implements ICircleView  
 					// check if it was there already
 					ObservationCircleView anchorView = flagToCircleView.get(flag);
 
+					
+					
 					// if null we are creating it for the first, no need to diff
 					if (anchorView == null) {
 						

@@ -3,10 +3,10 @@ package ltg.heliotablet_android.view.controller;
 import java.util.HashMap;
 import java.util.List;
 
-import ltg.heliotablet_android.TheoryViewFragment;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.view.theory.TheoryPlanetView;
+import ltg.heliotablet_android.view.theory.TheoryViewFragment;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;

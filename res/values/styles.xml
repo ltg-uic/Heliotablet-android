@@ -154,7 +154,7 @@
     <style name="observationAnchorViewStyle">
         <item name="android:layout_width">270dp</item>
         <item name="android:layout_height">270dp</item>
-        <item name="android:name">ltg.heliotablet_android.ObservationViewFragment</item>
+        <item name="android:name">ltg.heliotablet_android.view.observation.ObservationViewFragment</item>
     </style>
     
      <style name="observationCircleViewStyle" parent="@style/planetColor">

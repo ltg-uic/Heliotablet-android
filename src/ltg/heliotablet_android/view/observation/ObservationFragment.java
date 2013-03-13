@@ -1,5 +1,8 @@
-package ltg.heliotablet_android;
+package ltg.heliotablet_android.view.observation;
 
+import ltg.heliotablet_android.R;
+import ltg.heliotablet_android.R.id;
+import ltg.heliotablet_android.R.layout;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.view.controller.ObservationReasonController;
 import ltg.heliotablet_android.view.theory.CircleViewDefaultTouchListener;
@@ -14,7 +17,6 @@ import android.widget.FrameLayout;
 public class ObservationFragment extends Fragment {
 
 	private View observationView;
-	private ReasonDBOpenHelper db;
 	private ObservationReasonController observationController;
 
 	@Override
@@ -23,7 +25,6 @@ public class ObservationFragment extends Fragment {
 		observationView = inflater
 				.inflate(R.layout.observation_activity, container, false);
 		
-		 db= ReasonDBOpenHelper.getInstance(this.getActivity());
 		  StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll()
                  .penaltyLog()
                  .build());
@@ -68,7 +69,6 @@ public class ObservationFragment extends Fragment {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		db.close();
 	}
 
 }

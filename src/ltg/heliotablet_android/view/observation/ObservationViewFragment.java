@@ -1,25 +1,20 @@
-package ltg.heliotablet_android;
+package ltg.heliotablet_android.view.observation;
 
 import java.util.Collections;
 import java.util.List;
 
-import ltg.heliotablet_android.TheoryViewFragment.TargetViewDragListener;
+import ltg.heliotablet_android.MiscUtil;
+import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
-import ltg.heliotablet_android.deprecated.ReasonDataSource;
 import ltg.heliotablet_android.view.controller.ObservationReasonController;
-import ltg.heliotablet_android.view.controller.TheoryReasonController;
-import ltg.heliotablet_android.view.observation.ObservationAnchorView;
-import ltg.heliotablet_android.view.observation.ObservationCircleView;
-import ltg.heliotablet_android.view.theory.CircleView;
-import ltg.heliotablet_android.view.theory.TheoryPlanetView;
 
 import org.apache.commons.lang3.StringUtils;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;
-import android.content.ContentValues;
+import android.content.Context;
 import android.content.Loader;
 import android.content.res.TypedArray;
 import android.database.Cursor;
@@ -31,12 +26,8 @@ import android.view.DragEvent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnDragListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.commonsware.cwac.loaderex.SQLiteCursorLoader;
@@ -115,16 +106,19 @@ public class ObservationViewFragment extends Fragment implements
 						ObservationCircleView cv = (ObservationCircleView) dragged;
 
 						if (!tv.getAnchor().equals(cv.getFlag())) {
-
+							
+							if( tv.hasReadyOnlyFalse(cv.getFlag()) == true ) {
+									MiscUtil.makeTopToast(ObservationViewFragment.this.getActivity(), "Only one allowed at time.");
+									return false;
+							}
+							
+							
 							Reason reason = new Reason(tv.getAnchor(),
 									cv.getFlag(), Reason.TYPE_OBSERVATION,
 									"tony", false);
 							observationController.insertReason(reason);
 						} else {
-							Toast toast = Toast.makeText(getActivity(), "Can't drop the same colors.",
-									Toast.LENGTH_SHORT);
-							toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 50);
-							toast.show();
+							MiscUtil.makeTopToast((Context)getActivity(),  "Can't drop the same colors.");
 						}
 					}
 				}

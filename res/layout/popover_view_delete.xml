@@ -23,11 +23,16 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/textedit_shape"
+            android:textCursorDrawable="@null"
             android:ems="10"
             android:gravity="top"
             android:inputType="textMultiLine"
 <<<<<<< HEAD
+<<<<<<< HEAD
             android:text="@string/blank_space"
+=======
+            android:text="@string/lorem_ipsum"
+>>>>>>> refactor
             android:textColor="@color/Black" >
             
 =======

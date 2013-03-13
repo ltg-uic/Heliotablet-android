@@ -1,14 +1,15 @@
-package ltg.heliotablet_android;
+package ltg.heliotablet_android.view.theory;
 
 import java.util.Collections;
 import java.util.List;
 
+import ltg.heliotablet_android.R;
+import ltg.heliotablet_android.R.layout;
+import ltg.heliotablet_android.R.styleable;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.deprecated.ReasonDataSource;
 import ltg.heliotablet_android.view.controller.TheoryReasonController;
-import ltg.heliotablet_android.view.theory.CircleView;
-import ltg.heliotablet_android.view.theory.TheoryPlanetView;
 
 import org.apache.commons.lang3.StringUtils;
 

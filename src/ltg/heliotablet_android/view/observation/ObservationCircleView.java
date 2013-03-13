@@ -325,37 +325,6 @@ public class ObservationCircleView extends RelativeLayout implements ICircleView
 			}
 
 		}
-			
-			
-//			
-//			
-//			
-//			EditText editText = (EditText) adapter.findViewById(0,
-//					R.id.mainEditText);
-//			if( editText.getKeyListener() == null)
-//				return;
-//			
-//			InputMethodManager imm = (InputMethodManager) getContext()
-//					.getSystemService(Context.INPUT_METHOD_SERVICE);
-//			imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-//
-//			String newReasonText = StringUtils.trimToEmpty(editText.getText().toString());
-//
-//			reasonNeedsUpdate = null;
-//
-//			if (!Strings.isNullOrEmpty(newReasonText)) {
-//				View reasonView = adapter.getView(0);
-//				Reason viewReason = (Reason) reasonView.getTag();
-//
-//				// if it has been updated
-//				if ( !StringUtils.trimToEmpty(viewReason.getReasonText()).equals(newReasonText)) {
-//					reasonNeedsUpdate = Reason.newInstance(viewReason);
-//					reasonNeedsUpdate.setReasonText(editText.getText()
-//							.toString());
-//				}
-//			}
-//		}
-
 		
 	}
 	

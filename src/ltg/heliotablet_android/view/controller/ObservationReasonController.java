@@ -3,10 +3,10 @@ package ltg.heliotablet_android.view.controller;
 import java.util.HashMap;
 import java.util.List;
 
-import ltg.heliotablet_android.ObservationViewFragment;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.view.observation.ObservationAnchorView;
+import ltg.heliotablet_android.view.observation.ObservationViewFragment;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;
