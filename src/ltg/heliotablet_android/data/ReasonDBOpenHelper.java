@@ -66,6 +66,7 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 			+ COLUMN_REASON_ID + ") REFERENCES " + TABLE_REASON + " ("
 			+ COLUMN_ID + "));";
 	private static ReasonDBOpenHelper rInstance;
+	private SQLiteDatabase database;
 
 	public ReasonDBOpenHelper(Context context, String name,
 			CursorFactory factory, int version) {
@@ -86,6 +87,7 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		database = db;
 		db.execSQL("PRAGMA foreign_keys=ON;");
 		db.execSQL(CREATE_TABLE_REASON);
 		seedDb(db);
@@ -146,6 +148,11 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 		
 	}
 
+	
+	public void createReason(Reason reason) {
+		this.createReason(reason, database);
+	}
+	
 	public void createReason(Reason reason, SQLiteDatabase database) {
 		ContentValues values = new ContentValues();
 		values.put(ReasonDBOpenHelper.COLUMN_TYPE, reason.getType());

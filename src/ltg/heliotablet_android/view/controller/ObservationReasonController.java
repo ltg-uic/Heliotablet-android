@@ -8,6 +8,7 @@ import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.view.observation.ObservationAnchorView;
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Loader;
@@ -55,12 +56,16 @@ public class ObservationReasonController extends ReasonController {
 		}
 	}
 
-	public SQLiteCursorLoader getSqliteCursorLoader(String anchor) {
+	public SQLiteCursorLoader getSqliteCursorLoader(String anchor) throws NullPointerException {
 		Activity mainActivity = (Activity)context;
-		LoaderManager loaderManager = mainActivity.getLoaderManager();
 		
 		//find the loader
-		ObservationViewFragment obs = (ObservationViewFragment) mainActivity.getFragmentManager().findFragmentByTag(anchor);
+		Fragment findFragmentByTag = mainActivity.getFragmentManager().findFragmentByTag(anchor);
+		
+		if(findFragmentByTag == null)
+			throw new NullPointerException("ObservationReasonController anchor: " + anchor + " loader null."); 
+		
+		ObservationViewFragment obs = (ObservationViewFragment)findFragmentByTag;
 		Loader<Cursor> loader = obs.getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_OBS_LOADER_ID);
 		SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
 		return sqliteLoader;

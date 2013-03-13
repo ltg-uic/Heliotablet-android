@@ -21,12 +21,19 @@ public class ReasonController {
 		String[] args = { String.valueOf(reason.getId()) };
 		ContentValues reasonContentValues = ReasonDBOpenHelper.getReasonContentValues(reason);  
 		sqliteCursorLoader.update(ReasonDBOpenHelper.TABLE_REASON, reasonContentValues, "_id=?", args);
-		
 	}
 
-	public void insertReason(Reason reason) {
-		SQLiteCursorLoader sqliteCursorLoader = getSqliteCursorLoader(reason.getAnchor());
+	public void insertReason(Reason reason) throws NullPointerException {
+		SQLiteCursorLoader sqliteCursorLoader = null;
+		
+		try {
+			sqliteCursorLoader = getAnchorSqliteCursorLoader(reason.getAnchor());
+		} catch(NullPointerException e) {
+			throw new NullPointerException("insertReason null");
+		}
+		
 		ContentValues reasonContentValues = ReasonDBOpenHelper.getReasonContentValues(reason);
+		
 		sqliteCursorLoader.insert(ReasonDBOpenHelper.TABLE_REASON, null, reasonContentValues);		
 	}
 	
@@ -38,6 +45,31 @@ public class ReasonController {
 		sqliteCursorLoader.delete(ReasonDBOpenHelper.TABLE_REASON,
 				"_ID=?", args);
 		
+	}
+	
+	public void deleteReasonByOriginAndType(Reason reason) throws NullPointerException{
+		SQLiteCursorLoader sqliteCursorLoader = null;
+		
+		try {
+			sqliteCursorLoader = getAnchorSqliteCursorLoader(reason.getAnchor());
+		} catch(NullPointerException e) {
+			throw new NullPointerException("deleteReasonByOriginAndType null");
+		}
+		String[] args = { reason.getType(), reason.getAnchor(), reason.getFlag(), reason.getOrigin(), reason.getReasonText() };
+
+		sqliteCursorLoader.delete(ReasonDBOpenHelper.TABLE_REASON,
+				"TYPE=? and ANCHOR=? and FLAG=? and ORIGIN=? and REASONTEXT=?", args);
+		
+	}
+	
+	public SQLiteCursorLoader getAnchorSqliteCursorLoader(String anchor) throws NullPointerException {
+		SQLiteCursorLoader sqliteCursorLoader =null;
+		try {
+			sqliteCursorLoader = getSqliteCursorLoader(anchor);
+		} catch(NullPointerException e) {
+			throw new NullPointerException("Insert reason sqlloader");
+		}
+		return sqliteCursorLoader;
 	}
 
 }

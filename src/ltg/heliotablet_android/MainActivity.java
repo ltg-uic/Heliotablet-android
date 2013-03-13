@@ -2,6 +2,7 @@ package ltg.heliotablet_android;
 
 import ltg.commons.LTGEvent;
 import ltg.heliotablet_android.data.Reason;
+import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.view.LoginDialog;
 import ltg.heliotablet_android.view.controller.ObservationReasonController;
 import ltg.heliotablet_android.view.controller.TheoryReasonController;
@@ -28,6 +29,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Messenger;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -84,13 +86,41 @@ public class MainActivity extends Activity {
 						Reason reason = new Reason(anchor, color,
 								Reason.TYPE_THEORY, origin, true);
 						reason.setReasonText(reasonText);
-						tc.insertReason(reason);
+						try {
+							tc.insertReason(reason);
+						} catch(NullPointerException e) {
+							Log.e(TAG,"Problem inserting new theory");
+							insertReasonManually(reason,"INSERT");
+						}
 					} else if (ltgEvent.getType().equals("new_observation")) {
 						ObservationReasonController oc = ObservationReasonController.getInstance(this);
 						Reason reason = new Reason(anchor, color,
 								Reason.TYPE_OBSERVATION, origin, true);
 						reason.setReasonText(reasonText);
-						oc.insertReason(reason);
+						
+						try {
+							oc.insertReason(reason);
+						} catch(NullPointerException e) {
+							Log.e(TAG,"Problem inserting new observation");
+							insertReasonManually(reason,"INSERT");
+						}
+						
+					} else if(ltgEvent.getType().equals("update_theory")) {
+						
+					} else if(ltgEvent.getType().equals("update_observation")) { 
+						ObservationReasonController oc = ObservationReasonController.getInstance(this);
+
+					}  else if(ltgEvent.getType().equals("delete_theory")) {
+						TheoryReasonController tc = TheoryReasonController.getInstance(this);
+						Reason reason = new Reason(anchor, color,
+								Reason.TYPE_THEORY, origin, true);
+						tc.deleteReasonByOriginAndType(reason);
+						
+					} else if(ltgEvent.getType().equals("delete_obervation")) {
+						TheoryReasonController tc = TheoryReasonController.getInstance(this);
+						Reason reason = new Reason(anchor, color,
+								Reason.TYPE_OBSERVATION, origin, true);
+						tc.deleteReasonByOriginAndType(reason);
 					}
 
 				}
@@ -99,6 +129,23 @@ public class MainActivity extends Activity {
 			makeToast("LTG EVENT Received: " + ltgEvent.toString());
 
 		}
+	}
+
+	private void insertReasonManually(final Reason reason, final String op) {
+		Thread insertThread = new Thread(new Runnable() {
+
+		    public void run() {
+
+		    	ReasonDBOpenHelper rbHelper = ReasonDBOpenHelper.getInstance(MainActivity.this);
+		    	
+		    	if( op.equals("INSERT"))
+		    		rbHelper.createReason(reason);
+		    	
+
+		    }
+
+		});
+		
 	}
 
 	@Override

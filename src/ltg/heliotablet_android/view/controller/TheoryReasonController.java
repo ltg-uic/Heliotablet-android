@@ -8,6 +8,7 @@ import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.view.theory.TheoryPlanetView;
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Loader;
@@ -68,12 +69,15 @@ public class TheoryReasonController extends ReasonController {
 		theoryPlanetView.removeFlagFromCircleViewMap(reason.getFlag());
 	}
 	
-	public SQLiteCursorLoader getSqliteCursorLoader(String anchor) {
+	public SQLiteCursorLoader getSqliteCursorLoader(String anchor) throws NullPointerException {
 		Activity mainActivity = (Activity)context;
-		LoaderManager loaderManager = mainActivity.getLoaderManager();
+		
+		Fragment findFragmentByTag = mainActivity.getFragmentManager().findFragmentByTag(anchor);
+		if(findFragmentByTag == null)
+			throw new NullPointerException("TheoryReasonController anchor: " + anchor + " loader null."); 
 		
 		//find the loader
-		TheoryViewFragment tf = (TheoryViewFragment) mainActivity.getFragmentManager().findFragmentByTag(anchor);
+		TheoryViewFragment tf = (TheoryViewFragment)findFragmentByTag;
 		Loader<Cursor> loader = tf.getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_THEORY_LOADER_ID);
 		SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
 		return sqliteLoader;

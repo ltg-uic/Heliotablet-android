@@ -45,7 +45,7 @@ public class ReasonDataSource {
 		this.context = context;
 	}
 
-	public Reason createReason(Reason reason) {
+	public Reason insertReason(Reason reason) {
 		ContentValues values = new ContentValues();
 		values.put(ReasonDBOpenHelper.COLUMN_TYPE, reason.getType());
 		values.put(ReasonDBOpenHelper.COLUMN_ANCHOR, reason.getAnchor());
@@ -69,6 +69,7 @@ public class ReasonDataSource {
 		cursor.close();
 		return newReason;
 	}
+	
 	
 	public static ContentValues getReasonContentValues(Reason reason) {
 		ContentValues values = new ContentValues();
