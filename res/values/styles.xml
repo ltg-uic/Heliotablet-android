@@ -1,13 +1,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-<<<<<<< HEAD
-    
-    
-=======
-
-    	
->>>>>>> Radio buttons updates and pop over changes
     <!-- Application theme. -->
 	
 	<style name="Theme.Custom" parent="android:style/Theme.Holo">
@@ -15,22 +8,6 @@
 	</style>
     
 
-<<<<<<< HEAD
-      <style name="theoryPlanetTableGridStyleNeptune">
-        <item name="android:background">@color/TheoryViewPlanetName</item>
-        <item name="android:layout_width">810dp</item>
-        <item name="android:layout_height">85dp</item>
-        <item name="android:layout_gravity">center</item>
-     
-<!--         <item name="android:paddingBottom">1dp</item>
-        <item name="android:paddingLeft">2dp</item>
-        <item name="android:paddingRight">2dp</item>
-        <item name="android:paddingTop">1dp</item> -->
-        <item name="android:gravity">center_vertical</item>
-    </style>
-    
-     <style name="theoryPlanetLabelNeptune" parent="android:Widget.Holo.Light.TextView">
-=======
     <!--Brenda Testing the theme for radio buttons  -->
     <style name="CustomTheme" parent="android:Theme">
         <item name="android:radioButtonStyle">@style/RadioButton</item>
@@ -42,14 +19,13 @@
     <!-- END Brenda  -->
     
     <style name="theoryPlanetLabel" parent="android:Widget.Holo.Light.TextView">
->>>>>>> Radio buttons updates and pop over changes
         <!-- <item name="android:background">@color/TheoryViewPlanetName</item>-->        
         <item name="android:background">#000F29</item>
         
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/White</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:layout_height">85dp</item>
+        <item name="android:layout_height">86dp</item>
         <item name="android:layout_gravity">fill_horizontal</item>
     </style>
     
@@ -61,17 +37,6 @@
         <item name="android:textSize">23sp</item>
     </style>
 
-      <style name="theoryPlanetLabel" parent="android:Widget.Holo.Light.TextView">
-        <!-- <item name="android:background">@color/TheoryViewPlanetName</item>-->        
-        <item name="android:background">#000F29</item>
-        
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/White</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:layout_height">86dp</item>
-        <item name="android:layout_gravity">fill_horizontal</item>
-    </style>
-    
     <style name="theoryPlanetTableGridStyle">
         <item name="android:background">@color/TheoryViewPlanetName</item>
         <item name="android:layout_width">810dp</item>

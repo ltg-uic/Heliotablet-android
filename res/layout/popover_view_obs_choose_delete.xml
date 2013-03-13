@@ -29,12 +29,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="@string/obs_reason_text"
-<<<<<<< HEAD
-                android:textColor="@color/Black"
-                android:textSize="18dp" />
-=======
                 android:textSize="18sp" />
->>>>>>> Radio buttons updates and pop over changes
 
             <Space
                 android:layout_width="match_parent"
@@ -49,59 +44,26 @@
                 android:id="@+id/reasonButton1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-<<<<<<< HEAD
-                android:text="@string/reasonButton1"
-                android:textColor="@color/Black" />
-=======
                 android:button="@drawable/button_star"
                 android:text="@string/reasonButton1" />
->>>>>>> Radio buttons updates and pop over changes
 
             <RadioButton
                 android:id="@+id/reasonButton2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-<<<<<<< HEAD
-                android:text="@string/reasonButton2"
-                android:textColor="@color/Black" />
-=======
                 android:button="@drawable/button_star"
                 android:text="@string/reasonButton2" />
->>>>>>> Radio buttons updates and pop over changes
 
             <RadioButton
                 android:id="@+id/reasonButton3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-<<<<<<< HEAD
-                android:text="@string/reasonButton3"
-                android:textColor="@color/Black" />
-
-		</RadioGroup>
-        </LinearLayout>
-        
-          <Button
-              android:id="@+id/deleteButton"
-              style="?android:attr/buttonStyleSmall"
-              android:layout_width="30dp"
-              android:layout_height="30dp"
-              android:layout_centerHorizontal="true"
-              android:layout_centerVertical="true"
-              android:layout_marginLeft="490dp"
-              android:layout_marginTop="2dp"
-              android:background="@drawable/delete_button"
-              android:text=""
-              android:includeFontPadding="false"
-              android:textColor="@color/White"
-              android:textSize="20dp" />
-=======
                 android:button="@drawable/button_star"
                 android:text="@string/reasonButton3" />
         </RadioGroup>
 		
 
 </LinearLayout>
->>>>>>> Radio buttons updates and pop over changes
        
          <Button
             android:id="@+id/deleteButton"

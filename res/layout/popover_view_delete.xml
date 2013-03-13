@@ -9,12 +9,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="224dp"
-<<<<<<< HEAD
-        android:layout_margin="0dp"
-        >
-=======
         android:layout_margin="0dp" >
->>>>>>> Radio buttons updates and pop over changes
 
         <EditText
             android:id="@+id/mainEditText"
@@ -27,18 +22,7 @@
             android:ems="10"
             android:gravity="top"
             android:inputType="textMultiLine"
-<<<<<<< HEAD
-<<<<<<< HEAD
-            android:text="@string/blank_space"
-=======
-            android:text="@string/lorem_ipsum"
->>>>>>> refactor
-            android:textColor="@color/Black" >
-            
-=======
             android:text="@string/blank_space" >
-
->>>>>>> Radio buttons updates and pop over changes
             <requestFocus />
         </EditText>
 
