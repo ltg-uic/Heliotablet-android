@@ -3,6 +3,7 @@ package ltg.heliotablet_android.view.theory;
 
 import java.util.ArrayList;
 
+import ltg.heliotablet_android.MainActivity;
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.R.color;
 import ltg.heliotablet_android.data.Reason;
@@ -180,7 +181,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 						}
 
 						Reason reasonToDelete = (Reason) parent.getTag();
-
+						
 						theoryController.deleteReason(reasonToDelete, isScheduledForViewRemoval);
 						
 						InputMethodManager imm = (InputMethodManager) getContext()
@@ -188,7 +189,13 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 						imm.hideSoftInputFromWindow(
 								v.getApplicationWindowToken(),
 								InputMethodManager.HIDE_NOT_ALWAYS);
-
+						
+						Reason newInstance = Reason.newInstance(reasonToDelete);
+						
+						MainActivity mainActivity = (MainActivity) CircleView.this.getContext();
+						mainActivity.sendReasonIntent(newInstance, MainActivity.REMOVE_THEORY);
+						
+						
 						CircleView.this.makeToast("Reason Deleted");
 
 						if (isScheduledForViewRemoval) {
@@ -286,6 +293,13 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 		
 		//lets update
 		if( reasonNeedsUpdate != null && isDelete == false ) {
+			
+			
+			Reason newInstance = Reason.newInstance(reasonNeedsUpdate);
+			
+			MainActivity mainActivity = (MainActivity) CircleView.this.getContext();
+			mainActivity.sendReasonIntent(newInstance, MainActivity.UPDATE_THEORY);
+			
 			theoryController.updateReason(reasonNeedsUpdate);
 			this.makeToast("Reason Updated");
 			reasonNeedsUpdate = null;

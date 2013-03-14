@@ -24,7 +24,7 @@ public class ObservationReasonController extends ReasonController {
 	private HashMap<String, ObservationAnchorView> observationViewsToAnchors = new HashMap<String, ObservationAnchorView>();
 	
 	private ObservationReasonController(Context context) {
-		this.context = context;
+		super(context);
 	}
 	
 	public static ObservationReasonController getInstance(Context context) {

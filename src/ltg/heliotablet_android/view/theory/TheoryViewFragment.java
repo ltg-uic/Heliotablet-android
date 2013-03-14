@@ -107,8 +107,9 @@ public class TheoryViewFragment extends Fragment implements
 
 					if (targetView instanceof TheoryPlanetView) {
 						TheoryPlanetView tv = (TheoryPlanetView) targetView;
-						Reason reason = new Reason(tv.getAnchor(),cv.getFlag(), Reason.TYPE_THEORY,"tony", false);
 						
+						String origin = TheoryViewFragment.this.theoryController.getUserName();
+						Reason reason = new Reason(tv.getAnchor(),cv.getFlag(), Reason.TYPE_THEORY,origin, false);
 						MainActivity activity = (MainActivity) TheoryViewFragment.this.getActivity();
 						activity.sendReasonIntent(reason, MainActivity.NEW_THEORY);
 						

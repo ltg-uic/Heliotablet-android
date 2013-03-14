@@ -25,7 +25,7 @@ public class TheoryReasonController extends ReasonController {
 	private HashMap<String, TheoryPlanetView> theoryViewsToAnchors = new HashMap<String, TheoryPlanetView>();
 	
 	private TheoryReasonController(Context context) {
-		this.context = context;
+		super(context);
 	}
 	
 	public static TheoryReasonController getInstance(Context context) {

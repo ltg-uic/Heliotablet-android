@@ -3,11 +3,13 @@ package ltg.heliotablet_android.view.observation;
 import java.util.Collections;
 import java.util.List;
 
+import ltg.heliotablet_android.MainActivity;
 import ltg.heliotablet_android.MiscUtil;
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.view.controller.ObservationReasonController;
+import ltg.heliotablet_android.view.theory.TheoryViewFragment;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -111,9 +113,18 @@ public class ObservationViewFragment extends Fragment implements
 							}
 							
 							
+							
+							
+							String origin = ObservationViewFragment.this.observationController.getUserName();
+							
 							Reason reason = new Reason(tv.getAnchor(),
 									cv.getFlag(), Reason.TYPE_OBSERVATION,
-									"tony", false);
+									origin, false);
+							
+							MainActivity activity = (MainActivity) ObservationViewFragment.this.getActivity();
+							activity.sendReasonIntent(reason, MainActivity.NEW_OBSERVATION);
+							
+							
 							observationController.insertReason(reason);
 						} else {
 							MiscUtil.makeTopToast((Context)getActivity(),  "Can't drop the same colors.");

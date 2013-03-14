@@ -2,10 +2,12 @@ package ltg.heliotablet_android.view.controller;
 
 
 
+import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.commonsware.cwac.loaderex.acl.SQLiteCursorLoader;
 
@@ -13,6 +15,15 @@ import com.commonsware.cwac.loaderex.acl.SQLiteCursorLoader;
 public class ReasonController {
 	
 	protected Context context;
+	protected String userName;
+	private SharedPreferences settings;
+	
+	
+	public ReasonController(Context context) {
+		this.context = context;
+		settings = context.getSharedPreferences(context.getString(R.string.xmpp_prefs),context.MODE_PRIVATE);
+		
+	}
 	
 	public SQLiteCursorLoader getSqliteCursorLoader(String anchor) {
 		return null;
@@ -25,6 +36,16 @@ public class ReasonController {
 		sqliteCursorLoader.update(ReasonDBOpenHelper.TABLE_REASON, reasonContentValues, "_id=?", args);
 	}
 
+	public String getUserName() {
+		
+		String userName = settings.getString(
+				context.getString(R.string.user_name), "");
+		
+		return userName;
+		
+	}
+	
+	
 	public void insertReason(Reason reason) throws NullPointerException {
 		SQLiteCursorLoader sqliteCursorLoader = null;
 		

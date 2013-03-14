@@ -400,14 +400,16 @@ public class XmppService extends IntentService {
 	protected void processMessage(Message message) {
 		if (message.getFrom() != null) {
 			String fromName = StringUtils.parseBareAddress(message.getFrom());
-			String currentUser = StringUtils.parseBareAddress(xmppConnection
-					.getUser());
-			if (currentUser.equals(fromName)) {
-				return;
-			}
+			
 		}
 		if (message.getBody() != null) {
 
+			String currentUser = StringUtils.parseName(xmppConnection.getUser());
+			
+			if( message.getBody().contains(currentUser))
+				return;
+			
+			
 			// LTG EVENT
 			Intent intent = new Intent(LTG_EVENT_RECEIVED);
 			intent.putExtra(XMPP_MESSAGE, message.getBody());

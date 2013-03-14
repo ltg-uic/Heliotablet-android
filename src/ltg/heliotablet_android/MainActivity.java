@@ -46,6 +46,14 @@ public class MainActivity extends FragmentActivity implements TabListener {
 	private ActionBar actionBar;
 
 	private static final String TAG = "MainActivity";
+	public static String UPDATE_THEORY = "update_theory";
+	public static String REMOVE_THEORY = "remove_theory";
+	public static String NEW_THEORY = "new_theory";
+	
+	public static String NEW_OBSERVATION = "new_observation";
+	public static String REMOVE_OBSERVATION = "remove_observation";
+	public static String UPDATE_OBSERVATION = "update_observation";
+	
 	private Messenger activityMessenger;
 
 	private MenuItem connectMenu;
@@ -74,22 +82,23 @@ public class MainActivity extends FragmentActivity implements TabListener {
 	};
 
 	
-	public static String NEW_OBSERVATION = "new_observation";
-	public static String NEW_THEORY = "new_theory";
+	
 	
 	public void sendReasonIntent(Reason reason, String eventType) {
 		SharedPreferences settings = null;
 		
 		
-		if( eventType.equals(NEW_THEORY) || eventType.equals(NEW_THEORY) ) {
+		if( eventType.contains("theory") || eventType.contains("observation") ) {
 			
-			
+			String origin = reason.getOrigin();
+			if( origin == null) {
 			settings = getSharedPreferences(getString(R.string.xmpp_prefs),
 					MODE_PRIVATE);
-			String storedUserName = settings.getString(
+			origin = settings.getString(
 					getString(R.string.user_name), "");
+			}
 			
-			LTGEvent event = new LTGEvent(eventType, storedUserName, null, reason.toJSON());
+			LTGEvent event = new LTGEvent(eventType, origin, null, reason.toJSON());
 			Intent intent = new Intent();
 			intent.setAction(XmppService.SEND_GROUP_MESSAGE);
 			intent.putExtra(XmppService.LTG_EVENT_SENT, event);
