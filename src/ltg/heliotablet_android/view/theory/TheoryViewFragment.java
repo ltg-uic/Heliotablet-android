@@ -3,6 +3,7 @@ package ltg.heliotablet_android.view.theory;
 import java.util.Collections;
 import java.util.List;
 
+import ltg.heliotablet_android.MainActivity;
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
@@ -16,6 +17,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.util.AttributeSet;
@@ -46,7 +48,7 @@ public class TheoryViewFragment extends Fragment implements
 			Bundle savedInstanceState) {
 		
 		//init theory
-		theoryView = (TheoryPlanetView) inflater.inflate(R.layout.theory_view,
+		theoryView = (TheoryPlanetView) inflater.inflate(R.layout.dep_theory_view,
 				container, false);
 		theoryView.setAnchor(theoryAnchor);
 		theoryView.setOnDragListener(new TargetViewDragListener());
@@ -106,6 +108,10 @@ public class TheoryViewFragment extends Fragment implements
 					if (targetView instanceof TheoryPlanetView) {
 						TheoryPlanetView tv = (TheoryPlanetView) targetView;
 						Reason reason = new Reason(tv.getAnchor(),cv.getFlag(), Reason.TYPE_THEORY,"tony", false);
+						
+						MainActivity activity = (MainActivity) TheoryViewFragment.this.getActivity();
+						activity.sendReasonIntent(reason, MainActivity.NEW_THEORY);
+						
 						theoryController.insertReason(reason);
 					} 
 				}

@@ -30,7 +30,7 @@ public class TheoryFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		theoriesView = (ViewGroup) inflater.inflate(R.layout.theories_activity_vertical,
+		theoriesView = (ViewGroup) inflater.inflate(R.layout.dep_theories_activity_vertical,
 				container, false);
 		theoryController = TheoryReasonController.getInstance(getActivity());
 

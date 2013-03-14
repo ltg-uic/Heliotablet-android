@@ -30,7 +30,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -48,7 +47,6 @@ public class MainActivity extends FragmentActivity implements TabListener {
 
 	private static final String TAG = "MainActivity";
 	private Messenger activityMessenger;
-	private SharedPreferences settings = null;
 
 	private MenuItem connectMenu;
 	private MenuItem disconnectMenu;
@@ -75,6 +73,37 @@ public class MainActivity extends FragmentActivity implements TabListener {
 		};
 	};
 
+	
+	public static String NEW_OBSERVATION = "new_observation";
+	public static String NEW_THEORY = "new_theory";
+	
+	public void sendReasonIntent(Reason reason, String eventType) {
+		SharedPreferences settings = null;
+		
+		
+		if( eventType.equals(NEW_THEORY) || eventType.equals(NEW_THEORY) ) {
+			
+			
+			settings = getSharedPreferences(getString(R.string.xmpp_prefs),
+					MODE_PRIVATE);
+			String storedUserName = settings.getString(
+					getString(R.string.user_name), "");
+			
+			LTGEvent event = new LTGEvent(eventType, storedUserName, null, reason.toJSON());
+			Intent intent = new Intent();
+			intent.setAction(XmppService.SEND_GROUP_MESSAGE);
+			intent.putExtra(XmppService.LTG_EVENT_SENT, event);
+			Message newMessage = Message.obtain();
+			newMessage.obj = intent;
+			XmppService.sendToServiceHandler(intent);
+			
+		}
+		
+		
+	
+	}
+	
+	
 	public void receiveIntent(Intent intent) {
 		if (intent != null) {
 			LTGEvent ltgEvent = (LTGEvent) intent
@@ -238,7 +267,7 @@ public class MainActivity extends FragmentActivity implements TabListener {
 				String password = org.apache.commons.lang3.StringUtils
 						.stripToNull(passwordTextView.getText().toString());
 
-				settings = getSharedPreferences(getString(R.string.xmpp_prefs),
+				SharedPreferences settings = getSharedPreferences(getString(R.string.xmpp_prefs),
 						MODE_PRIVATE);
 				SharedPreferences.Editor prefEditor = settings.edit();
 				prefEditor.putString(getString(R.string.user_name), username);
@@ -266,7 +295,7 @@ public class MainActivity extends FragmentActivity implements TabListener {
 	}
 
 	private void hardcodedUserNameXMPP() {
-		settings = getSharedPreferences(getString(R.string.xmpp_prefs),
+		SharedPreferences settings = getSharedPreferences(getString(R.string.xmpp_prefs),
 				MODE_PRIVATE);
 		SharedPreferences.Editor prefEditor = settings.edit();
 		// prefEditor.clear();
@@ -281,7 +310,7 @@ public class MainActivity extends FragmentActivity implements TabListener {
 
 	public boolean shouldShowDialog() {
 
-		settings = getSharedPreferences(getString(R.string.xmpp_prefs),
+		SharedPreferences settings = getSharedPreferences(getString(R.string.xmpp_prefs),
 				MODE_PRIVATE);
 		String storedUserName = settings.getString(
 				getString(R.string.user_name), "");

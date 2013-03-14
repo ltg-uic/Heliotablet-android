@@ -1,11 +1,14 @@
 package ltg.heliotablet_android.data;
 
 import java.sql.Timestamp;
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import org.json.JSONObject;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ComparisonChain;
@@ -143,6 +146,17 @@ public class Reason implements Comparable<Reason> {
 		this.isReadonly = isReadonly;
 	}
 
+	
+	public JsonNode toJSON() {
+		Map map = new HashMap<String, String>();
+		map.put("anchor", this.getAnchor());
+		map.put("color", this.getFlag());
+		map.put("reason", this.getReasonText());
+		ObjectMapper om = new ObjectMapper();
+		JsonNode node = om.valueToTree(map);
+		return node;
+	}
+	
 	@Override
 	public String toString() {
 		return Objects.toStringHelper(this).add("id", Long.toString(this.id))

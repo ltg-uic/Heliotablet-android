@@ -49,8 +49,8 @@ public class XmppService extends IntentService {
 	private static final String DOMAIN = "54.243.60.48";
 	private static final String USERNAME = "android";
 	private static final String PASSWORD = "android";
-	
-	//action messages
+
+	// action messages
 	public static final String CHAT_ACTION_RECEIVED_MESSAGE = "CHAT_ACTION";
 	public static final String MESSAGE_TEXT_CHAT = "MESSAGE_TEXT";
 	public static final String GROUP_CHAT = "GROUP_CHAT";
@@ -72,6 +72,9 @@ public class XmppService extends IntentService {
 	public static final String LTG_EVENT = "LTG_EVENT";
 
 	public static final String LTG_EVENT_RECEIVED = "LTG_EVENT_RECEIVED";
+	public static final String LTG_EVENT_SENT = "LTG_EVENT_SENT";
+
+	public static String SEND_GROUP_MESSAGE = "SEND_GROUP_MESSAGE";
 
 	private static volatile Looper serviceLooper;
 	private static volatile ServiceHandler serviceHandler;
@@ -81,12 +84,13 @@ public class XmppService extends IntentService {
 	private MultiUserChat groupChat;
 	private String chatType = null;
 	private String groupChatRoom = null;
+	private String groupChatName = null;
 
-	//listeners
+	// listeners
 	private ConnectionCreationListener connectionCreationListener;
 	private ConnectionListener connectionGeneralListener;
 	private ArrayList<PacketListener> packetListeners = new ArrayList<PacketListener>();
-	
+
 	public XmppService() {
 		super("XMPP SERVICE");
 	}
@@ -104,7 +108,6 @@ public class XmppService extends IntentService {
 	}
 
 	private SmackAndroid smackAndroid;
-	
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
@@ -115,15 +118,15 @@ public class XmppService extends IntentService {
 		Bundle extras = intent.getExtras();
 		if (action.equals(STARTUP)) {
 			Object messExtra = extras.get(ACTIVITY_MESSAGER);
-			
+
 			if (messExtra != null) {
 				activityMessenger = (Messenger) messExtra;
 			}
-			
+
 			chatType = (String) extras.get(CHAT_TYPE);
 			groupChatRoom = (String) extras.get(GROUP_CHAT_NAME);
-			
-			
+			groupChatName = StringUtils.parseName(groupChatRoom);
+
 		} else if (action.equals(SEND_MESSAGE_CHAT)) {
 			Object extra = extras.get(MESSAGE_TEXT_CHAT);
 			if (extra != null) {
@@ -138,134 +141,159 @@ public class XmppService extends IntentService {
 					xmppConnection.sendPacket(msg);
 				}
 			}
+		} else if (action.equals(SEND_GROUP_MESSAGE)) {
+			LTGEvent extra = (LTGEvent) extras.get(LTG_EVENT_SENT);
+			if (xmppConnection != null) {
+				if( xmppConnection.isAuthenticated()) {
+				if (extra != null) {
+
+					String serializeEvent = LTGEventHandler
+							.serializeEvent(extra);
+
+					Log.i("XMPPChatDemoActivity", "Sending text "
+							+ serializeEvent + " to " + "aperritano");
+
+					Message msg = new Message(groupChatName + "@conference."
+							+ xmppConnection.getHost(), Message.Type.groupchat);
+					msg.setBody(serializeEvent);
+					if (xmppConnection != null) {
+						xmppConnection.sendPacket(msg);
+					}
+				}
+				}
+			}
 		} else if (action.equals(DO_LOGIN)) {
 			doLogin();
-			
-//			if( groupChatRoom != null)
-//				doGroupChat(groupChatRoom);
-			
+
+			// if( groupChatRoom != null)
+			// doGroupChat(groupChatRoom);
+
 		} else if (action.equals(CONNECT)) {
 			doConnection();
 		} else if (action.equals(RECONNECT)) {
 			doConnection();
-		} else if(action.equals(DISCONNECT)) {
+		} else if (action.equals(DISCONNECT)) {
 			groupChat.leave();
 			xmppConnection.disconnect();
 			sendErrorToUI("Disconnecting....from connection and group chat");
-		} else if( action.equals(GROUP_CHAT)) {
+		} else if (action.equals(GROUP_CHAT)) {
 			doGroupChat(groupChatRoom);
 			sendErrorToUI("Joined Group chat!!");
-		} else if( action.equals(DESTORY)) {
+		} else if (action.equals(DESTORY)) {
 			removeListeners();
 			groupChat = null;
 			xmppConnection = null;
-		} else if( action.equals(LTG_EVENT_RECEIVED)) {
+		} else if (action.equals(LTG_EVENT_RECEIVED)) {
 			String json = intent.getStringExtra(XMPP_MESSAGE);
-			
+
 			try {
-				LTGEvent deserializeEvent = LTGEventHandler.deserializeEvent(json);
+				LTGEvent deserializeEvent = LTGEventHandler
+						.deserializeEvent(json);
 				Intent i = new Intent(LTG_EVENT_RECEIVED);
-				i.putExtra(LTG_EVENT,(Serializable) deserializeEvent);
+				i.putExtra(LTG_EVENT, (Serializable) deserializeEvent);
 				sendIntentToUI(i);
 			} catch (IOException e) {
-				Log.e(TAG,"Problem Deserializing Event",e);
+				Log.e(TAG, "Problem Deserializing Event", e);
 			} catch (NotAnLTGEventException e) {
-				Log.e(TAG,"Non ltg event",e);
+				Log.e(TAG, "Non ltg event", e);
 				sendErrorToUI("Non LTG Event captured");
 			}
-			
-			
+
 		}
 
 	}
 
 	public void doConnection() {
-		
-		if (xmppConnection == null ) {
+
+		if (xmppConnection == null) {
 
 			AndroidConnectionConfiguration connectionConfiguration = new AndroidConnectionConfiguration(
-					DOMAIN, 5222,"TABLET");
+					DOMAIN, 5222, "TABLET");
 			connectionConfiguration.setSASLAuthenticationEnabled(false);
 			connectionConfiguration.setDebuggerEnabled(true);
-			//SASLAuthentication.supportSASLMechanism("PLAIN", 0);
+			// SASLAuthentication.supportSASLMechanism("PLAIN", 0);
 			XMPPConnection.DEBUG_ENABLED = true;
 			xmppConnection = new XMPPConnection(connectionConfiguration);
-			
 
-			Connection.addConnectionCreationListener(createConnectionListener());
-			
+			Connection
+					.addConnectionCreationListener(createConnectionListener());
+
 			try {
 				xmppConnection.connect();
-				xmppConnection.addConnectionListener(createGeneralConnectionListener());
+				xmppConnection
+						.addConnectionListener(createGeneralConnectionListener());
 
 			} catch (final XMPPException e) {
 				sendErrorToUI("There was a problem connecting to " + DOMAIN);
 				Log.e(TAG, "Could not connect to Xmpp server.", e);
 			}
-		} 
+		}
 	}
 
 	public ConnectionCreationListener createConnectionListener() {
 		connectionCreationListener = new ConnectionCreationListener() {
-			
+
 			@Override
 			public void connectionCreated(final Connection connection) {
 				final Intent i = new Intent(DO_LOGIN);
-				final android.os.Message newMessage = serviceHandler.obtainMessage();
+				final android.os.Message newMessage = serviceHandler
+						.obtainMessage();
 				newMessage.obj = i;
 				sendToServiceHandler(i);
 				sendErrorToUI("Connection Successful!!");
 			}
 		};
-		
+
 		return connectionCreationListener;
 	}
-	
+
 	public ConnectionListener createGeneralConnectionListener() {
 		connectionGeneralListener = new ConnectionListener() {
-			
+
 			@Override
 			public void connectionClosed() {
 				final Intent i = new Intent(DESTORY);
-				final android.os.Message newMessage = serviceHandler.obtainMessage();
+				final android.os.Message newMessage = serviceHandler
+						.obtainMessage();
 				newMessage.obj = i;
 				sendToServiceHandler(i);
 				sendErrorToUI("Connection is being destroyed normally");
-				
+
 			}
 
 			@Override
 			public void connectionClosedOnError(Exception e) {
 				final Intent i = new Intent(DESTORY);
-				final android.os.Message newMessage = serviceHandler.obtainMessage();
+				final android.os.Message newMessage = serviceHandler
+						.obtainMessage();
 				newMessage.obj = i;
 				sendToServiceHandler(i);
 				sendErrorToUI("Connection is being destroyed do to an error");
-				
+
 			}
 
 			@Override
 			public void reconnectingIn(int seconds) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void reconnectionSuccessful() {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void reconnectionFailed(Exception e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		};
-		
+
 		return connectionGeneralListener;
 	}
-	
+
 	public void removeListeners() {
 		Connection.removeConnectionCreationListener(connectionCreationListener);
 		xmppConnection.removeConnectionListener(connectionGeneralListener);
@@ -273,12 +301,11 @@ public class XmppService extends IntentService {
 			groupChat.removeMessageListener(packetListener);
 		}
 	}
+
 	public void doLogin() {
-		
-		
 
 		if (xmppConnection != null) {
-			
+
 			SharedPreferences settings = getSharedPreferences(
 					getString(R.string.xmpp_prefs), MODE_PRIVATE);
 			String storedUserName = settings.getString(
@@ -289,23 +316,23 @@ public class XmppService extends IntentService {
 			String error = null;
 			try {
 
-				
-			xmppConnection.login(storedUserName, storedPassword);
+				xmppConnection.login(storedUserName, storedPassword);
 
-			final Intent i = new Intent(GROUP_CHAT);
-			final android.os.Message newMessage = serviceHandler.obtainMessage();
-			newMessage.obj = i;
-			sendToServiceHandler(i);
+				final Intent i = new Intent(GROUP_CHAT);
+				final android.os.Message newMessage = serviceHandler
+						.obtainMessage();
+				newMessage.obj = i;
+				sendToServiceHandler(i);
 			} catch (XMPPException e) {
 				Log.e(TAG, "Could not login into xmpp server.", e);
 				showToast("There was a problem logging in with l: "
 						+ storedUserName + " p: " + storedPassword);
-			} catch(Exception e) {
+			} catch (Exception e) {
 				Log.e(TAG, "too many logins", e);
-			
+
 				showToast("Problem in DoLogin");
 			}
-		} 
+		}
 	}
 
 	@Override
@@ -326,32 +353,32 @@ public class XmppService extends IntentService {
 	}
 
 	public void doGroupChat(String chatroom) {
-		if( xmppConnection != null) {
-		if (xmppConnection.isAuthenticated() && chatroom != null) {
-			// Initialize and join chatRoom
-			if( groupChat == null)
-				groupChat = new MultiUserChat(xmppConnection, chatroom);
-			
-			try {
-				groupChat.join(xmppConnection.getUser());
-			} catch (XMPPException e) {
-				Log.e(TAG, "ERROR CONNECTING TO GROUP CHAT", e);
-			}
+		if (xmppConnection != null) {
+			if (xmppConnection.isAuthenticated() && chatroom != null) {
+				// Initialize and join chatRoom
+				if (groupChat == null)
+					groupChat = new MultiUserChat(xmppConnection, chatroom);
 
-			PacketListener pl = new PacketListener() {
-				@Override
-				public void processPacket(Packet packet) {
-					Message message = (Message) packet;
-					processMessage(message);
+				try {
+					groupChat.join(xmppConnection.getUser());
+				} catch (XMPPException e) {
+					Log.e(TAG, "ERROR CONNECTING TO GROUP CHAT", e);
 				}
-			};
-			
-			packetListeners.add(pl);
-			
-			xmppConnection.addPacketListener(pl, new PacketTypeFilter(
-					Message.class));
 
-		}
+				PacketListener pl = new PacketListener() {
+					@Override
+					public void processPacket(Packet packet) {
+						Message message = (Message) packet;
+						processMessage(message);
+					}
+				};
+
+				packetListeners.add(pl);
+
+				xmppConnection.addPacketListener(pl, new PacketTypeFilter(
+						Message.class));
+
+			}
 		}
 	}
 
@@ -380,14 +407,14 @@ public class XmppService extends IntentService {
 			}
 		}
 		if (message.getBody() != null) {
-			
-			//LTG EVENT
+
+			// LTG EVENT
 			Intent intent = new Intent(LTG_EVENT_RECEIVED);
 			intent.putExtra(XMPP_MESSAGE, message.getBody());
 			sendToServiceHandler(intent);
-			
+
 		} else {
-			//Log.i(TAG, packet.toXML());
+			// Log.i(TAG, packet.toXML());
 		}
 	}
 
@@ -401,7 +428,7 @@ public class XmppService extends IntentService {
 		}
 
 	}
-	
+
 	protected void sendErrorToUI(String text) {
 		Intent i = new Intent(ERROR);
 		i.putExtra(XMPP_MESSAGE, text);

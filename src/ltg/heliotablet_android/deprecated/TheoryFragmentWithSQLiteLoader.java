@@ -57,7 +57,7 @@ public class TheoryFragmentWithSQLiteLoader extends Fragment implements
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		theoriesView = (ViewGroup) inflater.inflate(
-				R.layout.theories_activity_vertical, container, false);
+				R.layout.dep_theories_activity_vertical, container, false);
 		 db= ReasonDBOpenHelper.getInstance(this.getActivity());
 		  StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll()
                   .penaltyLog()
