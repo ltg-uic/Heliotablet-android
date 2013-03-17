@@ -470,9 +470,14 @@ public class MainActivity extends FragmentActivity implements TabListener {
 		// Handle item selection
 		switch (item.getItemId()) {
 		case R.id.menu_connect:
-			prepDialog().show();
-			connectMenu.setEnabled(false);
-			disconnectMenu.setEnabled(true);
+			
+			Intent intent1 = new Intent(MainActivity.this,
+					WizardDialogFragment.class);
+			startActivity(intent1);
+			
+//			prepDialog().show();
+//			connectMenu.setEnabled(false);
+//			disconnectMenu.setEnabled(true);
 			return true;
 		case R.id.menu_disconnect:
 			connectMenu.setEnabled(true);

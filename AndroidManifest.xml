@@ -30,6 +30,13 @@
         </activity>
 
         <service android:name=".XmppService" />
+        
+        <activity
+            android:name=".WizardDialogFragment">
+            <!-- android:theme="@android:style/Theme.Dialog" > -->
+        </activity>
+        
+        
         <!--
              <receiver android:name="ltg.android_xmppbase.XmppServiceBooter">
              <intent-filter>

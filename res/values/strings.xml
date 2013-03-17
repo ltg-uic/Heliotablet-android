@@ -67,5 +67,39 @@
     <string name="login_title">XMPP Login</string>
     <string name="login_button">Login</string>
     <string name="cancel_button">Cancel</string>
+    
+    <!-- Class Wizard -->
+    <string name="ben_class_title">Ben\'s Class</string>
+    <string name="julia_class_title">Julia\'s Class</string>
+    
+    <string name="class_title_6th">6th Grade</string>
+    <string name="class_title_5th">5th Grade</string>
+    
+    <string name="ben_class_5th">Marissa,Kay,Allie,Charlotte,Jalyn,Palmer,Jamie,Noah,Robert,Alastair,Rafee</string>
+    <string name="ben_class_6th">Nora,Simone,Rayne,Erica,Saffi,Evelyn,Steffany,Michael,Mateu,Massimo,Josh,Jude</string>
+    
+    <string name="julia_class_5th">Owen,Alana,Camille,Hank,Jared,Maya,Oliver,Elias,Mei,Julian,Ashleigh,Saskia</string>
+    <string name="julia_class_6th">Tien,Josh,Will,Avital,Cleo,Jacob,Andrew,Amy,Esme,Honor,Ben</string>
+    
+     <string name="pick_your_teacher_">Pick Your Teacher.</string>
+    <string name="which_grade_">Which Grade are You in?</string>
+    <string name="choose_your_name_">Choose Your Name</string>
+
+    <string name="next">Next</string>
+    <string name="prev">Previous</string>
+    <string name="finish">Login!</string>
+    <string name="review">Review Your Class and Name</string>
+
+    <string name="label_your_name">Name</string>
+    <string name="label_your_email">Email</string>
+    <string name="hint_your_name">e.g. Larry</string>
+    <string name="hint_your_email">Optional</string>
+
+    <string name="submit_confirm_message">Place the order with the deli? You will receive an email
+        confirmation.</string>
+    <string name="submit_confirm_button">Place order</string>
+   
+    
+    
 
 </resources>

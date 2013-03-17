@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="top_text">28dp</dimen>
+       <dimen name="step_pager_tab_width">32dp</dimen>
+    <dimen name="step_pager_tab_height">3dp</dimen>
+    <dimen name="step_pager_tab_spacing">4dp</dimen>
 </resources>
