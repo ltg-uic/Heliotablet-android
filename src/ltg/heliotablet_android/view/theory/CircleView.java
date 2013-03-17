@@ -191,7 +191,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 								InputMethodManager.HIDE_NOT_ALWAYS);
 						
 						Reason newInstance = Reason.newInstance(reasonToDelete);
-						
+						CircleView.this.showPlanetColor(newInstance.getFlag());
 						MainActivity mainActivity = (MainActivity) CircleView.this.getContext();
 						mainActivity.sendReasonIntent(newInstance, MainActivity.REMOVE_THEORY);
 						
@@ -233,7 +233,13 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 			this.setReducedAlpha(135f);
 		else
 			this.setReducedAlpha(255f);
-		
+	}
+	
+	public void showPlanetColor(String flag) {
+		MainActivity act = (MainActivity) this.getContext();
+		TheoryFragmentWithSQLiteLoaderNestFragments fragment = (TheoryFragmentWithSQLiteLoaderNestFragments) act.getSectionsPagerAdapter().getItem(0);
+		View view = fragment.getPlanetColors().get(flag);
+		view.setVisibility(VISIBLE);
 	}
 
 	@Override

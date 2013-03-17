@@ -213,13 +213,13 @@ public class MainActivity extends FragmentActivity implements TabListener {
 		actionBar.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
-		mSectionsPagerAdapter = new SectionsPagerAdapter(
-				getSupportFragmentManager());
+		setSectionsPagerAdapter(new SectionsPagerAdapter(
+				getSupportFragmentManager()));
 
 		// Set up the ViewPager with the sections adapter.
-		mViewPager = (NonSwipeableViewPager) findViewById(R.id.main_pager);
-		mViewPager.setOffscreenPageLimit(3);
-		mViewPager.setAdapter(mSectionsPagerAdapter);
+		setFragmentViewPager((NonSwipeableViewPager) findViewById(R.id.main_pager));
+		getFragmentViewPager().setOffscreenPageLimit(3);
+		getFragmentViewPager().setAdapter(getSectionsPagerAdapter());
 		// When swiping between different sections, select the corresponding
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
 		// a reference to the Tab.
@@ -232,13 +232,13 @@ public class MainActivity extends FragmentActivity implements TabListener {
 //				});
 
 		// For each of the sections in the app, add a tab to the action bar.
-		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
+		for (int i = 0; i < getSectionsPagerAdapter().getCount(); i++) {
 			// Create a tab with text corresponding to the page title defined by
 			// the adapter. Also specify this Activity object, which implements
 			// the TabListener interface, as the callback (listener) for when
 			// this tab is selected.
 			actionBar.addTab(actionBar.newTab()
-					.setText(mSectionsPagerAdapter.getPageTitle(i))
+					.setText(getSectionsPagerAdapter().getPageTitle(i))
 					.setTabListener(this));
 		}
 	}
@@ -380,7 +380,7 @@ public class MainActivity extends FragmentActivity implements TabListener {
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-		mViewPager.setCurrentItem(tab.getPosition());
+		getFragmentViewPager().setCurrentItem(tab.getPosition());
 		
 	}
 
@@ -492,6 +492,26 @@ public class MainActivity extends FragmentActivity implements TabListener {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+	}
+
+
+	public NonSwipeableViewPager getFragmentViewPager() {
+		return mViewPager;
+	}
+
+
+	public void setFragmentViewPager(NonSwipeableViewPager mViewPager) {
+		this.mViewPager = mViewPager;
+	}
+
+
+	public SectionsPagerAdapter getSectionsPagerAdapter() {
+		return mSectionsPagerAdapter;
+	}
+
+
+	public void setSectionsPagerAdapter(SectionsPagerAdapter mSectionsPagerAdapter) {
+		this.mSectionsPagerAdapter = mSectionsPagerAdapter;
 	}
 
 }

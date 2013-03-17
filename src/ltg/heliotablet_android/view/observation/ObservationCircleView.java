@@ -132,6 +132,11 @@ public class ObservationCircleView extends RelativeLayout implements
 
 			String reasonText = StringUtils.stripToNull(reason.getReasonText());
 
+			
+			boolean shouldBeEnabled = true;
+			
+			radioGroup.setEnabled(shouldBeEnabled);
+			
 			for (int i = 0; i < radioGroup.getChildCount(); i++) {
 				RadioButton radioButton = (RadioButton) radioGroup
 						.getChildAt(i);
@@ -140,16 +145,26 @@ public class ObservationCircleView extends RelativeLayout implements
 
 				if (reasonText != null
 						& radioButton.getTag().equals(reasonText)) {
+					
 					radioButton.setChecked(true);
 					radioButton.setEnabled(false);
-				}
-
-				int count = reasonTextMultiSet.count(radioButton.getTag());
-				if (count > 0)
-					radioButton.setText(radioButton.getTag() + " (" + count
-							+ ")");
+					shouldBeEnabled = false;
+				} 
+				
 			}
 
+			if( shouldBeEnabled == false ) {
+				for (int i = 0; i < radioGroup.getChildCount(); i++) {
+					RadioButton radioButton = (RadioButton) radioGroup
+							.getChildAt(i);
+
+					
+						radioButton.setEnabled(false);
+
+				}
+							
+			}
+			
 			radioGroup
 					.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -163,27 +178,11 @@ public class ObservationCircleView extends RelativeLayout implements
 							String anchor = StringUtils.capitalize(reason
 									.getAnchor());
 
-							for (int i = 0; i < radioGroup.getChildCount(); i++) {
-								RadioButton radioButton = (RadioButton) radioGroup
-										.getChildAt(i);
-								updateRadioButton(radioButton, flag, anchor);
-								int count = reasonTextMultiSet
-										.count(radioButton.getTag());
-								if (count > 0)
-									radioButton.setText(radioButton.getTag()
-											+ " (" + count + ")");
-							}
-
 							RadioButton selectedRadioButton = (RadioButton) radioGroup
 									.findViewById(checkedId);
 							String text = (String) selectedRadioButton.getTag();
 							updateRadioButton(selectedRadioButton, flag, anchor);
 
-							int count = reasonTextMultiSet
-									.count(selectedRadioButton.getTag());
-							count = count + 1;
-							selectedRadioButton.setText(selectedRadioButton
-									.getTag() + " (" + count + ")");
 						}
 					});
 
@@ -206,45 +205,34 @@ public class ObservationCircleView extends RelativeLayout implements
 					if (ObservationCircleView.this.imReasons.size() - 1 <= 0) {
 						isScheduledForViewRemoval = true;
 					}
+					
+					
+					ImmutableSortedSet<Reason> editableReasons = ImmutableSortedSet
+							.copyOf(Iterables.filter(ObservationCircleView.this.imReasons,
+									Reason.getIsReadOnlyFalsePredicate()));
+					
+					
+					if( editableReasons.size() > 0 ) {
+						Reason reasonToDelete = editableReasons.first();
+						observationReasonController.deleteReason(
+								reasonToDelete,
+								isScheduledForViewRemoval);
+						
+						
+						MainActivity mainActivity = (MainActivity) ObservationCircleView.this.getContext();
+						mainActivity.sendReasonIntent(reasonToDelete, MainActivity.REMOVE_OBSERVATION);
+						
+						
+						ObservationCircleView.this
+								.makeToast("Reason Deleted");
 
-					if (parent != null) {
-						RadioGroup radioGroup = (RadioGroup) parent
-								.findViewById(R.id.radioGroup);
-
-						for (int i = 0; i < radioGroup.getChildCount(); i++) {
-							RadioButton radioButton = (RadioButton) radioGroup
-									.getChildAt(i);
-
-							if (radioButton.isEnabled() == false) {
-
-								Reason reasonToDelete = ((Reason) radioGroup
-										.getTag());
-
-								observationReasonController.deleteReason(
-										reasonToDelete,
-										isScheduledForViewRemoval);
-								
-								
-								Reason newInstance = Reason.newInstance(reasonToDelete);
-								
-								MainActivity mainActivity = (MainActivity) ObservationCircleView.this.getContext();
-								mainActivity.sendReasonIntent(newInstance, MainActivity.REMOVE_OBSERVATION);
-								
-								
-								ObservationCircleView.this
-										.makeToast("Reason Deleted");
-
-								if (isScheduledForViewRemoval) {
-									ViewGroup tv = (ViewGroup) ObservationCircleView.this
-											.getParent();
-									tv.removeView(ObservationCircleView.this);
-								}
-							}
-
+						if (isScheduledForViewRemoval) {
+							ViewGroup tv = (ViewGroup) ObservationCircleView.this
+									.getParent();
+							tv.removeView(ObservationCircleView.this);
 						}
-
 					}
-
+	
 				}
 			});
 		}

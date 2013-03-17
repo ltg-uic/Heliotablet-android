@@ -15,9 +15,7 @@ import android.app.Activity;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.util.AttributeSet;
@@ -56,11 +54,11 @@ public class TheoryViewFragment extends Fragment implements
 		db = ReasonDBOpenHelper.getInstance(this.getActivity());
 		
 		
-		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-				.detectAll().penaltyLog().build());
-		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-				.detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
-				.penaltyLog().penaltyDeath().build());
+//		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+//				.detectAll().penaltyLog().build());
+//		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+//				.detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
+//				.penaltyLog().penaltyDeath().build());
 
 		theoryController = TheoryReasonController.getInstance(getActivity());
 		theoryController.add(theoryAnchor, theoryView);
@@ -177,7 +175,7 @@ public class TheoryViewFragment extends Fragment implements
 				allReasons.add(reason);
 				data.moveToNext();
 			}
-			quickDump(allReasons);
+			//quickDump(allReasons);
 			theoryController.updateViews(allReasons, this.theoryAnchor);
 		}
 	}

@@ -2,15 +2,19 @@ package ltg.heliotablet_android.view.theory;
 
 import java.util.HashMap;
 
+import ltg.heliotablet_android.MainActivity;
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.view.controller.OrderingViewData;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.google.common.base.Objects;
@@ -88,9 +92,13 @@ public class TheoryPlanetView extends LinearLayout {
 
 				}
 
-				if( newIsReadonlyReasonSet.size() > 0 )
+				if( newIsReadonlyReasonSet.size() > 0 ) {
 					circleView.makeTransparent(false);
-				else
+					MainActivity act = (MainActivity) this.getContext();
+					TheoryFragmentWithSQLiteLoaderNestFragments fragment = (TheoryFragmentWithSQLiteLoaderNestFragments) act.getSectionsPagerAdapter().getItem(0);
+					View view = fragment.getPlanetColors().get(flag);
+					view.setVisibility(INVISIBLE);
+				} else
 					circleView.makeTransparent(true);
 				// just replace
 
