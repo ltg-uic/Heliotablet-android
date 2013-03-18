@@ -27,7 +27,6 @@
 
     <TextView android:id="@android:id/text1"
         style="?android:textAppearanceSmall"
-        android:textColor="@color/text_light"
         android:textAllCaps="true"
         android:textStyle="bold"
         android:ellipsize="end"

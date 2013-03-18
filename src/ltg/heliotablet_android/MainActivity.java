@@ -476,8 +476,8 @@ public class MainActivity extends FragmentActivity implements TabListener {
 			startActivity(intent1);
 			
 //			prepDialog().show();
-//			connectMenu.setEnabled(false);
-//			disconnectMenu.setEnabled(true);
+			connectMenu.setEnabled(false);
+			disconnectMenu.setEnabled(true);
 			return true;
 		case R.id.menu_disconnect:
 			connectMenu.setEnabled(true);

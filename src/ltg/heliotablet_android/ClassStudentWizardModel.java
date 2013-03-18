@@ -64,44 +64,48 @@ public class ClassStudentWizardModel extends AbstractWizardModel {
     	Iterable<String> julia5th = Splitter.on(',')
         .trimResults()
         .omitEmptyStrings()
-        .split(act.getString(R.string.ben_class_5th));
+        .split(act.getString(R.string.julia_class_5th));
     	String[] julia5thArray = Iterables.toArray(julia5th, String.class);
     	
     	//Julia 6th
     	Iterable<String> julia6th = Splitter.on(',')
         .trimResults()
         .omitEmptyStrings()
-        .split(act.getString(R.string.ben_class_6th));
+        .split(act.getString(R.string.julia_class_6th));
     	String[] julia6thArray = Iterables.toArray(julia6th, String.class);
     	
     	//ben branch
-    	BranchPage benBranch = new BranchPage(this, act.getString(R.string.which_grade_))
-		.addBranch(fifthGrade,
+    	BranchPage benBranch = new BranchPage(this, act.getString(R.string.which_grade_));
+    	benBranch .addBranch(fifthGrade,
 						new SingleFixedChoicePage(this, act.getString(R.string.choose_your_name_))
                 			.setChoices(ben5thArray)
-                			.setRequired(true))
+                			.setRequired(true));
                 			
-        .addBranch(sixthGrade,
+        benBranch.addBranch(sixthGrade,
         				new SingleFixedChoicePage(this, act.getString(R.string.choose_your_name_))
-						.setChoices(ben6thArray).setRequired(true));
+						.setChoices(ben6thArray)
+						.setRequired(true)).setRequired(true);
+    	benBranch.setRequired(true);
     	
-    	BranchPage juliaBranch = new BranchPage(this, act.getString(R.string.which_grade_))
-		.addBranch(fifthGrade,
-						new SingleFixedChoicePage(this, act.getString(R.string.choose_your_name_))
+    	BranchPage juliaBranch = new BranchPage(this, act.getString(R.string.which_grade_));
+		juliaBranch.addBranch(fifthGrade,
+						new SingleFixedChoicePage(this, act.getString(R.string.choose_your_name_) + " ")
                 			.setChoices(julia5thArray)
-                			.setRequired(true))
-        .addBranch(sixthGrade,
-        				new SingleFixedChoicePage(this, act.getString(R.string.choose_your_name_))
+                			.setRequired(true));
+		juliaBranch.setRequired(true);
+        juliaBranch.addBranch(sixthGrade,
+        				new SingleFixedChoicePage(this, act.getString(R.string.choose_your_name_) +" ")
 						.setChoices(julia6thArray)
 						.setRequired(true));
-    	
+    	juliaBranch.setRequired(true);
         return new PageList(
                 new BranchPage(this, act.getString(R.string.pick_your_teacher_))
                         .addBranch(bensClassString, benBranch)
                         	
 
                         .addBranch(juliaClassString,juliaBranch)
-                        .setRequired(true)    		
+                        .setRequired(true)
+                      		
                         
         );
     }
