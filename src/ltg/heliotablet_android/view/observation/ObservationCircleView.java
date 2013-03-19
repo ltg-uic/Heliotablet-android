@@ -341,7 +341,7 @@ public class ObservationCircleView extends RelativeLayout implements
 
 			MainActivity mainActivity = (MainActivity) ObservationCircleView.this
 					.getContext();
-			mainActivity.sendReasonIntent(newInstance,
+			mainActivity.createReasonIntent(newInstance,
 					MainActivity.UPDATE_OBSERVATION);
 
 			observationReasonController.updateReason(reasonNeedsUpdate);

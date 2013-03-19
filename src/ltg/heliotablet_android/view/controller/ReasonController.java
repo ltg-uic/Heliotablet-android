@@ -114,7 +114,7 @@ public class ReasonController {
 
 	public void sendIntent(Reason reason, String type) {
 		MainActivity mainActivity = (MainActivity)context;
-		mainActivity.sendReasonIntent(reason, type);
+		mainActivity.createReasonIntent(reason, type);
 	}
 	
 	public void makeToast(String toast) {

@@ -1,6 +1,8 @@
 package ltg.heliotablet_android.data;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import ltg.heliotablet_android.view.controller.TheoryReasonController;
 
@@ -8,6 +10,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -182,6 +185,25 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 //		cursor.close();
 		
 	}
+	
+	public List<Reason> getAllReasons() {
+	    List<Reason> reasons = new ArrayList<Reason>();
+
+	    //SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+	    //qb.setTables(ReasonDBOpenHelper.TABLE_REASON);
+	    Cursor cursor = getReadableDatabase().query(ReasonDBOpenHelper.TABLE_REASON,
+	        reasonColumns, null, null, null, null, null);
+
+	    cursor.moveToFirst();
+	    while (!cursor.isAfterLast()) {
+	      Reason reason = cursorToReason(cursor);
+	      reasons.add(reason);
+	      cursor.moveToNext();
+	    }
+	    // Make sure to close the cursor
+	    cursor.close();
+	    return reasons;
+	  }
 
 	public static Reason cursorToReason(Cursor c) {
 		Reason reason = new Reason();

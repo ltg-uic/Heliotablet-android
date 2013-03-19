@@ -278,7 +278,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 			Reason newInstance = Reason.newInstance(reasonNeedsUpdate);
 			
 			MainActivity mainActivity = (MainActivity) CircleView.this.getContext();
-			mainActivity.sendReasonIntent(newInstance, MainActivity.UPDATE_THEORY);
+			mainActivity.createReasonIntent(newInstance, MainActivity.UPDATE_THEORY);
 			
 			theoryController.updateReason(reasonNeedsUpdate);
 			this.makeToast("Reason Updated");

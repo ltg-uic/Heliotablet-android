@@ -148,10 +148,11 @@ public class Reason implements Comparable<Reason> {
 
 	
 	public JsonNode toJSON() {
-		Map map = new HashMap<String, String>();
+		Map<String, String> map = new HashMap<String, String>();
 		map.put("anchor", this.getAnchor());
 		map.put("color", this.getFlag());
 		map.put("reason", this.getReasonText());
+		map.put("type", this.getType().toLowerCase());
 		ObjectMapper om = new ObjectMapper();
 		JsonNode node = om.valueToTree(map);
 		return node;

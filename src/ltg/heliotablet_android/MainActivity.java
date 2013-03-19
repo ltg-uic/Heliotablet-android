@@ -1,6 +1,8 @@
 package ltg.heliotablet_android;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ltg.commons.LTGEvent;
 import ltg.heliotablet_android.data.Reason;
@@ -22,6 +24,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -38,6 +41,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.Lists;
 
 public class MainActivity extends FragmentActivity implements TabListener {
@@ -55,7 +62,7 @@ public class MainActivity extends FragmentActivity implements TabListener {
 	public static String UPDATE_OBSERVATION = "update_observation";
 
 	private Messenger activityMessenger;
-
+	private MenuItem initMenu;
 	private MenuItem connectMenu;
 	private MenuItem disconnectMenu;
 	private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -81,7 +88,7 @@ public class MainActivity extends FragmentActivity implements TabListener {
 		};
 	};
 
-	public void sendReasonIntent(Reason reason, String eventType) {
+	public void createReasonIntent(Reason reason, String eventType) {
 		SharedPreferences settings = null;
 
 		if (eventType.contains("theory") || eventType.contains("observation")) {
@@ -95,15 +102,61 @@ public class MainActivity extends FragmentActivity implements TabListener {
 
 			LTGEvent event = new LTGEvent(eventType, origin, null,
 					reason.toJSON());
-			Intent intent = new Intent();
-			intent.setAction(XmppService.SEND_GROUP_MESSAGE);
-			intent.putExtra(XmppService.LTG_EVENT_SENT, event);
-			Message newMessage = Message.obtain();
-			newMessage.obj = intent;
-			XmppService.sendToServiceHandler(intent);
+
+			sendIntent(event);
 
 		}
 
+	}
+
+	public void sendIntent(LTGEvent event) {
+		Intent intent = new Intent();
+		intent.setAction(XmppService.SEND_GROUP_MESSAGE);
+		intent.putExtra(XmppService.LTG_EVENT_SENT, event);
+		Message newMessage = Message.obtain();
+		newMessage.obj = intent;
+		XmppService.sendToServiceHandler(intent);
+
+	}
+
+	public void sendInitMessage() {
+		 new InitAsyncTask().execute();
+	}
+
+	private class InitAsyncTask extends AsyncTask<Void, Void, Void> {
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			ReasonDBOpenHelper dbHelper = ReasonDBOpenHelper
+					.getInstance(MainActivity.this);
+			List<Reason> allReasons = dbHelper.getAllReasons();
+
+			SharedPreferences settings = getSharedPreferences(
+					getString(R.string.xmpp_prefs), MODE_PRIVATE);
+			String userName = settings.getString(getString(R.string.user_name),
+					"");
+
+			StringBuilder message = new StringBuilder();
+
+			ArrayNode notes = JsonNodeFactory.instance.arrayNode();
+
+			for (Reason reason : allReasons) {
+				notes.add(reason.toJSON());
+			}
+
+			ObjectNode response = JsonNodeFactory.instance.objectNode();
+
+			response.put("notes", notes);
+
+			LTGEvent ltgEvent = new LTGEvent("init_helio", userName, null, response);
+			sendIntent(ltgEvent);
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+
+		}
 	}
 
 	public void receiveIntent(Intent intent) {
@@ -144,7 +197,7 @@ public class MainActivity extends FragmentActivity implements TabListener {
 						Reason reason = new Reason(anchor, color,
 								Reason.TYPE_THEORY, origin, true);
 						reason.setReasonText(reasonText);
-						tc.operationTheory(reason, anchor,"update");
+						tc.operationTheory(reason, anchor, "update");
 
 						makeToast("theory update anchor" + anchor + "color: "
 								+ color);
@@ -186,6 +239,8 @@ public class MainActivity extends FragmentActivity implements TabListener {
 						makeToast("deleted observation anchor" + anchor
 								+ "color: " + color);
 
+					} else if (ltgEvent.getType().equals("init_helio")) {
+
 					}
 
 				}
@@ -194,23 +249,6 @@ public class MainActivity extends FragmentActivity implements TabListener {
 			// makeToast("LTG EVENT Received: " + ltgEvent.toString());
 
 		}
-	}
-
-	private void insertReasonManually(final Reason reason, final String op) {
-		Thread insertThread = new Thread(new Runnable() {
-
-			public void run() {
-
-				ReasonDBOpenHelper rbHelper = ReasonDBOpenHelper
-						.getInstance(MainActivity.this);
-
-				if (op.equals("INSERT"))
-					rbHelper.createReason(reason);
-
-			}
-
-		});
-		// insertThread.run();
 	}
 
 	@Override
@@ -466,6 +504,7 @@ public class MainActivity extends FragmentActivity implements TabListener {
 		connectMenu = menu.getItem(0);
 		disconnectMenu = menu.getItem(1);
 		disconnectMenu.setEnabled(false);
+		initMenu = menu.getItem(2);
 		return true;
 	}
 
@@ -491,6 +530,9 @@ public class MainActivity extends FragmentActivity implements TabListener {
 			Message newMessage = Message.obtain();
 			newMessage.obj = intent;
 			XmppService.sendToServiceHandler(intent);
+			return true;
+		case R.id.menu_init:
+			this.sendInitMessage();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
