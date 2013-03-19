@@ -19,20 +19,15 @@ public class TheoryFragmentWithSQLiteLoaderNestFragments extends Fragment {
 	private TheoryReasonController theoryController;
 	private ViewGroup theoriesView;
 	private ReasonDBOpenHelper db = null;
-	private HashMap<String, View> planetColors = new HashMap<String, View>();
+	private ViewGroup planetColorsView = null;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		theoriesView = (ViewGroup) inflater.inflate(
 				R.layout.theories_activity_nested, container, false);
-		ViewGroup planetColorsView = (ViewGroup) theoriesView.findViewById(R.id.colors_include);
+		planetColorsView = (ViewGroup) theoriesView.findViewById(R.id.colors_include);
 		
-		int childCount = planetColorsView.getChildCount();
-		for (int i = 0; i < planetColorsView.getChildCount(); i++) {
-	       CircleView child = (CircleView) planetColorsView.getChildAt(i);
-	       getPlanetColors().put(child.getFlag(), child);
-	    }
 		
 		
 		
@@ -85,12 +80,18 @@ public class TheoryFragmentWithSQLiteLoaderNestFragments extends Fragment {
 		db.close();
 	}
 
-	public HashMap<String, View> getPlanetColors() {
-		return planetColors;
-	}
-
-	public void setPlanetColors(HashMap<String, View> planetColors) {
-		this.planetColors = planetColors;
+	public void showPlanetColor(String flag, int visible) {
+		int childCount = planetColorsView.getChildCount();
+		for (int i = 0; i < planetColorsView.getChildCount(); i++) {
+	       CircleView child = (CircleView) planetColorsView.getChildAt(i);
+	       if(child.getFlag().equals(flag)) {
+	    	   child.setVisibility(visible);
+	    	   child.invalidate();
+	    	   //planetColorsView.invalidate();
+	       }
+	    }
+		
+		
 	}
 
 }

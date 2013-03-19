@@ -175,35 +175,16 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 						CircleView.this.isDelete = true;
 						CircleView.this.cachedPopoverView.dissmissPopover(true);
 
-						boolean isScheduledForViewRemoval = false;
-						if (CircleView.this.imReasons.size() - 1 <= 0) {
-							isScheduledForViewRemoval = true;
-						}
 
 						Reason reasonToDelete = (Reason) parent.getTag();
 						
-						theoryController.deleteReason(reasonToDelete, isScheduledForViewRemoval);
+						theoryController.operationTheory(reasonToDelete, anchor, "remove");
 						
 						InputMethodManager imm = (InputMethodManager) getContext()
 								.getSystemService(Context.INPUT_METHOD_SERVICE);
 						imm.hideSoftInputFromWindow(
 								v.getApplicationWindowToken(),
 								InputMethodManager.HIDE_NOT_ALWAYS);
-						
-						Reason newInstance = Reason.newInstance(reasonToDelete);
-						CircleView.this.showPlanetColor(newInstance.getFlag());
-						MainActivity mainActivity = (MainActivity) CircleView.this.getContext();
-						mainActivity.sendReasonIntent(newInstance, MainActivity.REMOVE_THEORY);
-						
-						
-						CircleView.this.makeToast("Reason Deleted");
-
-						if (isScheduledForViewRemoval) {
-							ViewGroup tv = (ViewGroup) CircleView.this
-									.getParent();
-							tv.removeView(CircleView.this);
-						}
-						
 					}
 				});
 			}
@@ -235,13 +216,6 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 			this.setReducedAlpha(255f);
 	}
 	
-	public void showPlanetColor(String flag) {
-		MainActivity act = (MainActivity) this.getContext();
-		TheoryFragmentWithSQLiteLoaderNestFragments fragment = (TheoryFragmentWithSQLiteLoaderNestFragments) act.getSectionsPagerAdapter().getItem(0);
-		View view = fragment.getPlanetColors().get(flag);
-		view.setVisibility(VISIBLE);
-	}
-
 	@Override
 	public void popoverViewWillShow(PopoverView view) {
 	}

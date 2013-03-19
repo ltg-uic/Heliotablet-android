@@ -53,9 +53,18 @@ public class TheoryPlanetView extends LinearLayout {
 	public void setAnchor(String anchor) {
 		this.anchor = anchor;
 	}
+	
+	public void checkCircleView(String flag) {
+		CircleView circleView = flagToCircleView.get(flag);
+		
+		ImmutableSortedSet<Reason> reasons =(ImmutableSortedSet<Reason>) circleView.getTag();;
+		if( reasons.size() <= 1 ) {
+			flagToCircleView.remove(flag);
+		}
+	}
 
 	public void updateCircleView(ImmutableSortedSet<Reason> imReasonSet) {
-
+		
 		for (String flag : allFlags) {
 
 			// filter for each COLOR
@@ -96,8 +105,7 @@ public class TheoryPlanetView extends LinearLayout {
 					circleView.makeTransparent(false);
 					MainActivity act = (MainActivity) this.getContext();
 					TheoryFragmentWithSQLiteLoaderNestFragments fragment = (TheoryFragmentWithSQLiteLoaderNestFragments) act.getSectionsPagerAdapter().getItem(0);
-					View view = fragment.getPlanetColors().get(flag);
-					view.setVisibility(INVISIBLE);
+					fragment.showPlanetColor(flag,View.INVISIBLE);
 				} else
 					circleView.makeTransparent(true);
 				// just replace
@@ -107,6 +115,13 @@ public class TheoryPlanetView extends LinearLayout {
 				circleView.invalidate();
 				this.invalidate();
 
+			} else {
+				CircleView circleView = flagToCircleView.get(flag);
+				if( circleView != null ) {
+					this.flagToCircleView.remove(flag);
+					this.removeView(circleView);
+					this.invalidate();
+				}
 			}
 
 		}
@@ -162,6 +177,10 @@ public class TheoryPlanetView extends LinearLayout {
 	public String toString() {
 		return Objects.toStringHelper(this).add("anchor", this.anchor)
 				.add("flagToCircleView", this.flagToCircleView).toString();
+	}
+
+	public void clearFlagMap() {
+		flagToCircleView = new HashMap<String, CircleView>();		
 	}
 
 }

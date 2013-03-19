@@ -99,13 +99,12 @@ ModelCallbacks {
                    Bundle data = page.getData();
                    String username = (String) data.get("_");
                    
+                   
                	SharedPreferences settings = getSharedPreferences(getString(R.string.xmpp_prefs),
         				MODE_PRIVATE);
         		SharedPreferences.Editor prefEditor = settings.edit();
-        		// prefEditor.clear();
-        		// prefEditor.commit();
-        		prefEditor.putString(getString(R.string.user_name), "obama");
-        		prefEditor.putString(getString(R.string.password), "obama");
+        		prefEditor.putString(getString(R.string.user_name), username.toLowerCase());
+        		prefEditor.putString(getString(R.string.password), username.toLowerCase());
         		prefEditor.commit();
                 
         		Intent intent = new Intent();

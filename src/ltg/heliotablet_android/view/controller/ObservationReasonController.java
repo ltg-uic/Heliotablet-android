@@ -7,6 +7,7 @@ import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.view.observation.ObservationAnchorView;
 import ltg.heliotablet_android.view.observation.ObservationViewFragment;
+import ltg.heliotablet_android.view.theory.TheoryViewFragment;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
@@ -38,15 +39,6 @@ public class ObservationReasonController extends ReasonController {
 		this.observationViewsToAnchors.put(anchor, theoryview);
 	}
 
-	public void setTheoryViewsToAnchors(
-			HashMap<String, ObservationAnchorView> theoryViewsToAnchors) {
-		this.observationViewsToAnchors = theoryViewsToAnchors;
-		
-	}
-	
-	public HashMap<String, ObservationAnchorView> getTheoryViewsToAnchors() {
-		return observationViewsToAnchors;
-	}
 
 	public void updateViews(List<Reason> allReasons, String anchor) {
 		ImmutableSortedSet<Reason> imReasonSet = ImmutableSortedSet.copyOf(Iterables.filter(allReasons, Reason.getAnchorPredicate(anchor)));
@@ -60,7 +52,7 @@ public class ObservationReasonController extends ReasonController {
 		FragmentActivity mainActivity = (FragmentActivity)context;
 		
 		//find the loader
-		Fragment findFragmentByTag = mainActivity.getSupportFragmentManager().findFragmentByTag(anchor);
+		Fragment findFragmentByTag = mainActivity.getSupportFragmentManager().findFragmentByTag(anchor+"_OBSERVATION");
 		
 		if(findFragmentByTag == null)
 			throw new NullPointerException("ObservationReasonController anchor: " + anchor + " loader null."); 
@@ -76,9 +68,23 @@ public class ObservationReasonController extends ReasonController {
 		
 		ObservationAnchorView observationAnchorView = observationViewsToAnchors.get(reason.getAnchor());
 		
-		//if( isScheduledForViewRemoval )
-		//observationAnchorView.removeFlagFromCircleViewMap(reason.getFlag());
+//		if( isScheduledForViewRemoval )
+//			observationAnchorView.removeFlagFromCircleViewMap(reason.getFlag());
 	}
+	
+	public void operationObservation(Reason reason, String anchor, String command) {
+		FragmentActivity mainActivity = (FragmentActivity)context;
+		
+		//find the loader
+		Fragment findFragmentByTag = mainActivity.getSupportFragmentManager().findFragmentByTag(anchor+"_OBSERVATION");
+		if(findFragmentByTag == null)
+			return;
+		
+		//find the loader
+		ObservationViewFragment of = (ObservationViewFragment)findFragmentByTag;
+		of.dbOperation(reason, command);
+	}
+
 	
 	
 	

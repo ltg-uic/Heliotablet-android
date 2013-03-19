@@ -14,6 +14,7 @@ import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.view.ICircleView;
 import ltg.heliotablet_android.view.StyleCircleView;
 import ltg.heliotablet_android.view.controller.OrderingViewData;
+import ltg.heliotablet_android.view.theory.CircleView;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -120,6 +121,13 @@ public class ObservationAnchorView extends CircleLayout implements ICircleView  
 					anchorView.invalidate();
 					this.invalidate();
 
+				} else {
+					ObservationCircleView circleView = flagToCircleView.get(flag);
+					if( circleView != null ) {
+						this.flagToCircleView.remove(flag);
+						this.removeView(circleView);
+						this.invalidate();
+					}
 				}
 
 			}

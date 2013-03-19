@@ -14,6 +14,7 @@ import ltg.heliotablet_android.view.theory.TheoryViewFragment;
 import org.apache.commons.lang3.StringUtils;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.Cursor;
@@ -31,6 +32,8 @@ import android.view.View.OnDragListener;
 import android.view.ViewGroup;
 
 import com.commonsware.cwac.loaderex.acl.SQLiteCursorLoader;
+import com.google.common.collect.ImmutableSortedSet;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 public class ObservationViewFragment extends Fragment implements
@@ -125,7 +128,7 @@ public class ObservationViewFragment extends Fragment implements
 							activity.sendReasonIntent(reason, MainActivity.NEW_OBSERVATION);
 							
 							
-							observationController.insertReason(reason);
+							ObservationViewFragment.this.dbOperation(reason, "insert");
 						} else {
 							MiscUtil.makeTopToast((Context)getActivity(),  "Can't drop the same colors.");
 						}
@@ -189,8 +192,16 @@ public class ObservationViewFragment extends Fragment implements
 				data.moveToNext();
 			}
 			quickDump(allReasons);
-			observationController.updateViews(allReasons,
-					this.observationAnchor);
+			ImmutableSortedSet<Reason> imReasonSet = ImmutableSortedSet.copyOf(Iterables.filter(allReasons, Reason.getAnchorPredicate(observationAnchor)));
+			observationAnchorView.updateObservationCircleView(imReasonSet);
+//			observationController.updateViews(allReasons,
+//					this.observationAnchor);
+		} else {
+			List<Reason> allReasons = Lists.newArrayList();
+			if( observationAnchorView.getChildCount() > 0) {
+				observationAnchorView.removeAllViews();
+				observationAnchorView.invalidate();
+			}
 		}
 	}
 
@@ -222,6 +233,24 @@ public class ObservationViewFragment extends Fragment implements
 				.getText(R.styleable.ObservationViewFragment_android_label));
 		a.recycle();
 
+	}
+
+	public void dbOperation(Reason reason, String type) {
+		if( type.equals("insert")) {
+			ContentValues reasonContentValues = ReasonDBOpenHelper.getReasonContentValues(reason);
+			
+			Loader<Cursor> loader = getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_OBS_LOADER_ID);
+			SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
+			sqliteLoader.insert(ReasonDBOpenHelper.TABLE_REASON, null, reasonContentValues);
+		} else if( type.equals("remove")) {
+			
+			
+			String[] args = { reason.getAnchor(), reason.getFlag(), reason.getOrigin() };
+			Loader<Cursor> loader = getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_OBS_LOADER_ID);
+			SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
+			sqliteLoader.delete(ReasonDBOpenHelper.TABLE_REASON, ReasonDBOpenHelper.COLUMN_ANCHOR + "=? AND " + ReasonDBOpenHelper.COLUMN_FLAG + "=? AND " + ReasonDBOpenHelper.COLUMN_ORIGIN + "=?", args);
+		}
+		
 	}
 
 }

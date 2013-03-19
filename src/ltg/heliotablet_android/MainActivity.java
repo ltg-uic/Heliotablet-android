@@ -132,40 +132,66 @@ public class MainActivity extends FragmentActivity implements TabListener {
 								Reason.TYPE_THEORY, origin, true);
 						reason.setReasonText(reasonText);
 						try {
-							tc.insertReason(reason);
-						} catch(NullPointerException e) {
-							Log.e(TAG,"Problem inserting new theory");
-							insertReasonManually(reason,"INSERT");
+							tc.operationTheory(reason, anchor, "insert");
+							} catch(NullPointerException e) {
+								makeToast("bad data on insert theory" + anchor + "color: " + color);
 						}
+						
 					} else if (ltgEvent.getType().equals("new_observation")) {
+						
 						ObservationReasonController oc = ObservationReasonController.getInstance(this);
 						Reason reason = new Reason(anchor, color,
 								Reason.TYPE_OBSERVATION, origin, true);
 						reason.setReasonText(reasonText);
 						
 						try {
-							oc.insertReason(reason);
+							//oc.insertReason(reason);
+							oc.operationObservation(reason, anchor, "insert");
+							makeToast("obs new anchor" + anchor + "color: " + color);
 						} catch(NullPointerException e) {
 							Log.e(TAG,"Problem inserting new observation");
-							insertReasonManually(reason,"INSERT");
+							makeToast("problem inserting observation anchor" + anchor + "color: " + color);
 						}
+						
 						
 					} else if(ltgEvent.getType().equals("update_theory")) {
 						
-					} else if(ltgEvent.getType().equals("update_observation")) { 
-						ObservationReasonController oc = ObservationReasonController.getInstance(this);
-
-					}  else if(ltgEvent.getType().equals("delete_theory")) {
 						TheoryReasonController tc = TheoryReasonController.getInstance(this);
 						Reason reason = new Reason(anchor, color,
 								Reason.TYPE_THEORY, origin, true);
-						tc.deleteReasonByOriginAndType(reason);
+						tc.updateReasonByOriginAndColorAndAnchorAndType(reason);
 						
-					} else if(ltgEvent.getType().equals("delete_obervation")) {
-						TheoryReasonController tc = TheoryReasonController.getInstance(this);
+						makeToast("theory update anchor" + anchor + "color: " + color);
+					} else if(ltgEvent.getType().equals("update_observation")) { 
+						ObservationReasonController oc = ObservationReasonController.getInstance(this);
+						
 						Reason reason = new Reason(anchor, color,
 								Reason.TYPE_OBSERVATION, origin, true);
-						tc.deleteReasonByOriginAndType(reason);
+						oc.updateReasonByOriginAndColorAndAnchorAndType(reason);
+						makeToast("obs update anchor" + anchor + "color: " + color);
+						
+					}  else if(ltgEvent.getType().equals("remove_theory")) {
+						
+						TheoryReasonController tc = TheoryReasonController.getInstance(this);
+						Reason reason = new Reason(anchor, color,
+								Reason.TYPE_THEORY, origin, true);
+						//tc.deleteReasonByOriginAndType(reason);
+						try {
+						tc.operationTheory(reason, anchor, "remove");
+						} catch(NullPointerException e) {
+							makeToast("bad data on remove theory" + anchor + "color: " + color);
+						}
+						makeToast("deleted theory anchor" + anchor + "color: " + color);
+						
+					} else if(ltgEvent.getType().equals("remove_observation")) {
+						
+						ObservationReasonController oc = ObservationReasonController.getInstance(this);
+						Reason reason = new Reason(anchor, color,
+								Reason.TYPE_OBSERVATION, origin, true);
+//						oc.deleteReasonByOriginAndType(reason);
+						oc.operationObservation(reason, anchor, "remove");
+						makeToast("deleted observation anchor" + anchor + "color: " + color);
+						
 					}
 
 				}
@@ -471,11 +497,11 @@ public class MainActivity extends FragmentActivity implements TabListener {
 		switch (item.getItemId()) {
 		case R.id.menu_connect:
 			
-			Intent intent1 = new Intent(MainActivity.this,
-					WizardDialogFragment.class);
-			startActivity(intent1);
+//			Intent intent1 = new Intent(MainActivity.this,
+//					WizardDialogFragment.class);
+//			startActivity(intent1);
 			
-//			prepDialog().show();
+			prepDialog().show();
 			connectMenu.setEnabled(false);
 			disconnectMenu.setEnabled(true);
 			return true;

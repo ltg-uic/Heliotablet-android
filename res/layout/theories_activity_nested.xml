@@ -184,7 +184,7 @@
 
     <fragment
         android:id="@+id/mercury"
-        android:tag="mercury"
+        android:tag="mercury_THEORY"
         android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
         android:label="@string/mercury" 
         style="@style/theoryPlanetTableGridStyle"
@@ -196,7 +196,7 @@
 
 	  <fragment
         android:id="@+id/venus"
-        android:tag="venus"
+        android:tag="venus_THEORY"
         android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
         android:label="@string/venus" 
         style="@style/theoryPlanetTableGridStyle"
@@ -207,7 +207,7 @@
 
 	 <fragment
         android:id="@+id/earth"
-        android:tag="earth"
+        android:tag="earth_THEORY"
         android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
         android:label="@string/earth" 
         style="@style/theoryPlanetTableGridStyle"
@@ -217,7 +217,7 @@
 
 	 <fragment
         android:id="@+id/mars"
-        android:tag="mars"
+        android:tag="mars_THEORY"
         android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
         android:label="@string/mars" 
         style="@style/theoryPlanetTableGridStyle"
@@ -227,7 +227,7 @@
 
 	<fragment
         android:id="@+id/jupiter"
-        android:tag="jupiter"
+        android:tag="jupiter_THEORY"
         android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
         android:label="@string/jupiter" 
         style="@style/theoryPlanetTableGridStyle"
@@ -237,7 +237,7 @@
 
   <fragment
         android:id="@+id/saturn"
-        android:tag="saturn"
+        android:tag="saturn_THEORY"
         android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
         android:label="@string/saturn" 
         style="@style/theoryPlanetTableGridStyle"
@@ -248,7 +248,7 @@
 
     <fragment
         android:id="@+id/uranus"
-        android:tag="uranus"
+        android:tag="uranus_THEORY"
         android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
         android:label="@string/uranus" 
         style="@style/theoryPlanetTableGridStyle"
@@ -259,7 +259,7 @@
 
       <fragment
         android:id="@+id/neptune"
-        android:tag="neptune"
+        android:tag="neptune_THEORY"
         android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
         android:label="@string/neptune" 
         style="@style/theoryPlanetTableGridStyle"

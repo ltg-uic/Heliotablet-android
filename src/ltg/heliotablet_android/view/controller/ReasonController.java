@@ -2,11 +2,14 @@ package ltg.heliotablet_android.view.controller;
 
 
 
+import ltg.heliotablet_android.MainActivity;
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
+import ltg.heliotablet_android.view.theory.CircleView;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.commonsware.cwac.loaderex.acl.SQLiteCursorLoader;
@@ -78,12 +81,26 @@ public class ReasonController {
 		} catch(NullPointerException e) {
 			throw new NullPointerException("deleteReasonByOriginAndType null");
 		}
-		String[] args = { reason.getType(), reason.getAnchor(), reason.getFlag(), reason.getOrigin(), reason.getReasonText() };
+		String[] args = { reason.getAnchor(), reason.getFlag(), reason.getOrigin() };
+
+		sqliteCursorLoader.delete(ReasonDBOpenHelper.TABLE_REASON, ReasonDBOpenHelper.COLUMN_ANCHOR + "=? AND " + ReasonDBOpenHelper.COLUMN_FLAG + "=? AND " + ReasonDBOpenHelper.COLUMN_ORIGIN + "=?", args);
+	}
+	
+	public void updateReasonByOriginAndColorAndAnchorAndType(Reason reason) {
+		SQLiteCursorLoader sqliteCursorLoader = null;
+		
+		try {
+			sqliteCursorLoader = getAnchorSqliteCursorLoader(reason.getAnchor());
+		} catch(NullPointerException e) {
+			throw new NullPointerException("updateReasonByOriginAndType null");
+		}
+		String[] args = { reason.getType(), reason.getAnchor(), reason.getFlag(), reason.getOrigin() };
 
 		sqliteCursorLoader.delete(ReasonDBOpenHelper.TABLE_REASON,
 				"TYPE=? and ANCHOR=? and FLAG=? and ORIGIN=? and REASONTEXT=?", args);
 		
 	}
+	
 	
 	public SQLiteCursorLoader getAnchorSqliteCursorLoader(String anchor) throws NullPointerException {
 		SQLiteCursorLoader sqliteCursorLoader =null;
@@ -95,4 +112,13 @@ public class ReasonController {
 		return sqliteCursorLoader;
 	}
 
+	public void sendIntent(Reason reason, String type) {
+		MainActivity mainActivity = (MainActivity)context;
+		mainActivity.sendReasonIntent(reason, type);
+	}
+	
+	public void makeToast(String toast) {
+		MainActivity mainActivity = (MainActivity)context;
+		mainActivity.makeToast(toast);
+	}
 }

@@ -214,11 +214,11 @@ public class ObservationCircleView extends RelativeLayout implements
 					
 					if( editableReasons.size() > 0 ) {
 						Reason reasonToDelete = editableReasons.first();
-						observationReasonController.deleteReason(
-								reasonToDelete,
-								isScheduledForViewRemoval);
+//						observationReasonController.deleteReason(
+//								reasonToDelete,
+//								isScheduledForViewRemoval);
 						
-						
+						observationReasonController.operationObservation(reasonToDelete, reasonToDelete.getAnchor(), "remove");
 						MainActivity mainActivity = (MainActivity) ObservationCircleView.this.getContext();
 						mainActivity.sendReasonIntent(reasonToDelete, MainActivity.REMOVE_OBSERVATION);
 						
@@ -226,11 +226,11 @@ public class ObservationCircleView extends RelativeLayout implements
 						ObservationCircleView.this
 								.makeToast("Reason Deleted");
 
-						if (isScheduledForViewRemoval) {
-							ViewGroup tv = (ViewGroup) ObservationCircleView.this
-									.getParent();
-							tv.removeView(ObservationCircleView.this);
-						}
+//						if (isScheduledForViewRemoval) {
+//							ViewGroup tv = (ViewGroup) ObservationCircleView.this
+//									.getParent();
+//							tv.removeView(ObservationCircleView.this);
+//						}
 					}
 	
 				}

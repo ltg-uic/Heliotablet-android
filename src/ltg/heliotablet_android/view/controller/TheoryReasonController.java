@@ -3,8 +3,10 @@ package ltg.heliotablet_android.view.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import ltg.heliotablet_android.MainActivity;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
+import ltg.heliotablet_android.view.theory.TheoryFragmentWithSQLiteLoaderNestFragments;
 import ltg.heliotablet_android.view.theory.TheoryPlanetView;
 import ltg.heliotablet_android.view.theory.TheoryViewFragment;
 import android.app.Activity;
@@ -13,6 +15,7 @@ import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.Loader;
+import android.view.View;
 
 import com.commonsware.cwac.loaderex.acl.SQLiteCursorLoader;
 import com.google.common.collect.ImmutableSortedSet;
@@ -55,7 +58,9 @@ public class TheoryReasonController extends ReasonController {
 			TheoryPlanetView theoryPlanetView = theoryViewsToAnchors.get(anchor);
 			if( !imReasonSet.isEmpty() ) {
 				theoryPlanetView.updateCircleView(imReasonSet);
-		}
+			} else {
+				theoryPlanetView.removeAllViews();
+			}
 		
 	}
 	
@@ -73,7 +78,7 @@ public class TheoryReasonController extends ReasonController {
 		FragmentActivity mainActivity = (FragmentActivity)context;
 		
 		//find the loader
-		Fragment findFragmentByTag = mainActivity.getSupportFragmentManager().findFragmentByTag(anchor);
+		Fragment findFragmentByTag = mainActivity.getSupportFragmentManager().findFragmentByTag(anchor+"_THEORY");
 		if(findFragmentByTag == null)
 			throw new NullPointerException("TheoryReasonController anchor: " + anchor + " loader null."); 
 		
@@ -83,6 +88,26 @@ public class TheoryReasonController extends ReasonController {
 		SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
 		return sqliteLoader;
 	}
+	
+	public void operationTheory(Reason reason, String anchor, String command) throws NullPointerException {
+		FragmentActivity mainActivity = (FragmentActivity)context;
+		
+		//find the loader
+		Fragment findFragmentByTag = mainActivity.getSupportFragmentManager().findFragmentByTag(anchor+"_THEORY");
+		if(findFragmentByTag == null)
+			return;
+		
+		//find the loader
+		TheoryViewFragment tf = (TheoryViewFragment)findFragmentByTag;
+		tf.dbOperation(reason, command);
+	}
+	
+	public void showPlanetColor(String flag, int visible) {
+		MainActivity act = (MainActivity)context;
+		TheoryFragmentWithSQLiteLoaderNestFragments fragment = (TheoryFragmentWithSQLiteLoaderNestFragments) act.getSectionsPagerAdapter().getItem(0);
+		fragment.showPlanetColor(flag, visible);
+	}
+	
 	
 	
 }

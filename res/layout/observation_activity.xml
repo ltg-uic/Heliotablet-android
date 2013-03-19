@@ -21,7 +21,7 @@
         style="@style/observationAnchorViewStyle"
         android:layout_marginLeft="800dp"
         android:layout_marginTop="420dp"
-        android:tag="@string/blue"
+        android:tag="blue_OBSERVATION"
         android:label="@string/blue" >
     </fragment>
 
@@ -31,7 +31,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/mercury_shape"
-        android:tag="@string/brown"
+        android:tag="brown_OBSERVATION"
         android:label="@string/brown" />
 
     <fragment
@@ -40,7 +40,7 @@
         android:layout_marginLeft="800dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/saturn_shape"
-        android:tag="@string/yellow"
+        android:tag="yellow_OBSERVATION"
         android:label="@string/yellow" />
 
     <fragment
@@ -49,7 +49,7 @@
         android:layout_marginLeft="407dp"
         android:layout_marginTop="22dp"
         android:background="@drawable/venus_shape"
-        android:tag="@string/pink"
+        android:tag="pink_OBSERVATION"
         android:label="@string/pink" />
 
     <fragment
@@ -58,7 +58,7 @@
              android:layout_marginLeft="382dp"
         android:layout_marginTop="420dp"
         android:background="@drawable/mars_shape"
-        android:tag="@string/gray"
+        android:tag="gray_OBSERVATION"
         android:label="@string/gray" />
 
     <fragment
@@ -67,7 +67,7 @@
         android:layout_marginLeft="592dp"
         android:layout_marginTop="232dp"
         android:background="@drawable/earth_shape"
-        android:tag="@string/red"    
+        android:tag="red_OBSERVATION"    
         android:label="@string/red" />
 
     <fragment
@@ -76,7 +76,7 @@
         android:layout_marginLeft="12dp"
         android:layout_marginTop="416dp"
         android:background="@drawable/uranus_shape"
-        android:tag="@string/orange"
+        android:tag="orange_OBSERVATION"
         android:label="@string/orange" />
 
     <fragment
@@ -85,7 +85,7 @@
         android:layout_marginLeft="200dp"
         android:layout_marginTop="210dp"
         android:background="@drawable/jupiter_shape_observation_anchor"
-        android:tag="@string/green"
+        android:tag="green_OBSERVATION"
         android:label="@string/green" />
 
 </FrameLayout>
