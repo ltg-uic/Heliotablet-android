@@ -48,8 +48,6 @@ public class ObservationViewFragment extends Fragment implements
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		// init theory
-
 		observationAnchorView = (ObservationAnchorView) inflater.inflate(
 				R.layout.observation_anchor_view, container, false);
 		observationAnchorView.setAnchor(observationAnchor);
@@ -115,20 +113,14 @@ public class ObservationViewFragment extends Fragment implements
 									return false;
 							}
 							
-							
-							
-							
 							String origin = ObservationViewFragment.this.observationController.getUserName();
-							
 							Reason reason = new Reason(tv.getAnchor(),
 									cv.getFlag(), Reason.TYPE_OBSERVATION,
 									origin, false);
 							
-							MainActivity activity = (MainActivity) ObservationViewFragment.this.getActivity();
-							activity.sendReasonIntent(reason, MainActivity.NEW_OBSERVATION);
-							
 							
 							ObservationViewFragment.this.dbOperation(reason, "insert");
+							ObservationViewFragment.this.observationController.sendIntent(reason,  MainActivity.NEW_OBSERVATION);
 						} else {
 							MiscUtil.makeTopToast((Context)getActivity(),  "Can't drop the same colors.");
 						}
@@ -194,11 +186,10 @@ public class ObservationViewFragment extends Fragment implements
 			quickDump(allReasons);
 			ImmutableSortedSet<Reason> imReasonSet = ImmutableSortedSet.copyOf(Iterables.filter(allReasons, Reason.getAnchorPredicate(observationAnchor)));
 			observationAnchorView.updateObservationCircleView(imReasonSet);
-//			observationController.updateViews(allReasons,
-//					this.observationAnchor);
 		} else {
 			List<Reason> allReasons = Lists.newArrayList();
 			if( observationAnchorView.getChildCount() > 0) {
+				observationAnchorView.clearFlagMap();
 				observationAnchorView.removeAllViews();
 				observationAnchorView.invalidate();
 			}
@@ -243,12 +234,18 @@ public class ObservationViewFragment extends Fragment implements
 			SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
 			sqliteLoader.insert(ReasonDBOpenHelper.TABLE_REASON, null, reasonContentValues);
 		} else if( type.equals("remove")) {
-			
-			
 			String[] args = { reason.getAnchor(), reason.getFlag(), reason.getOrigin() };
 			Loader<Cursor> loader = getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_OBS_LOADER_ID);
 			SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
 			sqliteLoader.delete(ReasonDBOpenHelper.TABLE_REASON, ReasonDBOpenHelper.COLUMN_ANCHOR + "=? AND " + ReasonDBOpenHelper.COLUMN_FLAG + "=? AND " + ReasonDBOpenHelper.COLUMN_ORIGIN + "=?", args);
+		}  else if( type.equals("update")) {
+			
+			String[] args = { reason.getAnchor(), reason.getFlag(), reason.getOrigin() };
+			Loader<Cursor> loader = getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_OBS_LOADER_ID);
+			SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
+			ContentValues reasonContentValues = ReasonDBOpenHelper.getReasonContentValues(reason);
+			sqliteLoader.update(ReasonDBOpenHelper.TABLE_REASON, reasonContentValues, ReasonDBOpenHelper.COLUMN_ANCHOR + "=? AND " + ReasonDBOpenHelper.COLUMN_FLAG + "=? AND " + ReasonDBOpenHelper.COLUMN_ORIGIN + "=?", args);
+			
 		}
 		
 	}

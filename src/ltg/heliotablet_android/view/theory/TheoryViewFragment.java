@@ -16,6 +16,7 @@ import android.content.ContentValues;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -24,11 +25,8 @@ import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnDragListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.commonsware.cwac.loaderex.acl.SQLiteCursorLoader;
@@ -57,11 +55,11 @@ public class TheoryViewFragment extends Fragment implements
 		db = ReasonDBOpenHelper.getInstance(this.getActivity());
 		
 		
-//		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-//				.detectAll().penaltyLog().build());
-//		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-//				.detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
-//				.penaltyLog().penaltyDeath().build());
+		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+				.detectAll().penaltyLog().build());
+		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+				.detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
+				.penaltyLog().penaltyDeath().build());
 
 		theoryController = TheoryReasonController.getInstance(getActivity());
 		theoryController.add(theoryAnchor, theoryView);
@@ -83,7 +81,6 @@ public class TheoryViewFragment extends Fragment implements
 			sqliteLoader.insert(ReasonDBOpenHelper.TABLE_REASON, null, reasonContentValues);
 		} else if( type.equals("remove")) {
 			
-			
 			String[] args = { reason.getAnchor(), reason.getFlag(), reason.getOrigin() };
 			Loader<Cursor> loader = getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_THEORY_LOADER_ID);
 			SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
@@ -93,6 +90,15 @@ public class TheoryViewFragment extends Fragment implements
 			theoryController.sendIntent(reason, MainActivity.REMOVE_THEORY);
 			theoryController.makeToast("Reason Deleted");
 			
+		} else if( type.equals("update")) {
+			
+			String[] args = { reason.getAnchor(), reason.getFlag(), reason.getOrigin() };
+			
+			Loader<Cursor> loader = getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_THEORY_LOADER_ID);
+			
+			SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
+			ContentValues reasonContentValues = ReasonDBOpenHelper.getReasonContentValues(reason);
+			sqliteLoader.update(ReasonDBOpenHelper.TABLE_REASON, reasonContentValues, ReasonDBOpenHelper.COLUMN_ANCHOR + "=? AND " + ReasonDBOpenHelper.COLUMN_FLAG + "=? AND " + ReasonDBOpenHelper.COLUMN_ORIGIN + "=?", args);
 			
 		}
 		
@@ -128,7 +134,7 @@ public class TheoryViewFragment extends Fragment implements
 					Log.i("DRAG", "there equal");
 				} else {
 					//dragged.setVisibility(View.INVISIBLE);
-					//sourceView.removeView(dragged);
+					sourceView.removeView(dragged);
 
 					RelativeLayout rel = (RelativeLayout) dragged;
 

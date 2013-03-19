@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Multiset;
 
+import ltg.heliotablet_android.MainActivity;
 import ltg.heliotablet_android.MiscUtil;
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.data.Reason;
@@ -15,6 +16,7 @@ import ltg.heliotablet_android.view.ICircleView;
 import ltg.heliotablet_android.view.StyleCircleView;
 import ltg.heliotablet_android.view.controller.OrderingViewData;
 import ltg.heliotablet_android.view.theory.CircleView;
+import ltg.heliotablet_android.view.theory.TheoryFragmentWithSQLiteLoaderNestFragments;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -22,6 +24,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ScaleDrawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 public class ObservationAnchorView extends CircleLayout implements ICircleView   {
@@ -106,9 +109,9 @@ public class ObservationAnchorView extends CircleLayout implements ICircleView  
 
 					}
 
-					if( newIsReadonlyReasonSet.size() > 0 )
+					if( newIsReadonlyReasonSet.size() > 0 ) {
 						anchorView.makeTransparent(false);
-					else
+					} else
 						anchorView.makeTransparent(true);
 					// just replace
 
@@ -141,6 +144,11 @@ public class ObservationAnchorView extends CircleLayout implements ICircleView  
 
 	@Override
 	public void setTextColor(int textColor) {
+	}
+
+	public void clearFlagMap() {
+		flagToCircleView = new HashMap<String, ObservationCircleView>();
+		
 	}
 		
 }

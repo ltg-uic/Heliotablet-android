@@ -44,8 +44,8 @@
     <string name="fragment_tag_scratchpad">scratchpad</string>
     <string name="pink">pink</string>
     <string name="obs_reason_origin_text">Who agrees that %1$s is closer than %2$s?</string>
-    <string name="obs_reason_text">Why do people agree that %1$s is closer than %2$s?</string>
-    <string name="reasonButton1">Because they saw %1$s in front of %2$s.</string>
+    <string name="obs_reason_text">Why do you agree that %1$s is closer than %2$s?</string>
+    <string name="reasonButton1">Because you saw %1$s in front of %2$s.</string>
     <string name="reasonButton2">Because %1$s moved faster than %2$s.</string>
     <string name="reasonButton3">Because of another reason.</string>
 

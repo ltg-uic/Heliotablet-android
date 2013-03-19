@@ -134,7 +134,6 @@ public class ObservationCircleView extends RelativeLayout implements
 
 			
 			boolean shouldBeEnabled = true;
-			
 			radioGroup.setEnabled(shouldBeEnabled);
 			
 			for (int i = 0; i < radioGroup.getChildCount(); i++) {
@@ -214,23 +213,9 @@ public class ObservationCircleView extends RelativeLayout implements
 					
 					if( editableReasons.size() > 0 ) {
 						Reason reasonToDelete = editableReasons.first();
-//						observationReasonController.deleteReason(
-//								reasonToDelete,
-//								isScheduledForViewRemoval);
-						
 						observationReasonController.operationObservation(reasonToDelete, reasonToDelete.getAnchor(), "remove");
-						MainActivity mainActivity = (MainActivity) ObservationCircleView.this.getContext();
-						mainActivity.sendReasonIntent(reasonToDelete, MainActivity.REMOVE_OBSERVATION);
-						
-						
-						ObservationCircleView.this
-								.makeToast("Reason Deleted");
-
-//						if (isScheduledForViewRemoval) {
-//							ViewGroup tv = (ViewGroup) ObservationCircleView.this
-//									.getParent();
-//							tv.removeView(ObservationCircleView.this);
-//						}
+						observationReasonController.sendIntent(reasonToDelete, MainActivity.REMOVE_OBSERVATION);
+						observationReasonController.makeToast("Reason Deleted");
 					}
 	
 				}

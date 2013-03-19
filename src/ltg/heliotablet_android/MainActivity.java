@@ -49,18 +49,18 @@ public class MainActivity extends FragmentActivity implements TabListener {
 	public static String UPDATE_THEORY = "update_theory";
 	public static String REMOVE_THEORY = "remove_theory";
 	public static String NEW_THEORY = "new_theory";
-	
+
 	public static String NEW_OBSERVATION = "new_observation";
 	public static String REMOVE_OBSERVATION = "remove_observation";
 	public static String UPDATE_OBSERVATION = "update_observation";
-	
+
 	private Messenger activityMessenger;
 
 	private MenuItem connectMenu;
 	private MenuItem disconnectMenu;
 	private SectionsPagerAdapter mSectionsPagerAdapter;
 	private NonSwipeableViewPager mViewPager;
-	
+
 	private Handler handler = new Handler() {
 		public void handleMessage(Message message) {
 			Intent intent = (Intent) message.obj;
@@ -81,38 +81,31 @@ public class MainActivity extends FragmentActivity implements TabListener {
 		};
 	};
 
-	
-	
-	
 	public void sendReasonIntent(Reason reason, String eventType) {
 		SharedPreferences settings = null;
-		
-		
-		if( eventType.contains("theory") || eventType.contains("observation") ) {
-			
+
+		if (eventType.contains("theory") || eventType.contains("observation")) {
+
 			String origin = reason.getOrigin();
-			if( origin == null) {
-			settings = getSharedPreferences(getString(R.string.xmpp_prefs),
-					MODE_PRIVATE);
-			origin = settings.getString(
-					getString(R.string.user_name), "");
+			if (origin == null) {
+				settings = getSharedPreferences(getString(R.string.xmpp_prefs),
+						MODE_PRIVATE);
+				origin = settings.getString(getString(R.string.user_name), "");
 			}
-			
-			LTGEvent event = new LTGEvent(eventType, origin, null, reason.toJSON());
+
+			LTGEvent event = new LTGEvent(eventType, origin, null,
+					reason.toJSON());
 			Intent intent = new Intent();
 			intent.setAction(XmppService.SEND_GROUP_MESSAGE);
 			intent.putExtra(XmppService.LTG_EVENT_SENT, event);
 			Message newMessage = Message.obtain();
 			newMessage.obj = intent;
 			XmppService.sendToServiceHandler(intent);
-			
+
 		}
-		
-		
-	
+
 	}
-	
-	
+
 	public void receiveIntent(Intent intent) {
 		if (intent != null) {
 			LTGEvent ltgEvent = (LTGEvent) intent
@@ -126,78 +119,79 @@ public class MainActivity extends FragmentActivity implements TabListener {
 					String reasonText = payload.get("reason").textValue();
 					String origin = ltgEvent.getOrigin();
 					if (ltgEvent.getType().equals("new_theory")) {
-						TheoryReasonController tc = TheoryReasonController.getInstance(this);
+						TheoryReasonController tc = TheoryReasonController
+								.getInstance(this);
 
 						Reason reason = new Reason(anchor, color,
 								Reason.TYPE_THEORY, origin, true);
 						reason.setReasonText(reasonText);
-						try {
-							tc.operationTheory(reason, anchor, "insert");
-							} catch(NullPointerException e) {
-								makeToast("bad data on insert theory" + anchor + "color: " + color);
-						}
-						
+						tc.operationTheory(reason, anchor, "insert");
+						makeToast("theory insert anchor" + anchor + "color: "
+								+ color);
 					} else if (ltgEvent.getType().equals("new_observation")) {
-						
-						ObservationReasonController oc = ObservationReasonController.getInstance(this);
+						ObservationReasonController oc = ObservationReasonController
+								.getInstance(this);
 						Reason reason = new Reason(anchor, color,
 								Reason.TYPE_OBSERVATION, origin, true);
 						reason.setReasonText(reasonText);
-						
-						try {
-							//oc.insertReason(reason);
-							oc.operationObservation(reason, anchor, "insert");
-							makeToast("obs new anchor" + anchor + "color: " + color);
-						} catch(NullPointerException e) {
-							Log.e(TAG,"Problem inserting new observation");
-							makeToast("problem inserting observation anchor" + anchor + "color: " + color);
-						}
-						
-						
-					} else if(ltgEvent.getType().equals("update_theory")) {
-						
-						TheoryReasonController tc = TheoryReasonController.getInstance(this);
+
+						oc.operationObservation(reason, anchor, "insert");
+						makeToast("obs new anchor" + anchor + "color: " + color);
+					} else if (ltgEvent.getType().equals("update_theory")) {
+
+						TheoryReasonController tc = TheoryReasonController
+								.getInstance(this);
 						Reason reason = new Reason(anchor, color,
 								Reason.TYPE_THEORY, origin, true);
-						tc.updateReasonByOriginAndColorAndAnchorAndType(reason);
-						
-						makeToast("theory update anchor" + anchor + "color: " + color);
-					} else if(ltgEvent.getType().equals("update_observation")) { 
-						ObservationReasonController oc = ObservationReasonController.getInstance(this);
-						
+						reason.setReasonText(reasonText);
+						tc.operationTheory(reason, anchor,"update");
+
+						makeToast("theory update anchor" + anchor + "color: "
+								+ color);
+					} else if (ltgEvent.getType().equals("update_observation")) {
+						ObservationReasonController oc = ObservationReasonController
+								.getInstance(this);
+
 						Reason reason = new Reason(anchor, color,
 								Reason.TYPE_OBSERVATION, origin, true);
-						oc.updateReasonByOriginAndColorAndAnchorAndType(reason);
-						makeToast("obs update anchor" + anchor + "color: " + color);
-						
-					}  else if(ltgEvent.getType().equals("remove_theory")) {
-						
-						TheoryReasonController tc = TheoryReasonController.getInstance(this);
+						reason.setReasonText(reasonText);
+						oc.operationObservation(reason, anchor, "update");
+						makeToast("obs update anchor" + anchor + "color: "
+								+ color);
+
+					} else if (ltgEvent.getType().equals("remove_theory")) {
+
+						TheoryReasonController tc = TheoryReasonController
+								.getInstance(this);
 						Reason reason = new Reason(anchor, color,
 								Reason.TYPE_THEORY, origin, true);
-						//tc.deleteReasonByOriginAndType(reason);
+						// tc.deleteReasonByOriginAndType(reason);
 						try {
-						tc.operationTheory(reason, anchor, "remove");
-						} catch(NullPointerException e) {
-							makeToast("bad data on remove theory" + anchor + "color: " + color);
+							tc.operationTheory(reason, anchor, "remove");
+						} catch (NullPointerException e) {
+							makeToast("bad data on remove theory" + anchor
+									+ "color: " + color);
 						}
-						makeToast("deleted theory anchor" + anchor + "color: " + color);
-						
-					} else if(ltgEvent.getType().equals("remove_observation")) {
-						
-						ObservationReasonController oc = ObservationReasonController.getInstance(this);
+						makeToast("deleted theory anchor" + anchor + "color: "
+								+ color);
+
+					} else if (ltgEvent.getType().equals("remove_observation")) {
+
+						ObservationReasonController oc = ObservationReasonController
+								.getInstance(this);
 						Reason reason = new Reason(anchor, color,
 								Reason.TYPE_OBSERVATION, origin, true);
-//						oc.deleteReasonByOriginAndType(reason);
+						// oc.deleteReasonByOriginAndType(reason);
 						oc.operationObservation(reason, anchor, "remove");
-						makeToast("deleted observation anchor" + anchor + "color: " + color);
-						
+						makeToast("deleted observation anchor" + anchor
+								+ "color: " + color);
+
 					}
 
 				}
 
 			}
-			//makeToast("LTG EVENT Received: " + ltgEvent.toString());
+			// makeToast("LTG EVENT Received: " + ltgEvent.toString());
 
 		}
 	}
@@ -205,18 +199,18 @@ public class MainActivity extends FragmentActivity implements TabListener {
 	private void insertReasonManually(final Reason reason, final String op) {
 		Thread insertThread = new Thread(new Runnable() {
 
-		    public void run() {
+			public void run() {
 
-		    	ReasonDBOpenHelper rbHelper = ReasonDBOpenHelper.getInstance(MainActivity.this);
-		    	
-		    	if( op.equals("INSERT"))
-		    		rbHelper.createReason(reason);
-		    	
+				ReasonDBOpenHelper rbHelper = ReasonDBOpenHelper
+						.getInstance(MainActivity.this);
 
-		    }
+				if (op.equals("INSERT"))
+					rbHelper.createReason(reason);
+
+			}
 
 		});
-		//insertThread.run();
+		// insertThread.run();
 	}
 
 	@Override
@@ -228,10 +222,7 @@ public class MainActivity extends FragmentActivity implements TabListener {
 
 		initTabs();
 	}
-	
-	
 
-	
 	public void initTabs() {
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
@@ -249,13 +240,13 @@ public class MainActivity extends FragmentActivity implements TabListener {
 		// When swiping between different sections, select the corresponding
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
 		// a reference to the Tab.
-//		mViewPager
-//				.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-//					@Override
-//					public void onPageSelected(int position) {
-//						actionBar.setSelectedNavigationItem(position);
-//					}
-//				});
+		// mViewPager
+		// .setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+		// @Override
+		// public void onPageSelected(int position) {
+		// actionBar.setSelectedNavigationItem(position);
+		// }
+		// });
 
 		// For each of the sections in the app, add a tab to the action bar.
 		for (int i = 0; i < getSectionsPagerAdapter().getCount(); i++) {
@@ -302,8 +293,8 @@ public class MainActivity extends FragmentActivity implements TabListener {
 				String password = org.apache.commons.lang3.StringUtils
 						.stripToNull(passwordTextView.getText().toString());
 
-				SharedPreferences settings = getSharedPreferences(getString(R.string.xmpp_prefs),
-						MODE_PRIVATE);
+				SharedPreferences settings = getSharedPreferences(
+						getString(R.string.xmpp_prefs), MODE_PRIVATE);
 				SharedPreferences.Editor prefEditor = settings.edit();
 				prefEditor.putString(getString(R.string.user_name), username);
 				prefEditor.putString(getString(R.string.password), password);
@@ -330,8 +321,8 @@ public class MainActivity extends FragmentActivity implements TabListener {
 	}
 
 	private void hardcodedUserNameXMPP() {
-		SharedPreferences settings = getSharedPreferences(getString(R.string.xmpp_prefs),
-				MODE_PRIVATE);
+		SharedPreferences settings = getSharedPreferences(
+				getString(R.string.xmpp_prefs), MODE_PRIVATE);
 		SharedPreferences.Editor prefEditor = settings.edit();
 		// prefEditor.clear();
 		// prefEditor.commit();
@@ -345,8 +336,8 @@ public class MainActivity extends FragmentActivity implements TabListener {
 
 	public boolean shouldShowDialog() {
 
-		SharedPreferences settings = getSharedPreferences(getString(R.string.xmpp_prefs),
-				MODE_PRIVATE);
+		SharedPreferences settings = getSharedPreferences(
+				getString(R.string.xmpp_prefs), MODE_PRIVATE);
 		String storedUserName = settings.getString(
 				getString(R.string.user_name), "");
 		String storedPassword = settings.getString(
@@ -374,55 +365,44 @@ public class MainActivity extends FragmentActivity implements TabListener {
 		toast.show();
 	}
 
-
-
-
 	private void setupTabs() {
 		// TODO Auto-generated method stub
 
 		// Theories tab
 
-		Tab tab = actionBar
-				.newTab()
-				.setText(R.string.tab_title_theories)
+		Tab tab = actionBar.newTab().setText(R.string.tab_title_theories)
 				.setTabListener(this);
 		actionBar.addTab(tab);
 
-		tab = actionBar
-				.newTab()
-				.setText(R.string.tab_title_observations)
+		tab = actionBar.newTab().setText(R.string.tab_title_observations)
 				.setTabListener(this);
 
 		actionBar.addTab(tab);
-		tab = actionBar
-				.newTab()
-				.setText(R.string.tab_title_scratch_pad)
+		tab = actionBar.newTab().setText(R.string.tab_title_scratch_pad)
 				.setTabListener(this);
 
 		actionBar.addTab(tab);
 
 	}
-	
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		getFragmentViewPager().setCurrentItem(tab.getPosition());
-		
+
 	}
 
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
 	 * one of the sections/tabs/pages.
@@ -430,17 +410,18 @@ public class MainActivity extends FragmentActivity implements TabListener {
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
 		private List<Fragment> fragments = null;
-		
+
 		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
-			fragments =  Lists.newArrayList(new TheoryFragmentWithSQLiteLoaderNestFragments(), new ObservationFragment(), new ScratchPadFragment());
+			fragments = Lists.newArrayList(
+					new TheoryFragmentWithSQLiteLoaderNestFragments(),
+					new ObservationFragment(), new ScratchPadFragment());
 		}
 
 		@Override
 		public android.support.v4.app.Fragment getItem(int position) {
 			return fragments.get(position);
 		}
-		
 
 		@Override
 		public int getCount() {
@@ -460,9 +441,6 @@ public class MainActivity extends FragmentActivity implements TabListener {
 			return null;
 		}
 	}
-	
-
-
 
 	@Override
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -479,7 +457,7 @@ public class MainActivity extends FragmentActivity implements TabListener {
 		outState.putInt(STATE_SELECTED_NAVIGATION_ITEM, getActionBar()
 				.getSelectedNavigationIndex());
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -496,11 +474,11 @@ public class MainActivity extends FragmentActivity implements TabListener {
 		// Handle item selection
 		switch (item.getItemId()) {
 		case R.id.menu_connect:
-			
-//			Intent intent1 = new Intent(MainActivity.this,
-//					WizardDialogFragment.class);
-//			startActivity(intent1);
-			
+
+			// Intent intent1 = new Intent(MainActivity.this,
+			// WizardDialogFragment.class);
+			// startActivity(intent1);
+
 			prepDialog().show();
 			connectMenu.setEnabled(false);
 			disconnectMenu.setEnabled(true);
@@ -519,29 +497,25 @@ public class MainActivity extends FragmentActivity implements TabListener {
 		}
 	}
 
-	
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 	}
 
-
 	public NonSwipeableViewPager getFragmentViewPager() {
 		return mViewPager;
 	}
-
 
 	public void setFragmentViewPager(NonSwipeableViewPager mViewPager) {
 		this.mViewPager = mViewPager;
 	}
 
-
 	public SectionsPagerAdapter getSectionsPagerAdapter() {
 		return mSectionsPagerAdapter;
 	}
 
-
-	public void setSectionsPagerAdapter(SectionsPagerAdapter mSectionsPagerAdapter) {
+	public void setSectionsPagerAdapter(
+			SectionsPagerAdapter mSectionsPagerAdapter) {
 		this.mSectionsPagerAdapter = mSectionsPagerAdapter;
 	}
 
