@@ -6,33 +6,33 @@ import ltg.heliotablet_android.MainActivity;
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.view.controller.OrderingViewData;
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import com.google.common.base.Objects;
-import com.google.common.collect.ComparisonChain;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Ordering;
 
 public class TheoryPlanetView extends LinearLayout {
 
 	private String anchor;
 	private HashMap<String, CircleView> flagToCircleView = new HashMap<String, CircleView>();
+	
+	
+	private static  ImmutableMap<String, Drawable> DRAWABLES; 
 
-	private ImmutableSet<String> allFlags = ImmutableSet.of(Reason.CONST_BLUE,
+	private static ImmutableSet<String> allFlags = ImmutableSet.of(Reason.CONST_BLUE,
 			Reason.CONST_BROWN, Reason.CONST_GREEN, Reason.CONST_GREY,
 			Reason.CONST_ORANGE, Reason.CONST_PINK, Reason.CONST_RED,
 			Reason.CONST_YELLOW);
+	private String showPopoverFlag = null;
 	   
 	public TheoryPlanetView(Context context) {
 		super(context);
@@ -44,8 +44,35 @@ public class TheoryPlanetView extends LinearLayout {
 				R.styleable.TheoryPlanetView);
 		this.setAnchor(a.getString(R.styleable.TheoryPlanetView_anchor));
 		a.recycle();
+		
+		createDrawableMap();
 	}
+	
+	private void createDrawableMap() {
+		Resources resources = getResources();
+		DRAWABLES =
+		       new ImmutableMap.Builder<String, Drawable>()
+		           .put(Reason.CONST_RED, resources.getDrawable(R.drawable.earth_shape))
+		           .put(Reason.CONST_RED+"_d", resources.getDrawable(R.drawable.earth_shape_d))
+		           .put(Reason.CONST_BLUE, resources.getDrawable(R.drawable.neptune_shape))
+		           .put(Reason.CONST_BLUE+"_d", resources.getDrawable(R.drawable.neptune_shape_d))
+		           .put(Reason.CONST_BROWN, resources.getDrawable(R.drawable.mercury_shape))
+		           .put(Reason.CONST_BROWN+"_d", resources.getDrawable(R.drawable.mercury_shape_d))
+		           .put(Reason.CONST_YELLOW, resources.getDrawable(R.drawable.saturn_shape))
+		           .put(Reason.CONST_YELLOW+"_d", resources.getDrawable(R.drawable.saturn_shape_d))
+		           .put(Reason.CONST_PINK, resources.getDrawable(R.drawable.venus_shape))
+		           .put(Reason.CONST_PINK+"_d", resources.getDrawable(R.drawable.venus_shape_d))
+		           .put(Reason.CONST_GREEN, resources.getDrawable(R.drawable.jupiter_shape))
+		           .put(Reason.CONST_GREEN+"_d", resources.getDrawable(R.drawable.jupiter_shape_d))
+		           .put(Reason.CONST_GREY, resources.getDrawable(R.drawable.mars_shape))
+		           .put(Reason.CONST_GREY+"_d", resources.getDrawable(R.drawable.mars_shape_d))
+		           .put(Reason.CONST_ORANGE, resources.getDrawable(R.drawable.uranus_shape))
+		           .put(Reason.CONST_ORANGE+"_d", resources.getDrawable(R.drawable.uranus_shape_d))
+		           .build();
 
+		}
+	
+	
 	public String getAnchor() {
 		return anchor;
 	}
@@ -93,7 +120,7 @@ public class TheoryPlanetView extends LinearLayout {
 					circleView = (CircleView) LayoutInflater.from(getContext())
 							.inflate(R.layout.circle_view_layout, this, false);
 
-					styleCircleView(circleView, flag);
+					
 					circleView.setFlag(flag);
 					circleView.setAnchor(this.anchor);
 					flagToCircleView.put(flag, circleView);
@@ -102,20 +129,22 @@ public class TheoryPlanetView extends LinearLayout {
 				}
 
 				if( newIsReadonlyReasonSet.size() > 0 ) {
-					circleView.makeTransparent(false);
+					styleCircleView(circleView, flag, false);
 					MainActivity ma = (MainActivity) this.getContext();
 					ma.addUsedPlanetColor(circleView.getFlag());
-//					TheoryFragmentWithSQLiteLoaderNestFragments fragment = (TheoryFragmentWithSQLiteLoaderNestFragments) act.getSectionsPagerAdapter().getItem(0);
-//					fragment.showPlanetColor(flag,View.INVISIBLE);
 				} else {
-					circleView.makeTransparent(true);
+					styleCircleView(circleView, flag, true);
 				}
-				// just replace
-
 				
 				circleView.setTag(newSortedByReadOnlyReasonSet);
 				circleView.invalidate();
 				this.invalidate();
+				
+				if( showPopoverFlag != null && flag.equals(flag)) {
+					circleView.showPopover();
+					showPopoverFlag = null;
+				}
+				
 
 			} else {
 				CircleView circleView = flagToCircleView.get(flag);
@@ -132,7 +161,7 @@ public class TheoryPlanetView extends LinearLayout {
 
 	
 
-	private void styleCircleView(CircleView cv, String color) {
+	private void styleCircleView(CircleView cv, String color, boolean isTransparent) {
 		Resources resources = getResources();
 		Drawable drawable = null;
 
@@ -141,28 +170,66 @@ public class TheoryPlanetView extends LinearLayout {
 		int textColorBlack = resources.getColor(R.color.Black);
 
 		if (color.equals(Reason.CONST_RED)) {
-			drawable = resources.getDrawable(R.drawable.earth_shape);
+			if( isTransparent == false )
+				drawable = DRAWABLES.get(Reason.CONST_RED);
+			else
+				drawable = DRAWABLES.get(Reason.CONST_RED+"_d");
+			
 			textColor = textColorWhite;
 		} else if (color.equals(Reason.CONST_BLUE)) {
-			drawable = resources.getDrawable(R.drawable.neptune_shape);
+			if( isTransparent == false )
+				drawable = DRAWABLES.get(Reason.CONST_BLUE);
+			else
+				drawable = DRAWABLES.get(Reason.CONST_BLUE+"_d");
+			
 			textColor = textColorBlack;
 		} else if (color.equals(Reason.CONST_BROWN)) {
-			drawable = resources.getDrawable(R.drawable.mercury_shape);
+			
+			if( isTransparent == false )
+				drawable = DRAWABLES.get(Reason.CONST_BROWN);
+			else
+				drawable = DRAWABLES.get(Reason.CONST_BROWN+"_d");
+			
 			textColor = textColorWhite;
 		} else if (color.equals(Reason.CONST_YELLOW)) {
-			drawable = resources.getDrawable(R.drawable.saturn_shape);
+			
+			if( isTransparent == false )
+				drawable = DRAWABLES.get(Reason.CONST_YELLOW);
+			else
+				drawable = DRAWABLES.get(Reason.CONST_YELLOW+"_d");
+			
 			textColor = textColorBlack;
 		} else if (color.equals(Reason.CONST_PINK)) {
-			drawable = resources.getDrawable(R.drawable.venus_shape);
+			
+			if( isTransparent == false )
+				drawable = DRAWABLES.get(Reason.CONST_PINK);
+			else
+				drawable = DRAWABLES.get(Reason.CONST_PINK+"_d");
+			
 			textColor = textColorBlack;
 		} else if (color.equals(Reason.CONST_GREEN)) {
-			drawable = resources.getDrawable(R.drawable.jupiter_shape);
+			
+			if( isTransparent == false )
+				drawable = DRAWABLES.get(Reason.CONST_GREEN);
+			else
+				drawable = DRAWABLES.get(Reason.CONST_GREEN+"_d");
+			
 			textColor = textColorBlack;
 		} else if (color.equals(Reason.CONST_GREY)) {
-			drawable = resources.getDrawable(R.drawable.mars_shape);
+			
+			if( isTransparent == false )
+				drawable = DRAWABLES.get(Reason.CONST_GREY);
+			else
+				drawable = DRAWABLES.get(Reason.CONST_GREY+"_d");
+			
 			textColor = textColorBlack;
 		} else if (color.equals(Reason.CONST_ORANGE)) {
-			drawable = resources.getDrawable(R.drawable.uranus_shape);
+			
+			if( isTransparent == false )
+				drawable = DRAWABLES.get(Reason.CONST_ORANGE);
+			else
+				drawable = DRAWABLES.get(Reason.CONST_ORANGE+"_d");
+			
 			textColor = textColorBlack;
 
 		}
@@ -183,6 +250,11 @@ public class TheoryPlanetView extends LinearLayout {
 
 	public void clearFlagMap() {
 		flagToCircleView = new HashMap<String, CircleView>();		
+	}
+
+	public void showPopoverWithFlag(String flag) {
+		this.showPopoverFlag  = flag;
+		
 	}
 
 }

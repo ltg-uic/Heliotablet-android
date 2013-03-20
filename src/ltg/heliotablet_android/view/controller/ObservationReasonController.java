@@ -39,19 +39,7 @@ public class ObservationReasonController extends ReasonController {
 		this.observationViewsToAnchors.put(anchor, theoryview);
 	}
 	
-	public void operationObservation(Reason reason, String anchor, String command) {
-		FragmentActivity mainActivity = (FragmentActivity)context;
-		
-		//find the loader
-		Fragment findFragmentByTag = mainActivity.getSupportFragmentManager().findFragmentByTag(anchor+"_OBSERVATION");
-		if(findFragmentByTag == null)
-			return;
-		
-		//find the loader
-		ObservationViewFragment of = (ObservationViewFragment)findFragmentByTag;
-		of.dbOperation(reason, command);
-	}
-
+	
 	
 	
 	

@@ -32,12 +32,7 @@ public class ReasonController {
 		return null;
 	}
 
-	public void updateReason(Reason reason) {
-		SQLiteCursorLoader sqliteCursorLoader = getSqliteCursorLoader(reason.getAnchor());
-		String[] args = { String.valueOf(reason.getId()) };
-		ContentValues reasonContentValues = ReasonDBOpenHelper.getReasonContentValues(reason);  
-		sqliteCursorLoader.update(ReasonDBOpenHelper.TABLE_REASON, reasonContentValues, "_id=?", args);
-	}
+	
 
 	public String getUserName() {
 		

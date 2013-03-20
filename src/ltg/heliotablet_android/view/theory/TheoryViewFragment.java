@@ -160,6 +160,7 @@ public class TheoryViewFragment extends Fragment implements
 
 					if (targetView instanceof TheoryPlanetView) {
 						TheoryPlanetView tv = (TheoryPlanetView) targetView;
+						tv.showPopoverWithFlag(cv.getFlag());
 						TheoryViewFragment.this.activityCommunicator.addUsedPlanetColors(cv);
 						String origin = TheoryViewFragment.this.theoryController.getUserName();
 						Reason reason = new Reason(tv.getAnchor(),cv.getFlag(), Reason.TYPE_THEORY,origin, false);

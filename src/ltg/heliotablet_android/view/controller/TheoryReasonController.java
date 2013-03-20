@@ -54,22 +54,5 @@ public class TheoryReasonController extends ReasonController {
 		return theoryViewsToAnchors;
 	}
 	
-	public void operationTheory(Reason reason, String anchor, String command) throws NullPointerException {
-		FragmentActivity mainActivity = (FragmentActivity)context;
-		
-		//find the loader
-		Fragment findFragmentByTag = mainActivity.getSupportFragmentManager().findFragmentByTag(anchor+"_THEORY");
-		if(findFragmentByTag == null)
-			return;
-		
-		//find the loader
-		TheoryViewFragment tf = (TheoryViewFragment)findFragmentByTag;
-		tf.dbOperation(reason, command);
-	}
-	
-	public void showPlanetColor(String flag, int visible) {
-		MainActivity act = (MainActivity)context;
-		TheoryFragmentWithSQLiteLoaderNestFragments fragment = (TheoryFragmentWithSQLiteLoaderNestFragments) act.getSectionsPagerAdapter().getItem(0);
-	}
 	
 }

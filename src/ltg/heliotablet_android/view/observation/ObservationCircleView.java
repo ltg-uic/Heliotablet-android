@@ -90,6 +90,10 @@ public class ObservationCircleView extends RelativeLayout implements
 		reasonTextView.setTextColor(this.getTextColor());
 		this.enableDoubleTap();
 	}
+	
+	public void showPopover() {
+		showPopover(imReasons);
+	}
 
 	public void showPopover(ImmutableSortedSet<Reason> popOverReasonSet) {
 		Resources resources = getResources();
@@ -211,9 +215,11 @@ public class ObservationCircleView extends RelativeLayout implements
 									Reason.getIsReadOnlyFalsePredicate()));
 					
 					
+					
 					if( editableReasons.size() > 0 ) {
+						MainActivity ma = (MainActivity) ObservationCircleView.this.getContext();
 						Reason reasonToDelete = editableReasons.first();
-						observationReasonController.operationObservation(reasonToDelete, reasonToDelete.getAnchor(), "remove");
+						ma.operationObservation(reasonToDelete, reasonToDelete.getAnchor(), "remove");
 						observationReasonController.sendIntent(reasonToDelete, MainActivity.REMOVE_OBSERVATION);
 						observationReasonController.makeToast("Reason Deleted");
 					}
@@ -343,8 +349,9 @@ public class ObservationCircleView extends RelativeLayout implements
 					.getContext();
 			mainActivity.createReasonIntent(newInstance,
 					MainActivity.UPDATE_OBSERVATION);
-
-			observationReasonController.updateReason(reasonNeedsUpdate);
+			
+			MainActivity ma = (MainActivity) ObservationCircleView.this.getContext();
+			ma.operationObservation(reasonNeedsUpdate, reasonNeedsUpdate.getAnchor(), "update");
 			this.makeToast("Reason Updated");
 			reasonNeedsUpdate = null;
 		} else {
@@ -412,14 +419,6 @@ public class ObservationCircleView extends RelativeLayout implements
 		background.setAlpha((int) circleViewAlpha);
 		setBackground(background);
 		reasonTextView.setAlpha(circleViewAlpha);
-	}
-
-	protected void makeTransparent(boolean isTransparent) {
-		if (isTransparent)
-			this.setReducedAlpha(100f);
-		else
-			this.setReducedAlpha(255f);
-
 	}
 
 	@Override

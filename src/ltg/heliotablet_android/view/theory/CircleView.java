@@ -131,6 +131,10 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 	    }
 	}
 	
+	public void showPopover() {
+		showPopover(imReasons);
+	}
+	
 	public void showPopover(ImmutableSortedSet<Reason> popOverReasonSet) {
 		
 		ArrayList<View> pages = new ArrayList<View>();
@@ -178,7 +182,8 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 
 						Reason reasonToDelete = (Reason) parent.getTag();
 						
-						theoryController.operationTheory(reasonToDelete, anchor, "remove");
+						MainActivity ma = (MainActivity) CircleView.this.getContext();
+						ma.operationTheory(reasonToDelete, anchor, "remove");
 						
 						InputMethodManager imm = (InputMethodManager) getContext()
 								.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -207,13 +212,6 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 				PopoverView.getFrameForView(this),
 				PopoverView.PopoverArrowDirectionAny, true);
 		
-	}
-	
-	protected void makeTransparent(boolean isTransparent) {
-		if( isTransparent )
-			this.setReducedAlpha(135f);
-		else
-			this.setReducedAlpha(255f);
 	}
 	
 	@Override
@@ -280,7 +278,8 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 			MainActivity mainActivity = (MainActivity) CircleView.this.getContext();
 			mainActivity.createReasonIntent(newInstance, MainActivity.UPDATE_THEORY);
 			
-			theoryController.updateReason(reasonNeedsUpdate);
+			MainActivity ma = (MainActivity) CircleView.this.getContext();
+			ma.operationTheory(newInstance, anchor, "update");
 			this.makeToast("Reason Updated");
 			reasonNeedsUpdate = null;
 		} else {

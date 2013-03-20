@@ -21,14 +21,6 @@ public class ObservationFragment extends Fragment {
 		observationView = inflater
 				.inflate(R.layout.observation_activity, container, false);
 		
-//		  StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll()
-//                 .penaltyLog()
-//                 .build());
-//		  StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects()
-//         .detectLeakedClosableObjects()
-//         .penaltyLog()
-//         .penaltyDeath()
-//         .build());
 		
 		observationController = ObservationReasonController.getInstance(getActivity());
 

@@ -12,6 +12,7 @@ import ltg.heliotablet_android.view.controller.NonSwipeableViewPager;
 import ltg.heliotablet_android.view.controller.ObservationReasonController;
 import ltg.heliotablet_android.view.controller.TheoryReasonController;
 import ltg.heliotablet_android.view.observation.ObservationFragment;
+import ltg.heliotablet_android.view.observation.ObservationViewFragment;
 import ltg.heliotablet_android.view.theory.CircleView;
 import ltg.heliotablet_android.view.theory.TheoryFragmentWithSQLiteLoaderNestFragments;
 import ltg.heliotablet_android.view.theory.TheoryViewFragment;
@@ -182,7 +183,7 @@ public class MainActivity extends FragmentActivity implements TabListener, Fragm
 						Reason reason = new Reason(anchor, color,
 								Reason.TYPE_THEORY, origin, true);
 						reason.setReasonText(reasonText);
-						tc.operationTheory(reason, anchor, "insert");
+						this.operationTheory(reason, anchor, "insert");
 						makeToast("theory insert anchor" + anchor + "color: "
 								+ color);
 					} else if (ltgEvent.getType().equals("new_observation")) {
@@ -192,7 +193,7 @@ public class MainActivity extends FragmentActivity implements TabListener, Fragm
 								Reason.TYPE_OBSERVATION, origin, true);
 						reason.setReasonText(reasonText);
 
-						oc.operationObservation(reason, anchor, "insert");
+						this.operationObservation(reason, anchor, "insert");
 						makeToast("obs new anchor" + anchor + "color: " + color);
 					} else if (ltgEvent.getType().equals("update_theory")) {
 
@@ -201,7 +202,7 @@ public class MainActivity extends FragmentActivity implements TabListener, Fragm
 						Reason reason = new Reason(anchor, color,
 								Reason.TYPE_THEORY, origin, true);
 						reason.setReasonText(reasonText);
-						tc.operationTheory(reason, anchor, "update");
+						this.operationTheory(reason, anchor, "update");
 
 						makeToast("theory update anchor" + anchor + "color: "
 								+ color);
@@ -212,7 +213,7 @@ public class MainActivity extends FragmentActivity implements TabListener, Fragm
 						Reason reason = new Reason(anchor, color,
 								Reason.TYPE_OBSERVATION, origin, true);
 						reason.setReasonText(reasonText);
-						oc.operationObservation(reason, anchor, "update");
+						this.operationObservation(reason, anchor, "update");
 						makeToast("obs update anchor" + anchor + "color: "
 								+ color);
 
@@ -224,7 +225,7 @@ public class MainActivity extends FragmentActivity implements TabListener, Fragm
 								Reason.TYPE_THEORY, origin, true);
 						// tc.deleteReasonByOriginAndType(reason);
 						try {
-							tc.operationTheory(reason, anchor, "remove");
+							this.operationTheory(reason, anchor, "remove");
 						} catch (NullPointerException e) {
 							makeToast("bad data on remove theory" + anchor
 									+ "color: " + color);
@@ -239,7 +240,7 @@ public class MainActivity extends FragmentActivity implements TabListener, Fragm
 						Reason reason = new Reason(anchor, color,
 								Reason.TYPE_OBSERVATION, origin, true);
 						// oc.deleteReasonByOriginAndType(reason);
-						oc.operationObservation(reason, anchor, "remove");
+						this.operationObservation(reason, anchor, "remove");
 						makeToast("deleted observation anchor" + anchor
 								+ "color: " + color);
 
@@ -583,7 +584,31 @@ public class MainActivity extends FragmentActivity implements TabListener, Fragm
 		TheoryFragmentWithSQLiteLoaderNestFragments fragment = (TheoryFragmentWithSQLiteLoaderNestFragments) this.getSectionsPagerAdapter().getItem(0);
 		fragment.addUsedPlanetColor(color);
 	}
-		 
+	
+	public void operationTheory(Reason reason, String anchor, String command) throws NullPointerException {
+	
+		
+		//find the loader
+		Fragment findFragmentByTag = this.getSupportFragmentManager().findFragmentByTag(anchor+"_THEORY");
+		if(findFragmentByTag == null)
+			return;
+		
+		//find the loader
+		TheoryViewFragment tf = (TheoryViewFragment)findFragmentByTag;
+		tf.dbOperation(reason, command);
+	}
+	
+	public void operationObservation(Reason reason, String anchor, String command) {
+		//find the loader
+		Fragment findFragmentByTag = this.getSupportFragmentManager().findFragmentByTag(anchor+"_OBSERVATION");
+		if(findFragmentByTag == null)
+			return;
+		
+		//find the loader
+		ObservationViewFragment of = (ObservationViewFragment)findFragmentByTag;
+		of.dbOperation(reason, command);
+	}
+
 	
 
 }

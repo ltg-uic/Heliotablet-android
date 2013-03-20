@@ -55,12 +55,6 @@ public class ObservationViewFragment extends Fragment implements
 
 		db = ReasonDBOpenHelper.getInstance(this.getActivity());
 
-		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-				.detectAll().penaltyLog().build());
-		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-				.detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
-				.penaltyLog().penaltyDeath().build());
-
 		observationController = ObservationReasonController
 				.getInstance(getActivity());
 		observationController.add(observationAnchor, observationAnchorView);
@@ -119,10 +113,10 @@ public class ObservationViewFragment extends Fragment implements
 									cv.getFlag(), Reason.TYPE_OBSERVATION,
 									origin, false);
 							
-							ObservationViewFragment.this.observationController.sendIntent(reason,  MainActivity.NEW_OBSERVATION);
 
 							ObservationViewFragment.this.dbOperation(reason, "insert");
-							
+							ObservationViewFragment.this.observationController.sendIntent(reason,  MainActivity.NEW_OBSERVATION);
+							tv.showPopoverWithFlag(cv.getFlag());
 						} else {
 							MiscUtil.makeTopToast((Context)getActivity(),  "Can't drop the same colors.");
 						}
@@ -229,22 +223,17 @@ public class ObservationViewFragment extends Fragment implements
 	}
 
 	public void dbOperation(Reason reason, String type) {
+		Loader<Cursor> loader = getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_OBS_LOADER_ID);
+		SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
+		
 		if( type.equals("insert")) {
 			ContentValues reasonContentValues = ReasonDBOpenHelper.getReasonContentValues(reason);
-			
-			Loader<Cursor> loader = getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_OBS_LOADER_ID);
-			SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
 			sqliteLoader.insert(ReasonDBOpenHelper.TABLE_REASON, null, reasonContentValues);
 		} else if( type.equals("remove")) {
 			String[] args = { reason.getAnchor(), reason.getFlag(), reason.getOrigin() };
-			Loader<Cursor> loader = getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_OBS_LOADER_ID);
-			SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
 			sqliteLoader.delete(ReasonDBOpenHelper.TABLE_REASON, ReasonDBOpenHelper.COLUMN_ANCHOR + "=? AND " + ReasonDBOpenHelper.COLUMN_FLAG + "=? AND " + ReasonDBOpenHelper.COLUMN_ORIGIN + "=?", args);
 		}  else if( type.equals("update")) {
-			
 			String[] args = { reason.getAnchor(), reason.getFlag(), reason.getOrigin() };
-			Loader<Cursor> loader = getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_OBS_LOADER_ID);
-			SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
 			ContentValues reasonContentValues = ReasonDBOpenHelper.getReasonContentValues(reason);
 			sqliteLoader.update(ReasonDBOpenHelper.TABLE_REASON, reasonContentValues, ReasonDBOpenHelper.COLUMN_ANCHOR + "=? AND " + ReasonDBOpenHelper.COLUMN_FLAG + "=? AND " + ReasonDBOpenHelper.COLUMN_ORIGIN + "=?", args);
 			

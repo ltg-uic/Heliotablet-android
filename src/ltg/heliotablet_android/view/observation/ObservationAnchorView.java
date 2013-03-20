@@ -3,6 +3,7 @@ package ltg.heliotablet_android.view.observation;
 import java.util.HashMap;
 
 import com.google.common.collect.HashMultiset;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Iterables;
@@ -31,11 +32,13 @@ public class ObservationAnchorView extends CircleLayout implements ICircleView  
 
 	private String anchor;
 	private HashMap<String, ObservationCircleView> flagToCircleView = new HashMap<String, ObservationCircleView>();
+	private static  ImmutableMap<String, Drawable> DRAWABLES; 
 
-	private ImmutableSet<String> allFlags = ImmutableSet.of(Reason.CONST_BLUE,
+	private static ImmutableSet<String> allFlags = ImmutableSet.of(Reason.CONST_BLUE,
 			Reason.CONST_BROWN, Reason.CONST_GREEN, Reason.CONST_GREY,
 			Reason.CONST_ORANGE, Reason.CONST_PINK, Reason.CONST_RED,
 			Reason.CONST_YELLOW);
+	private String showPopoverFlag = null;
 	
 	public ObservationAnchorView(Context context) {
 		super(context);
@@ -44,9 +47,33 @@ public class ObservationAnchorView extends CircleLayout implements ICircleView  
 	public ObservationAnchorView(Context context, AttributeSet attrs) {
         super(context, attrs);
      
-       
+		createDrawableMap();
     }
 
+	private void createDrawableMap() {
+		Resources resources = getResources();
+		DRAWABLES =
+		       new ImmutableMap.Builder<String, Drawable>()
+		           .put(Reason.CONST_RED, resources.getDrawable(R.drawable.earth_shape))
+		           .put(Reason.CONST_RED+"_d", resources.getDrawable(R.drawable.earth_shape_d))
+		           .put(Reason.CONST_BLUE, resources.getDrawable(R.drawable.neptune_shape))
+		           .put(Reason.CONST_BLUE+"_d", resources.getDrawable(R.drawable.neptune_shape_d))
+		           .put(Reason.CONST_BROWN, resources.getDrawable(R.drawable.mercury_shape))
+		           .put(Reason.CONST_BROWN+"_d", resources.getDrawable(R.drawable.mercury_shape_d))
+		           .put(Reason.CONST_YELLOW, resources.getDrawable(R.drawable.saturn_shape))
+		           .put(Reason.CONST_YELLOW+"_d", resources.getDrawable(R.drawable.saturn_shape_d))
+		           .put(Reason.CONST_PINK, resources.getDrawable(R.drawable.venus_shape))
+		           .put(Reason.CONST_PINK+"_d", resources.getDrawable(R.drawable.venus_shape_d))
+		           .put(Reason.CONST_GREEN, resources.getDrawable(R.drawable.jupiter_shape))
+		           .put(Reason.CONST_GREEN+"_d", resources.getDrawable(R.drawable.jupiter_shape_d))
+		           .put(Reason.CONST_GREY, resources.getDrawable(R.drawable.mars_shape))
+		           .put(Reason.CONST_GREY+"_d", resources.getDrawable(R.drawable.mars_shape_d))
+		           .put(Reason.CONST_ORANGE, resources.getDrawable(R.drawable.uranus_shape))
+		           .put(Reason.CONST_ORANGE+"_d", resources.getDrawable(R.drawable.uranus_shape_d))
+		           .build();
+
+	}
+	
 	public String getAnchor() {
 		return anchor;
 	}
@@ -92,7 +119,10 @@ public class ObservationAnchorView extends CircleLayout implements ICircleView  
 					// true is first, we want false first
 					// check if it was there already
 					ObservationCircleView anchorView = flagToCircleView.get(flag);
-
+					Multiset<String> ms = HashMultiset.create();
+					for(Reason reason : newSortedByReadOnlyReasonSet) {
+						ms.add(reason.getReasonText());
+					}
 					
 					
 					// if null we are creating it for the first, no need to diff
@@ -101,7 +131,6 @@ public class ObservationAnchorView extends CircleLayout implements ICircleView  
 						anchorView = (ObservationCircleView) LayoutInflater.from(getContext())
 								.inflate(R.layout.observation_view_layout, this, false);
 
-						StyleCircleView.styleView((ICircleView)anchorView, flag, getResources());
 						anchorView.setFlag(flag);
 						anchorView.setAnchor(this.anchor);
 						flagToCircleView.put(flag, anchorView);
@@ -110,19 +139,22 @@ public class ObservationAnchorView extends CircleLayout implements ICircleView  
 					}
 
 					if( newIsReadonlyReasonSet.size() > 0 ) {
-						anchorView.makeTransparent(false);
-					} else
-						anchorView.makeTransparent(true);
+						styleCircleView(anchorView, flag, false);
+					} else {
+						styleCircleView(anchorView, flag, true);
+					}
 					// just replace
 
-					Multiset<String> ms = HashMultiset.create();
-					for(Reason reason : newSortedByReadOnlyReasonSet) {
-						ms.add(reason.getReasonText());
-					}
+					
 					anchorView.setReasonTextMultiSet(ms);
 					anchorView.setTag(newSortedByReadOnlyReasonSet);
 					anchorView.invalidate();
 					this.invalidate();
+					
+					if( showPopoverFlag != null && flag.equals(flag)) {
+						anchorView.showPopover();
+						showPopoverFlag = null;
+					}
 
 				} else {
 					ObservationCircleView circleView = flagToCircleView.get(flag);
@@ -136,6 +168,83 @@ public class ObservationAnchorView extends CircleLayout implements ICircleView  
 			}
 
 		}
+	
+	private void styleCircleView(ObservationCircleView cv, String color, boolean isTransparent) {
+		Resources resources = getResources();
+		Drawable drawable = null;
+
+		int textColor = 0;
+		int textColorWhite = resources.getColor(R.color.White);
+		int textColorBlack = resources.getColor(R.color.Black);
+
+		if (color.equals(Reason.CONST_RED)) {
+			if( isTransparent == false )
+				drawable = DRAWABLES.get(Reason.CONST_RED);
+			else
+				drawable = DRAWABLES.get(Reason.CONST_RED+"_d");
+			
+			textColor = textColorWhite;
+		} else if (color.equals(Reason.CONST_BLUE)) {
+			if( isTransparent == false )
+				drawable = DRAWABLES.get(Reason.CONST_BLUE);
+			else
+				drawable = DRAWABLES.get(Reason.CONST_BLUE+"_d");
+			
+			textColor = textColorBlack;
+		} else if (color.equals(Reason.CONST_BROWN)) {
+			
+			if( isTransparent == false )
+				drawable = DRAWABLES.get(Reason.CONST_BROWN);
+			else
+				drawable = DRAWABLES.get(Reason.CONST_BROWN+"_d");
+			
+			textColor = textColorWhite;
+		} else if (color.equals(Reason.CONST_YELLOW)) {
+			
+			if( isTransparent == false )
+				drawable = DRAWABLES.get(Reason.CONST_YELLOW);
+			else
+				drawable = DRAWABLES.get(Reason.CONST_YELLOW+"_d");
+			
+			textColor = textColorBlack;
+		} else if (color.equals(Reason.CONST_PINK)) {
+			
+			if( isTransparent == false )
+				drawable = DRAWABLES.get(Reason.CONST_PINK);
+			else
+				drawable = DRAWABLES.get(Reason.CONST_PINK+"_d");
+			
+			textColor = textColorBlack;
+		} else if (color.equals(Reason.CONST_GREEN)) {
+			
+			if( isTransparent == false )
+				drawable = DRAWABLES.get(Reason.CONST_GREEN);
+			else
+				drawable = DRAWABLES.get(Reason.CONST_GREEN+"_d");
+			
+			textColor = textColorBlack;
+		} else if (color.equals(Reason.CONST_GREY)) {
+			
+			if( isTransparent == false )
+				drawable = DRAWABLES.get(Reason.CONST_GREY);
+			else
+				drawable = DRAWABLES.get(Reason.CONST_GREY+"_d");
+			
+			textColor = textColorBlack;
+		} else if (color.equals(Reason.CONST_ORANGE)) {
+			
+			if( isTransparent == false )
+				drawable = DRAWABLES.get(Reason.CONST_ORANGE);
+			else
+				drawable = DRAWABLES.get(Reason.CONST_ORANGE+"_d");
+			
+			textColor = textColorBlack;
+
+		}
+		cv.setTextColor(textColor);
+		cv.setBackground(drawable);
+
+	}
 
 	@Override
 	public int getTextColor() {
@@ -148,7 +257,9 @@ public class ObservationAnchorView extends CircleLayout implements ICircleView  
 
 	public void clearFlagMap() {
 		flagToCircleView = new HashMap<String, ObservationCircleView>();
-		
 	}
-		
+
+	public void showPopoverWithFlag(String flag) {
+		this.showPopoverFlag   = flag;
+	}
 }
