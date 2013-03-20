@@ -183,7 +183,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 						Reason reasonToDelete = (Reason) parent.getTag();
 						
 						MainActivity ma = (MainActivity) CircleView.this.getContext();
-						ma.operationTheory(reasonToDelete, anchor, "remove");
+						ma.operationTheory(reasonToDelete, anchor, "remove", true);
 						
 						InputMethodManager imm = (InputMethodManager) getContext()
 								.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -275,12 +275,8 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 			
 			Reason newInstance = Reason.newInstance(reasonNeedsUpdate);
 			
-			MainActivity mainActivity = (MainActivity) CircleView.this.getContext();
-			mainActivity.createReasonIntent(newInstance, MainActivity.UPDATE_THEORY);
-			
 			MainActivity ma = (MainActivity) CircleView.this.getContext();
-			ma.operationTheory(newInstance, anchor, "update");
-			this.makeToast("Reason Updated");
+			ma.operationTheory(newInstance, anchor, "update", true);
 			reasonNeedsUpdate = null;
 		} else {
 			//just deleted reset the flag
@@ -290,15 +286,6 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 		
 	}
 
-
-	public void makeToast(String toastText) {
-		Toast toast = Toast.makeText(getContext(), toastText,
-				Toast.LENGTH_SHORT);
-		toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 50);
-		toast.show();
-	}
-	
-	
 	public String getFlag() {
 		return flag;
 	}

@@ -185,7 +185,9 @@ public class XmppService extends IntentService {
 			xmppConnection = null;
 		} else if (action.equals(LTG_EVENT_RECEIVED)) {
 			String json = intent.getStringExtra(XMPP_MESSAGE);
-
+			if( !json.contains("event") )
+				return;
+			
 			try {
 				LTGEvent deserializeEvent = LTGEventHandler
 						.deserializeEvent(json);
@@ -398,15 +400,16 @@ public class XmppService extends IntentService {
 	}
 
 	protected void processMessage(Message message) {
+		String fromName = null;
 		if (message.getFrom() != null) {
-			String fromName = StringUtils.parseBareAddress(message.getFrom());
+			fromName = StringUtils.parseBareAddress(message.getFrom());
 			
 		}
 		if (message.getBody() != null) {
 
 			String currentUser = StringUtils.parseName(xmppConnection.getUser());
 			
-			if( message.getBody().contains(currentUser))
+			if( fromName.contains(currentUser))
 				return;
 			
 			

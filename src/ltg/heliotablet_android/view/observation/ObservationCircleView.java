@@ -204,11 +204,6 @@ public class ObservationCircleView extends RelativeLayout implements
 					ObservationCircleView.this.cachedPopoverView
 							.dissmissPopover(true);
 
-					boolean isScheduledForViewRemoval = false;
-					if (ObservationCircleView.this.imReasons.size() - 1 <= 0) {
-						isScheduledForViewRemoval = true;
-					}
-					
 					
 					ImmutableSortedSet<Reason> editableReasons = ImmutableSortedSet
 							.copyOf(Iterables.filter(ObservationCircleView.this.imReasons,
@@ -219,9 +214,7 @@ public class ObservationCircleView extends RelativeLayout implements
 					if( editableReasons.size() > 0 ) {
 						MainActivity ma = (MainActivity) ObservationCircleView.this.getContext();
 						Reason reasonToDelete = editableReasons.first();
-						ma.operationObservation(reasonToDelete, reasonToDelete.getAnchor(), "remove");
-						observationReasonController.sendIntent(reasonToDelete, MainActivity.REMOVE_OBSERVATION);
-						observationReasonController.makeToast("Reason Deleted");
+						ma.operationObservation(reasonToDelete, reasonToDelete.getAnchor(), "remove",true);
 					}
 	
 				}
@@ -345,13 +338,8 @@ public class ObservationCircleView extends RelativeLayout implements
 
 			Reason newInstance = Reason.newInstance(reasonNeedsUpdate);
 
-			MainActivity mainActivity = (MainActivity) ObservationCircleView.this
-					.getContext();
-			mainActivity.createReasonIntent(newInstance,
-					MainActivity.UPDATE_OBSERVATION);
-			
 			MainActivity ma = (MainActivity) ObservationCircleView.this.getContext();
-			ma.operationObservation(reasonNeedsUpdate, reasonNeedsUpdate.getAnchor(), "update");
+			ma.operationObservation(reasonNeedsUpdate, reasonNeedsUpdate.getAnchor(), "update", true);
 			this.makeToast("Reason Updated");
 			reasonNeedsUpdate = null;
 		} else {

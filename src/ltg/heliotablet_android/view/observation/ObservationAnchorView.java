@@ -151,10 +151,10 @@ public class ObservationAnchorView extends CircleLayout implements ICircleView  
 					anchorView.invalidate();
 					this.invalidate();
 					
-					if( showPopoverFlag != null && flag.equals(flag)) {
-						anchorView.showPopover();
-						showPopoverFlag = null;
-					}
+//					if( showPopoverFlag != null && flag.equals(flag)) {
+//						anchorView.showPopover();
+//						showPopoverFlag = null;
+//					}
 
 				} else {
 					ObservationCircleView circleView = flagToCircleView.get(flag);
@@ -261,5 +261,13 @@ public class ObservationAnchorView extends CircleLayout implements ICircleView  
 
 	public void showPopoverWithFlag(String flag) {
 		this.showPopoverFlag   = flag;
+	}
+
+	public void showPopover(String popOverToShowFlag) {
+		ObservationCircleView observationCircleView = flagToCircleView.get(popOverToShowFlag);
+		if( observationCircleView != null ) {
+			observationCircleView.showPopover();
+		}
+		
 	}
 }

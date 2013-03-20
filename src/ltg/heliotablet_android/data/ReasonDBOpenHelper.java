@@ -204,7 +204,41 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 	    cursor.close();
 	    return reasons;
 	  }
+	
+	public List<Reason> getAllReasonsDump() {
+	    List<Reason> reasons = new ArrayList<Reason>();
 
+	    //SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+	    //qb.setTables(ReasonDBOpenHelper.TABLE_REASON);
+	    Cursor cursor = getReadableDatabase().query(ReasonDBOpenHelper.TABLE_REASON,
+	        reasonColumns, null, null, null, null, null);
+
+	    cursor.moveToFirst();
+	    while (!cursor.isAfterLast()) {
+	      Reason reason = cursorToReason(cursor);
+	      Log.i("SQLITE DUMP",reason.toString());
+	      cursor.moveToNext();
+	    }
+	    // Make sure to close the cursor
+	    cursor.close();
+	    return reasons;
+	  }
+	
+	public void deleteReason(Reason note) {
+		String[] args = { note.getAnchor(), note.getFlag(), note.getOrigin() };
+		getReadableDatabase().delete(ReasonDBOpenHelper.TABLE_REASON, ReasonDBOpenHelper.COLUMN_ANCHOR + "=? AND " + ReasonDBOpenHelper.COLUMN_FLAG + "=? AND " + ReasonDBOpenHelper.COLUMN_ORIGIN + "=?", args);
+	}
+
+	public void insertReason(ContentValues reasonContentValues){
+		long insert = getReadableDatabase().insert(ReasonDBOpenHelper.TABLE_REASON, null, reasonContentValues);
+		Log.d("INSERT", "NEW INSERT: " + insert);
+	}
+	
+	public void deleteAll(){
+	    String delete = "DELETE FROM " + ReasonDBOpenHelper.TABLE_REASON;
+	    getReadableDatabase().delete(ReasonDBOpenHelper.TABLE_REASON, null, null);
+	}
+	
 	public static Reason cursorToReason(Cursor c) {
 		Reason reason = new Reason();
 		reason.setId(c.getLong(c.getColumnIndex(ReasonDBOpenHelper.COLUMN_ID)));
@@ -236,6 +270,44 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 		values.put(ReasonDBOpenHelper.COLUMN_LAST_TIMESTAMP, new Timestamp(date.getTime()).toString());
 		values.put(ReasonDBOpenHelper.COLUMN_FLAG, reason.getFlag());
 		values.put(ReasonDBOpenHelper.COLUMN_ISREADONLY, reason.isReadonly());
+		
+		return values;
+	}
+	
+	public static ContentValues getReasonContentValues(Reason reason, String localOrigin) {
+		ContentValues values = new ContentValues();
+		values.put(ReasonDBOpenHelper.COLUMN_TYPE, reason.getType());
+		values.put(ReasonDBOpenHelper.COLUMN_ANCHOR, reason.getAnchor());
+		values.put(ReasonDBOpenHelper.COLUMN_ORIGIN, reason.getOrigin());
+		values.put(ReasonDBOpenHelper.COLUMN_REASON_TEXT,
+				reason.getFlag());
+		java.util.Date date= new java.util.Date();
+		values.put(ReasonDBOpenHelper.COLUMN_LAST_TIMESTAMP, new Timestamp(date.getTime()).toString());
+		values.put(ReasonDBOpenHelper.COLUMN_FLAG, reason.getFlag());
+		
+		boolean isReadyOnly = true;
+		if( localOrigin.toLowerCase().equals( reason.getOrigin().toLowerCase())) {
+			isReadyOnly = false;
+		} else {
+			isReadyOnly = true;
+		}
+		
+		values.put(ReasonDBOpenHelper.COLUMN_ISREADONLY, isReadyOnly);
+		
+		return values;
+	}
+	
+	public static ContentValues getReasonContentValues(Note reason) {
+		ContentValues values = new ContentValues();
+		values.put(ReasonDBOpenHelper.COLUMN_TYPE, reason.getType());
+		values.put(ReasonDBOpenHelper.COLUMN_ANCHOR, reason.getAnchor());
+		values.put(ReasonDBOpenHelper.COLUMN_ORIGIN, reason.getOrigin());
+		values.put(ReasonDBOpenHelper.COLUMN_REASON_TEXT,
+				reason.getReason());
+		java.util.Date date= new java.util.Date();
+		values.put(ReasonDBOpenHelper.COLUMN_LAST_TIMESTAMP, new Timestamp(date.getTime()).toString());
+		values.put(ReasonDBOpenHelper.COLUMN_FLAG, reason.getColor());
+		values.put(ReasonDBOpenHelper.COLUMN_ISREADONLY, false);
 		
 		return values;
 	}

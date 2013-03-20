@@ -17,4 +17,9 @@
         android:showAsAction="never"
         android:title="send init"/>
 
+     <item
+        android:id="@+id/menu_reset_db"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="reset db"/>
 </menu>

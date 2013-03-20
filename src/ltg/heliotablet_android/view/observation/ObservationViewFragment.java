@@ -44,7 +44,7 @@ public class ObservationViewFragment extends Fragment implements
 	private ReasonDBOpenHelper db = null;
 	private ObservationAnchorView observationAnchorView;
 	private SQLiteCursorLoader loader = null;
-
+	public String popOverToShowFlag = null;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
@@ -114,9 +114,8 @@ public class ObservationViewFragment extends Fragment implements
 									origin, false);
 							
 
-							ObservationViewFragment.this.dbOperation(reason, "insert");
-							ObservationViewFragment.this.observationController.sendIntent(reason,  MainActivity.NEW_OBSERVATION);
-							tv.showPopoverWithFlag(cv.getFlag());
+							ObservationViewFragment.this.dbOperation(reason, "insert", true);
+							ObservationViewFragment.this.popOverToShowFlag = cv.getFlag();
 						} else {
 							MiscUtil.makeTopToast((Context)getActivity(),  "Can't drop the same colors.");
 						}
@@ -166,7 +165,16 @@ public class ObservationViewFragment extends Fragment implements
 			updateAllViews(data);
 			break;
 		}
+		
+		if( popOverToShowFlag != null)
+			showPopover();
+		
 		Log.d("OBSERVATION FRAGMENT", "onLoadFinished");
+	}
+
+	private void showPopover() {
+		observationAnchorView.showPopover(popOverToShowFlag);
+		popOverToShowFlag = null;
 	}
 
 	private void updateAllViews(Cursor data) {
@@ -222,23 +230,51 @@ public class ObservationViewFragment extends Fragment implements
 
 	}
 
-	public void dbOperation(Reason reason, String type) {
+	public void dbOperation(Reason reason, String type, boolean shouldSendIntent) {
 		Loader<Cursor> loader = getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_OBS_LOADER_ID);
 		SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
 		
 		if( type.equals("insert")) {
 			ContentValues reasonContentValues = ReasonDBOpenHelper.getReasonContentValues(reason);
 			sqliteLoader.insert(ReasonDBOpenHelper.TABLE_REASON, null, reasonContentValues);
+			
+			if( shouldSendIntent )
+				sendIntent(reason,  MainActivity.NEW_OBSERVATION);
+			
+			makeToast("Observation Inserted");
 		} else if( type.equals("remove")) {
 			String[] args = { reason.getAnchor(), reason.getFlag(), reason.getOrigin() };
 			sqliteLoader.delete(ReasonDBOpenHelper.TABLE_REASON, ReasonDBOpenHelper.COLUMN_ANCHOR + "=? AND " + ReasonDBOpenHelper.COLUMN_FLAG + "=? AND " + ReasonDBOpenHelper.COLUMN_ORIGIN + "=?", args);
+			
+			if( shouldSendIntent )
+				sendIntent(reason,  MainActivity.REMOVE_OBSERVATION);
+			
+			makeToast("Observation Delete");
 		}  else if( type.equals("update")) {
 			String[] args = { reason.getAnchor(), reason.getFlag(), reason.getOrigin() };
 			ContentValues reasonContentValues = ReasonDBOpenHelper.getReasonContentValues(reason);
 			sqliteLoader.update(ReasonDBOpenHelper.TABLE_REASON, reasonContentValues, ReasonDBOpenHelper.COLUMN_ANCHOR + "=? AND " + ReasonDBOpenHelper.COLUMN_FLAG + "=? AND " + ReasonDBOpenHelper.COLUMN_ORIGIN + "=?", args);
 			
+			if( shouldSendIntent )
+				sendIntent(reason,  MainActivity.UPDATE_OBSERVATION);
+			
+			makeToast("Observation Update");
+		} else if(type.equals("removeAll")) {
+			sqliteLoader.delete(ReasonDBOpenHelper.TABLE_REASON, null, null);
+			
+			makeToast("ALL THEORYS DELETED");
 		}
 		
+	}
+	
+	public void sendIntent(Reason reason, String type) {
+		MainActivity mainActivity = (MainActivity)getActivity();
+		mainActivity.createReasonIntent(reason, type);
+	}
+	
+	public void makeToast(String toast) {
+		MainActivity mainActivity = (MainActivity)getActivity();
+		mainActivity.makeToast(toast);
 	}
 
 }

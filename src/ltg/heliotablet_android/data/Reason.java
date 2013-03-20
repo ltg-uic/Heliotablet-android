@@ -82,6 +82,14 @@ public class Reason implements Comparable<Reason> {
 		this.lastTimestamp = lastTimestamp;
 	}
 
+	public Reason(JsonNode n) {
+		this.type = n.get("type").textValue().toUpperCase();
+		this.origin = n.get("origin").textValue();
+		this.anchor = n.get("anchor").textValue();
+		this.flag = n.get("color").textValue();
+		this.reasonText = n.get("reason").textValue();
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -153,6 +161,7 @@ public class Reason implements Comparable<Reason> {
 		map.put("color", this.getFlag());
 		map.put("reason", this.getReasonText());
 		map.put("type", this.getType().toLowerCase());
+		map.put("origin", this.getOrigin());
 		ObjectMapper om = new ObjectMapper();
 		JsonNode node = om.valueToTree(map);
 		return node;

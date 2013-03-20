@@ -43,31 +43,6 @@ public class ReasonController {
 		
 	}
 	
-	
-	public void insertReason(Reason reason) throws NullPointerException {
-		SQLiteCursorLoader sqliteCursorLoader = null;
-		
-		try {
-			sqliteCursorLoader = getAnchorSqliteCursorLoader(reason.getAnchor());
-		} catch(NullPointerException e) {
-			throw new NullPointerException("insertReason null");
-		}
-		
-		ContentValues reasonContentValues = ReasonDBOpenHelper.getReasonContentValues(reason);
-		
-		sqliteCursorLoader.insert(ReasonDBOpenHelper.TABLE_REASON, null, reasonContentValues);		
-	}
-	
-	public void deleteReason(Reason reason, boolean isScheduledForViewRemoval) {
-		SQLiteCursorLoader sqliteCursorLoader = getSqliteCursorLoader(reason.getAnchor());
-
-		String[] args = { String.valueOf(reason.getId()) };
-
-		sqliteCursorLoader.delete(ReasonDBOpenHelper.TABLE_REASON,
-				"_ID=?", args);
-		
-	}
-	
 	public void deleteReasonByOriginAndType(Reason reason) throws NullPointerException{
 		SQLiteCursorLoader sqliteCursorLoader = null;
 		
@@ -107,13 +82,5 @@ public class ReasonController {
 		return sqliteCursorLoader;
 	}
 
-	public void sendIntent(Reason reason, String type) {
-		MainActivity mainActivity = (MainActivity)context;
-		mainActivity.createReasonIntent(reason, type);
-	}
 	
-	public void makeToast(String toast) {
-		MainActivity mainActivity = (MainActivity)context;
-		mainActivity.makeToast(toast);
-	}
 }

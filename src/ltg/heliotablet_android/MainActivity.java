@@ -1,16 +1,15 @@
 package ltg.heliotablet_android;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import ltg.commons.LTGEvent;
+import ltg.heliotablet_android.data.Note;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.data.ReasonDBOpenHelper;
 import ltg.heliotablet_android.view.LoginDialog;
 import ltg.heliotablet_android.view.controller.NonSwipeableViewPager;
-import ltg.heliotablet_android.view.controller.ObservationReasonController;
-import ltg.heliotablet_android.view.controller.TheoryReasonController;
 import ltg.heliotablet_android.view.observation.ObservationFragment;
 import ltg.heliotablet_android.view.observation.ObservationViewFragment;
 import ltg.heliotablet_android.view.theory.CircleView;
@@ -21,6 +20,7 @@ import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -36,22 +36,21 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 
-public class MainActivity extends FragmentActivity implements TabListener, FragmentCommunicator {
+public class MainActivity extends FragmentActivity implements TabListener,
+		FragmentCommunicator {
 
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 	private ActionBar actionBar;
@@ -72,6 +71,7 @@ public class MainActivity extends FragmentActivity implements TabListener, Fragm
 	private SectionsPagerAdapter mSectionsPagerAdapter;
 	private NonSwipeableViewPager mViewPager;
 	public FragmentCommunicator fragmentCommunicator;
+	public ReasonDBOpenHelper dbHelper;
 
 	private Handler handler = new Handler() {
 		public void handleMessage(Message message) {
@@ -125,15 +125,14 @@ public class MainActivity extends FragmentActivity implements TabListener, Fragm
 	}
 
 	public void sendInitMessage() {
-		 new InitAsyncTask().execute();
+		new InitAsyncTask().execute();
 	}
 
 	private class InitAsyncTask extends AsyncTask<Void, Void, Void> {
 
 		@Override
 		protected Void doInBackground(Void... params) {
-			ReasonDBOpenHelper dbHelper = ReasonDBOpenHelper
-					.getInstance(MainActivity.this);
+
 			List<Reason> allReasons = dbHelper.getAllReasons();
 
 			SharedPreferences settings = getSharedPreferences(
@@ -153,99 +152,147 @@ public class MainActivity extends FragmentActivity implements TabListener, Fragm
 
 			response.put("notes", notes);
 
-			LTGEvent ltgEvent = new LTGEvent("init_helio", userName, null, response);
+			LTGEvent ltgEvent = new LTGEvent("init_helio", userName, null,
+					response);
 			sendIntent(ltgEvent);
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(Void result) {
-
+			super.onPostExecute(result);
+			makeToast("Init task run!!!");
 		}
 	}
 
+	public void processNote(Reason n, String command) {
+		if( n.getType().equals(Reason.TYPE_THEORY) ) {
+			operationTheory(n, n.getAnchor(), command, false);
+		} else if( n.getType().equals(Reason.TYPE_OBSERVATION) ) {
+			operationObservation(n, n.getAnchor(), command, false);
+		}
+		
+	}
+	
 	public void receiveIntent(Intent intent) {
 		if (intent != null) {
 			LTGEvent ltgEvent = (LTGEvent) intent
 					.getSerializableExtra(XmppService.LTG_EVENT);
 
+			SharedPreferences settings = getSharedPreferences(
+					getString(R.string.xmpp_prefs), MODE_PRIVATE);
+
+			String storedUserName = settings.getString(
+					getString(R.string.user_name), "");
+
+			if (ltgEvent.getOrigin().toLowerCase()
+					.equals(storedUserName.toLowerCase())) {
+				return;
+			}
+
 			if (ltgEvent != null) {
 				if (ltgEvent.getPayload() != null) {
 					JsonNode payload = ltgEvent.getPayload();
-					String color = payload.get("color").textValue();
-					String anchor = payload.get("anchor").textValue();
-					String reasonText = payload.get("reason").textValue();
-					String origin = ltgEvent.getOrigin();
-					if (ltgEvent.getType().equals("new_theory")) {
-						TheoryReasonController tc = TheoryReasonController
-								.getInstance(this);
-
-						Reason reason = new Reason(anchor, color,
-								Reason.TYPE_THEORY, origin, true);
-						reason.setReasonText(reasonText);
-						this.operationTheory(reason, anchor, "insert");
-						makeToast("theory insert anchor" + anchor + "color: "
-								+ color);
-					} else if (ltgEvent.getType().equals("new_observation")) {
-						ObservationReasonController oc = ObservationReasonController
-								.getInstance(this);
-						Reason reason = new Reason(anchor, color,
-								Reason.TYPE_OBSERVATION, origin, true);
-						reason.setReasonText(reasonText);
-
-						this.operationObservation(reason, anchor, "insert");
-						makeToast("obs new anchor" + anchor + "color: " + color);
-					} else if (ltgEvent.getType().equals("update_theory")) {
-
-						TheoryReasonController tc = TheoryReasonController
-								.getInstance(this);
-						Reason reason = new Reason(anchor, color,
-								Reason.TYPE_THEORY, origin, true);
-						reason.setReasonText(reasonText);
-						this.operationTheory(reason, anchor, "update");
-
-						makeToast("theory update anchor" + anchor + "color: "
-								+ color);
-					} else if (ltgEvent.getType().equals("update_observation")) {
-						ObservationReasonController oc = ObservationReasonController
-								.getInstance(this);
-
-						Reason reason = new Reason(anchor, color,
-								Reason.TYPE_OBSERVATION, origin, true);
-						reason.setReasonText(reasonText);
-						this.operationObservation(reason, anchor, "update");
-						makeToast("obs update anchor" + anchor + "color: "
-								+ color);
-
-					} else if (ltgEvent.getType().equals("remove_theory")) {
-
-						TheoryReasonController tc = TheoryReasonController
-								.getInstance(this);
-						Reason reason = new Reason(anchor, color,
-								Reason.TYPE_THEORY, origin, true);
-						// tc.deleteReasonByOriginAndType(reason);
-						try {
-							this.operationTheory(reason, anchor, "remove");
-						} catch (NullPointerException e) {
-							makeToast("bad data on remove theory" + anchor
-									+ "color: " + color);
+					if (ltgEvent.getType().equals("init_helio_diff")) {
+						ArrayNode jsonNode = (ArrayNode) payload
+								.get("additions");
+						List<Reason> additions = new ArrayList<Reason>();
+						for (JsonNode n : jsonNode) {
+							
+							Reason r = new Reason(n);
+							if( storedUserName.equals(r.getOrigin())) {
+								r.setReadonly(false);
+							} else {
+								r.setReadonly(true);
+							}
+							
+							processNote(r, "insert");
+							//additions.add(r);
 						}
-						makeToast("deleted theory anchor" + anchor + "color: "
-								+ color);
 
-					} else if (ltgEvent.getType().equals("remove_observation")) {
+						jsonNode = (ArrayNode) payload.get("deletions");
+						List<Reason> deletions = new ArrayList<Reason>();
+						for (JsonNode n : jsonNode) {
+							Reason r = new Reason(n);
+							processNote(r, "remove");
+//							deletions.add(r);
+						}
 
-						ObservationReasonController oc = ObservationReasonController
-								.getInstance(this);
-						Reason reason = new Reason(anchor, color,
-								Reason.TYPE_OBSERVATION, origin, true);
-						// oc.deleteReasonByOriginAndType(reason);
-						this.operationObservation(reason, anchor, "remove");
-						makeToast("deleted observation anchor" + anchor
-								+ "color: " + color);
+						
+						
+						dbHelper.getAllReasonsDump();
+//						if (!additions.isEmpty()) {
+//							new InsertTask().execute(additions);
+//						}
+//
+//						if (!deletions.isEmpty()) {
+//							new DeleteTask().execute(deletions);
+//						}
+					} else {
 
-					} else if (ltgEvent.getType().equals("init_helio")) {
+						String color = payload.get("color").textValue();
+						String anchor = payload.get("anchor").textValue();
+						String reasonText = payload.get("reason").textValue();
+						String origin = ltgEvent.getOrigin();
+						if (ltgEvent.getType().equals("new_theory")) {
 
+							Reason reason = new Reason(anchor, color,
+									Reason.TYPE_THEORY, origin, true);
+							reason.setReasonText(reasonText);
+							this.operationTheory(reason, anchor, "insert", false);
+							makeToast("theory insert anchor" + anchor
+									+ "color: " + color);
+						} else if (ltgEvent.getType().equals("new_observation")) {
+							Reason reason = new Reason(anchor, color,
+									Reason.TYPE_OBSERVATION, origin, true);
+							reason.setReasonText(reasonText);
+
+							this.operationObservation(reason, anchor, "insert", false);
+							makeToast("obs new anchor" + anchor + "color: "
+									+ color);
+						} else if (ltgEvent.getType().equals("update_theory")) {
+
+							Reason reason = new Reason(anchor, color,
+									Reason.TYPE_THEORY, origin, true);
+							reason.setReasonText(reasonText);
+							this.operationTheory(reason, anchor, "update", false);
+
+							makeToast("theory update anchor" + anchor
+									+ "color: " + color);
+						} else if (ltgEvent.getType().equals(
+								"update_observation")) {
+							Reason reason = new Reason(anchor, color,
+									Reason.TYPE_OBSERVATION, origin, true);
+							reason.setReasonText(reasonText);
+							this.operationObservation(reason, anchor, "update", false);
+							makeToast("obs update anchor" + anchor + "color: "
+									+ color);
+
+						} else if (ltgEvent.getType().equals("remove_theory")) {
+
+							Reason reason = new Reason(anchor, color,
+									Reason.TYPE_THEORY, origin, true);
+							// tc.deleteReasonByOriginAndType(reason);
+							try {
+								this.operationTheory(reason, anchor, "remove", false);
+							} catch (NullPointerException e) {
+								makeToast("bad data on remove theory" + anchor
+										+ "color: " + color);
+							}
+							makeToast("deleted theory anchor" + anchor
+									+ "color: " + color);
+
+						} else if (ltgEvent.getType().equals(
+								"remove_observation")) {
+
+							Reason reason = new Reason(anchor, color,
+									Reason.TYPE_OBSERVATION, origin, true);
+							// oc.deleteReasonByOriginAndType(reason);
+							this.operationObservation(reason, anchor, "remove", false);
+							makeToast("deleted observation anchor" + anchor
+									+ "color: " + color);
+
+						}
 					}
 
 				}
@@ -256,9 +303,113 @@ public class MainActivity extends FragmentActivity implements TabListener, Fragm
 		}
 	}
 
+	
+
+	private class InsertTask extends AsyncTask<List<Reason>, Integer, String> {
+		private String localOrigin;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			SharedPreferences settings = getSharedPreferences(
+					getString(R.string.xmpp_prefs), MODE_PRIVATE);
+			localOrigin = settings.getString(getString(R.string.user_name), "");
+		}
+
+		@Override
+		protected String doInBackground(List<Reason>... params) {
+			List<Reason> notes = params[0];
+
+			for (Reason note : notes) {
+				ContentValues reasonContentValues = ReasonDBOpenHelper
+						.getReasonContentValues(note, localOrigin);
+				dbHelper.insertReason(reasonContentValues);
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			makeToast("INSERT INIT DIFF DONE!");
+		}
+	}
+
+	private class DeleteTask extends AsyncTask<List<Reason>, Integer, String> {
+
+		private String localOrigin = null;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			SharedPreferences settings = getSharedPreferences(
+					getString(R.string.xmpp_prefs), MODE_PRIVATE);
+			localOrigin = settings.getString(getString(R.string.user_name), "");
+		}
+
+		@Override
+		protected String doInBackground(List<Reason>... params) {
+			List<Reason> notes = params[0];
+
+			for (Reason note : notes) {
+				dbHelper.deleteReason(note);
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			makeToast("DELETE INIT DIFF DONE!");
+		}
+	}
+
+	
+	private static ImmutableSet<String> allColors = ImmutableSet.of(Reason.CONST_BLUE,
+			Reason.CONST_BROWN, Reason.CONST_GREEN, Reason.CONST_GREY,
+			Reason.CONST_ORANGE, Reason.CONST_PINK, Reason.CONST_RED,
+			Reason.CONST_YELLOW);
+	
+	private static ImmutableSet<String> allPlanets = ImmutableSet.of(Reason.CONST_EARTH,
+			Reason.CONST_NEPTUNE, Reason.CONST_URANUS, Reason.CONST_VENUS,
+			Reason.CONST_JUPITER, Reason.CONST_MERCURY, Reason.CONST_SATURN,
+			Reason.CONST_MARS);
+	
+	
+	private void resetDB() {
+		new AsyncTask<Void, Void, Void>() {
+			@Override
+			protected Void doInBackground(Void... params) {
+				
+//				for (String planet : allPlanets) {
+//					operationTheory(null, null, "removeAll", true);
+//				} 
+//				
+//				for (String planet : allColors) {
+//					operationObservation(null, null, "removeAll", true);
+//				} 
+				
+				dbHelper.deleteAll();
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Void result) {
+				makeToast("DELETE ALL DB DONE");
+			}
+		}.execute();
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		dbHelper = ReasonDBOpenHelper.getInstance(MainActivity.this);
+
 		setContentView(R.layout.activity_main);
 		hardcodedUserNameXMPP();
 		initXmppService();
@@ -539,6 +690,10 @@ public class MainActivity extends FragmentActivity implements TabListener, Fragm
 		case R.id.menu_init:
 			this.sendInitMessage();
 			return true;
+		case R.id.menu_reset_db:
+			this.resetDB();
+			return true;
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -565,50 +720,52 @@ public class MainActivity extends FragmentActivity implements TabListener, Fragm
 			SectionsPagerAdapter mSectionsPagerAdapter) {
 		this.mSectionsPagerAdapter = mSectionsPagerAdapter;
 	}
-	
-
 
 	@Override
 	public void addUsedPlanetColors(CircleView someView) {
-		TheoryFragmentWithSQLiteLoaderNestFragments fragment = (TheoryFragmentWithSQLiteLoaderNestFragments) this.getSectionsPagerAdapter().getItem(0);
+		TheoryFragmentWithSQLiteLoaderNestFragments fragment = (TheoryFragmentWithSQLiteLoaderNestFragments) this
+				.getSectionsPagerAdapter().getItem(0);
 		fragment.addUsedPlanetColors(someView);
 	}
 
 	@Override
 	public void showPlanetColor(String color) {
-		TheoryFragmentWithSQLiteLoaderNestFragments fragment = (TheoryFragmentWithSQLiteLoaderNestFragments) this.getSectionsPagerAdapter().getItem(0);
+		TheoryFragmentWithSQLiteLoaderNestFragments fragment = (TheoryFragmentWithSQLiteLoaderNestFragments) this
+				.getSectionsPagerAdapter().getItem(0);
 		fragment.showPlanetColor(color);
 	}
-	
+
 	public void addUsedPlanetColor(String color) {
-		TheoryFragmentWithSQLiteLoaderNestFragments fragment = (TheoryFragmentWithSQLiteLoaderNestFragments) this.getSectionsPagerAdapter().getItem(0);
+		TheoryFragmentWithSQLiteLoaderNestFragments fragment = (TheoryFragmentWithSQLiteLoaderNestFragments) this
+				.getSectionsPagerAdapter().getItem(0);
 		fragment.addUsedPlanetColor(color);
 	}
-	
-	public void operationTheory(Reason reason, String anchor, String command) throws NullPointerException {
-	
-		
-		//find the loader
-		Fragment findFragmentByTag = this.getSupportFragmentManager().findFragmentByTag(anchor+"_THEORY");
-		if(findFragmentByTag == null)
+
+	public void operationTheory(Reason reason, String anchor, String command, boolean shouldSendIntent)
+			throws NullPointerException {
+
+		// find the loader
+		Fragment findFragmentByTag = this.getSupportFragmentManager()
+				.findFragmentByTag(anchor + "_THEORY");
+		if (findFragmentByTag == null)
 			return;
-		
-		//find the loader
-		TheoryViewFragment tf = (TheoryViewFragment)findFragmentByTag;
-		tf.dbOperation(reason, command);
-	}
-	
-	public void operationObservation(Reason reason, String anchor, String command) {
-		//find the loader
-		Fragment findFragmentByTag = this.getSupportFragmentManager().findFragmentByTag(anchor+"_OBSERVATION");
-		if(findFragmentByTag == null)
-			return;
-		
-		//find the loader
-		ObservationViewFragment of = (ObservationViewFragment)findFragmentByTag;
-		of.dbOperation(reason, command);
+
+		// find the loader
+		TheoryViewFragment tf = (TheoryViewFragment) findFragmentByTag;
+		tf.dbOperation(reason, command, shouldSendIntent);
 	}
 
-	
+	public void operationObservation(Reason reason, String anchor,
+			String command, boolean shouldSendIntent) {
+		// find the loader
+		Fragment findFragmentByTag = this.getSupportFragmentManager()
+				.findFragmentByTag(anchor + "_OBSERVATION");
+		if (findFragmentByTag == null)
+			return;
+
+		// find the loader
+		ObservationViewFragment of = (ObservationViewFragment) findFragmentByTag;
+		of.dbOperation(reason, command, shouldSendIntent);
+	}
 
 }

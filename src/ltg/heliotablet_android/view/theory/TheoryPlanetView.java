@@ -6,6 +6,7 @@ import ltg.heliotablet_android.MainActivity;
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.view.controller.OrderingViewData;
+import ltg.heliotablet_android.view.observation.ObservationCircleView;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -252,8 +253,11 @@ public class TheoryPlanetView extends LinearLayout {
 		flagToCircleView = new HashMap<String, CircleView>();		
 	}
 
-	public void showPopoverWithFlag(String flag) {
-		this.showPopoverFlag  = flag;
+	public void showPopover(String popOverToShowFlag) {
+		CircleView cv = flagToCircleView.get(popOverToShowFlag);
+		if( cv != null ) {
+			cv.showPopover();
+		}
 		
 	}
 

@@ -49,6 +49,7 @@ public class TheoryViewFragment extends Fragment implements
 	private Map<String, CircleView> toShowPlanetColors = new HashMap<String, CircleView>();
 	private ViewGroup planetColorsView;
 	private FragmentCommunicator activityCommunicator;
+	public String popOverToShowFlag = null;
 
 	
 	
@@ -79,38 +80,51 @@ public class TheoryViewFragment extends Fragment implements
 		return theoryView;
 	}
 
-	public void dbOperation(Reason reason, String type) {
+	public void dbOperation(Reason reason, String type, boolean shouldSendIntent) {
 		
 		
 		if( type.equals("insert")) {
 			ContentValues reasonContentValues = ReasonDBOpenHelper.getReasonContentValues(reason);
-			
 			Loader<Cursor> loader = getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_THEORY_LOADER_ID);
 			SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
 			sqliteLoader.insert(ReasonDBOpenHelper.TABLE_REASON, null, reasonContentValues);
-		} else if( type.equals("remove")) {
 			
+			if( shouldSendIntent )
+				sendIntent(reason, MainActivity.NEW_THEORY);
+			makeToast("Theory Inserted");
+		} else if( type.equals("remove")) {
 			String[] args = { reason.getAnchor(), reason.getFlag(), reason.getOrigin() };
 			Loader<Cursor> loader = getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_THEORY_LOADER_ID);
 			SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
 			sqliteLoader.delete(ReasonDBOpenHelper.TABLE_REASON, ReasonDBOpenHelper.COLUMN_ANCHOR + "=? AND " + ReasonDBOpenHelper.COLUMN_FLAG + "=? AND " + ReasonDBOpenHelper.COLUMN_ORIGIN + "=?", args);
 			
+			String userName = theoryController.getUserName();
+			if( userName.equals(reason.getOrigin()))
+				activityCommunicator.showPlanetColor(reason.getFlag());
 			
-			activityCommunicator.showPlanetColor(reason.getFlag());
 			//theoryController.showPlanetColor(reason.getFlag(),View.VISIBLE);
-			theoryController.sendIntent(reason, MainActivity.REMOVE_THEORY);
-			theoryController.makeToast("Reason Deleted");
 			
+			if( shouldSendIntent )
+				sendIntent(reason, MainActivity.REMOVE_THEORY);
+			
+			makeToast("Theory Deleted");
 		} else if( type.equals("update")) {
-			
 			String[] args = { reason.getAnchor(), reason.getFlag(), reason.getOrigin() };
-			
 			Loader<Cursor> loader = getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_THEORY_LOADER_ID);
-			
 			SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
 			ContentValues reasonContentValues = ReasonDBOpenHelper.getReasonContentValues(reason);
 			sqliteLoader.update(ReasonDBOpenHelper.TABLE_REASON, reasonContentValues, ReasonDBOpenHelper.COLUMN_ANCHOR + "=? AND " + ReasonDBOpenHelper.COLUMN_FLAG + "=? AND " + ReasonDBOpenHelper.COLUMN_ORIGIN + "=?", args);
 			
+			if( shouldSendIntent )
+				sendIntent(reason, MainActivity.UPDATE_THEORY);
+			
+			makeToast("Theory Updated");
+		} else if( type.equals("removeAll")) {
+			Loader<Cursor> loader = getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_THEORY_LOADER_ID);
+			SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
+			sqliteLoader.delete(ReasonDBOpenHelper.TABLE_REASON, null, null);
+			
+			makeToast("ALL THEORYS DELETED");
 		}
 		
 		
@@ -160,12 +174,11 @@ public class TheoryViewFragment extends Fragment implements
 
 					if (targetView instanceof TheoryPlanetView) {
 						TheoryPlanetView tv = (TheoryPlanetView) targetView;
-						tv.showPopoverWithFlag(cv.getFlag());
+						TheoryViewFragment.this.popOverToShowFlag = cv.getFlag();
 						TheoryViewFragment.this.activityCommunicator.addUsedPlanetColors(cv);
 						String origin = TheoryViewFragment.this.theoryController.getUserName();
 						Reason reason = new Reason(tv.getAnchor(),cv.getFlag(), Reason.TYPE_THEORY,origin, false);
-						TheoryViewFragment.this.dbOperation(reason, "insert");
-						TheoryViewFragment.this.theoryController.sendIntent(reason, MainActivity.NEW_THEORY);
+						TheoryViewFragment.this.dbOperation(reason, "insert", true);
 					} 
 				}
 				break;
@@ -181,7 +194,10 @@ public class TheoryViewFragment extends Fragment implements
 		}
 	}
 
-	
+	private void showPopover() {
+		theoryView.showPopover(popOverToShowFlag);
+		popOverToShowFlag = null;
+	}
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
@@ -211,6 +227,8 @@ public class TheoryViewFragment extends Fragment implements
 							+ "' AND anchor = '"
 							+ theoryAnchor
 							+ "' ORDER BY anchor, flag, isReadOnly;", null);
+		case ReasonDBOpenHelper.DELETE_REASON_THEORY_LOADER_ID:
+			return null;
 		}
 
 		return null;
@@ -224,6 +242,9 @@ public class TheoryViewFragment extends Fragment implements
 			updateAllViews(data);
 			break;
 		}
+		
+		if( popOverToShowFlag != null)
+			showPopover();
 		Log.d("THEORY FRAGMENT", "onLoadFinished");
 	}
 	
@@ -293,5 +314,14 @@ public class TheoryViewFragment extends Fragment implements
 		activityCommunicator =(FragmentCommunicator)activity;
 	}
 	
+	public void sendIntent(Reason reason, String type) {
+		MainActivity mainActivity = (MainActivity)getActivity();
+		mainActivity.createReasonIntent(reason, type);
+	}
+	
+	public void makeToast(String toast) {
+		MainActivity mainActivity = (MainActivity)getActivity();
+		mainActivity.makeToast(toast);
+	}
 
 }
