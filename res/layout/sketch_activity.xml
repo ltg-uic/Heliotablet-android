@@ -103,16 +103,16 @@
         android:id="@+id/mercurySketchLabel"
         style="@style/sketchPlanetTextLabelStyle"
         android:layout_width="128dp"
-        android:layout_height="37dp"
+        android:layout_height="36dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="550dp"
         android:background="@drawable/tag_blue" >
 
         <TextView
             style="@style/SketchTextStyle"
             android:text="@string/mercury" />
     </RelativeLayout>
-
+    
     <RelativeLayout
         android:id="@+id/venusSketchLabel"
         style="@style/sketchPlanetTextLabelStyle"
@@ -223,7 +223,8 @@
 
         <TextView
             style="@style/SketchTextStyle"
-            android:text="@string/saturn" />
+            android:text="@string/saturn"
+            android:gravity="left" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -232,7 +233,7 @@
         android:layout_width="128dp"
         android:layout_height="36dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="550dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/tag_blue" >
 
         <EditText
@@ -257,4 +258,6 @@
             android:id="@+id/redSketchText"
             style="@style/sketchPlanetViewText"
             android:text="@string/red" /> -->
+
+
 </FrameLayout>
