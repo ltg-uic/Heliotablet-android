@@ -10,7 +10,7 @@
     <RelativeLayout
         android:id="@+id/redSketchPlanet"
         style="@style/sketchPlanetView"
-        android:layout_marginLeft="250dp"
+        android:layout_marginLeft="603dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/earth_shape"
         >
@@ -21,8 +21,8 @@
     <RelativeLayout
         android:id="@+id/blueSketchPlanet"
         style="@style/sketchPlanetView"
-        android:layout_marginLeft="425dp"
-        android:layout_marginTop="10dp" 
+        android:layout_marginLeft="780dp"
+        android:layout_marginTop="83dp" 
         android:background="@drawable/neptune_shape"
         >
 
@@ -32,8 +32,8 @@
     <RelativeLayout
         android:id="@+id/yellowSketchPlanet"
         style="@style/sketchPlanetView"
-        android:layout_marginLeft="600dp"
-        android:layout_marginTop="10dp" 
+        android:layout_marginLeft="854dp"
+        android:layout_marginTop="260dp" 
         android:background="@drawable/saturn_shape"
         >
 
@@ -43,8 +43,8 @@
     <RelativeLayout
         android:id="@+id/greenSketchPlanet"
         style="@style/sketchPlanetView"
-        android:layout_marginLeft="775dp"
-        android:layout_marginTop="10dp" 
+        android:layout_marginLeft="780dp"
+        android:layout_marginTop="437dp" 
         android:background="@drawable/jupiter_shape"
         >
 
@@ -54,8 +54,8 @@
     <RelativeLayout
         android:id="@+id/pinkSketchPlanet"
         style="@style/sketchPlanetView"
-        android:layout_marginLeft="950dp"
-        android:layout_marginTop="10dp" 
+        android:layout_marginLeft="603dp"
+        android:layout_marginTop="510dp" 
         android:background="@drawable/venus_shape"
         >
 
@@ -66,8 +66,8 @@
     <RelativeLayout
         android:id="@+id/brownSketchPlanet"
         style="@style/sketchPlanetView"
-        android:layout_marginLeft="250dp"
-        android:layout_marginTop="250dp" 
+        android:layout_marginLeft="426dp"
+        android:layout_marginTop="437dp" 
         android:background="@drawable/mercury_shape"
         >
 
@@ -77,8 +77,8 @@
     <RelativeLayout
         android:id="@+id/orangeSketchPlanet"
         style="@style/sketchPlanetView"
-        android:layout_marginLeft="425dp"
-        android:layout_marginTop="250dp" 
+        android:layout_marginLeft="353dp"
+        android:layout_marginTop="260dp" 
         android:background="@drawable/uranus_shape"
         >
 
@@ -88,8 +88,8 @@
      <RelativeLayout
         android:id="@+id/graySketchPlanet"
         style="@style/sketchPlanetView"
-        android:layout_marginLeft="600dp"
-        android:layout_marginTop="250dp" 
+        android:layout_marginLeft="426dp"
+        android:layout_marginTop="83dp" 
         android:background="@drawable/mars_shape"
         >
 
@@ -106,7 +106,7 @@
         android:layout_height="37dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/tag_gray1" >
+        android:background="@drawable/tag_blue" >
 
         <TextView
             style="@style/SketchTextStyle"
@@ -120,7 +120,7 @@
         android:layout_height="37dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="70dp"
-        android:background="@drawable/tag_gray1" >
+        android:background="@drawable/tag_blue" >
 
         <TextView
             style="@style/SketchTextStyle"
@@ -134,7 +134,7 @@
         android:layout_marginTop="130dp" 
         android:layout_width="128dp"
         android:layout_height="36dp"
-        android:background="@drawable/tag_gray1" >
+        android:background="@drawable/tag_blue" >
 
         <TextView
             style="@style/SketchTextStyle"
@@ -149,7 +149,7 @@
         android:layout_marginTop="190dp"  
         android:layout_width="128dp"
         android:layout_height="36dp"
-        android:background="@drawable/tag_gray1" >
+        android:background="@drawable/tag_blue" >
 
         <TextView
             style="@style/SketchTextStyle"
@@ -163,7 +163,7 @@
         android:layout_marginTop="250dp"  
         android:layout_width="128dp"
         android:layout_height="36dp"
-        android:background="@drawable/tag_gray1" >
+        android:background="@drawable/tag_blue" >
 
         <TextView
             style="@style/SketchTextStyle"
@@ -177,7 +177,7 @@
         android:layout_marginTop="310dp" 
         android:layout_width="128dp"
         android:layout_height="36dp"
-        android:background="@drawable/tag_gray1"  >
+        android:background="@drawable/tag_blue"  >
 
         <TextView
             style="@style/SketchTextStyle"
@@ -191,7 +191,7 @@
         android:layout_marginTop="370dp"
         android:layout_width="128dp"
         android:layout_height="36dp"
-        android:background="@drawable/tag_gray1" >
+        android:background="@drawable/tag_blue" >
 
         <TextView
             style="@style/SketchTextStyle"
@@ -205,7 +205,7 @@
         android:layout_height="36dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="430dp"
-        android:background="@drawable/tag_gray1" >
+        android:background="@drawable/tag_blue" >
 
         <TextView
             style="@style/SketchTextStyle"
@@ -219,7 +219,7 @@
         android:layout_marginTop="490dp"  
         android:layout_width="128dp"
         android:layout_height="36dp"
-        android:background="@drawable/tag_gray1" >
+        android:background="@drawable/tag_blue" >
 
         <TextView
             style="@style/SketchTextStyle"
@@ -233,7 +233,7 @@
         android:layout_height="36dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="550dp"
-        android:background="@drawable/tag_gray1" >
+        android:background="@drawable/tag_blue" >
 
         <EditText
             android:id="@+id/sketchEditText"
