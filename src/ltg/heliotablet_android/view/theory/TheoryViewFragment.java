@@ -91,6 +91,7 @@ public class TheoryViewFragment extends Fragment implements
 			
 			if( shouldSendIntent )
 				sendIntent(reason, MainActivity.NEW_THEORY);
+			
 			makeToast("Theory Inserted");
 		} else if( type.equals("remove")) {
 			String[] args = { reason.getAnchor(), reason.getFlag(), reason.getOrigin() };
@@ -322,6 +323,12 @@ public class TheoryViewFragment extends Fragment implements
 	public void makeToast(String toast) {
 		MainActivity mainActivity = (MainActivity)getActivity();
 		mainActivity.makeToast(toast);
+	}
+
+	public void resetUI() {
+		if( theoryView != null ) 
+			theoryView.resetTheoryView();
+		
 	}
 
 }

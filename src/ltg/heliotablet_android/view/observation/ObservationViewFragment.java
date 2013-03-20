@@ -277,4 +277,9 @@ public class ObservationViewFragment extends Fragment implements
 		mainActivity.makeToast(toast);
 	}
 
+	public void resetUI() {
+		observationAnchorView.resetObsView();
+		
+	}
+
 }

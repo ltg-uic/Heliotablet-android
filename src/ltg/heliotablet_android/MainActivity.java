@@ -220,7 +220,7 @@ public class MainActivity extends FragmentActivity implements TabListener,
 
 						
 						
-						dbHelper.getAllReasonsDump();
+						//dbHelper.getAllReasonsDump();
 //						if (!additions.isEmpty()) {
 //							new InsertTask().execute(additions);
 //						}
@@ -400,8 +400,46 @@ public class MainActivity extends FragmentActivity implements TabListener,
 			@Override
 			protected void onPostExecute(Void result) {
 				makeToast("DELETE ALL DB DONE");
+				//update interface
+				//first theories
+				for (String planet : allPlanets) {
+					resetTheoryView(planet);
+				} 
+				
+				for (String color : allColors) {
+					showPlanetColor(color);
+				} 
+				
+				//Next observations
+				for (String color : allColors) {
+					resetObservationView(color);
+				} 
+				
+				
 			}
 		}.execute();
+	}
+
+	protected void resetTheoryView(String planet) {
+		Fragment findFragmentByTag = this.getSupportFragmentManager()
+				.findFragmentByTag(planet + "_THEORY");
+		if (findFragmentByTag == null)
+			return;
+
+		// find the loader
+		TheoryViewFragment tf = (TheoryViewFragment) findFragmentByTag;
+		tf.resetUI();
+	}
+	
+	protected void resetObservationView(String color) {
+		Fragment findFragmentByTag = this.getSupportFragmentManager()
+				.findFragmentByTag(color + "_OBSERVATION");
+		if (findFragmentByTag == null)
+			return;
+		
+		ObservationViewFragment of = (ObservationViewFragment) findFragmentByTag;
+		of.resetUI();
+		
 	}
 
 	@Override
@@ -741,6 +779,7 @@ public class MainActivity extends FragmentActivity implements TabListener,
 		fragment.addUsedPlanetColor(color);
 	}
 
+	
 	public void operationTheory(Reason reason, String anchor, String command, boolean shouldSendIntent)
 			throws NullPointerException {
 

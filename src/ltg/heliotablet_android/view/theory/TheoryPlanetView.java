@@ -49,6 +49,12 @@ public class TheoryPlanetView extends LinearLayout {
 		createDrawableMap();
 	}
 	
+	public void resetTheoryView() {
+		flagToCircleView = new HashMap<String, CircleView>();
+		this.removeAllViews();
+		this.invalidate();
+	}
+	
 	private void createDrawableMap() {
 		Resources resources = getResources();
 		DRAWABLES =

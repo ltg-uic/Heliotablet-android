@@ -103,6 +103,7 @@ public class TheoryFragmentWithSQLiteLoaderNestFragments extends Fragment implem
 
 	@Override
 	public void showPlanetColor(String color) {
+		
 		View view = usedPlanetColors.get(color);
 		if( view != null ) {
 			planetColorsView.addView(view);

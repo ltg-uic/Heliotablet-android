@@ -77,6 +77,12 @@ public class ObservationAnchorView extends CircleLayout implements ICircleView  
 	public String getAnchor() {
 		return anchor;
 	}
+	
+	public void resetObsView() {
+		flagToCircleView = new HashMap<String, ObservationCircleView>();
+		this.removeAllViews();
+		this.invalidate();
+	}
 
 	public void setAnchor(String anchor) {
 		this.anchor = anchor;
