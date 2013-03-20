@@ -12,7 +12,9 @@ import ltg.heliotablet_android.view.controller.NonSwipeableViewPager;
 import ltg.heliotablet_android.view.controller.ObservationReasonController;
 import ltg.heliotablet_android.view.controller.TheoryReasonController;
 import ltg.heliotablet_android.view.observation.ObservationFragment;
+import ltg.heliotablet_android.view.theory.CircleView;
 import ltg.heliotablet_android.view.theory.TheoryFragmentWithSQLiteLoaderNestFragments;
+import ltg.heliotablet_android.view.theory.TheoryViewFragment;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
@@ -37,6 +39,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -47,7 +50,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.Lists;
 
-public class MainActivity extends FragmentActivity implements TabListener {
+public class MainActivity extends FragmentActivity implements TabListener, FragmentCommunicator {
 
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 	private ActionBar actionBar;
@@ -67,6 +70,7 @@ public class MainActivity extends FragmentActivity implements TabListener {
 	private MenuItem disconnectMenu;
 	private SectionsPagerAdapter mSectionsPagerAdapter;
 	private NonSwipeableViewPager mViewPager;
+	public FragmentCommunicator fragmentCommunicator;
 
 	private Handler handler = new Handler() {
 		public void handleMessage(Message message) {
@@ -560,5 +564,26 @@ public class MainActivity extends FragmentActivity implements TabListener {
 			SectionsPagerAdapter mSectionsPagerAdapter) {
 		this.mSectionsPagerAdapter = mSectionsPagerAdapter;
 	}
+	
+
+
+	@Override
+	public void addUsedPlanetColors(CircleView someView) {
+		TheoryFragmentWithSQLiteLoaderNestFragments fragment = (TheoryFragmentWithSQLiteLoaderNestFragments) this.getSectionsPagerAdapter().getItem(0);
+		fragment.addUsedPlanetColors(someView);
+	}
+
+	@Override
+	public void showPlanetColor(String color) {
+		TheoryFragmentWithSQLiteLoaderNestFragments fragment = (TheoryFragmentWithSQLiteLoaderNestFragments) this.getSectionsPagerAdapter().getItem(0);
+		fragment.showPlanetColor(color);
+	}
+	
+	public void addUsedPlanetColor(String color) {
+		TheoryFragmentWithSQLiteLoaderNestFragments fragment = (TheoryFragmentWithSQLiteLoaderNestFragments) this.getSectionsPagerAdapter().getItem(0);
+		fragment.addUsedPlanetColor(color);
+	}
+		 
+	
 
 }

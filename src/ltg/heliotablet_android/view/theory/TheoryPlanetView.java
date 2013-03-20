@@ -103,11 +103,13 @@ public class TheoryPlanetView extends LinearLayout {
 
 				if( newIsReadonlyReasonSet.size() > 0 ) {
 					circleView.makeTransparent(false);
-					MainActivity act = (MainActivity) this.getContext();
-					TheoryFragmentWithSQLiteLoaderNestFragments fragment = (TheoryFragmentWithSQLiteLoaderNestFragments) act.getSectionsPagerAdapter().getItem(0);
-					fragment.showPlanetColor(flag,View.INVISIBLE);
-				} else
+					MainActivity ma = (MainActivity) this.getContext();
+					ma.addUsedPlanetColor(circleView.getFlag());
+//					TheoryFragmentWithSQLiteLoaderNestFragments fragment = (TheoryFragmentWithSQLiteLoaderNestFragments) act.getSectionsPagerAdapter().getItem(0);
+//					fragment.showPlanetColor(flag,View.INVISIBLE);
+				} else {
 					circleView.makeTransparent(true);
+				}
 				// just replace
 
 				

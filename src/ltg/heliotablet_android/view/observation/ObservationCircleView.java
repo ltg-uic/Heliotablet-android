@@ -256,7 +256,7 @@ public class ObservationCircleView extends RelativeLayout implements
 
 		PopoverView popoverView = new PopoverView(getContext(), viewPagerLayout);
 		cachedPopoverView = popoverView;
-		popoverView.setContentSizeForViewInPopover(new Point(520, 220));
+		popoverView.setContentSizeForViewInPopover(new Point(520, 210));
 		popoverView.setDelegate(this);
 		popoverView.showPopoverFromRectInViewGroup(parent,
 				PopoverView.getFrameForView(this),

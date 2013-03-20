@@ -1,8 +1,12 @@
 package ltg.heliotablet_android.view.theory;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import ltg.heliotablet_android.ActivityCommunicator;
+import ltg.heliotablet_android.FragmentCommunicator;
 import ltg.heliotablet_android.MainActivity;
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.data.Reason;
@@ -42,7 +46,12 @@ public class TheoryViewFragment extends Fragment implements
 	private ReasonDBOpenHelper db = null;
 	private TheoryPlanetView theoryView;
 	private SQLiteCursorLoader loader = null;
+	private Map<String, CircleView> toShowPlanetColors = new HashMap<String, CircleView>();
+	private ViewGroup planetColorsView;
+	private FragmentCommunicator activityCommunicator;
 
+	
+	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
@@ -86,7 +95,9 @@ public class TheoryViewFragment extends Fragment implements
 			SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
 			sqliteLoader.delete(ReasonDBOpenHelper.TABLE_REASON, ReasonDBOpenHelper.COLUMN_ANCHOR + "=? AND " + ReasonDBOpenHelper.COLUMN_FLAG + "=? AND " + ReasonDBOpenHelper.COLUMN_ORIGIN + "=?", args);
 			
-			theoryController.showPlanetColor(reason.getFlag(),View.VISIBLE);
+			
+			activityCommunicator.showPlanetColor(reason.getFlag());
+			//theoryController.showPlanetColor(reason.getFlag(),View.VISIBLE);
 			theoryController.sendIntent(reason, MainActivity.REMOVE_THEORY);
 			theoryController.makeToast("Reason Deleted");
 			
@@ -104,6 +115,13 @@ public class TheoryViewFragment extends Fragment implements
 		
 		
 	}
+	private void addBackToPlanetView(String flag) {
+		CircleView circleView = toShowPlanetColors.get(flag);
+		planetColorsView.addView(circleView);
+		planetColorsView.invalidate();
+		
+	}
+
 	private void setupLoader() {
 		getLoaderManager().initLoader(ReasonDBOpenHelper.ALL_REASONS_THEORY_LOADER_ID,
 				null, this);
@@ -142,14 +160,11 @@ public class TheoryViewFragment extends Fragment implements
 
 					if (targetView instanceof TheoryPlanetView) {
 						TheoryPlanetView tv = (TheoryPlanetView) targetView;
-						
+						TheoryViewFragment.this.activityCommunicator.addUsedPlanetColors(cv);
 						String origin = TheoryViewFragment.this.theoryController.getUserName();
 						Reason reason = new Reason(tv.getAnchor(),cv.getFlag(), Reason.TYPE_THEORY,origin, false);
 						TheoryViewFragment.this.dbOperation(reason, "insert");
 						TheoryViewFragment.this.theoryController.sendIntent(reason, MainActivity.NEW_THEORY);
-						TheoryViewFragment.this.theoryController.showPlanetColor(cv.getFlag(), View.INVISIBLE);
-						
-						//sourceView.addView(dragged);
 					} 
 				}
 				break;
@@ -173,6 +188,14 @@ public class TheoryViewFragment extends Fragment implements
 	}
 
 
+
+	public void putPlanetColorView(CircleView cv) {
+		toShowPlanetColors.put(cv.getFlag(), cv);
+	}
+	
+	public View getPlanetColorView(String flag) {
+		return toShowPlanetColors.get(flag);
+	}
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -256,6 +279,17 @@ public class TheoryViewFragment extends Fragment implements
 		theoryAnchor = StringUtils.lowerCase((String) a.getText(R.styleable.TheoryViewFragment_android_label));
 		a.recycle();
 
+	}
+
+	public void addPlanetColorsView(ViewGroup planetColorsView) {
+		this.planetColorsView = planetColorsView;
+		
+	}
+	
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		activityCommunicator =(FragmentCommunicator)activity;
 	}
 	
 

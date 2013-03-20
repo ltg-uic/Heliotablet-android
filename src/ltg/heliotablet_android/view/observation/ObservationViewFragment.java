@@ -113,14 +113,16 @@ public class ObservationViewFragment extends Fragment implements
 									return false;
 							}
 							
+							
 							String origin = ObservationViewFragment.this.observationController.getUserName();
 							Reason reason = new Reason(tv.getAnchor(),
 									cv.getFlag(), Reason.TYPE_OBSERVATION,
 									origin, false);
 							
-							
-							ObservationViewFragment.this.dbOperation(reason, "insert");
 							ObservationViewFragment.this.observationController.sendIntent(reason,  MainActivity.NEW_OBSERVATION);
+
+							ObservationViewFragment.this.dbOperation(reason, "insert");
+							
 						} else {
 							MiscUtil.makeTopToast((Context)getActivity(),  "Can't drop the same colors.");
 						}
