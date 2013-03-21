@@ -39,21 +39,11 @@ public class TheoryFragmentWithSQLiteLoaderNestFragments extends Fragment implem
 		
 		
 		
-		 db= ReasonDBOpenHelper.getInstance(this.getActivity());
-//		  StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll()
-//                  .penaltyLog()
-//                  .build());
-//		  StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects()
-//          .detectLeakedClosableObjects()
-//          .penaltyLog()
-//          .penaltyDeath()
-//          .build());
+		db = ReasonDBOpenHelper.getInstance(this.getActivity());
 		
 		theoryController = TheoryReasonController.getInstance(getActivity());
 
 		setupListeners();
-		
-		//getData(ReasonContentProvider.CONTENT_URI);
 		
 		return theoriesView;
 	}
@@ -107,8 +97,6 @@ public class TheoryFragmentWithSQLiteLoaderNestFragments extends Fragment implem
 		
 		View view = usedPlanetColors.get(color);
 		if( view != null ) {
-			
-			
 			usedPlanetColors.remove(color);
 			planetColorsView.addView(view);
 			planetColorsView.invalidate();
