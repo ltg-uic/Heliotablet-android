@@ -89,6 +89,8 @@ public class MainActivity extends FragmentActivity implements TabListener,
 				} else if (intent.getAction().equals(
 						XmppService.LTG_EVENT_RECEIVED)) {
 					receiveIntent(intent);
+				} else if (intent.getAction().equals(XmppService.GROUP_CHAT_CREATED)) {
+					sendInitMessage();
 				}
 			}
 

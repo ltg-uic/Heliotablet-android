@@ -74,6 +74,8 @@ public class XmppService extends IntentService {
 	public static final String LTG_EVENT_RECEIVED = "LTG_EVENT_RECEIVED";
 	public static final String LTG_EVENT_SENT = "LTG_EVENT_SENT";
 
+	public static final String GROUP_CHAT_CREATED = "GROUP_CHAT_CREATED";
+
 	public static String SEND_GROUP_MESSAGE = "SEND_GROUP_MESSAGE";
 
 	private static volatile Looper serviceLooper;
@@ -178,10 +180,12 @@ public class XmppService extends IntentService {
 		} else if (action.equals(DISCONNECT)) {
 			groupChat.leave();
 			xmppConnection.disconnect();
-			sendErrorToUI("Disconnecting....from connection and group chat");
+			sendMessageToUI("Disconnecting....from connection and group chat");
 		} else if (action.equals(GROUP_CHAT)) {
 			doGroupChat(groupChatRoom);
-			sendErrorToUI("Joined Group chat!!");
+			sendMessageToUI("Joined Group chat!!");
+			Intent i = new Intent(GROUP_CHAT_CREATED);
+			sendIntentToUI(i);
 		} else if (action.equals(DESTORY)) {
 			removeListeners();
 			groupChat = null;
@@ -201,7 +205,7 @@ public class XmppService extends IntentService {
 				Log.e(TAG, "Problem Deserializing Event", e);
 			} catch (NotAnLTGEventException e) {
 				Log.e(TAG, "Non ltg event", e);
-				sendErrorToUI("Non LTG Event captured");
+				sendMessageToUI("Non LTG Event captured");
 			}
 
 		}
@@ -230,7 +234,7 @@ public class XmppService extends IntentService {
 						.addConnectionListener(createGeneralConnectionListener());
 
 			} catch (final XMPPException e) {
-				sendErrorToUI("There was a problem connecting to " + DOMAIN);
+				sendMessageToUI("There was a problem connecting to " + DOMAIN);
 				Log.e(TAG, "Could not connect to Xmpp server.", e);
 			}
 		}
@@ -246,7 +250,7 @@ public class XmppService extends IntentService {
 						.obtainMessage();
 				newMessage.obj = i;
 				sendToServiceHandler(i);
-				sendErrorToUI("Connection Successful!!");
+				sendMessageToUI("Connection Successful!!");
 			}
 		};
 
@@ -263,7 +267,7 @@ public class XmppService extends IntentService {
 						.obtainMessage();
 				newMessage.obj = i;
 				sendToServiceHandler(i);
-				sendErrorToUI("Connection is being destroyed normally");
+				sendMessageToUI("Connection is being destroyed normally");
 
 			}
 
@@ -274,7 +278,7 @@ public class XmppService extends IntentService {
 						.obtainMessage();
 				newMessage.obj = i;
 				sendToServiceHandler(i);
-				sendErrorToUI("Connection is being destroyed do to an error");
+				sendMessageToUI("Connection is being destroyed do to an error");
 
 			}
 
@@ -438,7 +442,7 @@ public class XmppService extends IntentService {
 
 	}
 
-	protected void sendErrorToUI(String text) {
+	protected void sendMessageToUI(String text) {
 		Intent i = new Intent(ERROR);
 		i.putExtra(XMPP_MESSAGE, text);
 
