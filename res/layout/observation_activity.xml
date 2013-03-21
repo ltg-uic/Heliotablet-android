@@ -8,9 +8,9 @@
     
       <include
         android:id="@+id/shape_colors_include"
-        android:layout_width="260dp"
-        android:layout_height="600dp"
-        android:layout_marginLeft="1024dp"
+        android:layout_width="245dp"
+        android:layout_height="560dp"
+        android:layout_marginLeft="1040dp"
         android:layout_marginTop="53dp"
         android:scaleType="fitEnd"
         layout="@layout/shape_colors_layout"

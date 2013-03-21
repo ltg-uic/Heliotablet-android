@@ -103,29 +103,16 @@
         android:id="@+id/mercurySketchLabel"
         style="@style/sketchPlanetTextLabelStyle"
         android:layout_width="128dp"
-        android:layout_height="36dp"
+        android:layout_height="38dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="550dp"
-        android:background="@drawable/tag_blue" >
+        android:background="@drawable/tag_blue_0" >
 
         <TextView
             style="@style/SketchTextStyle"
             android:text="@string/mercury" />
     </RelativeLayout>
     
-    <RelativeLayout
-        android:id="@+id/venusSketchLabel"
-        style="@style/sketchPlanetTextLabelStyle"
-        android:layout_width="128dp"
-        android:layout_height="37dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="70dp"
-        android:background="@drawable/tag_blue" >
-
-        <TextView
-            style="@style/SketchTextStyle"
-            android:text="@string/venus" />
-    </RelativeLayout>
     
       <RelativeLayout
         android:id="@+id/earthSketchLabel"
@@ -133,8 +120,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="130dp" 
         android:layout_width="128dp"
-        android:layout_height="36dp"
-        android:background="@drawable/tag_blue" >
+        android:layout_height="38dp"
+        android:background="@drawable/tag_blue_0" >
 
         <TextView
             style="@style/SketchTextStyle"
@@ -148,8 +135,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="190dp"  
         android:layout_width="128dp"
-        android:layout_height="36dp"
-        android:background="@drawable/tag_blue" >
+        android:layout_height="38dp"
+        android:background="@drawable/tag_blue_0" >
 
         <TextView
             style="@style/SketchTextStyle"
@@ -162,8 +149,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="250dp"  
         android:layout_width="128dp"
-        android:layout_height="36dp"
-        android:background="@drawable/tag_blue" >
+        android:layout_height="38dp"
+        android:background="@drawable/tag_blue_0" >
 
         <TextView
             style="@style/SketchTextStyle"
@@ -176,8 +163,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="310dp" 
         android:layout_width="128dp"
-        android:layout_height="36dp"
-        android:background="@drawable/tag_blue"  >
+        android:layout_height="38dp"
+        android:background="@drawable/tag_blue_0"  >
 
         <TextView
             style="@style/SketchTextStyle"
@@ -190,8 +177,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="370dp"
         android:layout_width="128dp"
-        android:layout_height="36dp"
-        android:background="@drawable/tag_blue" >
+        android:layout_height="38dp"
+        android:background="@drawable/tag_blue_0" >
 
         <TextView
             style="@style/SketchTextStyle"
@@ -199,17 +186,17 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/earthSketchLabel"
+        android:id="@+id/venusSketchLabel"
         style="@style/sketchPlanetTextLabelStyle"
         android:layout_width="128dp"
-        android:layout_height="36dp"
+        android:layout_height="37dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="430dp"
-        android:background="@drawable/tag_blue" >
+        android:background="@drawable/tag_blue_0" >
 
         <TextView
             style="@style/SketchTextStyle"
-            android:text="@string/earth" />
+            android:text="@string/venus" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -218,8 +205,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="490dp"  
         android:layout_width="128dp"
-        android:layout_height="36dp"
-        android:background="@drawable/tag_blue" >
+        android:layout_height="38dp"
+        android:background="@drawable/tag_blue_0" >
 
         <TextView
             style="@style/SketchTextStyle"
@@ -231,10 +218,10 @@
         android:id="@+id/editSketchLabel"
         style="@style/sketchPlanetTextLabelStyle"
         android:layout_width="128dp"
-        android:layout_height="36dp"
+        android:layout_height="38dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/tag_blue" >
+        android:layout_marginTop="70dp"
+        android:background="@drawable/tag_blue_0" >
 
         <EditText
             android:id="@+id/sketchEditText"
