@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.FrameLayout;
 
 public class TheoryFragmentWithSQLiteLoaderNestFragments extends Fragment implements FragmentCommunicator {
@@ -106,6 +107,9 @@ public class TheoryFragmentWithSQLiteLoaderNestFragments extends Fragment implem
 		
 		View view = usedPlanetColors.get(color);
 		if( view != null ) {
+			
+			
+			usedPlanetColors.remove(color);
 			planetColorsView.addView(view);
 			planetColorsView.invalidate();
 		}
@@ -115,6 +119,12 @@ public class TheoryFragmentWithSQLiteLoaderNestFragments extends Fragment implem
 	public void addUsedPlanetColor(String color) {
 		if( usedPlanetColors.containsValue(color) == false ) {
 			View view = unUsedPlanetColors.get(color);
+			
+			ViewGroup parent = (ViewGroup) view.getParent();
+			if( parent != null ) {
+				parent.removeView(parent);
+			}
+			
 			planetColorsView.removeView(view);
 			planetColorsView.invalidate();
 			usedPlanetColors.put(color, view);
