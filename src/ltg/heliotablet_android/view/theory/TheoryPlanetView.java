@@ -25,7 +25,7 @@ public class TheoryPlanetView extends LinearLayout {
 
 	private String anchor;
 	private HashMap<String, CircleView> flagToCircleView = new HashMap<String, CircleView>();
-	
+	private  boolean hasVoted = false;
 	
 	private static  ImmutableMap<String, Drawable> DRAWABLES; 
 
@@ -53,6 +53,7 @@ public class TheoryPlanetView extends LinearLayout {
 		flagToCircleView = new HashMap<String, CircleView>();
 		this.removeAllViews();
 		this.invalidate();
+		hasVoted = false;
 	}
 	
 	private void createDrawableMap() {
@@ -265,6 +266,14 @@ public class TheoryPlanetView extends LinearLayout {
 			cv.showPopover();
 		}
 		
+	}
+
+	public boolean isHasVoted() {
+		return hasVoted;
+	}
+
+	public void setHasVoted(boolean hasVoted) {
+		this.hasVoted = hasVoted;
 	}
 
 }

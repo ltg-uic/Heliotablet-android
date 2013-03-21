@@ -49,8 +49,7 @@ public class TheoryViewFragment extends Fragment implements
 	private Map<String, CircleView> toShowPlanetColors = new HashMap<String, CircleView>();
 	private ViewGroup planetColorsView;
 	private FragmentCommunicator activityCommunicator;
-	public String popOverToShowFlag = null;
-
+	public  String popOverToShowFlag = null;
 	
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,6 +83,7 @@ public class TheoryViewFragment extends Fragment implements
 		
 		
 		if( type.equals("insert")) {
+			
 			ContentValues reasonContentValues = ReasonDBOpenHelper.getReasonContentValues(reason);
 			Loader<Cursor> loader = getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_THEORY_LOADER_ID);
 			SQLiteCursorLoader sqliteLoader = (SQLiteCursorLoader)loader;
@@ -109,6 +109,9 @@ public class TheoryViewFragment extends Fragment implements
 				sendIntent(reason, MainActivity.REMOVE_THEORY);
 			
 			makeToast("Theory Deleted");
+			
+			theoryView.setHasVoted(false);
+			
 		} else if( type.equals("update")) {
 			String[] args = { reason.getAnchor(), reason.getFlag(), reason.getOrigin() };
 			Loader<Cursor> loader = getLoaderManager().getLoader(ReasonDBOpenHelper.ALL_REASONS_THEORY_LOADER_ID);
@@ -166,6 +169,15 @@ public class TheoryViewFragment extends Fragment implements
 				if (targetView.equals(sourceView)) {
 					Log.i("DRAG", "there equal");
 				} else {
+					
+					TheoryPlanetView tv = (TheoryPlanetView) targetView;
+					if( tv.isHasVoted() ) {
+						makeToast("Only one vote per planet.");
+						return false;
+					} else {
+						tv.setHasVoted(true);
+					}
+						
 					//dragged.setVisibility(View.INVISIBLE);
 					sourceView.removeView(dragged);
 
@@ -174,7 +186,6 @@ public class TheoryViewFragment extends Fragment implements
 					CircleView cv = (CircleView) dragged;
 
 					if (targetView instanceof TheoryPlanetView) {
-						TheoryPlanetView tv = (TheoryPlanetView) targetView;
 						TheoryViewFragment.this.popOverToShowFlag = cv.getFlag();
 						TheoryViewFragment.this.activityCommunicator.addUsedPlanetColors(cv);
 						String origin = TheoryViewFragment.this.theoryController.getUserName();
