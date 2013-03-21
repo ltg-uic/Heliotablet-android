@@ -207,6 +207,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 		cachedPopoverView = popoverView;
 		popoverView.setContentSizeForViewInPopover(new Point(370, 220));
 		popoverView.setDelegate(this);
+		popoverView.setOnTouchListener(null);
 		popoverView.showPopoverFromRectInViewGroup(
 				parent,
 				PopoverView.getFrameForView(this),

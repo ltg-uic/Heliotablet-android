@@ -94,25 +94,14 @@ ModelCallbacks {
             public void onClick(View view) {
                 if (mPager.getCurrentItem() == mCurrentPageSequence.size()) {
                 	
-                   List<Page> currentPageSequence = mWizardModel.getCurrentPageSequence();	
-                   Page page = currentPageSequence.get(2);
-                   Bundle data = page.getData();
-                   String username = (String) data.get("_");
+                Bundle save = mWizardModel.save();
                    
-                   
-               	SharedPreferences settings = getSharedPreferences(getString(R.string.xmpp_prefs),
-        				MODE_PRIVATE);
-        		SharedPreferences.Editor prefEditor = settings.edit();
-        		prefEditor.putString(getString(R.string.user_name), username.toLowerCase());
-        		prefEditor.putString(getString(R.string.password), username.toLowerCase());
-        		prefEditor.commit();
-                
-        		Intent intent = new Intent();
-				intent.setAction(XmppService.CONNECT);
-				Message newMessage = Message.obtain();
-				newMessage.obj = intent;
-				XmppService.sendToServiceHandler(intent);
-        		
+			    Intent returnIntent = new Intent();
+			    returnIntent.putExtras(save);
+				
+				
+				setResult(RESULT_OK,returnIntent);  
+				
                 finish();
                 } else {
                     if (mEditingAfterReview) {

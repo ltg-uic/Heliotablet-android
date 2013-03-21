@@ -56,6 +56,8 @@ public class MainActivity extends FragmentActivity implements TabListener,
 	private ActionBar actionBar;
 
 	private static final String TAG = "MainActivity";
+	public static final int LOGIN_WIZARD_DONE = 1;
+	public static final int REQUEST_LOGIN = 0;
 	public static String UPDATE_THEORY = "update_theory";
 	public static String REMOVE_THEORY = "remove_theory";
 	public static String NEW_THEORY = "new_theory";
@@ -161,8 +163,41 @@ public class MainActivity extends FragmentActivity implements TabListener,
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
-			makeToast("Init task run!!!");
+			makeToast("Initializating Task Done!");
+			resetDB();
+			
 		}
+	}
+	
+	private void resetDB() {
+		new AsyncTask<Void, Void, Void>() {
+			@Override
+			protected Void doInBackground(Void... params) {
+				dbHelper.deleteAll();
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Void result) {
+				makeToast("DELETE ALL DB DONE");
+				//update interface
+				//first theories
+				for (String planet : allPlanets) {
+					resetTheoryView(planet);
+				} 
+				
+				for (String color : allColors) {
+					showPlanetColor(color);
+				} 
+				
+				//Next observations
+				for (String color : allColors) {
+					resetObservationView(color);
+				} 
+				
+				
+			}
+		}.execute();
 	}
 
 	public void processNote(Reason n, String command) {
@@ -303,72 +338,6 @@ public class MainActivity extends FragmentActivity implements TabListener,
 		}
 	}
 
-	
-
-	private class InsertTask extends AsyncTask<List<Reason>, Integer, String> {
-		private String localOrigin;
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-
-			SharedPreferences settings = getSharedPreferences(
-					getString(R.string.xmpp_prefs), MODE_PRIVATE);
-			localOrigin = settings.getString(getString(R.string.user_name), "");
-		}
-
-		@Override
-		protected String doInBackground(List<Reason>... params) {
-			List<Reason> notes = params[0];
-
-			for (Reason note : notes) {
-				ContentValues reasonContentValues = ReasonDBOpenHelper
-						.getReasonContentValues(note, localOrigin);
-				dbHelper.insertReason(reasonContentValues);
-			}
-
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			makeToast("INSERT INIT DIFF DONE!");
-		}
-	}
-
-	private class DeleteTask extends AsyncTask<List<Reason>, Integer, String> {
-
-		private String localOrigin = null;
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-
-			SharedPreferences settings = getSharedPreferences(
-					getString(R.string.xmpp_prefs), MODE_PRIVATE);
-			localOrigin = settings.getString(getString(R.string.user_name), "");
-		}
-
-		@Override
-		protected String doInBackground(List<Reason>... params) {
-			List<Reason> notes = params[0];
-
-			for (Reason note : notes) {
-				dbHelper.deleteReason(note);
-			}
-
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			makeToast("DELETE INIT DIFF DONE!");
-		}
-	}
-
-	
 	private static ImmutableSet<String> allColors = ImmutableSet.of(Reason.CONST_BLUE,
 			Reason.CONST_BROWN, Reason.CONST_GREEN, Reason.CONST_GREY,
 			Reason.CONST_ORANGE, Reason.CONST_PINK, Reason.CONST_RED,
@@ -380,45 +349,7 @@ public class MainActivity extends FragmentActivity implements TabListener,
 			Reason.CONST_MARS);
 	
 	
-	private void resetDB() {
-		new AsyncTask<Void, Void, Void>() {
-			@Override
-			protected Void doInBackground(Void... params) {
-				
-//				for (String planet : allPlanets) {
-//					operationTheory(null, null, "removeAll", true);
-//				} 
-//				
-//				for (String planet : allColors) {
-//					operationObservation(null, null, "removeAll", true);
-//				} 
-				
-				dbHelper.deleteAll();
-				return null;
-			}
 
-			@Override
-			protected void onPostExecute(Void result) {
-				makeToast("DELETE ALL DB DONE");
-				//update interface
-				//first theories
-				for (String planet : allPlanets) {
-					resetTheoryView(planet);
-				} 
-				
-				for (String color : allColors) {
-					showPlanetColor(color);
-				} 
-				
-				//Next observations
-				for (String color : allColors) {
-					resetObservationView(color);
-				} 
-				
-				
-			}
-		}.execute();
-	}
 
 	protected void resetTheoryView(String planet) {
 		Fragment findFragmentByTag = this.getSupportFragmentManager()
@@ -449,7 +380,7 @@ public class MainActivity extends FragmentActivity implements TabListener,
 		dbHelper = ReasonDBOpenHelper.getInstance(MainActivity.this);
 
 		setContentView(R.layout.activity_main);
-		hardcodedUserNameXMPP();
+		//hardcodedUserNameXMPP();
 		initXmppService();
 
 		initTabs();
@@ -499,8 +430,6 @@ public class MainActivity extends FragmentActivity implements TabListener,
 		intent.setAction(XmppService.STARTUP);
 		intent.putExtra(XmppService.ACTIVITY_MESSAGER, activityMessenger);
 		intent.putExtra(XmppService.CHAT_TYPE, XmppService.GROUP_CHAT);
-		intent.putExtra(XmppService.GROUP_CHAT_NAME,
-				getString(R.string.XMPP_CHAT_ROOM));
 		startService(intent);
 	}
 
@@ -596,83 +525,63 @@ public class MainActivity extends FragmentActivity implements TabListener,
 		toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 50);
 		toast.show();
 	}
-
-	private void setupTabs() {
-		// TODO Auto-generated method stub
-
-		// Theories tab
-
-		Tab tab = actionBar.newTab().setText(R.string.tab_title_theories)
-				.setTabListener(this);
-		actionBar.addTab(tab);
-
-		tab = actionBar.newTab().setText(R.string.tab_title_observations)
-				.setTabListener(this);
-
-		actionBar.addTab(tab);
-		tab = actionBar.newTab().setText(R.string.tab_title_scratch_pad)
-				.setTabListener(this);
-
-		actionBar.addTab(tab);
-
-	}
-
+	
 	@Override
-	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-		getFragmentViewPager().setCurrentItem(tab.getPosition());
-
-	}
-
-	@Override
-	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onTabReselected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-	 * one of the sections/tabs/pages.
-	 */
-	public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-		private List<Fragment> fragments = null;
-
-		public SectionsPagerAdapter(FragmentManager fm) {
-			super(fm);
-			fragments = Lists.newArrayList(
-					new TheoryFragmentWithSQLiteLoaderNestFragments(),
-					new ObservationFragment(), new ScratchPadFragment());
-		}
-
-		@Override
-		public android.support.v4.app.Fragment getItem(int position) {
-			return fragments.get(position);
-		}
-
-		@Override
-		public int getCount() {
-			return 3;
-		}
-
-		@Override
-		public CharSequence getPageTitle(int position) {
-			switch (position) {
-			case 0:
-				return getString(R.string.tab_title_theories);
-			case 1:
-				return getString(R.string.tab_title_observations);
-			case 2:
-				return getString(R.string.tab_title_scratch_pad);
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    // Check which request we're responding to
+		if (resultCode == RESULT_OK) {
+            Bundle save = data.getExtras();
+			Bundle pickBundle = save.getBundle(getResources()
+					.getString(R.string.pick_your_teacher_));
+			String whichTeacher = pickBundle.getString("_");
+			String key = null;
+			String xmppChatRoom = null;
+			if (whichTeacher.contains("Ben")) {
+				key = getResources()
+						.getString(R.string.ben_class_title);
+				
+				xmppChatRoom = getResources()
+						.getString(R.string.XMPP_CHAT_ROOM_BEN);
+			} else {
+				key = getResources().getString(
+						R.string.julia_class_title);
+				
+				xmppChatRoom = getResources()
+						.getString(R.string.XMPP_CHAT_ROOM_JULIA);
 			}
-			return null;
-		}
+
+			key = key
+					+ ":"
+					+ getResources().getString(
+							R.string.choose_your_name_);
+
+			Bundle kidBundle = save.getBundle(key);
+
+			String username = kidBundle.getString("_");
+           
+           
+           
+       	SharedPreferences settings = getSharedPreferences(getString(R.string.xmpp_prefs),
+				MODE_PRIVATE);
+		SharedPreferences.Editor prefEditor = settings.edit();
+		prefEditor.putString(getString(R.string.user_name), username.toLowerCase());
+		prefEditor.putString(getString(R.string.password), username.toLowerCase());
+		prefEditor.commit();
+        
+		Intent intent = new Intent();
+		intent.setAction(XmppService.CONNECT);
+		intent.putExtra(XmppService.GROUP_CHAT_NAME,xmppChatRoom);
+		
+		
+		Message newMessage = Message.obtain();
+		newMessage.obj = intent;
+		XmppService.sendToServiceHandler(intent);
+			
+			
+        }
 	}
+
+	
 
 	@Override
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -708,11 +617,11 @@ public class MainActivity extends FragmentActivity implements TabListener,
 		switch (item.getItemId()) {
 		case R.id.menu_connect:
 
-			// Intent intent1 = new Intent(MainActivity.this,
-			// WizardDialogFragment.class);
-			// startActivity(intent1);
+			 Intent intent1 = new Intent(MainActivity.this,
+			 WizardDialogFragment.class);
+			 startActivityForResult(intent1, REQUEST_LOGIN);
 
-			prepDialog().show();
+			//prepDialog().show();
 			connectMenu.setEnabled(false);
 			disconnectMenu.setEnabled(true);
 			return true;
@@ -805,6 +714,83 @@ public class MainActivity extends FragmentActivity implements TabListener,
 		// find the loader
 		ObservationViewFragment of = (ObservationViewFragment) findFragmentByTag;
 		of.dbOperation(reason, command, shouldSendIntent);
+	}
+	
+	private void setupTabs() {
+		// TODO Auto-generated method stub
+
+		// Theories tab
+
+		Tab tab = actionBar.newTab().setText(R.string.tab_title_theories)
+				.setTabListener(this);
+		actionBar.addTab(tab);
+
+		tab = actionBar.newTab().setText(R.string.tab_title_observations)
+				.setTabListener(this);
+
+		actionBar.addTab(tab);
+		tab = actionBar.newTab().setText(R.string.tab_title_scratch_pad)
+				.setTabListener(this);
+
+		actionBar.addTab(tab);
+
+	}
+
+	@Override
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		getFragmentViewPager().setCurrentItem(tab.getPosition());
+
+	}
+
+	@Override
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onTabReselected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+	 * one of the sections/tabs/pages.
+	 */
+	public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+		private List<Fragment> fragments = null;
+
+		public SectionsPagerAdapter(FragmentManager fm) {
+			super(fm);
+			fragments = Lists.newArrayList(
+					new TheoryFragmentWithSQLiteLoaderNestFragments(),
+					new ObservationFragment(), new ScratchPadFragment());
+		}
+
+		@Override
+		public android.support.v4.app.Fragment getItem(int position) {
+			return fragments.get(position);
+		}
+
+		@Override
+		public int getCount() {
+			return 3;
+		}
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+			switch (position) {
+			case 0:
+				return getString(R.string.tab_title_theories);
+			case 1:
+				return getString(R.string.tab_title_observations);
+			case 2:
+				return getString(R.string.tab_title_scratch_pad);
+			}
+			return null;
+		}
 	}
 
 }

@@ -124,8 +124,7 @@ public class XmppService extends IntentService {
 			}
 
 			chatType = (String) extras.get(CHAT_TYPE);
-			groupChatRoom = (String) extras.get(GROUP_CHAT_NAME);
-			groupChatName = StringUtils.parseName(groupChatRoom);
+
 
 		} else if (action.equals(SEND_MESSAGE_CHAT)) {
 			Object extra = extras.get(MESSAGE_TEXT_CHAT);
@@ -169,6 +168,10 @@ public class XmppService extends IntentService {
 			// doGroupChat(groupChatRoom);
 
 		} else if (action.equals(CONNECT)) {
+			
+			groupChatRoom = (String) extras.get(GROUP_CHAT_NAME);
+			groupChatName = StringUtils.parseName(groupChatRoom);
+			
 			doConnection();
 		} else if (action.equals(RECONNECT)) {
 			doConnection();
@@ -204,6 +207,7 @@ public class XmppService extends IntentService {
 		}
 
 	}
+
 
 	public void doConnection() {
 
