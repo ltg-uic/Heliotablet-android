@@ -23,17 +23,17 @@
 	             android:width="80dp" />
 	    	<gradient
 	            android:type="radial"
-	            android:startColor="#FF7383"
-	            android:endColor="@color/PlanetRed"
+	            android:startColor="#CEA58C"
+	            android:endColor="@color/PlanetBrown"
 	            android:gradientRadius="100"
 	            android:centerX="75%"
 	            android:centerY="25%"/>
 	    	<size
                 android:height="100dp"
                 android:width="100dp" />
-	    	<stroke android:width="1dp" android:color="@color/PlanetRed" />
+	    	<stroke android:width="1dp" android:color="@color/PlanetBrown" />
 	</shape>
 	</item>
-		<item android:drawable="@drawable/planet_disabled">
-	</item>
+	<item android:drawable="@drawable/planet_yours">
+	</item>	
 </layer-list>

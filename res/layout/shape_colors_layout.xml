@@ -2,16 +2,16 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:circleView="http://schemas.android.com/apk/res/ltg.heliotablet_android"
     android:id="@+id/shapeColorsView"
-     android:layout_width="245dp"
+     android:layout_width="250dp"
     android:layout_height="560dp"
     android:background="@drawable/shape_cloud" > 
 
     <ltg.heliotablet_android.view.observation.ObservationCircleView
         android:id="@+id/earthTheoryPlanet"
         style="@style/theoryPlanetView"
-        android:layout_marginLeft="156dp"
+        android:layout_marginLeft="160dp"
         android:layout_marginTop="29dp"
-        android:background="@drawable/earth_shape" 
+        android:background="@drawable/earth_shape_active" 
         circleView:flag="red"
         circleView:textColor="@color/White"
         />
@@ -20,9 +20,9 @@
     <ltg.heliotablet_android.view.observation.ObservationCircleView
         android:id="@+id/neptuneTheoryPlanet"
         style="@style/theoryPlanetView"
-        android:layout_marginLeft="80dp"
+        android:layout_marginLeft="85dp"
         android:layout_marginTop="96dp"
-        android:background="@drawable/neptune_shape" 
+        android:background="@drawable/neptune_shape_active" 
         circleView:flag="blue"
         circleView:textColor="@color/White"
         />
@@ -30,9 +30,9 @@
     <ltg.heliotablet_android.view.observation.ObservationCircleView
         android:id="@+id/mercuryTheoryPlanet"
         style="@style/theoryPlanetView"
-        android:layout_marginLeft="148dp"
+        android:layout_marginLeft="153dp"
         android:layout_marginTop="444dp"
-        android:background="@drawable/mercury_shape" 
+        android:background="@drawable/mercury_shape_active" 
         circleView:flag="brown"
         circleView:textColor="@color/White"
         />
@@ -41,7 +41,7 @@
     <ltg.heliotablet_android.view.observation.ObservationCircleView
         android:id="@+id/uranusTheoryPlanet"
         style="@style/theoryPlanetView"
-        android:layout_marginLeft="35dp"
+        android:layout_marginLeft="39dp"
         android:layout_marginTop="282dp"
         android:background="@drawable/uranus_shape"
         circleView:flag="orange"
@@ -52,7 +52,7 @@
     <ltg.heliotablet_android.view.observation.ObservationCircleView
         android:id="@+id/marsTheoryPlanet"
         style="@style/theoryPlanetView"
-        android:layout_marginLeft="138dp"
+        android:layout_marginLeft="144dp"
         android:layout_marginTop="185dp"
         android:background="@drawable/mars_shape" 
         circleView:flag="gray"
@@ -62,7 +62,7 @@
     <ltg.heliotablet_android.view.observation.ObservationCircleView
         android:id="@+id/greenTheoryPlanet"
         style="@style/theoryPlanetView"
-        android:layout_marginLeft="140dp"
+        android:layout_marginLeft="146dp"
         android:layout_marginTop="300dp"
         android:background="@drawable/jupiter_shape"
         circleView:flag="green"
@@ -71,8 +71,8 @@
     <ltg.heliotablet_android.view.observation.ObservationCircleView
         android:id="@+id/pinkTheoryPlanet"
         style="@style/theoryPlanetView"
-        android:layout_marginLeft="37dp"
-        android:layout_marginTop="184dp"
+        android:layout_marginLeft="41dp"
+        android:layout_marginTop="185dp"
         android:background="@drawable/venus_shape" 
         circleView:flag="pink"
         circleView:textColor="@color/Black"
@@ -81,7 +81,7 @@
     <ltg.heliotablet_android.view.observation.ObservationCircleView
         android:id="@+id/saturnTheoryPlanet"
         style="@style/theoryPlanetView"
-        android:layout_marginLeft="80dp"
+        android:layout_marginLeft="83dp"
         android:layout_marginTop="374dp"
         android:background="@drawable/saturn_shape"
         circleView:flag="yellow"

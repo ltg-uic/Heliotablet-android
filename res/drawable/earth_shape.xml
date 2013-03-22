@@ -23,7 +23,7 @@
 	             android:width="80dp" />
 	    	<gradient
 	            android:type="radial"
-	            android:startColor="#CEA58C"
+	            android:startColor="#FF7383"
 	            android:endColor="@color/PlanetRed"
 	            android:gradientRadius="100"
 	            android:centerX="75%"

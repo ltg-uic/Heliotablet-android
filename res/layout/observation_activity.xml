@@ -8,9 +8,9 @@
     
       <include
         android:id="@+id/shape_colors_include"
-        android:layout_width="245dp"
+        android:layout_width="250dp"
         android:layout_height="560dp"
-        android:layout_marginLeft="1040dp"
+        android:layout_marginLeft="1036dp"
         android:layout_marginTop="53dp"
         android:scaleType="fitEnd"
         layout="@layout/shape_colors_layout"
@@ -38,7 +38,7 @@
         android:id="@+id/yellowView"
         style="@style/observationAnchorViewStyle"
         android:layout_marginLeft="800dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/saturn_shape"
         android:tag="yellow_OBSERVATION"
         android:label="@string/yellow" />
@@ -47,7 +47,7 @@
         android:id="@+id/pinkView"
         style="@style/observationAnchorViewStyle"
         android:layout_marginLeft="407dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/venus_shape"
         android:tag="pink_OBSERVATION"
         android:label="@string/pink" />
