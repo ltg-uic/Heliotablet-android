@@ -61,23 +61,26 @@
     <style name="sketchPlanetTextLabelStyle">
         <item name="android:background">@drawable/sketch_rect</item>
         <item name="android:layout_width">145dp</item>
-        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_height">54dp</item>
     </style>
 
     <style name="SketchTextStyle" parent="android:Widget.TextView">
         <item name="android:textSize">25sp</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-<!--         <item name="android:layout_centerHorizontal">true</item> -->
-        <item name="android:layout_marginLeft">12dp</item>
-        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_height">fill_parent</item>
+		<item name="android:layout_centerHorizontal">true</item>
+		<item name="android:layout_centerVertical">true</item> 
+<!--         <item name="android:layout_marginLeft">12dp</item> -->
+<!--          <item name="android:layout_marginBottom">2dp</item> -->
+
     </style>
 
     <style name="sketchPlanetViewText" parent="android:Widget.Holo.Light.TextView">
         <item name="android:textColor">@color/White</item>
-        <item name="android:textSize">25sp</item>
+        <item name="android:textSize">26sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">10dp</item>
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:layout_centerVertical">true</item>
     </style>
