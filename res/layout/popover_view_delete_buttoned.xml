@@ -2,20 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/mainScrollView"
     android:layout_width="370dp"
-    android:layout_height="245dp"
+    android:layout_height="290dp"
     android:layout_gravity="fill"
     android:background="@color/BGBlueDark" >
 
     <FrameLayout
         android:id="@+id/frameLayout1"
         android:layout_width="match_parent"
-        android:layout_height="129dp"
+        android:layout_height="224dp"
         android:layout_margin="0dp" >
 
         <EditText
             android:id="@+id/mainEditText"
             android:layout_width="340dp"
-            android:layout_height="95dp"
+            android:layout_height="190dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/textedit_shape"
@@ -36,22 +36,12 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/frameLayout1"
         android:orientation="vertical" >
-        
-            <Button
-        android:id="@+id/saveButton"
-        android:layout_width="340dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/frameLayout1"
-        android:text="Save" />
     
      <Button
         android:id="@+id/deleteButton"
         android:layout_width="340dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/saveButton"
         android:text="Delete" />
         
         

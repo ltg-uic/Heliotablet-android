@@ -2,11 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/mainScrollView"
     android:layout_width="520dp"
-    android:layout_height="210dp"
+    android:layout_height="265dp"
     android:layout_gravity="fill"
-    android:background="@color/BGBlueDark">
+    android:background="@color/BurlyWood" >
 
     <FrameLayout
+        android:id="@+id/frameLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="0dp" >
@@ -68,42 +69,26 @@
 		
 
 </LinearLayout>
-       
-         <Button
-            android:id="@+id/deleteButton"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="490dp"
-            android:layout_marginTop="2dp"
-            android:background="@drawable/button_close"
-            android:includeFontPadding="false"
-            android:text=""
-            android:textColor="@color/White"
-            android:textSize="20sp" />
                   
     </FrameLayout>
     
-    
-    <LinearLayout
+        <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        	android:layout_marginTop="10dp"
 		android:layout_marginLeft="15dp"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/frameLayout1"
+        android:layout_below="@+id/frameLayout2"
         android:orientation="vertical" >
     
      <Button
         android:id="@+id/deleteButton"
-        android:layout_width="340dp"
+        android:layout_width="490dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:text="Delete" />
         
         
     </LinearLayout>
-    
 
 </RelativeLayout>

@@ -29,6 +29,8 @@ import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.SystemClock;
 import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -62,6 +64,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 	private RelativeLayout viewPagerLayout;
 	private Reason reasonNeedsUpdate;
 	private TheoryReasonController theoryController;
+	private OnTouchListener popoverTouchListener;
 	
 	public CircleView(Context context) {
 		super(context);
@@ -147,11 +150,11 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 				.orderedBy(OrderingViewData.isReadOnlyOrdering.reverse())
 				.addAll(popOverReasonSet).build();
 		
-		
+		boolean keepListener = false;
 		
 		for (Reason reason : copyOfReasonSet) {
 			View layout = View.inflate(getContext(),
-					R.layout.popover_view_delete, null);
+					R.layout.popover_view_delete_buttoned, null);
 			layout.setTag(reason);
 			
 			final EditText editText = (EditText) layout.findViewById(R.id.mainEditText);
@@ -167,6 +170,30 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 			    editText.setFocusableInTouchMode(true);
 	            editText.setClickable(true);
 				editText.requestFocus();
+				if( reason.getReasonText() != null && !reason.getReasonText().equals("")) {
+					keepListener = true;
+				}
+				editText.addTextChangedListener(new TextWatcher() {
+					
+					@Override
+					public void onTextChanged(CharSequence s, int start, int before, int count) {
+						cachedPopoverView.setOnTouchListener(popoverTouchListener);
+						
+					}
+					
+					@Override
+					public void beforeTextChanged(CharSequence s, int start, int count,
+							int after) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void afterTextChanged(Editable s) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
 				deleteButton.setVisibility(View.VISIBLE);
 				deleteButton.setOnClickListener(new OnClickListener() {
 					
@@ -205,9 +232,13 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 		
 		PopoverView popoverView = new PopoverView(getContext(), viewPagerLayout);
 		cachedPopoverView = popoverView;
-		popoverView.setContentSizeForViewInPopover(new Point(370, 220));
+		popoverView.setContentSizeForViewInPopover(new Point(370, 290));
 		popoverView.setDelegate(this);
-		popoverView.setOnTouchListener(null);
+		popoverTouchListener = popoverView;
+		
+		if( !keepListener )
+			popoverView.setOnTouchListener(null);
+		
 		popoverView.showPopoverFromRectInViewGroup(
 				parent,
 				PopoverView.getFrameForView(this),
