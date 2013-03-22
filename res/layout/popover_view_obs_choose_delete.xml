@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/mainScrollView"
     android:layout_width="520dp"
-    android:layout_height="260dp"
+    android:layout_height="265dp"
     android:layout_gravity="fill"
     android:background="@color/BGBlueDark">
 
@@ -66,18 +66,14 @@
                 android:button="@drawable/button_star"
                 android:text="@string/reasonButton3" />
         </RadioGroup>
-		
-
-</LinearLayout>
-       
-         
-                  
+		</LinearLayout>
+                
     </FrameLayout>
-    
     
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
 		android:layout_marginLeft="15dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/frameLayout2"
@@ -85,14 +81,10 @@
     
      <Button
         android:id="@+id/deleteButton"
-        android:layout_width="340dp"
+        android:layout_width="490dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-
         android:text="Delete" />
-        
-        
     </LinearLayout>
     
-
-</RelativeLayout>
+  </RelativeLayout>

@@ -66,16 +66,14 @@
                 android:button="@drawable/button_star"
                 android:text="@string/reasonButton3" />
         </RadioGroup>
-		
-
-</LinearLayout>
+        </LinearLayout>
                   
     </FrameLayout>
     
         <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        	android:layout_marginTop="10dp"
+        android:layout_marginTop="10dp"
 		android:layout_marginLeft="15dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/frameLayout2"
@@ -87,8 +85,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:text="Delete" />
-        
-        
-    </LinearLayout>
+	 </LinearLayout>
 
 </RelativeLayout>
