@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import android.webkit.WebStorage.Origin;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -244,6 +246,20 @@ public class Reason implements Comparable<Reason> {
 		return isReadyOnlyPredicate;
 	}
 
+	public static Predicate<Reason> getCurrentUserIsInSet(final String user) {
+		Predicate<Reason> isReadyOnlyPredicate = new Predicate<Reason>() {
+
+			@Override
+			public boolean apply(Reason input) {
+				if( input.getOrigin().equals(user) )
+					return true;
+				else 
+					return false;
+			}
+		};
+		return isReadyOnlyPredicate;
+	}
+	
 	public static Predicate<Reason> getIsReadOnlyTruePredicate() {
 		Predicate<Reason> isReadyOnlyPredicate = new Predicate<Reason>() {
 

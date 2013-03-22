@@ -90,7 +90,8 @@ public class MainActivity extends FragmentActivity implements TabListener,
 						XmppService.LTG_EVENT_RECEIVED)) {
 					receiveIntent(intent);
 				} else if (intent.getAction().equals(XmppService.GROUP_CHAT_CREATED)) {
-					sendInitMessage();
+					resetDB();
+					//sendInitMessage();
 				}
 			}
 
@@ -166,7 +167,7 @@ public class MainActivity extends FragmentActivity implements TabListener,
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
 			makeToast("Initializating Task Done!");
-			resetDB();
+			
 			
 		}
 	}
@@ -196,6 +197,8 @@ public class MainActivity extends FragmentActivity implements TabListener,
 				for (String color : allColors) {
 					resetObservationView(color);
 				} 
+				
+				sendInitMessage();
 				
 				
 			}
@@ -231,6 +234,8 @@ public class MainActivity extends FragmentActivity implements TabListener,
 				if (ltgEvent.getPayload() != null) {
 					JsonNode payload = ltgEvent.getPayload();
 					if (ltgEvent.getType().equals("init_helio_diff")) {
+						
+						
 						ArrayNode jsonNode = (ArrayNode) payload
 								.get("additions");
 						List<Reason> additions = new ArrayList<Reason>();

@@ -6,8 +6,10 @@ import ltg.heliotablet_android.MainActivity;
 import ltg.heliotablet_android.R;
 import ltg.heliotablet_android.data.Reason;
 import ltg.heliotablet_android.view.controller.OrderingViewData;
+import ltg.heliotablet_android.view.controller.TheoryReasonController;
 import ltg.heliotablet_android.view.observation.ObservationCircleView;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -100,6 +102,9 @@ public class TheoryPlanetView extends LinearLayout {
 
 	public void updateCircleView(ImmutableSortedSet<Reason> imReasonSet) {
 		
+		 TheoryReasonController theoryController = TheoryReasonController.getInstance(this.getContext());
+		 String currentUserName = theoryController.getUserName();
+		
 		for (String flag : allFlags) {
 
 			// filter for each COLOR
@@ -136,6 +141,10 @@ public class TheoryPlanetView extends LinearLayout {
 
 				}
 
+				ImmutableSortedSet<Reason> isUserHereSet = ImmutableSortedSet
+						.copyOf(Iterables.filter(imReasonSet,
+								Reason.getCurrentUserIsInSet(currentUserName)));
+				
 				if( newIsReadonlyReasonSet.size() > 0 ) {
 					styleCircleView(circleView, flag, false);
 					MainActivity ma = (MainActivity) this.getContext();
