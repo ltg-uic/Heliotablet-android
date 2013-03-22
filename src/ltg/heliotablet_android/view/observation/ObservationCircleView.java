@@ -30,6 +30,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,6 +63,7 @@ public class ObservationCircleView extends RelativeLayout implements
 	private boolean isDelete = false;
 	private ObservationReasonController observationReasonController;
 	private PopoverView cachedPopoverView;
+	private OnTouchListener popoverTouchListener;
 
 	public ObservationCircleView(Context context) {
 		super(context);
@@ -112,7 +114,8 @@ public class ObservationCircleView extends RelativeLayout implements
 						Reason.getIsReadOnlyTruePredicate()));
 
 		// get all the users - the current one
-
+		boolean keepListener = false;
+		
 		if (!editableReasons.isEmpty()) {
 			Reason reason = editableReasons.first();
 
@@ -165,7 +168,7 @@ public class ObservationCircleView extends RelativeLayout implements
 						radioButton.setEnabled(false);
 
 				}
-							
+				keepListener = true;			
 			}
 			
 			radioGroup
@@ -174,6 +177,10 @@ public class ObservationCircleView extends RelativeLayout implements
 						@Override
 						public void onCheckedChanged(RadioGroup radioGroup,
 								int checkedId) {
+							
+							
+							
+							
 							Reason reason = (Reason) radioGroup.getTag();
 
 							String flag = StringUtils.capitalize(reason
@@ -185,7 +192,8 @@ public class ObservationCircleView extends RelativeLayout implements
 									.findViewById(checkedId);
 							String text = (String) selectedRadioButton.getTag();
 							updateRadioButton(selectedRadioButton, flag, anchor);
-
+							cachedPopoverView.setOnTouchListener(popoverTouchListener);
+							cachedPopoverView.dissmissPopover(true);
 						}
 					});
 
@@ -254,9 +262,19 @@ public class ObservationCircleView extends RelativeLayout implements
 		ViewGroup parent = (ViewGroup) this.getParent().getParent().getParent();
 
 		PopoverView popoverView = new PopoverView(getContext(), viewPagerLayout);
+		
 		cachedPopoverView = popoverView;
-		popoverView.setContentSizeForViewInPopover(new Point(520, 210));
+		
+		popoverTouchListener = popoverView;
+		
+		if( !keepListener )
+			popoverView.setOnTouchListener(null);
+		
+		popoverView.setContentSizeForViewInPopover(new Point(520, 250));
 		popoverView.setDelegate(this);
+		
+	
+		
 		popoverView.showPopoverFromRectInViewGroup(parent,
 				PopoverView.getFrameForView(this),
 				PopoverView.PopoverArrowDirectionAny, true);
