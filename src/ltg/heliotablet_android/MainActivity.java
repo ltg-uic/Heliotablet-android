@@ -74,6 +74,7 @@ public class MainActivity extends FragmentActivity implements TabListener,
 	private NonSwipeableViewPager mViewPager;
 	public FragmentCommunicator fragmentCommunicator;
 	public ReasonDBOpenHelper dbHelper;
+	public boolean needsLogout = false;
 
 	private Handler handler = new Handler() {
 		public void handleMessage(Message message) {
@@ -91,10 +92,29 @@ public class MainActivity extends FragmentActivity implements TabListener,
 					receiveIntent(intent);
 				} else if (intent.getAction().equals(XmppService.GROUP_CHAT_CREATED)) {
 					resetDB();
+					updateConnectionMenu(true);
 					//sendInitMessage();
+				} else if (intent.getAction().equals(XmppService.DISCONNECTED_FOR_UI)) {
+					updateConnectionMenu(false);
 				}
 			}
 
+		}
+
+		private void updateConnectionMenu(boolean isConnected) {
+			
+			if( isConnected ) {
+				SharedPreferences settings = getSharedPreferences(getString(R.string.xmpp_prefs),
+						MODE_PRIVATE);
+				String userName = settings.getString(getString(R.string.user_name), "");
+				
+				connectMenu.setTitle(userName +" is connected");
+				needsLogout = true;
+			} else {
+				connectMenu.setTitle("Login");
+				needsLogout = false;
+			}
+			
 		};
 	};
 
@@ -612,9 +632,9 @@ public class MainActivity extends FragmentActivity implements TabListener,
 		getMenuInflater().inflate(R.menu.activity_main, menu);
 
 		connectMenu = menu.getItem(0);
-		disconnectMenu = menu.getItem(1);
-		disconnectMenu.setEnabled(false);
-		initMenu = menu.getItem(2);
+//		disconnectMenu = menu.getItem(1);
+//		disconnectMenu.setEnabled(false);
+//		initMenu = menu.getItem(2);
 		return true;
 	}
 
@@ -624,32 +644,71 @@ public class MainActivity extends FragmentActivity implements TabListener,
 		switch (item.getItemId()) {
 		case R.id.menu_connect:
 
-			 Intent intent1 = new Intent(MainActivity.this,
-			 WizardDialogFragment.class);
-			 startActivityForResult(intent1, REQUEST_LOGIN);
+			doConnection();
+			 
 
 			//prepDialog().show();
-			connectMenu.setEnabled(false);
-			disconnectMenu.setEnabled(true);
+			//connectMenu.setEnabled(false);
+//			disconnectMenu.setEnabled(true);
 			return true;
-		case R.id.menu_disconnect:
-			connectMenu.setEnabled(true);
-			disconnectMenu.setEnabled(false);
-			Intent intent = new Intent();
-			intent.setAction(XmppService.DISCONNECT);
-			Message newMessage = Message.obtain();
-			newMessage.obj = intent;
-			XmppService.sendToServiceHandler(intent);
-			return true;
-		case R.id.menu_init:
-			this.sendInitMessage();
-			return true;
-		case R.id.menu_reset_db:
-			this.resetDB();
-			return true;
+//		case R.id.menu_disconnect:
+//			connectMenu.setEnabled(true);
+//			disconnectMenu.setEnabled(false);
+//			Intent intent = new Intent();
+//			intent.setAction(XmppService.DISCONNECT);
+//			Message newMessage = Message.obtain();
+//			newMessage.obj = intent;
+//			XmppService.sendToServiceHandler(intent);
+//			return true;
+//		case R.id.menu_init:
+//			this.sendInitMessage();
+//			return true;
+//		case R.id.menu_reset_db:
+//			this.resetDB();
+//			return true;
 
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	private void doConnection() {
+		if( needsLogout == false ) {
+			
+        	Intent intent1 = new Intent(MainActivity.this,
+        	WizardDialogFragment.class);
+        	startActivityForResult(intent1, REQUEST_LOGIN);
+        	needsLogout = true;
+			
+			
+		} else {
+			
+			SharedPreferences settings = getSharedPreferences(getString(R.string.xmpp_prefs),
+					MODE_PRIVATE);
+			String userName = settings.getString(getString(R.string.user_name), "");
+			
+			 new AlertDialog.Builder(this)
+             .setTitle("Are you sure you want to logout " + userName + " ?")
+             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                 public void onClick(DialogInterface dialog, int whichButton) {
+                 	
+                		Intent intent = new Intent();
+            			intent.setAction(XmppService.DISCONNECT);
+            			Message newMessage = Message.obtain();
+            			newMessage.obj = intent;
+            			XmppService.sendToServiceHandler(intent);
+                	
+                 }
+             })
+             .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                 public void onClick(DialogInterface dialog, int whichButton) {
+
+                 	
+                 }
+             })
+             .create()
+             .show();
+		
 		}
 	}
 

@@ -76,6 +76,8 @@ public class XmppService extends IntentService {
 
 	public static final String GROUP_CHAT_CREATED = "GROUP_CHAT_CREATED";
 
+	public static final String DISCONNECTED_FOR_UI = "DISCONNECTED_FOR_UI";
+
 	public static String SEND_GROUP_MESSAGE = "SEND_GROUP_MESSAGE";
 
 	private static volatile Looper serviceLooper;
@@ -178,9 +180,16 @@ public class XmppService extends IntentService {
 		} else if (action.equals(RECONNECT)) {
 			doConnection();
 		} else if (action.equals(DISCONNECT)) {
-			groupChat.leave();
-			xmppConnection.disconnect();
-			sendMessageToUI("Disconnecting....from connection and group chat");
+			if( groupChat != null ) {
+				groupChat.leave();
+				sendMessageToUI("Disconnecting....from group chat");
+			}
+			
+			if( xmppConnection != null) {
+				sendMessageToUI("Disconnecting....from connection");
+				xmppConnection.disconnect();
+			}
+			
 		} else if (action.equals(GROUP_CHAT)) {
 			doGroupChat(groupChatRoom);
 			sendMessageToUI("Joined Group chat!!");
@@ -190,6 +199,10 @@ public class XmppService extends IntentService {
 			removeListeners();
 			groupChat = null;
 			xmppConnection = null;
+			
+			Intent i = new Intent(DISCONNECTED_FOR_UI);
+			sendIntentToUI(i);
+			
 		} else if (action.equals(LTG_EVENT_RECEIVED)) {
 			String json = intent.getStringExtra(XMPP_MESSAGE);
 			if( !json.contains("event") )

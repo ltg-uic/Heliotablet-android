@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/mainScrollView"
-    android:layout_width="520dp"
-    android:layout_height="290dp"
+    android:layout_width="510dp"
+    android:layout_height="240dp"
     android:layout_gravity="fill"
     android:background="@color/BGBlueDark" >
 
-    <FrameLayout
-        android:id="@+id/frameLayout2"
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="0dp" >
+        android:layout_height="match_parent"
+        android:layout_margin="0dp"
+        android:orientation="vertical" >
 
         <LinearLayout
             android:id="@+id/buttonGroup"
             android:layout_width="490dp"
             android:layout_height="180dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/textedit_shape"
             android:gravity="top"
             android:orientation="vertical" >
-            
+
             <requestFocus />
 
             <TextView
@@ -38,54 +39,48 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="16dp" />
+                android:layout_height="10dp" />
 
-        <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-            <RadioButton
-                android:id="@+id/reasonButton1"
+            <RadioGroup
+                android:id="@+id/radioGroup"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/button_star"
-                android:text="@string/reasonButton1" />
+                android:layout_height="wrap_content" >
 
-            <RadioButton
-                android:id="@+id/reasonButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/button_star"
-                android:text="@string/reasonButton2" />
+                <RadioButton
+                    android:id="@+id/reasonButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/button_star"
+                    android:text="@string/reasonButton1"
+                    android:textColor="@color/Black" />
 
-            <RadioButton
-                android:id="@+id/reasonButton3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/button_star"
-                android:text="@string/reasonButton3" />
-        </RadioGroup>
+                <RadioButton
+                    android:id="@+id/reasonButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/button_star"
+                    android:text="@string/reasonButton2"
+                    android:textColor="@color/Black" />
+
+                <RadioButton
+                    android:id="@+id/reasonButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/button_star"
+                    android:text="@string/reasonButton3"
+                    android:textColor="@color/Black" />
+            </RadioGroup>
         </LinearLayout>
-                  
-    </FrameLayout>
-    
-        <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-		android:layout_marginLeft="15dp"
-		android:layout_marginBottom="15dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/frameLayout2"
-        android:orientation="vertical" >
-    
-     <Button
-        android:id="@+id/deleteButton"
-        android:layout_width="490dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:text="Delete" />
-	 </LinearLayout>
+
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="490dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentLeft="true"
+            android:text="@string/delete_button_label"/>
+        
+    </LinearLayout>
 
 </RelativeLayout>
