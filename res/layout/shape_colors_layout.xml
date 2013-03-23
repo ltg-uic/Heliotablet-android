@@ -11,7 +11,7 @@
         style="@style/theoryPlanetView"
         android:layout_marginLeft="160dp"
         android:layout_marginTop="29dp"
-        android:background="@drawable/earth_shape_active" 
+        android:background="@drawable/earth_shape" 
         circleView:flag="red"
         circleView:textColor="@color/White"
         />
@@ -22,7 +22,7 @@
         style="@style/theoryPlanetView"
         android:layout_marginLeft="85dp"
         android:layout_marginTop="96dp"
-        android:background="@drawable/neptune_shape_active" 
+        android:background="@drawable/neptune_shape" 
         circleView:flag="blue"
         circleView:textColor="@color/White"
         />
@@ -32,7 +32,7 @@
         style="@style/theoryPlanetView"
         android:layout_marginLeft="153dp"
         android:layout_marginTop="444dp"
-        android:background="@drawable/mercury_shape_active" 
+        android:background="@drawable/mercury_shape" 
         circleView:flag="brown"
         circleView:textColor="@color/White"
         />
