@@ -78,13 +78,14 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/frameLayout2"
         android:orientation="vertical" >
-    
-     <Button
-        android:id="@+id/deleteButton"
-        android:layout_width="490dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:text="Delete" />
+
+            <Button
+                android:id="@+id/deleteButton"
+                android:layout_width="490dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_delete"
+                android:text="Delete" />
+
 	 </LinearLayout>
 
 </RelativeLayout>
