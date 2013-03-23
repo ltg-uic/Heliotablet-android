@@ -12,7 +12,7 @@
         style="@style/sketchPlanetView"
         android:layout_marginLeft="603dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/earth_shape"
+        android:background="@drawable/earth_shape_d"
         >
 
      
@@ -23,7 +23,7 @@
         style="@style/sketchPlanetView"
         android:layout_marginLeft="780dp"
         android:layout_marginTop="83dp" 
-        android:background="@drawable/neptune_shape"
+        android:background="@drawable/neptune_shape_d"
         >
 
         
@@ -34,7 +34,7 @@
         style="@style/sketchPlanetView"
         android:layout_marginLeft="854dp"
         android:layout_marginTop="260dp" 
-        android:background="@drawable/saturn_shape"
+        android:background="@drawable/saturn_shape_d"
         >
 
        
@@ -45,7 +45,7 @@
         style="@style/sketchPlanetView"
         android:layout_marginLeft="780dp"
         android:layout_marginTop="437dp" 
-        android:background="@drawable/jupiter_shape"
+        android:background="@drawable/jupiter_shape_d"
         >
 
         
@@ -56,7 +56,7 @@
         style="@style/sketchPlanetView"
         android:layout_marginLeft="603dp"
         android:layout_marginTop="510dp" 
-        android:background="@drawable/venus_shape"
+        android:background="@drawable/venus_shape_d"
         >
 
        
@@ -68,7 +68,7 @@
         style="@style/sketchPlanetView"
         android:layout_marginLeft="426dp"
         android:layout_marginTop="437dp" 
-        android:background="@drawable/mercury_shape"
+        android:background="@drawable/mercury_shape_d"
         >
 
       
@@ -79,7 +79,7 @@
         style="@style/sketchPlanetView"
         android:layout_marginLeft="353dp"
         android:layout_marginTop="260dp" 
-        android:background="@drawable/uranus_shape"
+        android:background="@drawable/uranus_shape_d"
         >
 
         
@@ -90,7 +90,7 @@
         style="@style/sketchPlanetView"
         android:layout_marginLeft="426dp"
         android:layout_marginTop="83dp" 
-        android:background="@drawable/mars_shape"
+        android:background="@drawable/mars_shape_d"
         >
 
     
