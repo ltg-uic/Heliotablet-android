@@ -124,7 +124,7 @@ public class ObservationCircleView extends RelativeLayout implements
 		
 		popoverTouchListener = popoverView;
 		
-		popoverView.setContentSizeForViewInPopover(new Point(520, 250));
+		popoverView.setContentSizeForViewInPopover(new Point(520, 290));
 		popoverView.setDelegate(this);
 		
 	

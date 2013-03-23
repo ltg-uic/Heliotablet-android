@@ -101,6 +101,7 @@
     <string name="submit_confirm_message">Place the order with the deli? You will receive an email
         confirmation.</string>
     <string name="submit_confirm_button">Place order</string>
+    <string name="delete_button_label">Delete</string>
    
     
     

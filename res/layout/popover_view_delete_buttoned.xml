@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/mainScrollView"
-    android:layout_width="370dp"
-    android:layout_height="290dp"
+    android:layout_width="360dp"
+    android:layout_height="260dp"
     android:layout_gravity="fill"
     android:background="@color/BGBlueDark" >
 
-    <FrameLayout
-        android:id="@+id/frameLayout1"
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="224dp"
-        android:layout_margin="0dp" >
+        android:layout_height="match_parent"
+        android:layout_margin="0dp"
+        android:orientation="vertical" >
 
         <EditText
             android:id="@+id/mainEditText"
             android:layout_width="340dp"
             android:layout_height="190dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/textedit_shape"
             android:ems="10"
             android:gravity="top"
@@ -28,24 +29,15 @@
 
             <requestFocus />
         </EditText>
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-		android:layout_marginLeft="15dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/frameLayout1"
-        android:orientation="vertical" >
-    
-     <Button
-        android:id="@+id/deleteButton"
-        android:layout_width="340dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:text="Delete" />
         
-        
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="340dp"
+            android:layout_height="50dp"
+             android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="@string/delete_button_label" />
     </LinearLayout>
+
 
 </RelativeLayout>
