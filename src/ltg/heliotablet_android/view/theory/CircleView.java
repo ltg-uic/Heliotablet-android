@@ -38,6 +38,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -166,23 +167,31 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 				.orderedBy(OrderingViewData.isReadOnlyOrdering.reverse())
 				.addAll(popOverReasonSet).build();
 		
-		boolean keepListener = false;
 		
 		for (Reason reason : copyOfReasonSet) {
-			View layout = View.inflate(getContext(),
-					R.layout.popover_view_delete_buttoned, null);
-			layout.setTag(reason);
-			
-			final EditText editText = (EditText) layout.findViewById(R.id.mainEditText);
-			Button deleteButton = (Button) layout.findViewById(R.id.deleteButton);
-			editText.setText(reason.getReasonText());
+			View layout = null;
 			
 			if( reason.isReadonly()) {
+				
+				layout = View.inflate(getContext(),
+						R.layout.popover_view_delete_buttoned_no, null);
+				layout.setTag(reason);
+				final EditText editText = (EditText) layout.findViewById(R.id.mainEditText);
+				editText.setText(reason.getReasonText());
 				editText.setKeyListener(null);
 				editText.setBackground(getResources().getDrawable(R.drawable.textedit_shape_disabled));
-				deleteButton.setVisibility(View.GONE);
 				editText.setText(reason.getOrigin() + ": " + reason.getReasonText());
+				editText.setTextColor(getResources().getColor(R.color.White));
 			} else {
+				
+				layout = View.inflate(getContext(),
+						R.layout.popover_view_delete_buttoned, null);
+				layout.setTag(reason);
+				
+				Button deleteButton = (Button) layout.findViewById(R.id.deleteButton);
+				
+				final EditText editText = (EditText) layout.findViewById(R.id.mainEditText);
+				editText.setText(reason.getReasonText());
 				editText.setFocusable(true);
 			    editText.setFocusableInTouchMode(true);
 	            editText.setClickable(true);

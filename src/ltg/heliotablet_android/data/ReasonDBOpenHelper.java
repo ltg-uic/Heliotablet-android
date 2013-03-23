@@ -4,13 +4,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import ltg.heliotablet_android.view.controller.TheoryReasonController;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
