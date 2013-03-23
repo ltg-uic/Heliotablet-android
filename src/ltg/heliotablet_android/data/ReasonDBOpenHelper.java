@@ -123,10 +123,10 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 	public void seedDb(SQLiteDatabase db) {
 
 		Reason earthRed1 = new Reason();
-		earthRed1.setAnchor(Reason.CONST_RED);
+		earthRed1.setAnchor(Reason.CONST_BROWN);
 		earthRed1.setFlag(Reason.CONST_YELLOW);
 		earthRed1.setOrigin("Derek");
-		earthRed1.setReasonText("");
+		earthRed1.setReasonText("testing");
 		earthRed1.setType(Reason.TYPE_OBSERVATION);
 		earthRed1.setReadonly(false);
 
@@ -134,7 +134,7 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 
 		Reason earthRed2 = new Reason();
 
-		earthRed2.setAnchor(Reason.CONST_RED);
+		earthRed2.setAnchor(Reason.CONST_BROWN);
 		earthRed2.setFlag(Reason.CONST_YELLOW);
 		earthRed2.setOrigin("Tony");
 		earthRed2.setReasonText("Because Yellow moved faster than Red.");
@@ -145,7 +145,7 @@ public class ReasonDBOpenHelper extends SQLiteOpenHelper {
 
 		Reason earthRed21 = new Reason();
 
-		earthRed21.setAnchor(Reason.CONST_RED);
+		earthRed21.setAnchor(Reason.CONST_BROWN);
 		earthRed21.setFlag(Reason.CONST_YELLOW);
 		earthRed21.setOrigin("Tom");
 		earthRed21.setReasonText("Because they saw Yellow in front of Red.");

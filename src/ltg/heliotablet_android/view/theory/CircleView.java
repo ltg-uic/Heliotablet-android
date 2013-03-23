@@ -145,6 +145,22 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 		ViewPager vPager = (ViewPager) viewPagerLayout
 				.findViewById(R.id.popover_pager);
 		
+		vPager.setAdapter(new PopoverViewAdapter(pages));
+		vPager.setOffscreenPageLimit(5);
+		vPager.setCurrentItem(0);
+        ViewGroup parent = (ViewGroup) this.getParent().getParent().getParent().getParent();
+
+		
+		PopoverView popoverView = new PopoverView(getContext(), viewPagerLayout);
+		cachedPopoverView = popoverView;
+		popoverView.setContentSizeForViewInPopover(new Point(370, 290));
+		popoverView.setDelegate(this);
+		popoverTouchListener = popoverView;
+		
+		popoverView.showPopoverFromRectInViewGroup(
+				parent,
+				PopoverView.getFrameForView(this),
+				PopoverView.PopoverArrowDirectionAny, true);
 		
 		ImmutableSortedSet<Reason> copyOfReasonSet = ImmutableSortedSet
 				.orderedBy(OrderingViewData.isReadOnlyOrdering.reverse())
@@ -165,18 +181,24 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 				editText.setKeyListener(null);
 				editText.setBackground(getResources().getDrawable(R.drawable.textedit_shape_disabled));
 				deleteButton.setVisibility(View.GONE);
+				editText.setText(reason.getOrigin() + ": " + reason.getReasonText());
 			} else {
 				editText.setFocusable(true);
 			    editText.setFocusableInTouchMode(true);
 	            editText.setClickable(true);
 				editText.requestFocus();
-				if( reason.getReasonText() != null && !reason.getReasonText().equals("")) {
-					keepListener = true;
+				
+				String reasonStrip = StringUtils.stripToNull(reason.getReasonText());
+				if( reasonStrip == null ) {
+					popoverView.setOnTouchListener(null);
 				}
+				
+				
 				editText.addTextChangedListener(new TextWatcher() {
 					
 					@Override
 					public void onTextChanged(CharSequence s, int start, int before, int count) {
+						
 						cachedPopoverView.setOnTouchListener(popoverTouchListener);
 						
 					}
@@ -224,25 +246,7 @@ public class CircleView extends RelativeLayout implements PopoverViewDelegate, I
 			pages.add(layout);
 		}
 		
-		vPager.setAdapter(new PopoverViewAdapter(pages));
-		vPager.setOffscreenPageLimit(5);
-		vPager.setCurrentItem(0);
-        ViewGroup parent = (ViewGroup) this.getParent().getParent().getParent().getParent();
-
-		
-		PopoverView popoverView = new PopoverView(getContext(), viewPagerLayout);
-		cachedPopoverView = popoverView;
-		popoverView.setContentSizeForViewInPopover(new Point(370, 290));
-		popoverView.setDelegate(this);
-		popoverTouchListener = popoverView;
-		
-		if( !keepListener )
-			popoverView.setOnTouchListener(null);
-		
-		popoverView.showPopoverFromRectInViewGroup(
-				parent,
-				PopoverView.getFrameForView(this),
-				PopoverView.PopoverArrowDirectionAny, true);
+	
 		
 	}
 	

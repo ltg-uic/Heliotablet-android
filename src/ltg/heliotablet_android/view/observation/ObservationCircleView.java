@@ -113,8 +113,25 @@ public class ObservationCircleView extends RelativeLayout implements
 				.copyOf(Iterables.filter(popOverReasonSet,
 						Reason.getIsReadOnlyTruePredicate()));
 
-		// get all the users - the current one
-		boolean keepListener = false;
+		vPager.setAdapter(new PopoverViewAdapter(pages));
+		vPager.setOffscreenPageLimit(5);
+		vPager.setCurrentItem(0);
+		ViewGroup parent = (ViewGroup) this.getParent().getParent().getParent();
+
+		PopoverView popoverView = new PopoverView(getContext(), viewPagerLayout);
+		
+		cachedPopoverView = popoverView;
+		
+		popoverTouchListener = popoverView;
+		
+		popoverView.setContentSizeForViewInPopover(new Point(520, 250));
+		popoverView.setDelegate(this);
+		
+	
+		
+		popoverView.showPopoverFromRectInViewGroup(parent,
+				PopoverView.getFrameForView(this),
+				PopoverView.PopoverArrowDirectionAny, true);
 		
 		if (!editableReasons.isEmpty()) {
 			Reason reason = editableReasons.first();
@@ -168,7 +185,9 @@ public class ObservationCircleView extends RelativeLayout implements
 						radioButton.setEnabled(false);
 
 				}
-				keepListener = true;			
+				popoverView.setOnTouchListener(popoverTouchListener);
+			} else {
+				popoverView.setOnTouchListener(null);
 			}
 			
 			radioGroup
@@ -177,9 +196,6 @@ public class ObservationCircleView extends RelativeLayout implements
 						@Override
 						public void onCheckedChanged(RadioGroup radioGroup,
 								int checkedId) {
-							
-							
-							
 							
 							Reason reason = (Reason) radioGroup.getTag();
 
@@ -192,7 +208,6 @@ public class ObservationCircleView extends RelativeLayout implements
 									.findViewById(checkedId);
 							String text = (String) selectedRadioButton.getTag();
 							updateRadioButton(selectedRadioButton, flag, anchor);
-							cachedPopoverView.setOnTouchListener(popoverTouchListener);
 							cachedPopoverView.dissmissPopover(true);
 						}
 					});
@@ -256,28 +271,7 @@ public class ObservationCircleView extends RelativeLayout implements
 			editText.setKeyListener(null);
 
 		}
-		vPager.setAdapter(new PopoverViewAdapter(pages));
-		vPager.setOffscreenPageLimit(5);
-		vPager.setCurrentItem(0);
-		ViewGroup parent = (ViewGroup) this.getParent().getParent().getParent();
 
-		PopoverView popoverView = new PopoverView(getContext(), viewPagerLayout);
-		
-		cachedPopoverView = popoverView;
-		
-		popoverTouchListener = popoverView;
-		
-		if( !keepListener )
-			popoverView.setOnTouchListener(null);
-		
-		popoverView.setContentSizeForViewInPopover(new Point(520, 250));
-		popoverView.setDelegate(this);
-		
-	
-		
-		popoverView.showPopoverFromRectInViewGroup(parent,
-				PopoverView.getFrameForView(this),
-				PopoverView.PopoverArrowDirectionAny, true);
 
 	}
 
@@ -339,6 +333,10 @@ public class ObservationCircleView extends RelativeLayout implements
 									.newInstance((Reason) radioGroup.getTag());
 							newReason.setReasonText(selectedText);
 							reasonNeedsUpdate = newReason;
+							MainActivity ma = (MainActivity) ObservationCircleView.this.getContext();
+							ma.operationObservation(reasonNeedsUpdate, reasonNeedsUpdate.getAnchor(), "update", true);
+							this.makeToast("Reason Updated");
+							reasonNeedsUpdate = null;
 						}
 
 					}
@@ -356,10 +354,10 @@ public class ObservationCircleView extends RelativeLayout implements
 
 			Reason newInstance = Reason.newInstance(reasonNeedsUpdate);
 
-			MainActivity ma = (MainActivity) ObservationCircleView.this.getContext();
-			ma.operationObservation(reasonNeedsUpdate, reasonNeedsUpdate.getAnchor(), "update", true);
-			this.makeToast("Reason Updated");
-			reasonNeedsUpdate = null;
+//			MainActivity ma = (MainActivity) ObservationCircleView.this.getContext();
+//			ma.operationObservation(reasonNeedsUpdate, reasonNeedsUpdate.getAnchor(), "update", true);
+//			this.makeToast("Reason Updated");
+//			reasonNeedsUpdate = null;
 		} else {
 			// just deleted reset the flag
 			isDelete = false;
