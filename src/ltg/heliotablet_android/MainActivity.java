@@ -110,9 +110,11 @@ public class MainActivity extends FragmentActivity implements TabListener,
 				
 				connectMenu.setTitle(userName +" is connected");
 				needsLogout = true;
+				connectMenu.setIcon(getResources().getDrawable(R.drawable.switch_on));
 			} else {
 				connectMenu.setTitle("Login");
 				needsLogout = false;
+				connectMenu.setIcon(getResources().getDrawable(R.drawable.switch_off));
 			}
 			
 		};

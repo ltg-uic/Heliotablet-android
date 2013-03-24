@@ -5,6 +5,7 @@
         android:orderInCategory="100"
         android:showAsAction="ifRoom|withText"
         android:title="@string/menu_connect"
+        android:icon="@drawable/switch_off"
        />
     
 <!--     <item
