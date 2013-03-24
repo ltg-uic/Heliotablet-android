@@ -182,8 +182,6 @@ public class TheoryPlanetView extends LinearLayout {
 		Resources resources = getResources();
 		Drawable drawable = null;
 
-		int textColor = 0;
-		int textColorWhite = resources.getColor(R.color.White);
 		int textColorBlack = resources.getColor(R.color.Black);
 
 		if (color.equals(Reason.CONST_RED)) {
@@ -191,31 +189,23 @@ public class TheoryPlanetView extends LinearLayout {
 				drawable = DRAWABLES.get(Reason.CONST_RED);
 			else
 				drawable = DRAWABLES.get(Reason.CONST_RED+"_d");
-			
-			textColor = textColorWhite;
 		} else if (color.equals(Reason.CONST_BLUE)) {
 			if( isTransparent == false )
 				drawable = DRAWABLES.get(Reason.CONST_BLUE);
 			else
 				drawable = DRAWABLES.get(Reason.CONST_BLUE+"_d");
-			
-			textColor = textColorBlack;
 		} else if (color.equals(Reason.CONST_BROWN)) {
 			
 			if( isTransparent == false )
 				drawable = DRAWABLES.get(Reason.CONST_BROWN);
 			else
 				drawable = DRAWABLES.get(Reason.CONST_BROWN+"_d");
-			
-			textColor = textColorWhite;
 		} else if (color.equals(Reason.CONST_YELLOW)) {
 			
 			if( isTransparent == false )
 				drawable = DRAWABLES.get(Reason.CONST_YELLOW);
 			else
 				drawable = DRAWABLES.get(Reason.CONST_YELLOW+"_d");
-			
-			textColor = textColorBlack;
 		} else if (color.equals(Reason.CONST_PINK)) {
 			
 			if( isTransparent == false )
@@ -223,7 +213,6 @@ public class TheoryPlanetView extends LinearLayout {
 			else
 				drawable = DRAWABLES.get(Reason.CONST_PINK+"_d");
 			
-			textColor = textColorBlack;
 		} else if (color.equals(Reason.CONST_GREEN)) {
 			
 			if( isTransparent == false )
@@ -231,7 +220,6 @@ public class TheoryPlanetView extends LinearLayout {
 			else
 				drawable = DRAWABLES.get(Reason.CONST_GREEN+"_d");
 			
-			textColor = textColorBlack;
 		} else if (color.equals(Reason.CONST_GREY)) {
 			
 			if( isTransparent == false )
@@ -239,7 +227,6 @@ public class TheoryPlanetView extends LinearLayout {
 			else
 				drawable = DRAWABLES.get(Reason.CONST_GREY+"_d");
 			
-			textColor = textColorBlack;
 		} else if (color.equals(Reason.CONST_ORANGE)) {
 			
 			if( isTransparent == false )
@@ -247,10 +234,9 @@ public class TheoryPlanetView extends LinearLayout {
 			else
 				drawable = DRAWABLES.get(Reason.CONST_ORANGE+"_d");
 			
-			textColor = textColorBlack;
 
 		}
-		cv.setTextColor(textColor);
+		cv.setTextColor(textColorBlack);
 		cv.setBackground(drawable);
 
 	}

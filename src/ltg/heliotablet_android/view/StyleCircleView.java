@@ -11,34 +11,24 @@ public class StyleCircleView {
 		Drawable drawable = null;
 
 		int textColor = 0;
-		int textColorWhite = resources.getColor(R.color.White);
 		int textColorBlack = resources.getColor(R.color.Black);
 
 		if (color.equals(Reason.CONST_RED)) {
-			drawable = resources.getDrawable(R.drawable.earth_shape);
-			textColor = textColorWhite;
+			drawable = resources.getDrawable(R.drawable.earth_shape_d);
 		} else if (color.equals(Reason.CONST_BLUE)) {
-			drawable = resources.getDrawable(R.drawable.neptune_shape);
-			textColor = textColorBlack;
+			drawable = resources.getDrawable(R.drawable.neptune_shape_d);
 		} else if (color.equals(Reason.CONST_BROWN)) {
-			drawable = resources.getDrawable(R.drawable.mercury_shape);
-			textColor = textColorWhite;
+			drawable = resources.getDrawable(R.drawable.mercury_shape_d);
 		} else if (color.equals(Reason.CONST_YELLOW)) {
-			drawable = resources.getDrawable(R.drawable.saturn_shape);
-			textColor = textColorBlack;
+			drawable = resources.getDrawable(R.drawable.saturn_shape_d);
 		} else if (color.equals(Reason.CONST_PINK)) {
-			drawable = resources.getDrawable(R.drawable.venus_shape);
-			textColor = textColorBlack;
+			drawable = resources.getDrawable(R.drawable.venus_shape_d);
 		} else if (color.equals(Reason.CONST_GREEN)) {
-			drawable = resources.getDrawable(R.drawable.jupiter_shape);
-			textColor = textColorBlack;
+			drawable = resources.getDrawable(R.drawable.jupiter_shape_d);
 		} else if (color.equals(Reason.CONST_GREY)) {
-			drawable = resources.getDrawable(R.drawable.mars_shape);
-			textColor = textColorBlack;
+			drawable = resources.getDrawable(R.drawable.mars_shape_d);
 		} else if (color.equals(Reason.CONST_ORANGE)) {
-			drawable = resources.getDrawable(R.drawable.uranus_shape);
-			textColor = textColorBlack;
-
+			drawable = resources.getDrawable(R.drawable.uranus_shape_d);
 		}
 		view.setTextColor(textColor);
 		view.setBackground(drawable);

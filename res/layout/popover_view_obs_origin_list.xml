@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/originScrollView" android:layout_width="520dp"
-	android:layout_height="220dp" android:layout_gravity="fill"
-	android:background="@color/BGBlueDark">
+    android:id="@+id/originScrollView"
+    android:layout_width="510dp"
+    android:layout_height="240dp"
+    android:layout_gravity="fill"
+    android:background="@color/BGBlueDark" >
 
-	<FrameLayout android:layout_width="match_parent"
-		android:layout_height="224dp" android:layout_margin="0dp">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" 
+         android:layout_marginLeft="10dp"
+         android:layout_marginBottom="10dp"
+         android:layout_marginTop="10dp"
+            >
 
-		<EditText android:id="@+id/originEditText"
-			android:layout_width="490dp" android:layout_height="190dp"
-			android:layout_marginLeft="15dp" android:layout_marginTop="15dp"
-			android:background="@drawable/textedit_shape" android:gravity="center"
-			android:inputType="textMultiLine" android:text="@string/blank_space"
-			android:textColor="@color/BGBlueDark" android:textStyle="bold" />
-	</FrameLayout>
+        <EditText
+            android:id="@+id/originEditText"
+            android:layout_width="490dp"
+            android:layout_height="230dp"
+            android:background="@drawable/textedit_shape"
+            android:gravity="center_horizontal"
+            android:inputType="textMultiLine"
+            android:text="@string/blank_space"
+            android:textColor="@color/BGBlueDark"
+            android:textStyle="bold" />
+    </FrameLayout>
+
 </ScrollView>

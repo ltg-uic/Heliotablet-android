@@ -59,7 +59,7 @@
     <string name="XMPP_PORT">XMPP_PORT</string>
     <string name="XMPP_CHAT_ROOM_BEN">helio-sp-13-ben@conference.54.243.60.48</string>
     <string name="XMPP_CHAT_ROOM_JULIA">helio-sp-13-julia@conference.54.243.60.48</string>
-    <string name="menu_connect">Connect</string>
+    <string name="menu_connect">Login</string>
 	<string name="menu_disconnect">Disconnect</string>
     <string name="password">PASSWORD</string>
     <string name="label">XMPP Service</string>

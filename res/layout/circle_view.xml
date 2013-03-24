@@ -4,6 +4,7 @@
     <TextView
         android:id="@+id/reasonLabelText"
         style="@style/theoryReasonText"
-        android:text="@string/blank_space" />
+        android:text="@string/blank_space" 
+        />
 
 </merge>

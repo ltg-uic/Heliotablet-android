@@ -30,7 +30,7 @@
         style="@style/observationAnchorViewStyle"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/mercury_shape"
+        android:background="@drawable/mercury_shape_d"
         android:tag="brown_OBSERVATION"
         android:label="@string/brown" />
 
@@ -39,7 +39,7 @@
         style="@style/observationAnchorViewStyle"
         android:layout_marginLeft="800dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/saturn_shape"
+        android:background="@drawable/saturn_shape_d"
         android:tag="yellow_OBSERVATION"
         android:label="@string/yellow" />
 
