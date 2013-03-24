@@ -341,6 +341,10 @@ public class XmppService extends IntentService {
 
 				xmppConnection.login(storedUserName, storedPassword);
 
+				while(xmppConnection.isAuthenticated() == false) {
+					sendMessageToUI("Waiting to login to chat");
+				}
+				
 				final Intent i = new Intent(GROUP_CHAT);
 				final android.os.Message newMessage = serviceHandler
 						.obtainMessage();
@@ -384,6 +388,12 @@ public class XmppService extends IntentService {
 
 				try {
 					groupChat.join(xmppConnection.getUser());
+					
+					while(groupChat.isJoined() == false) {
+						sendMessageToUI("Waiting to join group chat");
+					}
+					
+					
 				} catch (XMPPException e) {
 					Log.e(TAG, "ERROR CONNECTING TO GROUP CHAT", e);
 				}

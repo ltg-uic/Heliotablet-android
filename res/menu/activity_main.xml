@@ -5,9 +5,9 @@
         android:orderInCategory="100"
         android:showAsAction="ifRoom|withText"
         android:title="@string/menu_connect"
-        android:icon="@drawable/switch_off"
+      
        />
-    
+    <!--   android:icon="@drawable/switch_off" -->
 <!--     <item
         android:id="@+id/menu_disconnect"
         android:orderInCategory="100"
