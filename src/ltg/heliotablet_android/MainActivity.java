@@ -52,6 +52,8 @@ import com.google.common.collect.Lists;
 public class MainActivity extends FragmentActivity implements TabListener,
 		FragmentCommunicator {
 
+	private static final String INIT_HELIO = "init_helio";
+	private static final String INIT_HELIO_DIFF = "init_helio_diff";
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 	private ActionBar actionBar;
 
@@ -65,6 +67,7 @@ public class MainActivity extends FragmentActivity implements TabListener,
 	public static String NEW_OBSERVATION = "new_observation";
 	public static String REMOVE_OBSERVATION = "remove_observation";
 	public static String UPDATE_OBSERVATION = "update_observation";
+	public List<String> eventTypes = Lists.newArrayList(NEW_THEORY, UPDATE_THEORY, REMOVE_THEORY, NEW_OBSERVATION, UPDATE_OBSERVATION, REMOVE_OBSERVATION);
 
 	private Messenger activityMessenger;
 	private MenuItem initMenu;
@@ -247,15 +250,25 @@ public class MainActivity extends FragmentActivity implements TabListener,
 			String storedUserName = settings.getString(
 					getString(R.string.user_name), "");
 
+		
 			if (ltgEvent.getOrigin().toLowerCase()
 					.equals(storedUserName.toLowerCase())) {
 				return;
 			}
 
+			
 			if (ltgEvent != null) {
 				if (ltgEvent.getPayload() != null) {
 					JsonNode payload = ltgEvent.getPayload();
-					if (ltgEvent.getType().equals("init_helio_diff")) {
+					
+					String ltgEventType = ltgEvent.getType();
+					
+					if( ltgEventType.equals(INIT_HELIO)) {
+						return;
+					} else if (ltgEventType.equals(INIT_HELIO_DIFF)) {
+						
+						if( !ltgEvent.getDestination().contains(storedUserName))
+							return;
 						
 						
 						ArrayNode jsonNode = (ArrayNode) payload
@@ -292,13 +305,26 @@ public class MainActivity extends FragmentActivity implements TabListener,
 //						if (!deletions.isEmpty()) {
 //							new DeleteTask().execute(deletions);
 //						}
-					} else {
+					} else if( eventTypes.contains(ltgEventType) ) {
 
-						String color = payload.get("color").textValue();
-						String anchor = payload.get("anchor").textValue();
-						String reasonText = payload.get("reason").textValue();
-						String origin = ltgEvent.getOrigin();
-						if (ltgEvent.getType().equals("new_theory")) {
+						String color = null;
+						String anchor = null;
+						String reasonText = null;
+						String origin = null;
+						
+						if( payload.get("color") != null )
+							color = payload.get("color").textValue();
+						
+						if( payload.get("anchor") != null )
+							anchor = payload.get("anchor").textValue();
+						
+						if(  payload.get("reason") != null )
+							reasonText = payload.get("reason").textValue();
+						
+						if(  ltgEvent.getOrigin() != null )
+							origin = ltgEvent.getOrigin();
+						
+						if (ltgEventType.equals(NEW_THEORY)) {
 
 							Reason reason = new Reason(anchor, color,
 									Reason.TYPE_THEORY, origin, true);
@@ -306,7 +332,7 @@ public class MainActivity extends FragmentActivity implements TabListener,
 							this.operationTheory(reason, anchor, "insert", false);
 							makeToast("theory insert anchor" + anchor
 									+ "color: " + color);
-						} else if (ltgEvent.getType().equals("new_observation")) {
+						} else if (ltgEventType.equals(NEW_OBSERVATION)) {
 							Reason reason = new Reason(anchor, color,
 									Reason.TYPE_OBSERVATION, origin, true);
 							reason.setReasonText(reasonText);
@@ -314,7 +340,7 @@ public class MainActivity extends FragmentActivity implements TabListener,
 							this.operationObservation(reason, anchor, "insert", false);
 							makeToast("obs new anchor" + anchor + "color: "
 									+ color);
-						} else if (ltgEvent.getType().equals("update_theory")) {
+						} else if (ltgEventType.equals(UPDATE_THEORY)) {
 
 							Reason reason = new Reason(anchor, color,
 									Reason.TYPE_THEORY, origin, true);
@@ -323,8 +349,8 @@ public class MainActivity extends FragmentActivity implements TabListener,
 
 							makeToast("theory update anchor" + anchor
 									+ "color: " + color);
-						} else if (ltgEvent.getType().equals(
-								"update_observation")) {
+						} else if (ltgEventType.equals(
+								UPDATE_OBSERVATION)) {
 							Reason reason = new Reason(anchor, color,
 									Reason.TYPE_OBSERVATION, origin, true);
 							reason.setReasonText(reasonText);
@@ -332,7 +358,7 @@ public class MainActivity extends FragmentActivity implements TabListener,
 							makeToast("obs update anchor" + anchor + "color: "
 									+ color);
 
-						} else if (ltgEvent.getType().equals("remove_theory")) {
+						} else if (ltgEventType.equals(REMOVE_THEORY)) {
 
 							Reason reason = new Reason(anchor, color,
 									Reason.TYPE_THEORY, origin, true);
@@ -346,8 +372,8 @@ public class MainActivity extends FragmentActivity implements TabListener,
 							makeToast("deleted theory anchor" + anchor
 									+ "color: " + color);
 
-						} else if (ltgEvent.getType().equals(
-								"remove_observation")) {
+						} else if (ltgEventType.equals(
+								REMOVE_OBSERVATION)) {
 
 							Reason reason = new Reason(anchor, color,
 									Reason.TYPE_OBSERVATION, origin, true);

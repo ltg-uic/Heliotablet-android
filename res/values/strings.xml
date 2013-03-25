@@ -46,9 +46,9 @@
 
     
     <string name="obs_reason_origin_text">Who agrees that %1$s is closer than %2$s?</string>
-    <string name="obs_reason_text">Why do you agree that %1$s is closer than %2$s?</string>
+    <string name="obs_reason_text">Why do I think that %1$s is closer than %2$s?</string>
     <string name="reasonButton1">Because I saw %1$s pass in front of %2$s.</string>
-    <string name="reasonButton2">Because I %1$s saw that one was faster than the other.</string>
+    <string name="reasonButton2">Because I saw that one was faster than the other.</string>
     <string name="reasonButton3">Because of another reason.</string>
 
     <!-- Xmpp stuff -->
