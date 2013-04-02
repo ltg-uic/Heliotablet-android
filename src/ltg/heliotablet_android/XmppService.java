@@ -433,14 +433,14 @@ public class XmppService extends IntentService {
 	protected void processMessage(Message message) {
 		String fromName = null;
 		if (message.getFrom() != null) {
-			fromName = StringUtils.parseBareAddress(message.getFrom());
+			fromName = StringUtils.parseName(message.getFrom());
 			
 		}
 		if (message.getBody() != null) {
 
 			String currentUser = StringUtils.parseName(xmppConnection.getUser());
 			
-			if( fromName.contains(currentUser))
+			if( fromName.equals(currentUser))
 				return;
 			
 			

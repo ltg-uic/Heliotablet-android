@@ -59,7 +59,7 @@
     <string name="XMPP_PORT">XMPP_PORT</string>
     <string name="XMPP_CHAT_ROOM_BEN">helio-sp-13-ben@conference.54.243.60.48</string>
     <string name="XMPP_CHAT_ROOM_JULIA">helio-sp-13-julia@conference.54.243.60.48</string>
-    <string name="menu_connect">Login</string>
+    <string name="menu_connect">LOGIN NEEDED</string>
 	<string name="menu_disconnect">Disconnect</string>
     <string name="password">PASSWORD</string>
     <string name="label">XMPP Service</string>
@@ -79,10 +79,10 @@
     <string name="class_title_5th">5th Grade</string>
     
     <string name="ben_class_5th">Marissa,Kay,Allie,Charlotte,Jalyn,Palmer,Jamie,Noah,Robert,Alastair,Rafee</string>
-    <string name="ben_class_6th">Nora,Simone,Rayne,Erica,Saffi,Evelyn,Steffany,Michael,Mateu,Massimo,Josh,Jude</string>
+    <string name="ben_class_6th">Nora,Simone,Rayne,Erica,Saffi,Evelyn,Steffany,Michael,Mateu,Massimo,Josh,Jude,Benny</string>
     
     <string name="julia_class_5th">Owen,Alana,Camille,Hank,Jared,Maya,Oliver,Elias,Mei,Julian,Ashleigh,Saskia</string>
-    <string name="julia_class_6th">Tien,JoshD,Will,Avital,Cleo,Jacob,Andrew,Amy,Esme,Honor,Ben</string>
+    <string name="julia_class_6th">Tien,JoshD,Will,Avital,Cleo,Jacob,Andrew,Amy,Esme,Honor,Ben,Julia</string>
     
      <string name="pick_your_teacher_">Pick Your Teacher.</string>
     <string name="which_grade_">Which Grade are You in?</string>
