@@ -578,7 +578,7 @@ public class MainActivity extends FragmentActivity implements TabListener,
 	public void makeToast(String toastText) {
 		Toast toast = Toast.makeText(this, toastText, Toast.LENGTH_SHORT);
 		toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 50);
-		toast.show();
+		//toast.show();
 	}
 	
 	@Override
