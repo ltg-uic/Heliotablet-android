@@ -18,7 +18,7 @@
     <string name="mars">Marte</string>
     <string name="earth">Tierra</string>
     <string name="mercury">Mercurio</string>
-    <string name="jupiter">Jupiter</string>
+    <string name="jupiter">Júpiter</string>
     <string name="uranus">Urano</string>
     <string name="neptune">Neptune</string>
 
@@ -28,7 +28,7 @@
     <string name="yellow">amarillo</string>
     <string name="green">verde</string>
     <string name="white">blanco</string>
-    <string name="purple">purpura</string>
+    <string name="purple">violeta</string>
     <string name="brown">cafe</string>
     <string name="orange">naranja</string>
     <string name="gray">gris</string>
