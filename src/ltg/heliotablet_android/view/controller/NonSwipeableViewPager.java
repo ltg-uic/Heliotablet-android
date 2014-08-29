@@ -6,16 +6,16 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 public class NonSwipeableViewPager extends ViewPager {
-	
-	public NonSwipeableViewPager(Context context) {
+
+    private boolean enabled;
+
+    public NonSwipeableViewPager(Context context) {
         super(context);
     }
 
     public NonSwipeableViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-
-    private boolean enabled;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -37,5 +37,5 @@ public class NonSwipeableViewPager extends ViewPager {
 
     public void setPagingEnabled(boolean enabled) {
         this.enabled = enabled;
-    } 
+    }
 }

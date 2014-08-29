@@ -57,6 +57,11 @@ public abstract class Page implements PageTreeNode {
         return mRequired;
     }
 
+    public Page setRequired(boolean required) {
+        mRequired = required;
+        return this;
+    }
+
     void setParentKey(String parentKey) {
         mParentKey = parentKey;
     }
@@ -90,10 +95,5 @@ public abstract class Page implements PageTreeNode {
 
     public void notifyDataChanged() {
         mCallbacks.onPageDataChanged(this);
-    }
-
-    public Page setRequired(boolean required) {
-        mRequired = required;
-        return this;
     }
 }

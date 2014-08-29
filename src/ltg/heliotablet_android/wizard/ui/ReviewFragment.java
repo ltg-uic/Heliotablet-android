@@ -1,16 +1,5 @@
-
 package ltg.heliotablet_android.wizard.ui;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import ltg.heliotablet_android.R;
-import ltg.heliotablet_android.wizard.model.AbstractWizardModel;
-import ltg.heliotablet_android.wizard.model.ModelCallbacks;
-import ltg.heliotablet_android.wizard.model.Page;
-import ltg.heliotablet_android.wizard.model.ReviewItem;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -21,6 +10,16 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import ltg.heliotablet_android.R;
+import ltg.heliotablet_android.wizard.model.AbstractWizardModel;
+import ltg.heliotablet_android.wizard.model.ModelCallbacks;
+import ltg.heliotablet_android.wizard.model.Page;
+import ltg.heliotablet_android.wizard.model.ReviewItem;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class ReviewFragment extends ListFragment implements ModelCallbacks {
     private Callbacks mCallbacks;
@@ -40,7 +39,7 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_page, container, false);
 
         TextView titleView = (TextView) rootView.findViewById(android.R.id.title);
@@ -107,6 +106,7 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
 
     public interface Callbacks {
         AbstractWizardModel onGetModel();
+
         void onEditScreenAfterReview(String pageKey);
     }
 

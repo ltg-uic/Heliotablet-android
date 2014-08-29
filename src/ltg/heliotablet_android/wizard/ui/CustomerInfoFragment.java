@@ -1,8 +1,5 @@
-
 package ltg.heliotablet_android.wizard.ui;
 
-import ltg.heliotablet_android.R;
-import ltg.heliotablet_android.wizard.model.CustomerInfoPage;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -14,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import ltg.heliotablet_android.R;
+import ltg.heliotablet_android.wizard.model.CustomerInfoPage;
 
 public class CustomerInfoFragment extends Fragment {
     private static final String ARG_KEY = "key";
@@ -24,6 +23,9 @@ public class CustomerInfoFragment extends Fragment {
     private TextView mNameView;
     private TextView mEmailView;
 
+    public CustomerInfoFragment() {
+    }
+
     public static CustomerInfoFragment create(String key) {
         Bundle args = new Bundle();
         args.putString(ARG_KEY, key);
@@ -31,9 +33,6 @@ public class CustomerInfoFragment extends Fragment {
         CustomerInfoFragment fragment = new CustomerInfoFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    public CustomerInfoFragment() {
     }
 
     @Override
@@ -47,7 +46,7 @@ public class CustomerInfoFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_page_customer_info, container, false);
         ((TextView) rootView.findViewById(android.R.id.title)).setText(mPage.getTitle());
 
@@ -83,7 +82,7 @@ public class CustomerInfoFragment extends Fragment {
         mNameView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1,
-                    int i2) {
+                                          int i2) {
             }
 
             @Override
@@ -101,7 +100,7 @@ public class CustomerInfoFragment extends Fragment {
         mEmailView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1,
-                    int i2) {
+                                          int i2) {
             }
 
             @Override

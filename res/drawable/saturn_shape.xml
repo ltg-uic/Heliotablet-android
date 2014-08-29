@@ -1,39 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
-	<item>
-	<shape 
-	    android:shape="oval">
-	    	<size
-	             android:height="80dp"
-	             android:width="80dp" />
-	    	<gradient
-	            android:type="radial"
-	            android:startColor="#ffffff"
-	            android:endColor="@color/PlanetGreyShadow"
-	            android:gradientRadius="100"
-	            android:centerX="75%"
-	            android:centerY="25%"/>
-	</shape>
-	</item>
-	<item android:left="1dp"
-    	      android:bottom="2dp">
-	<shape android:shape="oval">
-	    	<size
-	             android:height="80dp"
-	             android:width="80dp" />
-	    	<gradient
-	            android:type="radial"
-	            android:startColor="#FFFFFF"
-	            android:endColor="@color/PlanetYellow"
-	            android:gradientRadius="100"
-	            android:centerX="75%"
-	            android:centerY="25%"/>
-	    	<size
-                android:height="100dp"
-                android:width="100dp" />
-	    	<stroke android:width="1dp" android:color="@color/PlanetYellow" />
-	</shape>
-	</item>
-		<item android:drawable="@drawable/planet_yours_1">
-	</item>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape
+                android:shape="oval">
+            <size
+                    android:height="80dp"
+                    android:width="80dp"/>
+            <gradient
+                    android:type="radial"
+                    android:startColor="#ffffff"
+                    android:endColor="@color/PlanetGreyShadow"
+                    android:gradientRadius="100"
+                    android:centerX="75%"
+                    android:centerY="25%"/>
+        </shape>
+    </item>
+    <item
+            android:left="1dp"
+            android:bottom="2dp">
+        <shape android:shape="oval">
+            <size
+                    android:height="80dp"
+                    android:width="80dp"/>
+            <gradient
+                    android:type="radial"
+                    android:startColor="#FFFFFF"
+                    android:endColor="@color/PlanetYellow"
+                    android:gradientRadius="100"
+                    android:centerX="75%"
+                    android:centerY="25%"/>
+            <size
+                    android:height="100dp"
+                    android:width="100dp"/>
+            <stroke
+                    android:width="1dp"
+                    android:color="@color/PlanetYellow"/>
+        </shape>
+    </item>
+    <item android:drawable="@drawable/planet_yours_1">
+    </item>
 </layer-list>

@@ -1,245 +1,245 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/planetSketchView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background_color" >
+             android:id="@+id/planetSketchView"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@drawable/background_color">
 
     <!-- planets -->
 
     <RelativeLayout
-        android:id="@+id/redSketchPlanet"
-        style="@style/sketchPlanetView"
-        android:layout_marginLeft="603dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/earth_shape_d"
-        >
+            android:id="@+id/redSketchPlanet"
+            style="@style/sketchPlanetView"
+            android:layout_marginLeft="603dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/earth_shape_d"
+            >
 
-     
+
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/blueSketchPlanet"
-        style="@style/sketchPlanetView"
-        android:layout_marginLeft="780dp"
-        android:layout_marginTop="83dp" 
-        android:background="@drawable/neptune_shape_d"
-        >
+            android:id="@+id/blueSketchPlanet"
+            style="@style/sketchPlanetView"
+            android:layout_marginLeft="780dp"
+            android:layout_marginTop="83dp"
+            android:background="@drawable/neptune_shape_d"
+            >
 
-        
+
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/yellowSketchPlanet"
-        style="@style/sketchPlanetView"
-        android:layout_marginLeft="854dp"
-        android:layout_marginTop="260dp" 
-        android:background="@drawable/saturn_shape_d"
-        >
+            android:id="@+id/yellowSketchPlanet"
+            style="@style/sketchPlanetView"
+            android:layout_marginLeft="854dp"
+            android:layout_marginTop="260dp"
+            android:background="@drawable/saturn_shape_d"
+            >
 
-       
+
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/greenSketchPlanet"
-        style="@style/sketchPlanetView"
-        android:layout_marginLeft="780dp"
-        android:layout_marginTop="437dp" 
-        android:background="@drawable/jupiter_shape_d"
-        >
+            android:id="@+id/greenSketchPlanet"
+            style="@style/sketchPlanetView"
+            android:layout_marginLeft="780dp"
+            android:layout_marginTop="437dp"
+            android:background="@drawable/jupiter_shape_d"
+            >
 
-        
+
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/pinkSketchPlanet"
-        style="@style/sketchPlanetView"
-        android:layout_marginLeft="603dp"
-        android:layout_marginTop="510dp" 
-        android:background="@drawable/venus_shape_d"
-        >
+            android:id="@+id/pinkSketchPlanet"
+            style="@style/sketchPlanetView"
+            android:layout_marginLeft="603dp"
+            android:layout_marginTop="510dp"
+            android:background="@drawable/venus_shape_d"
+            >
 
-       
+
     </RelativeLayout>
 
-    
+
     <RelativeLayout
-        android:id="@+id/brownSketchPlanet"
-        style="@style/sketchPlanetView"
-        android:layout_marginLeft="426dp"
-        android:layout_marginTop="437dp" 
-        android:background="@drawable/mercury_shape_d"
-        >
+            android:id="@+id/brownSketchPlanet"
+            style="@style/sketchPlanetView"
+            android:layout_marginLeft="426dp"
+            android:layout_marginTop="437dp"
+            android:background="@drawable/mercury_shape_d"
+            >
 
-      
+
     </RelativeLayout>
-    
+
     <RelativeLayout
-        android:id="@+id/orangeSketchPlanet"
-        style="@style/sketchPlanetView"
-        android:layout_marginLeft="353dp"
-        android:layout_marginTop="260dp" 
-        android:background="@drawable/uranus_shape_d"
-        >
+            android:id="@+id/orangeSketchPlanet"
+            style="@style/sketchPlanetView"
+            android:layout_marginLeft="353dp"
+            android:layout_marginTop="260dp"
+            android:background="@drawable/uranus_shape_d"
+            >
 
-        
-    </RelativeLayout>
-	
-     <RelativeLayout
-        android:id="@+id/graySketchPlanet"
-        style="@style/sketchPlanetView"
-        android:layout_marginLeft="426dp"
-        android:layout_marginTop="83dp" 
-        android:background="@drawable/mars_shape_d"
-        >
 
-    
     </RelativeLayout>
-    
+
+    <RelativeLayout
+            android:id="@+id/graySketchPlanet"
+            style="@style/sketchPlanetView"
+            android:layout_marginLeft="426dp"
+            android:layout_marginTop="83dp"
+            android:background="@drawable/mars_shape_d"
+            >
+
+
+    </RelativeLayout>
+
 
     <!-- labels -->
 
     <RelativeLayout
-        android:id="@+id/mercurySketchLabel"
-        style="@style/sketchPlanetTextLabelStyle"
-        android:layout_width="130dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="550dp"
-        android:background="@drawable/tag_blue_0" >
+            android:id="@+id/mercurySketchLabel"
+            style="@style/sketchPlanetTextLabelStyle"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="550dp"
+            android:background="@drawable/tag_blue_0">
 
         <TextView
-            style="@style/SketchTextStyle"
-            android:text="@string/mercury" />
+                style="@style/SketchTextStyle"
+                android:text="@string/mercury"/>
     </RelativeLayout>
-    
-    
-      <RelativeLayout
-        android:id="@+id/earthSketchLabel"
-        style="@style/sketchPlanetTextLabelStyle"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="130dp" 
-        android:layout_width="128dp"
-        android:layout_height="38dp"
-        android:background="@drawable/tag_blue_0" >
 
-        <TextView
-            style="@style/SketchTextStyle"
-            android:text="@string/earth" />
-    </RelativeLayout>
-    
 
     <RelativeLayout
-        android:id="@+id/neptune_sketchLabel"
-        style="@style/sketchPlanetTextLabelStyle"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="190dp"  
-        android:layout_width="128dp"
-        android:layout_height="38dp"
-        android:background="@drawable/tag_blue_0" >
+            android:id="@+id/earthSketchLabel"
+            style="@style/sketchPlanetTextLabelStyle"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="130dp"
+            android:layout_width="128dp"
+            android:layout_height="38dp"
+            android:background="@drawable/tag_blue_0">
 
         <TextView
-            style="@style/SketchTextStyle"
-            android:text="@string/neptune" />
+                style="@style/SketchTextStyle"
+                android:text="@string/earth"/>
     </RelativeLayout>
 
+
     <RelativeLayout
-        android:id="@+id/uranusSketchLabel"
-        style="@style/sketchPlanetTextLabelStyle"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="250dp"  
-        android:layout_width="128dp"
-        android:layout_height="38dp"
-        android:background="@drawable/tag_blue_0" >
+            android:id="@+id/neptune_sketchLabel"
+            style="@style/sketchPlanetTextLabelStyle"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="190dp"
+            android:layout_width="128dp"
+            android:layout_height="38dp"
+            android:background="@drawable/tag_blue_0">
 
         <TextView
-            style="@style/SketchTextStyle"
-            android:text="@string/uranus" />
+                style="@style/SketchTextStyle"
+                android:text="@string/neptune"/>
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/jupiterSketchLabel"
-        style="@style/sketchPlanetTextLabelStyle"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="310dp" 
-        android:layout_width="128dp"
-        android:layout_height="38dp"
-        android:background="@drawable/tag_blue_0"  >
+            android:id="@+id/uranusSketchLabel"
+            style="@style/sketchPlanetTextLabelStyle"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="250dp"
+            android:layout_width="128dp"
+            android:layout_height="38dp"
+            android:background="@drawable/tag_blue_0">
 
         <TextView
-            style="@style/SketchTextStyle"
-            android:text="@string/jupiter" />
+                style="@style/SketchTextStyle"
+                android:text="@string/uranus"/>
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/marsSketchLabel"
-        style="@style/sketchPlanetTextLabelStyle"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="370dp"
-        android:layout_width="128dp"
-        android:layout_height="38dp"
-        android:background="@drawable/tag_blue_0" >
+            android:id="@+id/jupiterSketchLabel"
+            style="@style/sketchPlanetTextLabelStyle"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="310dp"
+            android:layout_width="128dp"
+            android:layout_height="38dp"
+            android:background="@drawable/tag_blue_0">
 
         <TextView
-            style="@style/SketchTextStyle"
-            android:text="@string/mars" />
+                style="@style/SketchTextStyle"
+                android:text="@string/jupiter"/>
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/venusSketchLabel"
-        style="@style/sketchPlanetTextLabelStyle"
-        android:layout_width="128dp"
-        android:layout_height="37dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="430dp"
-        android:background="@drawable/tag_blue_0" >
+            android:id="@+id/marsSketchLabel"
+            style="@style/sketchPlanetTextLabelStyle"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="370dp"
+            android:layout_width="128dp"
+            android:layout_height="38dp"
+            android:background="@drawable/tag_blue_0">
 
         <TextView
-            style="@style/SketchTextStyle"
-            android:text="@string/venus" />
+                style="@style/SketchTextStyle"
+                android:text="@string/mars"/>
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/saturnSketchLabel"
-        style="@style/sketchPlanetTextLabelStyle"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="490dp"  
-        android:layout_width="128dp"
-        android:layout_height="38dp"
-        android:background="@drawable/tag_blue_0" >
+            android:id="@+id/venusSketchLabel"
+            style="@style/sketchPlanetTextLabelStyle"
+            android:layout_width="128dp"
+            android:layout_height="37dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="430dp"
+            android:background="@drawable/tag_blue_0">
 
         <TextView
-            style="@style/SketchTextStyle"
-            android:text="@string/saturn"
-            android:gravity="left" />
+                style="@style/SketchTextStyle"
+                android:text="@string/venus"/>
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/editSketchLabel"
-        style="@style/sketchPlanetTextLabelStyle"
+            android:id="@+id/saturnSketchLabel"
+            style="@style/sketchPlanetTextLabelStyle"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="490dp"
+            android:layout_width="128dp"
+            android:layout_height="38dp"
+            android:background="@drawable/tag_blue_0">
 
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="70dp"
-        android:background="@drawable/tag_blue_0" >
+        <TextView
+                style="@style/SketchTextStyle"
+                android:text="@string/saturn"
+                android:gravity="left"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/editSketchLabel"
+            style="@style/sketchPlanetTextLabelStyle"
+
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="70dp"
+            android:background="@drawable/tag_blue_0">
 
         <EditText
-            android:id="@+id/sketchEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
-            android:gravity="center"
-            android:textSize="24sp" 
-            android:maxLength="12"
-            >
+                android:id="@+id/sketchEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:gravity="center"
+                android:textSize="24sp"
+                android:maxLength="12"
+                >
 
-            <requestFocus />
+            <requestFocus/>
         </EditText>
-        
-        
+
+
     </RelativeLayout>
 
     <!--    <RelativeLayout
@@ -257,6 +257,6 @@
               android:background="@android:drawable/ic_menu_camera" />
 
     </RelativeLayout> -->
-  
+
 
 </FrameLayout>

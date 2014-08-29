@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ltg.heliotablet_android.view.theory.TheoryPlanetView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/venusView"
-    style="@style/theoryPlanetTableGridStyle"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background_color" />
+                                                      android:id="@+id/venusView"
+                                                      style="@style/theoryPlanetTableGridStyle"
+                                                      android:layout_width="match_parent"
+                                                      android:layout_height="match_parent"
+                                                      android:background="@drawable/background_color"/>
 

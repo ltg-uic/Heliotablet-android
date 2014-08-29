@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:planetView="http://schemas.android.com/apk/res/ltg.heliotablet_android"
-    android:layout_width="match_parent"
-    android:layout_height="fill_parent"
-    android:layout_gravity="fill"
-    android:alignmentMode="alignBounds"
-    android:background="@android:color/holo_blue_light"
-    android:columnCount="6"
-    android:fitsSystemWindows="false"
-    android:orientation="horizontal"
-    android:padding="0dp"
-    android:paddingBottom="0dp"
-    android:paddingLeft="0dp"
-    android:paddingRight="0dp"
-    android:paddingTop="0dp"
-    android:rowCount="21"
-    android:rowOrderPreserved="false"
-    android:useDefaultMargins="false" >
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="fill"
+            android:alignmentMode="alignBounds"
+            android:background="@android:color/holo_blue_light"
+            android:columnCount="6"
+            android:fitsSystemWindows="false"
+            android:orientation="horizontal"
+            android:padding="0dp"
+            android:paddingBottom="0dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:paddingTop="0dp"
+            android:rowCount="21"
+            android:rowOrderPreserved="false"
+            android:useDefaultMargins="false">
 
     <!-- Beginning spacers -->
 
@@ -24,19 +23,19 @@
     <!-- ver space -->
 
     <Space
-        android:layout_width="1dp"
-        android:layout_column="0"
-        android:layout_gravity="fill_vertical"
-        android:layout_row="0" />
+            android:layout_width="1dp"
+            android:layout_column="0"
+            android:layout_gravity="fill_vertical"
+            android:layout_row="0"/>
 
     <!-- Titles -->
     <!-- Planets -->
 
-   <!--  <Space
-        android:layout_height="1dp"
-        android:layout_column="1"
-        android:layout_gravity="fill_horizontal"
-        android:layout_row="0" /> -->
+    <!--  <Space
+         android:layout_height="1dp"
+         android:layout_column="1"
+         android:layout_gravity="fill_horizontal"
+         android:layout_row="0" /> -->
 
     <!-- Theories -->
 
@@ -44,228 +43,227 @@
     <!-- ver space -->
 
     <Space
-        android:layout_width="1dp"
-        android:layout_column="2"
-        android:layout_gravity="fill_vertical"
-        android:layout_row="0" />
+            android:layout_width="1dp"
+            android:layout_column="2"
+            android:layout_gravity="fill_vertical"
+            android:layout_row="0"/>
 
     <!-- hor space -->
 
-<!--     <Space
-        android:layout_height="1dp"
-        android:layout_column="3"
-        android:layout_gravity="fill_horizontal"
-        android:layout_row="0" /> -->
+    <!--     <Space
+            android:layout_height="1dp"
+            android:layout_column="3"
+            android:layout_gravity="fill_horizontal"
+            android:layout_row="0" /> -->
 
     <!-- Colors -->
 
-  <!--   <Space
-        android:layout_height="1dp"
-        android:layout_column="4"
-        android:layout_gravity="fill_horizontal"
-        android:layout_row="0" /> -->
+    <!--   <Space
+          android:layout_height="1dp"
+          android:layout_column="4"
+          android:layout_gravity="fill_horizontal"
+          android:layout_row="0" /> -->
 
     <!-- ver space -->
 
     <Space
-        android:layout_width="1dp"
-        android:layout_column="4"
-        android:layout_gravity="fill_vertical"
-        android:layout_row="0" />
+            android:layout_width="1dp"
+            android:layout_column="4"
+            android:layout_gravity="fill_vertical"
+            android:layout_row="0"/>
 
     <include
-        android:id="@+id/colors_include"
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        android:layout_column="5"
-        android:layout_gravity="fill"
-        android:layout_row="1"
-        android:layout_rowSpan="19"
-        layout="@layout/colors_layout"
-        android:background="@drawable/background_color"
-        android:gravity="center"
-        android:paddingRight="0dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginRight="1dp"
-        android:layout_marginBottom="1dp" />
+            android:id="@+id/colors_include"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_column="5"
+            android:layout_gravity="fill"
+            android:layout_row="1"
+            android:layout_rowSpan="19"
+            layout="@layout/colors_layout"
+            android:background="@drawable/background_color"
+            android:gravity="center"
+            android:paddingRight="0dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="1dp"/>
 
     <!-- Planet rows -->
 
 
     <TextView
-        style="@style/theoryPlanetLabel"
-        android:layout_width="97dp"
-        android:layout_column="1"
-        android:layout_row="3"
-        android:text="@string/mercury" 
-        android:layout_marginTop="1dp" />
+            style="@style/theoryPlanetLabel"
+            android:layout_width="97dp"
+            android:layout_column="1"
+            android:layout_row="3"
+            android:text="@string/mercury"
+            android:layout_marginTop="1dp"/>
 
     <Space
-        android:layout_height="1dp"
-        android:layout_column="1"
-        android:layout_row="4" />
+            android:layout_height="1dp"
+            android:layout_column="1"
+            android:layout_row="4"/>
 
     <TextView
-        style="@style/theoryPlanetLabel"
-        android:layout_column="1"
-        android:layout_row="5"
-        android:text="@string/venus" />
+            style="@style/theoryPlanetLabel"
+            android:layout_column="1"
+            android:layout_row="5"
+            android:text="@string/venus"/>
 
     <Space
-        android:layout_height="1dp"
-        android:layout_column="1"
-        android:layout_row="6" />
+            android:layout_height="1dp"
+            android:layout_column="1"
+            android:layout_row="6"/>
 
     <TextView
-        style="@style/theoryPlanetLabel"
-        android:layout_column="1"
-        android:layout_row="7"
-        android:text="@string/earth" />
+            style="@style/theoryPlanetLabel"
+            android:layout_column="1"
+            android:layout_row="7"
+            android:text="@string/earth"/>
 
     <Space
-        android:layout_height="1dp"
-        android:layout_column="1"
-        android:layout_row="8" />
+            android:layout_height="1dp"
+            android:layout_column="1"
+            android:layout_row="8"/>
 
     <TextView
-        style="@style/theoryPlanetLabel"
-        android:layout_column="1"
-        android:layout_row="9"
-        android:text="@string/mars" />
+            style="@style/theoryPlanetLabel"
+            android:layout_column="1"
+            android:layout_row="9"
+            android:text="@string/mars"/>
 
     <Space
-        android:layout_height="1dp"
-        android:layout_column="1"
-        android:layout_row="10" />
+            android:layout_height="1dp"
+            android:layout_column="1"
+            android:layout_row="10"/>
 
     <TextView
-        style="@style/theoryPlanetLabel"
-        android:layout_column="1"
-        android:layout_row="11"
-        android:text="@string/jupiter" />
+            style="@style/theoryPlanetLabel"
+            android:layout_column="1"
+            android:layout_row="11"
+            android:text="@string/jupiter"/>
 
     <Space
-        android:layout_height="1dp"
-        android:layout_column="1"
-        android:layout_row="12" />
+            android:layout_height="1dp"
+            android:layout_column="1"
+            android:layout_row="12"/>
 
     <TextView
-        style="@style/theoryPlanetLabel"
-        android:layout_column="1"
-        android:layout_row="13"
-        android:text="@string/saturn" />
+            style="@style/theoryPlanetLabel"
+            android:layout_column="1"
+            android:layout_row="13"
+            android:text="@string/saturn"/>
 
     <Space
-        android:layout_height="1dp"
-        android:layout_column="1"
-        android:layout_row="14" />
+            android:layout_height="1dp"
+            android:layout_column="1"
+            android:layout_row="14"/>
 
     <TextView
-        style="@style/theoryPlanetLabel"
-        android:layout_column="1"
-        android:layout_row="15"
-        android:text="@string/uranus" />
+            style="@style/theoryPlanetLabel"
+            android:layout_column="1"
+            android:layout_row="15"
+            android:text="@string/uranus"/>
 
     <Space
-        android:layout_height="1dp"
-        android:layout_column="1"
-        android:layout_row="16" />
+            android:layout_height="1dp"
+            android:layout_column="1"
+            android:layout_row="16"/>
 
     <TextView
-        style="@style/theoryPlanetLabel"
-        android:layout_column="1"
-        android:layout_row="17"
-        android:text="@string/neptune" 
-      />
+            style="@style/theoryPlanetLabel"
+            android:layout_column="1"
+            android:layout_row="17"
+            android:text="@string/neptune"
+            />
 
-   
 
     <!-- views -->
 
     <fragment
-        android:id="@+id/mercury"
-        android:tag="mercury_THEORY"
-        android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
-        android:label="@string/mercury" 
-        style="@style/theoryPlanetTableGridStyle"
-        android:layout_column="3"
-        android:layout_row="3"
-        android:layout_marginTop="1dp" >
-  
-     </fragment>
+            android:id="@+id/mercury"
+            android:tag="mercury_THEORY"
+            android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
+            android:label="@string/mercury"
+            style="@style/theoryPlanetTableGridStyle"
+            android:layout_column="3"
+            android:layout_row="3"
+            android:layout_marginTop="1dp">
 
-	  <fragment
-        android:id="@+id/venus"
-        android:tag="venus_THEORY"
-        android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
-        android:label="@string/venus" 
-        style="@style/theoryPlanetTableGridStyle"
-        android:layout_column="3"
-        android:layout_row="5" >
-  
-     </fragment>
-
-	 <fragment
-        android:id="@+id/earth"
-        android:tag="earth_THEORY"
-        android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
-        android:label="@string/earth" 
-        style="@style/theoryPlanetTableGridStyle"
-        android:layout_column="3"
-        android:layout_row="7" >
-     </fragment>
-
-	 <fragment
-        android:id="@+id/mars"
-        android:tag="mars_THEORY"
-        android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
-        android:label="@string/mars" 
-        style="@style/theoryPlanetTableGridStyle"
-        android:layout_column="3"
-        android:layout_row="9" >
-     </fragment>
-
-	<fragment
-        android:id="@+id/jupiter"
-        android:tag="jupiter_THEORY"
-        android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
-        android:label="@string/jupiter" 
-        style="@style/theoryPlanetTableGridStyle"
-        android:layout_column="3"
-        android:layout_row="11" >
-     </fragment>	 
-
-  <fragment
-        android:id="@+id/saturn"
-        android:tag="saturn_THEORY"
-        android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
-        android:label="@string/saturn" 
-        style="@style/theoryPlanetTableGridStyle"
-        android:layout_column="3"
-        android:layout_row="13" >
-  
-     </fragment>
+    </fragment>
 
     <fragment
-        android:id="@+id/uranus"
-        android:tag="uranus_THEORY"
-        android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
-        android:label="@string/uranus" 
-        style="@style/theoryPlanetTableGridStyle"
-        android:layout_column="3"
-        android:layout_row="15" >
-  
-     </fragment>
+            android:id="@+id/venus"
+            android:tag="venus_THEORY"
+            android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
+            android:label="@string/venus"
+            style="@style/theoryPlanetTableGridStyle"
+            android:layout_column="3"
+            android:layout_row="5">
 
-      <fragment
-        android:id="@+id/neptune"
-        android:tag="neptune_THEORY"
-        android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
-        android:label="@string/neptune" 
-        style="@style/theoryPlanetTableGridStyle"
-        android:layout_column="3"
-        android:layout_row="17" >
-  
-     </fragment>
-     
+    </fragment>
+
+    <fragment
+            android:id="@+id/earth"
+            android:tag="earth_THEORY"
+            android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
+            android:label="@string/earth"
+            style="@style/theoryPlanetTableGridStyle"
+            android:layout_column="3"
+            android:layout_row="7">
+    </fragment>
+
+    <fragment
+            android:id="@+id/mars"
+            android:tag="mars_THEORY"
+            android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
+            android:label="@string/mars"
+            style="@style/theoryPlanetTableGridStyle"
+            android:layout_column="3"
+            android:layout_row="9">
+    </fragment>
+
+    <fragment
+            android:id="@+id/jupiter"
+            android:tag="jupiter_THEORY"
+            android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
+            android:label="@string/jupiter"
+            style="@style/theoryPlanetTableGridStyle"
+            android:layout_column="3"
+            android:layout_row="11">
+    </fragment>
+
+    <fragment
+            android:id="@+id/saturn"
+            android:tag="saturn_THEORY"
+            android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
+            android:label="@string/saturn"
+            style="@style/theoryPlanetTableGridStyle"
+            android:layout_column="3"
+            android:layout_row="13">
+
+    </fragment>
+
+    <fragment
+            android:id="@+id/uranus"
+            android:tag="uranus_THEORY"
+            android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
+            android:label="@string/uranus"
+            style="@style/theoryPlanetTableGridStyle"
+            android:layout_column="3"
+            android:layout_row="15">
+
+    </fragment>
+
+    <fragment
+            android:id="@+id/neptune"
+            android:tag="neptune_THEORY"
+            android:name="ltg.heliotablet_android.view.theory.TheoryViewFragment"
+            android:label="@string/neptune"
+            style="@style/theoryPlanetTableGridStyle"
+            android:layout_column="3"
+            android:layout_row="17">
+
+    </fragment>
+
 </GridLayout>

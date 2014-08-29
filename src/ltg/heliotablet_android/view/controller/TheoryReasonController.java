@@ -1,58 +1,41 @@
 package ltg.heliotablet_android.view.controller;
 
-import java.util.HashMap;
-import java.util.List;
-
-import ltg.heliotablet_android.MainActivity;
-import ltg.heliotablet_android.data.Reason;
-import ltg.heliotablet_android.data.ReasonDBOpenHelper;
-import ltg.heliotablet_android.view.theory.CircleView;
-import ltg.heliotablet_android.view.theory.TheoryFragmentWithSQLiteLoaderNestFragments;
-import ltg.heliotablet_android.view.theory.TheoryPlanetView;
-import ltg.heliotablet_android.view.theory.TheoryViewFragment;
-import android.app.Activity;
 import android.content.Context;
-import android.database.Cursor;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.Loader;
-import android.view.View;
+import ltg.heliotablet_android.view.theory.TheoryPlanetView;
 
-import com.commonsware.cwac.loaderex.acl.SQLiteCursorLoader;
-import com.google.common.collect.ImmutableSortedSet;
-import com.google.common.collect.Iterables;
+import java.util.HashMap;
 
 public class TheoryReasonController extends ReasonController {
 
-	private static TheoryReasonController tInstance;
-	
-	private HashMap<String, TheoryPlanetView> theoryViewsToAnchors = new HashMap<String, TheoryPlanetView>();
-	
-	private TheoryReasonController(Context context) {
-		super(context);
-	}
-	
-	public static TheoryReasonController getInstance(Context context) {
-		if (tInstance == null) {
-			tInstance = new TheoryReasonController(context);
-		}
-		return tInstance;
-	}
-	
-	
-	public void add(String anchor, TheoryPlanetView theoryview) {
-		this.theoryViewsToAnchors.put(anchor, theoryview);
-	}
+    private static TheoryReasonController tInstance;
 
-	public void setTheoryViewsToAnchors(
-			HashMap<String, TheoryPlanetView> theoryViewsToAnchors) {
-		this.theoryViewsToAnchors = theoryViewsToAnchors;
-		
-	}
-	
-	public HashMap<String, TheoryPlanetView> getTheoryViewsToAnchors() {
-		return theoryViewsToAnchors;
-	}
-	
-	
+    private HashMap<String, TheoryPlanetView> theoryViewsToAnchors = new HashMap<String, TheoryPlanetView>();
+
+    private TheoryReasonController(Context context) {
+        super(context);
+    }
+
+    public static TheoryReasonController getInstance(Context context) {
+        if (tInstance == null) {
+            tInstance = new TheoryReasonController(context);
+        }
+        return tInstance;
+    }
+
+
+    public void add(String anchor, TheoryPlanetView theoryview) {
+        this.theoryViewsToAnchors.put(anchor, theoryview);
+    }
+
+    public HashMap<String, TheoryPlanetView> getTheoryViewsToAnchors() {
+        return theoryViewsToAnchors;
+    }
+
+    public void setTheoryViewsToAnchors(
+            HashMap<String, TheoryPlanetView> theoryViewsToAnchors) {
+        this.theoryViewsToAnchors = theoryViewsToAnchors;
+
+    }
+
+
 }

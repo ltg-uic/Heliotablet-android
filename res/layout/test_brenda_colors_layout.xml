@@ -1,85 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/planetColorsView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background_color" >
+             android:id="@+id/planetColorsView"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@drawable/background_color">
 
-    
-      <include
-        android:id="@+id/shape_colors_include"
-        android:layout_width="260dp"
-        android:layout_height="600dp"
-        android:layout_marginLeft="1024dp"
-        android:layout_marginTop="53dp"
-        android:scaleType="fitEnd"
-        layout="@layout/shape_colors_layout"
-      />
-      
-   
+
+    <include
+            android:id="@+id/shape_colors_include"
+            android:layout_width="260dp"
+            android:layout_height="600dp"
+            android:layout_marginLeft="1024dp"
+            android:layout_marginTop="53dp"
+            android:scaleType="fitEnd"
+            layout="@layout/shape_colors_layout"
+            />
+
 
     <fragment
-        android:id="@+id/blueView"
-        style="@style/observationAnchorViewStyle"
-        android:layout_marginLeft="800dp"
-        android:layout_marginTop="420dp"
-        android:label="@string/blue" >
+            android:id="@+id/blueView"
+            style="@style/observationAnchorViewStyle"
+            android:layout_marginLeft="800dp"
+            android:layout_marginTop="420dp"
+            android:label="@string/blue">
     </fragment>
 
     <fragment
-        android:id="@+id/brownView"
-        style="@style/observationAnchorViewStyle"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/mercury_shape"
-        android:label="@string/brown" />
+            android:id="@+id/brownView"
+            style="@style/observationAnchorViewStyle"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/mercury_shape"
+            android:label="@string/brown"/>
 
     <fragment
-        android:id="@+id/yellowView"
-        style="@style/observationAnchorViewStyle"
-        android:layout_marginLeft="800dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/saturn_shape"
-        android:label="@string/yellow" />
+            android:id="@+id/yellowView"
+            style="@style/observationAnchorViewStyle"
+            android:layout_marginLeft="800dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/saturn_shape"
+            android:label="@string/yellow"/>
 
     <fragment
-        android:id="@+id/pinkView"
-        style="@style/observationAnchorViewStyle"
-        android:layout_marginLeft="407dp"
-        android:layout_marginTop="22dp"
-        android:background="@drawable/venus_shape"
-        android:label="@string/pink" />
+            android:id="@+id/pinkView"
+            style="@style/observationAnchorViewStyle"
+            android:layout_marginLeft="407dp"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/venus_shape"
+            android:label="@string/pink"/>
 
     <fragment
-        android:id="@+id/grayView"
-        style="@style/observationAnchorViewStyle"
-             android:layout_marginLeft="382dp"
-        android:layout_marginTop="420dp"
-        android:background="@drawable/mars_shape"
-        android:label="@string/gray" />
+            android:id="@+id/grayView"
+            style="@style/observationAnchorViewStyle"
+            android:layout_marginLeft="382dp"
+            android:layout_marginTop="420dp"
+            android:background="@drawable/mars_shape"
+            android:label="@string/gray"/>
 
     <fragment
-        android:id="@+id/redView"
-        style="@style/observationAnchorViewStyle"
-        android:layout_marginLeft="592dp"
-        android:layout_marginTop="232dp"
-        android:background="@drawable/earth_shape"    
-        android:label="@string/red" />
+            android:id="@+id/redView"
+            style="@style/observationAnchorViewStyle"
+            android:layout_marginLeft="592dp"
+            android:layout_marginTop="232dp"
+            android:background="@drawable/earth_shape"
+            android:label="@string/red"/>
 
     <fragment
-        android:id="@+id/orangeView"
-        style="@style/observationAnchorViewStyle"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="416dp"
-        android:background="@drawable/uranus_shape"
-        android:label="@string/orange" />
+            android:id="@+id/orangeView"
+            style="@style/observationAnchorViewStyle"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="416dp"
+            android:background="@drawable/uranus_shape"
+            android:label="@string/orange"/>
 
     <fragment
-        android:id="@+ig/greenView"
-        style="@style/observationAnchorViewStyle"
-        android:layout_marginLeft="200dp"
-        android:layout_marginTop="210dp"
-        android:background="@drawable/jupiter_shape_observation_anchor"
-        android:label="@string/green" />
+            android:id="@+ig/greenView"
+            style="@style/observationAnchorViewStyle"
+            android:layout_marginLeft="200dp"
+            android:layout_marginTop="210dp"
+            android:background="@drawable/jupiter_shape_observation_anchor"
+            android:label="@string/green"/>
 
 </FrameLayout>

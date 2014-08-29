@@ -16,7 +16,6 @@
 
 package ltg.heliotablet_android.wizard.ui;
 
-import ltg.heliotablet_android.R;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -27,6 +26,7 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import ltg.heliotablet_android.R;
 
 public class StepPagerStrip extends View {
     private static final int[] ATTRS = new int[]{
@@ -140,10 +140,10 @@ public class StepPagerStrip extends View {
             canvas.drawRect(mTempRectF, i < mCurrentPage
                     ? mPrevTabPaint
                     : (i > mCurrentPage
-                            ? mNextTabPaint
-                            : (i == mPageCount - 1
-                                    ? mSelectedLastTabPaint
-                                    : mSelectedTabPaint)));
+                    ? mNextTabPaint
+                    : (i == mPageCount - 1
+                    ? mSelectedLastTabPaint
+                    : mSelectedTabPaint)));
         }
     }
 

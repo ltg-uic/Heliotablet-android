@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Red Close Button -->
     <item>
-        <shape 
-            android:shape="rectangle" >
+        <shape
+                android:shape="rectangle">
             <padding
-                android:bottom="4dp"
-                android:left="0dp"
-                android:right="0dp"
-                android:top="0dp" />
+                    android:bottom="4dp"
+                    android:left="0dp"
+                    android:right="0dp"
+                    android:top="0dp"/>
 
             <gradient
-                android:angle="270"
-                android:centerX="0.55"
-                android:startColor="#BF0C0F" 
-                android:centerColor="#EC1C24"
-                android:endColor="#F69778"/>
+                    android:angle="270"
+                    android:centerX="0.55"
+                    android:startColor="#BF0C0F"
+                    android:centerColor="#EC1C24"
+                    android:endColor="#F69778"/>
             <corners android:radius="7dp"/>
-            <stroke android:width="1dp" android:color="@color/WhiteSmoke" />
-            
-            
-    	</shape>
+            <stroke
+                    android:width="1dp"
+                    android:color="@color/WhiteSmoke"/>
+
+
+        </shape>
     </item>
 </layer-list>

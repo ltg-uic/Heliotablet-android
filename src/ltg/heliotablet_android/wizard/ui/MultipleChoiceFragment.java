@@ -1,13 +1,5 @@
 package ltg.heliotablet_android.wizard.ui;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import ltg.heliotablet_android.R;
-import ltg.heliotablet_android.wizard.model.MultipleFixedChoicePage;
-import ltg.heliotablet_android.wizard.model.Page;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +11,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import ltg.heliotablet_android.R;
+import ltg.heliotablet_android.wizard.model.MultipleFixedChoicePage;
+import ltg.heliotablet_android.wizard.model.Page;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class MultipleChoiceFragment extends ListFragment {
     private static final String ARG_KEY = "key";
@@ -28,6 +28,9 @@ public class MultipleChoiceFragment extends ListFragment {
     private List<String> mChoices;
     private Page mPage;
 
+    public MultipleChoiceFragment() {
+    }
+
     public static MultipleChoiceFragment create(String key) {
         Bundle args = new Bundle();
         args.putString(ARG_KEY, key);
@@ -35,9 +38,6 @@ public class MultipleChoiceFragment extends ListFragment {
         MultipleChoiceFragment fragment = new MultipleChoiceFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    public MultipleChoiceFragment() {
     }
 
     @Override
@@ -57,7 +57,7 @@ public class MultipleChoiceFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_page, container, false);
         ((TextView) rootView.findViewById(android.R.id.title)).setText(mPage.getTitle());
 

@@ -2,28 +2,28 @@
 <resources>
 
     <declare-styleable name="TheoryPlanetView">
-        <attr name="anchor" format="string" />
+        <attr name="anchor" format="string"/>
     </declare-styleable>
     <declare-styleable name="CircleView">
-        <attr name="flag" format="string" />
-        <attr name="textColor" format="color" />
+        <attr name="flag" format="string"/>
+        <attr name="textColor" format="color"/>
     </declare-styleable>
     <declare-styleable name="TheoryViewFragment">
-        <attr name="android:label" />
+        <attr name="android:label"/>
     </declare-styleable>
     <declare-styleable name="ObservationViewFragment">
-        <attr name="android:label" />
+        <attr name="android:label"/>
     </declare-styleable>
     <declare-styleable name="CircleLayout">
-        <attr name="innerRadius" format="dimension" />
-        <attr name="divider" format="color" />
-        <attr name="innerCircle" format="color" />
-        <attr name="angleOffset" format="float" />
-        <attr name="dividerWidth" format="dimension" />
+        <attr name="innerRadius" format="dimension"/>
+        <attr name="divider" format="color"/>
+        <attr name="innerCircle" format="color"/>
+        <attr name="angleOffset" format="float"/>
+        <attr name="dividerWidth" format="dimension"/>
     </declare-styleable>
 
-     <declare-styleable name="AppTheme">
-        <attr name="textAppearanceFinish" format="reference" />
+    <declare-styleable name="AppTheme">
+        <attr name="textAppearanceFinish" format="reference"/>
     </declare-styleable>
-    
+
 </resources>

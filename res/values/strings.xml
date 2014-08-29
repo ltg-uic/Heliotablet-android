@@ -34,7 +34,7 @@
     <string name="gray">gray</string>
     <string name="blank_space">" "</string>
     <string name="lorem_ipsum">This is earth because it is awesome.</string>
-    
+
     <!-- labels -->
     <string name="action_previous">Previous</string>
     <string name="action_next">Next</string>
@@ -44,7 +44,7 @@
     <string name="fragment_tag_scratchpad">scratchpad</string>
     <string name="pink">pink</string>
 
-    
+
     <string name="obs_reason_origin_text">Who agrees that %1$s is closer than %2$s?</string>
     <string name="obs_reason_text">Why do I think that %1$s is closer than %2$s?</string>
     <string name="reasonButton1">Because I saw %1$s pass in front of %2$s.</string>
@@ -54,13 +54,14 @@
     <!-- Xmpp stuff -->
     <string name="xmpp_prefs">XMPP_PREFS</string>
     <string name="user_name">USER_NAME</string>
-    <string name="xmpp_host">54.243.60.48</string>
+
+    <string name="xmpp_host">ltg.evl.uic.edu</string>
     <string name="XMPP_HOST_KEY">xmpp_host_key</string>
     <string name="XMPP_PORT">XMPP_PORT</string>
-    <string name="XMPP_CHAT_ROOM_BEN">helio-sp-13-ben@conference.54.243.60.48</string>
+    <string name="XMPP_CHAT_ROOM_BEN">hr-test@conference.ltg.evl.uic.edu</string>
     <string name="XMPP_CHAT_ROOM_JULIA">helio-sp-13-julia@conference.54.243.60.48</string>
     <string name="menu_connect">LOGIN NEEDED</string>
-	<string name="menu_disconnect">Disconnect</string>
+    <string name="menu_disconnect">Disconnect</string>
     <string name="password">PASSWORD</string>
     <string name="label">XMPP Service</string>
     <string name="authenticator_activity_username_label">Username</string>
@@ -70,21 +71,21 @@
     <string name="login_title">XMPP Login</string>
     <string name="login_button">Login</string>
     <string name="cancel_button">Cancel</string>
-    
+
     <!-- Class Wizard -->
-    <string name="ben_class_title">Ben\'s Class</string>
+    <string name="ben_class_title">Brenda\'s Class</string>
     <string name="julia_class_title">Julia\'s Class</string>
-    
+
     <string name="class_title_6th">6th Grade</string>
     <string name="class_title_5th">5th Grade</string>
-    
-    <string name="ben_class_5th">Marissa,Kay,Allie,Charlotte,Jalyn,Palmer,Jamie,Noah,Robert,Alastair,Rafee</string>
+
+    <string name="ben_class_5th">Group1,Group2,Group3,Group4,Group5,Group6,Group7</string>
     <string name="ben_class_6th">Nora,Simone,Rayne,Erica,Saffi,Evelyn,Steffany,Michael,Mateu,Massimo,Josh,Jude,Benny</string>
-    
+
     <string name="julia_class_5th">Owen,Alana,Camille,Hank,Jared,Maya,Oliver,Elias,Mei,Julian,Ashleigh,Saskia</string>
     <string name="julia_class_6th">Tien,JoshD,Will,Avital,Cleo,Jacob,Andrew,Amy,Esme,Honor,Ben,Julia</string>
-    
-     <string name="pick_your_teacher_">Pick Your Teacher.</string>
+
+    <string name="pick_your_teacher_">Pick Your Teacher.</string>
     <string name="which_grade_">Which Grade are You in?</string>
     <string name="choose_your_name_">Choose Your Name</string>
 
@@ -102,8 +103,6 @@
         confirmation.</string>
     <string name="submit_confirm_button">Place order</string>
     <string name="delete_button_label">Delete</string>
-   
-    
-    
+
 
 </resources>

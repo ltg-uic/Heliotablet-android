@@ -22,5 +22,6 @@ package ltg.heliotablet_android.wizard.model;
  */
 public interface ModelCallbacks {
     void onPageDataChanged(Page page);
+
     void onPageTreeChanged();
 }

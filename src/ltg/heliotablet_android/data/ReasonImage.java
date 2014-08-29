@@ -5,49 +5,49 @@ import java.sql.Timestamp;
 
 public class ReasonImage {
 
-	private Blob imageRaw;
-	private String url;
-	private Long id;
-	private Long reasonId;
-	private Timestamp creationTime;
-	
-	public Blob getImageRaw() {
-		return imageRaw;
-	}
+    private Blob imageRaw;
+    private String url;
+    private Long id;
+    private Long reasonId;
+    private Timestamp creationTime;
 
-	public void setImageRaw(Blob imageRaw) {
-		this.imageRaw = imageRaw;
-	}
+    public Blob getImageRaw() {
+        return imageRaw;
+    }
 
-	public String getUrl() {
-		return url;
-	}
+    public void setImageRaw(Blob imageRaw) {
+        this.imageRaw = imageRaw;
+    }
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    public String getUrl() {
+        return url;
+    }
 
-	public Long getReasonId() {
-		return reasonId;
-	}
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-	public void setReasonId(Long reasonId) {
-		this.reasonId = reasonId;
-	}
+    public Long getReasonId() {
+        return reasonId;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public void setReasonId(Long reasonId) {
+        this.reasonId = reasonId;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Timestamp getCreationTime() {
-		return creationTime;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setCreationTime(Timestamp creationTime) {
-		this.creationTime = creationTime;
-	}
+    public Timestamp getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(Timestamp creationTime) {
+        this.creationTime = creationTime;
+    }
 }

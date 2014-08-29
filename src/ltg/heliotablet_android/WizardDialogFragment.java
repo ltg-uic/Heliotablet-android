@@ -1,20 +1,7 @@
 package ltg.heliotablet_android;
 
-import java.util.List;
-
-import ltg.heliotablet_android.wizard.model.AbstractWizardModel;
-import ltg.heliotablet_android.wizard.model.ModelCallbacks;
-import ltg.heliotablet_android.wizard.model.Page;
-import ltg.heliotablet_android.wizard.ui.PageFragmentCallbacks;
-import ltg.heliotablet_android.wizard.ui.ReviewFragment;
-import ltg.heliotablet_android.wizard.ui.StepPagerStrip;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Message;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -24,12 +11,20 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import ltg.heliotablet_android.wizard.model.AbstractWizardModel;
+import ltg.heliotablet_android.wizard.model.ModelCallbacks;
+import ltg.heliotablet_android.wizard.model.Page;
+import ltg.heliotablet_android.wizard.ui.PageFragmentCallbacks;
+import ltg.heliotablet_android.wizard.ui.ReviewFragment;
+import ltg.heliotablet_android.wizard.ui.StepPagerStrip;
+
+import java.util.List;
 
 public class WizardDialogFragment extends FragmentActivity implements
-PageFragmentCallbacks, ReviewFragment.Callbacks,
-ModelCallbacks {
+        PageFragmentCallbacks, ReviewFragment.Callbacks,
+        ModelCallbacks {
 
-	private ViewPager mPager;
+    private ViewPager mPager;
     private MyPagerAdapter mPagerAdapter;
 
     private boolean mEditingAfterReview;
@@ -43,14 +38,14 @@ ModelCallbacks {
 
     private List<Page> mCurrentPageSequence;
     private StepPagerStrip mStepPagerStrip;
-    
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.f_activity_main);
 
         mWizardModel = new ClassStudentWizardModel(this);
-        
+
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
@@ -93,16 +88,16 @@ ModelCallbacks {
             @Override
             public void onClick(View view) {
                 if (mPager.getCurrentItem() == mCurrentPageSequence.size()) {
-                	
-                Bundle save = mWizardModel.save();
-                   
-			    Intent returnIntent = new Intent();
-			    returnIntent.putExtras(save);
-				
-				
-				setResult(RESULT_OK,returnIntent);  
-				
-                finish();
+
+                    Bundle save = mWizardModel.save();
+
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtras(save);
+
+
+                    setResult(RESULT_OK, returnIntent);
+
+                    finish();
                 } else {
                     if (mEditingAfterReview) {
                         mPager.setCurrentItem(mPagerAdapter.getCount() - 1);
@@ -253,7 +248,14 @@ ModelCallbacks {
 
         @Override
         public int getCount() {
+            if (mCurrentPageSequence == null) {
+                return 0;
+            }
             return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+        }
+
+        public int getCutOffPage() {
+            return mCutOffPage;
         }
 
         public void setCutOffPage(int cutOffPage) {
@@ -261,10 +263,6 @@ ModelCallbacks {
                 cutOffPage = Integer.MAX_VALUE;
             }
             mCutOffPage = cutOffPage;
-        }
-
-        public int getCutOffPage() {
-            return mCutOffPage;
         }
     }
 }

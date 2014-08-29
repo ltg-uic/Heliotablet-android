@@ -5,68 +5,68 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class Note {
-	
-	private String type;
-	private String origin;
-	private String anchor;
-	private String color;
-	private String reason;
-	
-	public Note(String type, String origin, String anchor, String color, String reason) {
-		this.type = type;
-		this.origin = origin;
-		this.anchor = anchor;
-		this.color = color;
-		this.reason = reason;
-	}
-	
-	public Note(JsonNode n) {
-		this.type = n.get("type").textValue();
-		this.origin = n.get("origin").textValue();
-		this.anchor = n.get("anchor").textValue();
-		this.color = n.get("color").textValue();
-		this.reason = n.get("reason").textValue();
-	}
 
-	public String getType() {
-		return type;
-	}
-	
-	public String getOrigin() {
-		return origin;
-	}
+    private String type;
+    private String origin;
+    private String anchor;
+    private String color;
+    private String reason;
 
-	public String getAnchor() {
-		return anchor;
-	}
+    public Note(String type, String origin, String anchor, String color, String reason) {
+        this.type = type;
+        this.origin = origin;
+        this.anchor = anchor;
+        this.color = color;
+        this.reason = reason;
+    }
 
-	public String getColor() {
-		return color;
-	}
+    public Note(JsonNode n) {
+        this.type = n.get("type").textValue();
+        this.origin = n.get("origin").textValue();
+        this.anchor = n.get("anchor").textValue();
+        this.color = n.get("color").textValue();
+        this.reason = n.get("reason").textValue();
+    }
 
-	public String getReason() {
-		return reason;
-	}
+    public String getType() {
+        return type;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof Note))
-			return false;
-		Note n = (Note) obj;	
-		if (type!=n.getType() || origin!=n.getOrigin() || anchor!=n.getAnchor() || color!=n.getColor() || reason!=n.getReason())
-			return false;
-		return true;
-	}
-	
-	
-	public JsonNode serialize() {
-		ObjectNode node = JsonNodeFactory.instance.objectNode();
-		node.put("type", type);
-		node.put("origin", origin);
-		node.put("anchor", anchor);
-		node.put("color", color);
-		node.put("reason", reason);
-		return node;
-	}
-	
+    public String getOrigin() {
+        return origin;
+    }
+
+    public String getAnchor() {
+        return anchor;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Note))
+            return false;
+        Note n = (Note) obj;
+        if (type != n.getType() || origin != n.getOrigin() || anchor != n.getAnchor() || color != n.getColor() || reason != n.getReason())
+            return false;
+        return true;
+    }
+
+
+    public JsonNode serialize() {
+        ObjectNode node = JsonNodeFactory.instance.objectNode();
+        node.put("type", type);
+        node.put("origin", origin);
+        node.put("anchor", anchor);
+        node.put("color", color);
+        node.put("reason", reason);
+        return node;
+    }
+
 }

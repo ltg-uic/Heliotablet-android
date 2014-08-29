@@ -19,10 +19,9 @@ package ltg.heliotablet_android.wizard.model;
 
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import ltg.heliotablet_android.wizard.ui.CustomerInfoFragment;
 
 import java.util.ArrayList;
-
-import ltg.heliotablet_android.wizard.ui.CustomerInfoFragment;
 
 /**
  * A page asking for a name and an email.

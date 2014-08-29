@@ -1,91 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/mainScrollView"
-    android:layout_width="520dp"
-    android:layout_height="265dp"
-    android:layout_gravity="fill"
-    android:background="@color/BurlyWood" >
+                android:id="@+id/mainScrollView"
+                android:layout_width="520dp"
+                android:layout_height="265dp"
+                android:layout_gravity="fill"
+                android:background="@color/BurlyWood">
 
     <FrameLayout
-        android:id="@+id/frameLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="0dp" >
+            android:id="@+id/frameLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp">
 
         <LinearLayout
-            android:id="@+id/buttonGroup"
-            android:layout_width="490dp"
-            android:layout_height="180dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/textedit_shape"
-            android:gravity="top"
-            android:orientation="vertical" >
-            
-            <requestFocus />
+                android:id="@+id/buttonGroup"
+                android:layout_width="490dp"
+                android:layout_height="180dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/textedit_shape"
+                android:gravity="top"
+                android:orientation="vertical">
+
+            <requestFocus/>
 
             <TextView
-                android:id="@+id/reasonTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="left|center_horizontal"
-                android:text="@string/obs_reason_text"
-                android:textColor="@color/BGBlueDark"
-                android:textColorHint="@color/BGBlueDark"
-                android:textColorLink="@color/BGBlueMedium"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                    android:id="@+id/reasonTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_horizontal"
+                    android:text="@string/obs_reason_text"
+                    android:textColor="@color/BGBlueDark"
+                    android:textColorHint="@color/BGBlueDark"
+                    android:textColorLink="@color/BGBlueMedium"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
 
             <Space
-                android:layout_width="match_parent"
-                android:layout_height="16dp" />
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"/>
 
-        <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+            <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-            <RadioButton
-                android:id="@+id/reasonButton1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/button_star"
-                android:text="@string/reasonButton1" />
+                <RadioButton
+                        android:id="@+id/reasonButton1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/button_star"
+                        android:text="@string/reasonButton1"/>
 
-            <RadioButton
-                android:id="@+id/reasonButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/button_star"
-                android:text="@string/reasonButton2" />
+                <RadioButton
+                        android:id="@+id/reasonButton2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/button_star"
+                        android:text="@string/reasonButton2"/>
 
-            <RadioButton
-                android:id="@+id/reasonButton3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/button_star"
-                android:text="@string/reasonButton3" />
-        </RadioGroup>
+                <RadioButton
+                        android:id="@+id/reasonButton3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/button_star"
+                        android:text="@string/reasonButton3"/>
+            </RadioGroup>
         </LinearLayout>
-                  
-    </FrameLayout>
-    
-        <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-		android:layout_marginLeft="15dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/frameLayout2"
-        android:orientation="vertical" >
 
-            <Button
+    </FrameLayout>
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/frameLayout2"
+            android:orientation="vertical">
+
+        <Button
                 android:id="@+id/deleteButton"
                 android:layout_width="490dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_delete"
-                android:text="Delete" />
+                android:text="Delete"/>
 
-	 </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

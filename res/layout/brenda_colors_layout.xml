@@ -1,94 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:circleView="http://schemas.android.com/apk/res/ltg.heliotablet_android"
-    android:id="@+id/planetColorsView"
-    android:layout_width="300dp"
-    android:layout_height="match_parent"
-    android:background="@drawable/shape_cloud"
-    android:measureAllChildren="true" >
+             xmlns:circleView="http://schemas.android.com/apk/res/ltg.heliotablet_android"
+             android:id="@+id/planetColorsView"
+             android:layout_width="300dp"
+             android:layout_height="match_parent"
+             android:background="@drawable/shape_cloud"
+             android:measureAllChildren="true">
 
     <ltg.heliotablet_android.view.theory.CircleView
-        android:id="@+id/neptuneTheoryPlanet"
-        style="@style/theoryPlanetView"
-        android:layout_marginLeft="95dp"
-        android:layout_marginTop="115dp"
-        android:background="@drawable/neptune_shape"
-        circleView:flag="blue"
-        circleView:textColor="@color/White" />
+            android:id="@+id/neptuneTheoryPlanet"
+            style="@style/theoryPlanetView"
+            android:layout_marginLeft="95dp"
+            android:layout_marginTop="115dp"
+            android:background="@drawable/neptune_shape"
+            circleView:flag="blue"
+            circleView:textColor="@color/White"/>
 
     <ltg.heliotablet_android.view.theory.CircleView
-        android:id="@+id/mercuryTheoryPlanet"
-        style="@style/theoryPlanetView"
-        android:layout_marginLeft="181dp"
-        android:layout_marginTop="535dp"
-        android:background="@drawable/mercury_shape"
-        circleView:flag="brown"
-        circleView:textColor="@color/White" />
-    
-    <ltg.heliotablet_android.view.theory.CircleView
-        android:id="@+id/pinkTheoryPlanet"
-        style="@style/theoryPlanetView"
-        android:layout_marginLeft="43dp"
-        android:layout_marginTop="223dp"
-        android:background="@drawable/venus_shape"
-        circleView:flag="pink"
-        circleView:textColor="@color/Black" />
+            android:id="@+id/mercuryTheoryPlanet"
+            style="@style/theoryPlanetView"
+            android:layout_marginLeft="181dp"
+            android:layout_marginTop="535dp"
+            android:background="@drawable/mercury_shape"
+            circleView:flag="brown"
+            circleView:textColor="@color/White"/>
 
     <ltg.heliotablet_android.view.theory.CircleView
-        android:id="@+id/earthTheoryPlanet"
-        style="@style/theoryPlanetView"
-        android:layout_marginLeft="190dp"
-        android:layout_marginTop="33dp"
-        android:background="@drawable/earth_shape"
-        circleView:flag="red"
-        circleView:textColor="@color/White" />
+            android:id="@+id/pinkTheoryPlanet"
+            style="@style/theoryPlanetView"
+            android:layout_marginLeft="43dp"
+            android:layout_marginTop="223dp"
+            android:background="@drawable/venus_shape"
+            circleView:flag="pink"
+            circleView:textColor="@color/Black"/>
 
     <ltg.heliotablet_android.view.theory.CircleView
-        android:id="@+id/greenTheoryPlanet"
-        style="@style/theoryPlanetView"
-        android:layout_marginLeft="170dp"
-        android:layout_marginTop="360dp"
-        android:background="@drawable/jupiter_shape"
-        circleView:flag="green"
-        circleView:textColor="@color/Black" />
+            android:id="@+id/earthTheoryPlanet"
+            style="@style/theoryPlanetView"
+            android:layout_marginLeft="190dp"
+            android:layout_marginTop="33dp"
+            android:background="@drawable/earth_shape"
+            circleView:flag="red"
+            circleView:textColor="@color/White"/>
 
     <ltg.heliotablet_android.view.theory.CircleView
-        android:id="@+id/uranusTheoryPlanet"
-        style="@style/theoryPlanetView"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="340dp"
-        android:background="@drawable/uranus_shape"
-        circleView:flag="orange"
-        circleView:textColor="@color/Black" />
+            android:id="@+id/greenTheoryPlanet"
+            style="@style/theoryPlanetView"
+            android:layout_marginLeft="170dp"
+            android:layout_marginTop="360dp"
+            android:background="@drawable/jupiter_shape"
+            circleView:flag="green"
+            circleView:textColor="@color/Black"/>
 
     <ltg.heliotablet_android.view.theory.CircleView
-        android:id="@+id/saturnTheoryPlanet"
-        style="@style/theoryPlanetView"
-        android:layout_marginLeft="95dp"
-        android:layout_marginTop="450dp"
-        android:background="@drawable/saturn_shape"
-        circleView:flag="yellow"
-        circleView:textColor="@color/Black" >
+            android:id="@+id/uranusTheoryPlanet"
+            style="@style/theoryPlanetView"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="340dp"
+            android:background="@drawable/uranus_shape"
+            circleView:flag="orange"
+            circleView:textColor="@color/Black"/>
+
+    <ltg.heliotablet_android.view.theory.CircleView
+            android:id="@+id/saturnTheoryPlanet"
+            style="@style/theoryPlanetView"
+            android:layout_marginLeft="95dp"
+            android:layout_marginTop="450dp"
+            android:background="@drawable/saturn_shape"
+            circleView:flag="yellow"
+            circleView:textColor="@color/Black">
     </ltg.heliotablet_android.view.theory.CircleView>
 
     <ltg.heliotablet_android.view.theory.CircleView
-        android:id="@+id/marsTheoryPlanet"
-        style="@style/theoryPlanetView"
-        android:layout_marginLeft="170dp"
-        android:layout_marginTop="222dp"
-        android:background="@drawable/mars_shape"
-        circleView:flag="gray"
-        circleView:textColor="@color/Black" >
+            android:id="@+id/marsTheoryPlanet"
+            style="@style/theoryPlanetView"
+            android:layout_marginLeft="170dp"
+            android:layout_marginTop="222dp"
+            android:background="@drawable/mars_shape"
+            circleView:flag="gray"
+            circleView:textColor="@color/Black">
     </ltg.heliotablet_android.view.theory.CircleView>
 
-<!--     <ltg.heliotablet_android.view.theory.CircleView
-        android:id="@+id/CircleView01"
-        style="@style/theoryPlanetView"
-        android:layout_marginLeft="170dp"
-        android:layout_marginTop="222dp"
-        android:background="@drawable/mars_shape"
-        circleView:flag="gray"
-        circleView:textColor="@color/Black" >
-    </ltg.heliotablet_android.view.theory.CircleView> -->
-        
+    <!--     <ltg.heliotablet_android.view.theory.CircleView
+            android:id="@+id/CircleView01"
+            style="@style/theoryPlanetView"
+            android:layout_marginLeft="170dp"
+            android:layout_marginTop="222dp"
+            android:background="@drawable/mars_shape"
+            circleView:flag="gray"
+            circleView:textColor="@color/Black" >
+        </ltg.heliotablet_android.view.theory.CircleView> -->
+
 </FrameLayout>

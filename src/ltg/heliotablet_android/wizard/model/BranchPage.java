@@ -19,11 +19,10 @@ package ltg.heliotablet_android.wizard.model;
 
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import ltg.heliotablet_android.wizard.ui.SingleChoiceFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import ltg.heliotablet_android.wizard.ui.SingleChoiceFragment;
 
 /**
  * A page representing a branching point in the wizard. Depending on which choice is selected, the

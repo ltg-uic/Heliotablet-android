@@ -16,12 +16,6 @@
 
 package ltg.heliotablet_android.wizard.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import ltg.heliotablet_android.R;
-import ltg.heliotablet_android.wizard.model.Page;
-import ltg.heliotablet_android.wizard.model.SingleFixedChoicePage;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,6 +26,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import ltg.heliotablet_android.R;
+import ltg.heliotablet_android.wizard.model.Page;
+import ltg.heliotablet_android.wizard.model.SingleFixedChoicePage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SingleChoiceFragment extends ListFragment {
     private static final String ARG_KEY = "key";
@@ -41,6 +41,9 @@ public class SingleChoiceFragment extends ListFragment {
     private String mKey;
     private Page mPage;
 
+    public SingleChoiceFragment() {
+    }
+
     public static SingleChoiceFragment create(String key) {
         Bundle args = new Bundle();
         args.putString(ARG_KEY, key);
@@ -48,9 +51,6 @@ public class SingleChoiceFragment extends ListFragment {
         SingleChoiceFragment fragment = new SingleChoiceFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    public SingleChoiceFragment() {
     }
 
     @Override
@@ -70,7 +70,7 @@ public class SingleChoiceFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_page, container, false);
         ((TextView) rootView.findViewById(android.R.id.title)).setText(mPage.getTitle());
 

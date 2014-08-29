@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ltg.heliotablet_android.view.observation.ObservationAnchorView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/ltg.heliotablet_android"
-    android:id="@+id/observationAnchorView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:angleOffset="90.0"
-   app:innerRadius="80dp"
- />
+                                                                xmlns:app="http://schemas.android.com/apk/res/ltg.heliotablet_android"
+                                                                android:id="@+id/observationAnchorView"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="match_parent"
+                                                                app:angleOffset="90.0"
+                                                                app:innerRadius="80dp"
+        />

@@ -18,10 +18,9 @@ package ltg.heliotablet_android.wizard.model;
 
 
 import android.support.v4.app.Fragment;
+import ltg.heliotablet_android.wizard.ui.MultipleChoiceFragment;
 
 import java.util.ArrayList;
-
-import ltg.heliotablet_android.wizard.ui.MultipleChoiceFragment;
 
 /**
  * A page offering the user a number of non-mutually exclusive choices.

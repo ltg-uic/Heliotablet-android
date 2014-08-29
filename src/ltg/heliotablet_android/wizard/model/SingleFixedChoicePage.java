@@ -19,11 +19,10 @@ package ltg.heliotablet_android.wizard.model;
 
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import ltg.heliotablet_android.wizard.ui.SingleChoiceFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import ltg.heliotablet_android.wizard.ui.SingleChoiceFragment;
 
 /**
  * A page offering the user a number of mutually exclusive choices.

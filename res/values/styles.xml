@@ -2,11 +2,11 @@
 
 
     <!-- Application theme. -->
-	
-	<style name="Theme.Custom" parent="android:style/Theme.Holo">
-	     <item name="android:actionBarSize">55dp</item>
-	</style>
-    
+
+    <style name="Theme.Custom" parent="android:style/Theme.Holo">
+        <item name="android:actionBarSize">55dp</item>
+    </style>
+
 
     <!--Brenda Testing the theme for radio buttons  -->
     <style name="CustomTheme" parent="android:Theme">
@@ -17,19 +17,19 @@
         <item name="android:button">@drawable/button_star</item>
     </style>
     <!-- END Brenda  -->
-    
+
     <style name="theoryPlanetLabel" parent="android:Widget.Holo.Light.TextView">
-        <!-- <item name="android:background">@color/TheoryViewPlanetName</item>-->        
+        <!-- <item name="android:background">@color/TheoryViewPlanetName</item>-->
         <item name="android:background">#000F29</item>
-        
+
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/White</item>
         <item name="android:textSize">20sp</item>
         <item name="android:layout_height">86dp</item>
         <item name="android:layout_gravity">fill_horizontal</item>
     </style>
-    
-    
+
+
     <style name="theoryPlanetHeaderLabel" parent="android:Widget.Holo.Light.TextView">
         <item name="android:background">@color/PlanetTheoryTableColor</item>
         <item name="android:gravity">center</item>
@@ -42,11 +42,11 @@
         <item name="android:layout_width">810dp</item>
         <item name="android:layout_height">86dp</item>
         <item name="android:layout_gravity">center</item>
-     
-<!--         <item name="android:paddingBottom">1dp</item>
-        <item name="android:paddingLeft">2dp</item>
-        <item name="android:paddingRight">2dp</item>
-        <item name="android:paddingTop">1dp</item> -->
+
+        <!--         <item name="android:paddingBottom">1dp</item>
+                <item name="android:paddingLeft">2dp</item>
+                <item name="android:paddingRight">2dp</item>
+                <item name="android:paddingTop">1dp</item> -->
         <item name="android:gravity">center_vertical</item>
     </style>
 
@@ -68,10 +68,10 @@
         <item name="android:textSize">25sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">fill_parent</item>
-		<item name="android:layout_centerHorizontal">true</item>
-		<item name="android:layout_centerVertical">true</item> 
-<!--         <item name="android:layout_marginLeft">12dp</item> -->
-<!--          <item name="android:layout_marginBottom">2dp</item> -->
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <!--         <item name="android:layout_marginLeft">12dp</item> -->
+        <!--          <item name="android:layout_marginBottom">2dp</item> -->
 
     </style>
 
@@ -125,31 +125,31 @@
         <item name="android:layout_height">270dp</item>
         <item name="android:name">ltg.heliotablet_android.view.observation.ObservationViewFragment</item>
     </style>
-    
-     <style name="observationCircleViewStyle" parent="@style/planetColor">
+
+    <style name="observationCircleViewStyle" parent="@style/planetColor">
         <item name="android:layout_width">10dp</item>
         <item name="android:layout_height">10dp</item>
     </style>
-    
-     <!-- BRENDA ADDED TO TEST BUTTON STYLES, BUT MAY NEED TO DELETE THIS PART LATER -->
+
+    <!-- BRENDA ADDED TO TEST BUTTON STYLES, BUT MAY NEED TO DELETE THIS PART LATER -->
     <style name="button_star" parent="@android:style/Widget.Button">
         <item name="android:gravity">center_vertical|center_horizontal</item>
         <item name="android:background">@drawable/button_star</item>
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
-<!--    <item name="android:textColor">#FFFFFFFF</item>
-        <item name="android:shadowColor">#FF000000</item>
-        <item name="android:shadowDx">0</item>
-        <item name="android:shadowDy">-1</item>
-        <item name="android:shadowRadius">0.2</item>
-        <item name="android:textSize">16dip</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:background">@drawable/button</item>
-        <item name="android:focusable">true</item>
-        <item name="android:clickable">true</item> -->
+        <!--    <item name="android:textColor">#FFFFFFFF</item>
+                <item name="android:shadowColor">#FF000000</item>
+                <item name="android:shadowDx">0</item>
+                <item name="android:shadowDy">-1</item>
+                <item name="android:shadowRadius">0.2</item>
+                <item name="android:textSize">16dip</item>
+                <item name="android:textStyle">bold</item>
+                <item name="android:background">@drawable/button</item>
+                <item name="android:focusable">true</item>
+                <item name="android:clickable">true</item> -->
     </style>
-    
-        <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="textAppearanceFinish">@style/TextAppearanceFinish</item>
     </style>
 

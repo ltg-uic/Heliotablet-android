@@ -1,276 +1,264 @@
 package ltg.heliotablet_android.data;
 
-import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.json.JSONObject;
-
-import android.webkit.WebStorage.Origin;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ComparisonChain;
 
+import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Reason implements Comparable<Reason> {
 
-	private long id;
+    public final static String CONST_MERCURY = "mercury";
+    public final static String CONST_VENUS = "venus";
+    public final static String CONST_EARTH = "earth";
+    public final static String CONST_MARS = "mars";
+    public final static String CONST_SATURN = "saturn";
+    public final static String CONST_JUPITER = "jupiter";
+    public final static String CONST_NEPTUNE = "neptune";
+    public final static String CONST_URANUS = "uranus";
+    public final static String CONST_RED = "red";
+    public final static String CONST_ORANGE = "orange";
+    public final static String CONST_BLUE = "blue";
+    public final static String CONST_GREEN = "green";
+    public final static String CONST_PINK = "pink";
+    public final static String CONST_YELLOW = "yellow";
+    public final static String CONST_GREY = "gray";
+    public final static String CONST_BROWN = "brown";
+    public final static String TYPE_THEORY = "THEORY";
+    public final static String TYPE_OBSERVATION = "OBSERVATION";
+    private long id;
+    // THEORY OR OBERVATION
+    private String type;
+    // PLANET_NAME OR COLOR that the flag is attached to
+    private String anchor;
+    private String flag;
+    private Timestamp lastTimestamp;
+    private String origin;
+    private String reasonText;
+    private boolean isReadonly;
 
-	// THEORY OR OBERVATION
-	private String type;
+    public Reason(String anchor, String flag, String type, String origin,
+                  boolean isReadOnly) {
+        this.anchor = anchor;
+        this.flag = flag;
+        this.origin = origin;
+        this.type = type;
+        this.isReadonly = isReadOnly;
+        java.util.Date date = new java.util.Date();
+        this.lastTimestamp = new Timestamp(date.getTime());
+    }
 
-	// PLANET_NAME OR COLOR that the flag is attached to
-	private String anchor;
-	private String flag;
+    public Reason() {
 
-	private Timestamp lastTimestamp;
-	private String origin;
-	private String reasonText;
-	private boolean isReadonly;
+    }
 
-	public final static String CONST_MERCURY = "mercury";
-	public final static String CONST_VENUS = "venus";
-	public final static String CONST_EARTH = "earth";
-	public final static String CONST_MARS = "mars";
-	public final static String CONST_SATURN = "saturn";
-	public final static String CONST_JUPITER = "jupiter";
-	public final static String CONST_NEPTUNE = "neptune";
-	public final static String CONST_URANUS = "uranus";
+    public Reason(long id, String anchor, String flag, String type,
+                  String origin, boolean isReadOnly, String reasonText,
+                  Timestamp lastTimestamp) {
+        this.id = id;
+        this.anchor = anchor;
+        this.flag = flag;
+        this.origin = origin;
+        this.type = type;
+        this.isReadonly = isReadOnly;
+        this.reasonText = reasonText;
+        this.lastTimestamp = lastTimestamp;
+    }
 
-	public final static String CONST_RED = "red";
-	public final static String CONST_ORANGE = "orange";
-	public final static String CONST_BLUE = "blue";
-	public final static String CONST_GREEN = "green";
-	public final static String CONST_PINK = "pink";
-	public final static String CONST_YELLOW = "yellow";
-	public final static String CONST_GREY = "gray";
-	public final static String CONST_BROWN = "brown";
+    public Reason(JsonNode n) {
+        this.type = n.get("type").textValue().toUpperCase();
+        this.origin = n.get("origin").textValue();
+        this.anchor = n.get("anchor").textValue();
+        this.flag = n.get("color").textValue();
+        this.reasonText = n.get("reason").textValue();
+    }
 
-	public final static String TYPE_THEORY = "THEORY";
-	public final static String TYPE_OBSERVATION = "OBSERVATION";
+    public static Reason newInstance(Reason reason) {
+        return new Reason(reason.getId(), reason.getAnchor(), reason.getFlag(), reason.getType(), reason.getOrigin(), reason.isReadonly, reason.getReasonText(), reason.getLastTimestamp());
+    }
 
-	public Reason(String anchor, String flag, String type, String origin,
-			boolean isReadOnly) {
-		this.anchor = anchor;
-		this.flag = flag;
-		this.origin = origin;
-		this.type = type;
-		this.isReadonly = isReadOnly;
-		java.util.Date date = new java.util.Date();
-		this.lastTimestamp = new Timestamp(date.getTime());
-	}
+    public static Predicate<Reason> getIdPredicate(final Long id) {
+        Predicate<Reason> idPredicate = new Predicate<Reason>() {
 
-	public static Reason newInstance(Reason reason) {
-	    return new Reason(reason.getId(),reason.getAnchor(), reason.getFlag(), reason.getType(), reason.getOrigin(), reason.isReadonly,reason.getReasonText(), reason.getLastTimestamp()); 
-	}
- 
-	public Reason() {
+            @Override
+            public boolean apply(Reason input) {
+                if (id.equals(input.getId()))
+                    return true;
 
-	}
+                return false;
+            }
+        };
+        return idPredicate;
+    }
 
-	public Reason(long id, String anchor, String flag, String type,
-			String origin, boolean isReadOnly, String reasonText,
-			Timestamp lastTimestamp) {
-		this.id = id;
-		this.anchor = anchor;
-		this.flag = flag;
-		this.origin = origin;
-		this.type = type;
-		this.isReadonly = isReadOnly;
-		this.reasonText = reasonText;
-		this.lastTimestamp = lastTimestamp;
-	}
+    public static Predicate<Reason> getAnchorPredicate(final String anchor) {
+        Predicate<Reason> anchorPredicate = new Predicate<Reason>() {
 
-	public Reason(JsonNode n) {
-		this.type = n.get("type").textValue().toUpperCase();
-		this.origin = n.get("origin").textValue();
-		this.anchor = n.get("anchor").textValue();
-		this.flag = n.get("color").textValue();
-		this.reasonText = n.get("reason").textValue();
-	}
+            @Override
+            public boolean apply(Reason input) {
 
-	public long getId() {
-		return id;
-	}
+                if (anchor.equals(input.getAnchor()))
+                    return true;
 
-	public void setId(long id) {
-		this.id = id;
-	}
+                return false;
+            }
+        };
+        return anchorPredicate;
+    }
 
-	public Timestamp getLastTimestamp() {
-		return lastTimestamp;
-	}
+    public static Predicate<Reason> getFlagPredicate(final String flag) {
+        Predicate<Reason> flagPredicate = new Predicate<Reason>() {
 
-	public void setLastTimestamp(Timestamp lastTimestamp) {
-		this.lastTimestamp = lastTimestamp;
-	}
+            @Override
+            public boolean apply(Reason input) {
 
-	public String getType() {
-		return type;
-	}
+                if (flag.equals(input.getFlag()))
+                    return true;
 
-	public void setType(String type) {
-		this.type = type;
-	}
+                return false;
+            }
+        };
+        return flagPredicate;
+    }
 
-	public String getOrigin() {
-		return origin;
-	}
+    public static Predicate<Reason> getIsReadOnlyFalsePredicate() {
+        Predicate<Reason> isReadyOnlyPredicate = new Predicate<Reason>() {
 
-	public void setOrigin(String origin) {
-		this.origin = origin;
-	}
+            @Override
+            public boolean apply(Reason input) {
+                if (input.isReadonly == false)
+                    return true;
+                else
+                    return false;
+            }
+        };
+        return isReadyOnlyPredicate;
+    }
 
-	public String getReasonText() {
-		return reasonText;
-	}
+    public static Predicate<Reason> getCurrentUserIsInSet(final String user) {
+        Predicate<Reason> isReadyOnlyPredicate = new Predicate<Reason>() {
 
-	public void setReasonText(String reasonText) {
-		this.reasonText = reasonText;
-	}
+            @Override
+            public boolean apply(Reason input) {
+                if (input.getOrigin().equals(user))
+                    return true;
+                else
+                    return false;
+            }
+        };
+        return isReadyOnlyPredicate;
+    }
 
-	public String getAnchor() {
-		return anchor;
-	}
+    public static Predicate<Reason> getIsReadOnlyTruePredicate() {
+        Predicate<Reason> isReadyOnlyPredicate = new Predicate<Reason>() {
 
-	public void setAnchor(String anchor) {
-		this.anchor = anchor;
-	}
+            @Override
+            public boolean apply(Reason input) {
+                if (input.isReadonly == true)
+                    return true;
+                else
+                    return false;
+            }
+        };
+        return isReadyOnlyPredicate;
+    }
 
-	public String getFlag() {
-		return flag;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public void setFlag(String flag) {
-		this.flag = flag;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public boolean isReadonly() {
-		return isReadonly;
-	}
+    public Timestamp getLastTimestamp() {
+        return lastTimestamp;
+    }
 
-	public void setReadonly(boolean isReadonly) {
-		this.isReadonly = isReadonly;
-	}
+    public void setLastTimestamp(Timestamp lastTimestamp) {
+        this.lastTimestamp = lastTimestamp;
+    }
 
-	
-	public JsonNode toJSON() {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("anchor", this.getAnchor());
-		map.put("color", this.getFlag());
-		map.put("reason", this.getReasonText());
-		map.put("type", this.getType().toLowerCase());
-		map.put("origin", this.getOrigin());
-		ObjectMapper om = new ObjectMapper();
-		JsonNode node = om.valueToTree(map);
-		return node;
-	}
-	
-	@Override
-	public String toString() {
-		return Objects.toStringHelper(this).add("id", Long.toString(this.id))
-				.add("reasonText", this.reasonText).add("anchor", this.anchor)
-				.add("type", this.type).add("flag", this.flag)
-				.add("origin", this.origin).add("isReadonly", this.isReadonly)
-				.toString();
-	}
+    public String getType() {
+        return type;
+    }
 
-	@Override
-	public int compareTo(Reason other) {
-		return ComparisonChain.start().compare(this.id, other.id)
-				.compare(this.reasonText, other.reasonText)
-				.compare(this.anchor, other.anchor)
-				.compare(this.type, other.type).compare(this.flag, other.flag)
-				.compare(this.origin, other.origin)
-				.compareTrueFirst(this.isReadonly, other.isReadonly).result();
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public static Predicate<Reason> getIdPredicate(final Long id) {
-		Predicate<Reason> idPredicate = new Predicate<Reason>() {
+    public String getOrigin() {
+        return origin;
+    }
 
-			@Override
-			public boolean apply(Reason input) {
-				if (id.equals(input.getId()))
-					return true;
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
 
-				return false;
-			}
-		};
-		return idPredicate;
-	}
-	
-	public static Predicate<Reason> getAnchorPredicate(final String anchor) {
-		Predicate<Reason> anchorPredicate = new Predicate<Reason>() {
+    public String getReasonText() {
+        return reasonText;
+    }
 
-			@Override
-			public boolean apply(Reason input) {
-	
-				if (anchor.equals(input.getAnchor()))
-					return true;
+    public void setReasonText(String reasonText) {
+        this.reasonText = reasonText;
+    }
 
-				return false;
-			}
-		};
-		return anchorPredicate;
-	}
-	
-	public static Predicate<Reason> getFlagPredicate(final String flag) {
-		Predicate<Reason> flagPredicate = new Predicate<Reason>() {
+    public String getAnchor() {
+        return anchor;
+    }
 
-			@Override
-			public boolean apply(Reason input) {
-	
-				if (flag.equals(input.getFlag()))
-					return true;
+    public void setAnchor(String anchor) {
+        this.anchor = anchor;
+    }
 
-				return false;
-			}
-		};
-		return flagPredicate;
-	}
-	
-	public static Predicate<Reason> getIsReadOnlyFalsePredicate() {
-		Predicate<Reason> isReadyOnlyPredicate = new Predicate<Reason>() {
+    public String getFlag() {
+        return flag;
+    }
 
-			@Override
-			public boolean apply(Reason input) {
-				if( input.isReadonly == false)
-					return true;
-				else 
-					return false;
-			}
-		};
-		return isReadyOnlyPredicate;
-	}
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
 
-	public static Predicate<Reason> getCurrentUserIsInSet(final String user) {
-		Predicate<Reason> isReadyOnlyPredicate = new Predicate<Reason>() {
+    public boolean isReadonly() {
+        return isReadonly;
+    }
 
-			@Override
-			public boolean apply(Reason input) {
-				if( input.getOrigin().equals(user) )
-					return true;
-				else 
-					return false;
-			}
-		};
-		return isReadyOnlyPredicate;
-	}
-	
-	public static Predicate<Reason> getIsReadOnlyTruePredicate() {
-		Predicate<Reason> isReadyOnlyPredicate = new Predicate<Reason>() {
+    public void setReadonly(boolean isReadonly) {
+        this.isReadonly = isReadonly;
+    }
 
-			@Override
-			public boolean apply(Reason input) {
-				if( input.isReadonly == true)
-					return true;
-				else 
-					return false;
-			}
-		};
-		return isReadyOnlyPredicate;
-	}
+    public JsonNode toJSON() {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("anchor", this.getAnchor());
+        map.put("color", this.getFlag());
+        map.put("reason", this.getReasonText());
+        map.put("type", this.getType().toLowerCase());
+        map.put("origin", this.getOrigin());
+        ObjectMapper om = new ObjectMapper();
+        JsonNode node = om.valueToTree(map);
+        return node;
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this).add("id", Long.toString(this.id))
+                .add("reasonText", this.reasonText).add("anchor", this.anchor)
+                .add("type", this.type).add("flag", this.flag)
+                .add("origin", this.origin).add("isReadonly", this.isReadonly)
+                .toString();
+    }
+
+    @Override
+    public int compareTo(Reason other) {
+        return ComparisonChain.start().compare(this.id, other.id)
+                .compare(this.reasonText, other.reasonText)
+                .compare(this.anchor, other.anchor)
+                .compare(this.type, other.type).compare(this.flag, other.flag)
+                .compare(this.origin, other.origin)
+                .compareTrueFirst(this.isReadonly, other.isReadonly).result();
+    }
 }

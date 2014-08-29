@@ -17,12 +17,12 @@
  */
 -->
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+    <LinearLayout
             android:id="@+id/loginView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -30,24 +30,24 @@
             android:paddingBottom="13dip"
             android:paddingLeft="20dip"
             android:paddingRight="20dip"
-            android:paddingTop="5dip" >
+            android:paddingTop="5dip">
 
-            <TextView
+        <TextView
                 android:id="@+id/loginMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dip"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
 
-            <TextView
+        <TextView
                 android:id="@+id/usernameLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/authenticator_activity_username_label"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
-            <EditText
+        <EditText
                 android:id="@+id/usernameTextView"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -55,18 +55,18 @@
                 android:inputType="textEmailAddress"
                 android:minWidth="250dip"
                 android:scrollHorizontally="true"
-                android:singleLine="true" />
+                android:singleLine="true"/>
 
-            <TextView
+        <TextView
                 android:id="@+id/usernameSpacer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dip"
                 android:focusable="true"
                 android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
 
-            <TextView
+        <TextView
                 android:id="@+id/passwordLabelText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,9 +74,9 @@
                 android:singleLine="true"
                 android:text="@string/authenticator_activity_password_label"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
-            <EditText
+        <EditText
                 android:id="@+id/passwordTextView"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -84,14 +84,14 @@
                 android:inputType="textPassword"
                 android:minWidth="250dip"
                 android:scrollHorizontally="true"
-                android:singleLine="true" />
+                android:singleLine="true"/>
 
-            <TextView
+        <TextView
                 android:id="@+id/messageBottomSpacer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dip"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
 
-        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/mainScrollView"
-    android:layout_width="370dp"
-    android:layout_height="220dp"
-    android:layout_gravity="fill"
-    android:background="@color/WhiteSmoke"
-     >
+            android:id="@+id/mainScrollView"
+            android:layout_width="370dp"
+            android:layout_height="220dp"
+            android:layout_gravity="fill"
+            android:background="@color/WhiteSmoke"
+        >
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="224dp"
-        android:layout_margin="5dp"
-        android:orientation="vertical" >
+            android:layout_width="match_parent"
+            android:layout_height="224dp"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
 
         <EditText
-            android:id="@+id/mainEditText"
-            android:layout_width="360dp"
-            android:layout_height="210dp"
-            android:background="@drawable/textedit_shape"
-            android:ems="10"
-            android:gravity="top"
-            android:inputType="textMultiLine"
-            android:text="@string/blank_space"
-            android:textColor="@color/Black" >
-            
-            <requestFocus />
+                android:id="@+id/mainEditText"
+                android:layout_width="360dp"
+                android:layout_height="210dp"
+                android:background="@drawable/textedit_shape"
+                android:ems="10"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:text="@string/blank_space"
+                android:textColor="@color/Black">
+
+            <requestFocus/>
         </EditText>
     </LinearLayout>
 
