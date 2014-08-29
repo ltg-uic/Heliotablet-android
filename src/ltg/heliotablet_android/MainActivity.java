@@ -44,7 +44,6 @@ import java.util.List;
 public class MainActivity extends FragmentActivity implements TabListener,
         FragmentCommunicator {
 
-    public static final int LOGIN_WIZARD_DONE = 1;
     public static final int REQUEST_LOGIN = 0;
     private static final String INIT_HELIO = "init_helio";
     private static final String INIT_HELIO_DIFF = "init_helio_diff";
@@ -210,9 +209,11 @@ public class MainActivity extends FragmentActivity implements TabListener,
                     getString(R.string.user_name), "");
 
 
-            if (ltgEvent.getOrigin().toLowerCase()
-                    .equals(storedUserName.toLowerCase())) {
-                return;
+            if (ltgEvent.getOrigin() != null) {
+                if (ltgEvent.getOrigin().toLowerCase()
+                        .equals(storedUserName.toLowerCase())) {
+                    return;
+                }
             }
 
 

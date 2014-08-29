@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="observation">observación</string>
-    <string name="theory_default">teoría_default</string>
-    <string name="theory_dropped">teoría_dropped</string>
+    <string name="observation">observation</string>
+    <string name="theory_default">theory_default</string>
+    <string name="theory_dropped">theory_dropped</string>
     <string name="app_name">helioRoom</string>
-    <string name="title_section4">Discusión</string>
-    <string name="tab_title_scratch_pad">Borrador</string>
-    <string name="tab_title_observations">Observaciones</string>
-    <string name="tab_title_theories">Teorias</string>
-    <string name="planets">Planetas</string>
-    <string name="theories">Teorias</string>
+    <string name="title_section4">Discussion</string>
+    <string name="tab_title_scratch_pad">Scratch Pad</string>
+    <string name="tab_title_observations">Observations</string>
+    <string name="tab_title_theories">Theories</string>
+    <string name="planets">Planets</string>
+    <string name="theories">Theories</string>
     <string name="venus">Venus</string>
     <string name="saturn">Saturn</string>
     <string name="colors">Colors</string>
@@ -32,33 +32,34 @@
     <string name="brown">brown</string>
     <string name="orange">orange</string>
     <string name="gray">gray</string>
-    <string name="pink">pink</string>
     <string name="blank_space">" "</string>
     <string name="lorem_ipsum">This is earth because it is awesome.</string>
-    
-    <!-- labels -->
-    <string name="action_previous">Anterior</string>
-    <string name="action_next">Proximo</string>
-    <string name="action_finish">Terminar</string>
-    <string name="fragment_tag_theory">teoría</string>
-    <string name="fragment_tag_observation">Observaciones</string>
-    <string name="fragment_tag_scratchpad">Borrador</string>
 
-    
-    <string name="obs_reason_origin_text">¿Quién esta de acuerdo que %1$s es mas cercano que %2$s?</string>
-    <string name="obs_reason_text">¿Por qué pienso que %1$s es más cercano que %2$s?</string>
-    <string name="reasonButton1">Porque vi que %1$s pasó enfrente de %2$s.</string>
-    <string name="reasonButton2">Proque vi que uno era mas rapido que el otro.</string>
-    <string name="reasonButton3">Por otra razón.</string>
+    <!-- labels -->
+    <string name="action_previous">Previous</string>
+    <string name="action_next">Next</string>
+    <string name="action_finish">Finish</string>
+    <string name="fragment_tag_theory">theory</string>
+    <string name="fragment_tag_observation">observations</string>
+    <string name="fragment_tag_scratchpad">scratchpad</string>
+    <string name="pink">pink</string>
+
+
+    <string name="obs_reason_origin_text">Who agrees that %1$s is closer than %2$s?</string>
+    <string name="obs_reason_text">Why do I think that %1$s is closer than %2$s?</string>
+    <string name="reasonButton1">Because I saw %1$s pass in front of %2$s.</string>
+    <string name="reasonButton2">Because I saw that one was faster than the other.</string>
+    <string name="reasonButton3">Because of another reason.</string>
 
     <!-- Xmpp stuff -->
     <string name="xmpp_prefs">XMPP_PREFS</string>
     <string name="user_name">USER_NAME</string>
+
     <string name="xmpp_host">ltg.evl.uic.edu</string>
     <string name="XMPP_HOST_KEY">xmpp_host_key</string>
     <string name="XMPP_PORT">XMPP_PORT</string>
     <string name="XMPP_CHAT_ROOM_BEN">hr-test@conference.ltg.evl.uic.edu</string>
-    <string name="XMPP_CHAT_ROOM_JULIA">hr-test@conference.ltg.evl.uic.edu</string>
+    <string name="XMPP_CHAT_ROOM_JULIA">helio-sp-13-julia@conference.54.243.60.48</string>
     <string name="menu_connect">LOGIN NEEDED</string>
     <string name="menu_disconnect">Disconnect</string>
     <string name="password">PASSWORD</string>
@@ -70,7 +71,7 @@
     <string name="login_title">XMPP Login</string>
     <string name="login_button">Login</string>
     <string name="cancel_button">Cancel</string>
-    
+
     <!-- Class Wizard -->
     <string name="ben_class_title">Brenda\'s Class</string>
     <string name="julia_class_title">Julia\'s Class</string>
@@ -79,17 +80,18 @@
     <string name="class_title_5th">5th Grade</string>
 
     <string name="ben_class_5th">Group1,Group2,Group3,Group4,Group5,Group6,Group7</string>
-    <string name="ben_class_6th">Nora,Simone,Rayne,Erica,Saffi,Evelyn,Steffany,Michael,Mateu,Massimo,Josh,Jude,Benny</string>
+    <string name="ben_class_6th">Nora,Simone,Rayne,Erica,Saffi,Evelyn,Steffany,Michael,Mateu,Massimo,Josh,Jude,Benny
+    </string>
 
     <string name="julia_class_5th">Owen,Alana,Camille,Hank,Jared,Maya,Oliver,Elias,Mei,Julian,Ashleigh,Saskia</string>
     <string name="julia_class_6th">Tien,JoshD,Will,Avital,Cleo,Jacob,Andrew,Amy,Esme,Honor,Ben,Julia</string>
-    
-     <string name="pick_your_teacher_">Pick Your Teacher.</string>
+
+    <string name="pick_your_teacher_">Pick Your Teacher.</string>
     <string name="which_grade_">Which Grade are You in?</string>
     <string name="choose_your_name_">Choose Your Name</string>
 
-    <string name="next">Proximo</string>
-    <string name="prev">Anterior</string>
+    <string name="next">Next</string>
+    <string name="prev">Previous</string>
     <string name="finish">Login!</string>
     <string name="review">Review Your Class and Name</string>
 
@@ -99,11 +101,10 @@
     <string name="hint_your_email">Optional</string>
 
     <string name="submit_confirm_message">Place the order with the deli? You will receive an email
-        confirmation.</string>
+        confirmation.
+    </string>
     <string name="submit_confirm_button">Place order</string>
     <string name="delete_button_label">Delete</string>
-   
-    
-    
+
 
 </resources>
